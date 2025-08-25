@@ -129,10 +129,10 @@ local function checkTime()
   local device = os.date("%d%m%Y")
   if online and server ~= device then
     sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
-    local msg = _("time_unsynced", server, device, adminWA)
+    local msg = "⚠️ Waktu device tidak sesuai!\n\n🌐 Server: "..server.."\n📱 Device: "..device.."\n\nHubungi admin: "..adminWA
     if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
       gg.copyText(adminWA)
-      gg.toast(_("file_name_copied"))
+      gg.toast("Link admin disalin.")
     end
     os.exit()
   end
@@ -141,10 +141,10 @@ end
 -- ⌛ Expiry Check
 if os.date("%Y%m%d") > expiryDate then
   sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
-  local msg = _("script_expired", adminWA)
+  local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
   if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
     gg.copyText(adminWA)
-    gg.toast(_("file_name_copied"))
+    gg.toast("Link admin disalin.")
   end
   os.exit()
 end
@@ -153,10 +153,10 @@ end
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
   sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
-  local msg = _("file_renamed", expectedName, current, adminWA)
+  local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
   if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
     gg.copyText(adminWA)
-    gg.toast(_("file_name_copied"))
+    gg.toast("Link admin disalin.")
   end
   os.exit()
 end
@@ -259,11 +259,13 @@ local function trackAndLog()
   end
 end
 
--- ✅ Inisialisasi Awal (Optimized)
-resetUserLogMonthly()
-checkTime()
+-- ✅ Inisialisasi Awal
+checkTime()               -- proteksi waktu
+resetUserLogMonthly()     -- reset log kalau tanggal 1
 gg.toast(_("connecting"))
-gg.sleep(500)
+gg.sleep(300)
+
+-- 📌 Jalankan logging di background (tidak block menu)
 pcall(trackAndLog)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
