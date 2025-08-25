@@ -161,11 +161,11 @@ if current ~= expectedName then
   os.exit()
 end
 
--- 🌍 Get IP & Location (single request)
+-- 🌍 Get IP & Location (faster timeout)
 local function getIPData()
   local t = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 3 then
+  if not res or not res.content or os.clock() - t > 1 then
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -197,7 +197,7 @@ local function resetUserLogMonthly()
   end
 end
 
--- 📊 Tracking Pengguna
+-- 📊 Tracking Pengguna (optimized, no spam Telegram)
 local function trackAndLog()
   local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local ipData = getIPData()
@@ -245,41 +245,25 @@ local function trackAndLog()
 
   for _ in pairs(userList) do totalUsers = totalUsers + 1 end
 
-  local msg = "📊 DAILY LOG — " .. os.date("%d %b %Y") .. "\n"
   if userJustAdded then
+    local msg = "📊 DAILY LOG — " .. os.date("%d %b %Y") .. "\n"
     msg = msg .. "\n🆕 NEW USER DETECTED!\n📱 Device: " .. dev
     msg = msg .. "\n🌍 Location: " .. ipData.city .. ", " .. ipData.country
     msg = msg .. "\n📡 Provider: " .. ipData.isp
     msg = msg .. "\n🔗 IP: " .. ipData.ip
     msg = msg .. "\n🕓 Login Time: " .. waktu .. "\n"
-  else
-    msg = msg .. "\n✅ No new users today.\n"
-  end
-
-  msg = msg .. "\n📌 TOTAL USERS: " .. totalUsers .. "\n\n"
-  local i = 1
-  for _, data in pairs(userDetailMap) do
-    msg = msg .. string.format("%d. %s | %s | %s, %s | %s | %s\n",
-      i, data.dev, data.ip, data.city, data.country, data.isp, data.waktu)
-    i = i + 1
-  end
-
-  local lastLog = ""
-  local f2 = io.open(lastLogFile, "r")
-  if f2 then lastLog = f2:read("*a") or ""; f2:close() end
-  if userJustAdded or lastLog ~= now then
+    msg = msg .. "\n📌 TOTAL USERS: " .. totalUsers .. "\n\n"
     sendTelegramLog(msg)
     local f3 = io.open(lastLogFile, "w")
     if f3 then f3:write(now); f3:close() end
   end
 end
 
--- ✅ Inisialisasi Awal
+-- ✅ Inisialisasi Awal (Optimized)
 resetUserLogMonthly()
-trackAndLog()
 checkTime()
 gg.toast(_("connecting"))
-gg.sleep(1000)
+gg.sleep(500)
 pcall(trackAndLog)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
