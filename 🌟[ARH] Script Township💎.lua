@@ -1402,34 +1402,35 @@ end
   
 permanentCode = loadOrGenerateCode(permCodeFile)  
   
--- 📤 Kirim ke Telegram saat awal  
-local codeSentFlag = "/sdcard/.azka_code_sent.txt"  
-local f = io.open(lastRequestFile, "r")  
-local requestTime = f and tonumber(f:read("*a")) or 0  
-if f then f:close() end  
-  
-local shouldSend = (not io.open(codeSentFlag, "r")) or (os.time() - requestTime <= 2)  
-if shouldSend then  
-local msg =[[  
-🔑 <b>GENERATED CODES</b>  
-  
-💎 <b>PERMANENT CODE</b> : <code>]] .. permanentCode ..[[</code>  
-⏳ <b>EXPIRED CODE</b>   : <code>]] .. expiredCode ..[[</code>  
-📅 <b>Valid Until</b>   : <b>]] .. expiredDate ..[[</b>  
-📂 <i>Script:</i> <code>]] .. (gg.getFile():match("[^/]+$") or "Unknown Script") ..[[</code>  
-🕒 <i>Generated at:</i> <b>]] .. os.date("%Y-%m-%d %H:%M:%S") ..[[</b>  
-]]  
-local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")  
-:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")  
-local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
-local res, err = safeRequest(url)
-if not res then
-  gg.toast("⚠️ Telegram send failed (" .. err .. ")")
-end
-  
-local sentFlag = io.open(codeSentFlag, "w")  
-if sentFlag then sentFlag:write("sent") sentFlag:close() end  
-end  
+-- 📤 Kirim ke Telegram saat awal
+local codeSentFlag = "/sdcard/.azka_code_sent.txt"
+local f = io.open(lastRequestFile, "r")
+local requestTime = f and tonumber(f:read("*a")) or 0
+if f then f:close() end
+
+local shouldSend = (not io.open(codeSentFlag, "r")) or (os.time() - requestTime <= 2)
+if shouldSend then
+  local msg =[[
+🔑 <b>GENERATED CODES</b>
+
+💎 <b>PERMANENT CODE</b> : <code>]] .. permanentCode ..[[</code>
+⏳ <b>EXPIRED CODE</b>   : <code>]] .. expiredCode ..[[</code>
+📅 <b>Valid Until</b>   : <b>]] .. expiredDate ..[[</b>
+📂 <i>Script:</i> <code>]] .. (gg.getFile():match("[^/]+$") or "Unknown Script") ..[[</code>
+🕒 <i>Generated at:</i> <b>]] .. os.date("%Y-%m-%d %H:%M:%S") ..[[</b>
+]]
+  local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+    :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+  local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
+
+  local res, err = safeRequest(url)
+  if not res then
+    gg.toast("⚠️ Failed to send generated codes (" .. err .. ")")
+  end
+
+  local sentFlag = io.open(codeSentFlag, "w")
+  if sentFlag then sentFlag:write("sent") sentFlag:close() end
+		end
   
 -- 🔐 Auto login  
 do  
@@ -1516,7 +1517,7 @@ elseif menu == 2 then
       gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
     end
   end
-break  
+  break
 elseif menu == 3 then  
 resetMode()  
 exit()  
