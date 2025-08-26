@@ -1038,8 +1038,8 @@ end
 function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
-    
--- 💎 ARH SECURE LOGIN SYSTEM (FINAL - RANDOM CODES & TELEGRAM DISTRIBUTION + COOLDOWN)
+
+		-- 💎 ARH SECURE LOGIN SYSTEM (FINAL - ONLINE SAFE VERSION)
 
 -- 📂 File paths
 local passFile              = "/sdcard/.azka_pass"
@@ -1053,6 +1053,11 @@ local permCodeFile          = "/sdcard/.azka_current_perm.txt"
 local lastRequestFile       = "/sdcard/.azka_last_request.txt"
 local savedNameFile         = "/sdcard/.azka_username_sc_dl.txt"
 
+-- Optional: GitHub raw via proxy (sesuaikan jika mau pakai online repo)
+-- Jika tidak pakai, biarkan string kosong.
+local githubBase = "" -- contoh: "https://ghproxy.net/https://raw.githubusercontent.com/USER/REPO/main/"
+
+-- Default values (bisa di-overwrite dari online file jika tersedia)
 local expiredCode = "Trialcode-7days"
 local expiredDate = "2025-09-1"
 local maxExpiredUsers = 5  -- 🔄 dynamic slot system
@@ -1063,419 +1068,507 @@ local chat_id = "1561442361"
 local permanentCode
 local loginSuccess = false
 local startTime = os.time()
+local slotAlertShown = false
 
+-- ======================
+-- 🛡 SafeRequest wrapper
+-- ======================
+local function safeRequest(url)
+  -- small wrapper to prevent hanging when network fails
+  if not url or url == "" then return nil end
+  -- show small toast so user knows network activity happening
+  pcall(gg.toast, "🔄 Connecting...")
+  local ok, res = pcall(gg.makeRequest, url)
+  if not ok or not res or not res.content then
+    -- try to give concise feedback, don't spam user
+    pcall(gg.toast, "❌ Network failed")
+    return nil
+  end
+  return res
+end
+
+-- ======================
 -- 📎 Utilities
+-- ======================
 local function getDeviceID()
-    local info = gg.getTargetInfo() or {}
-    return (info.label or "") .. "-" .. (info.versionCode or "") .. "-" .. (os.getenv("HOSTNAME") or "") .. "-" .. (gg.getDeviceId and gg.getDeviceId() or "")
+  local ok, info = pcall(gg.getTargetInfo)
+  info = ok and (info or {}) or {}
+  local label = info.label or ""
+  local version = info.versionCode or ""
+  local hostname = os.getenv("HOSTNAME") or ""
+  local device = (gg.getDeviceId and gg.getDeviceId() or "")
+  return label .. "-" .. version .. "-" .. hostname .. "-" .. device
 end
 
 local function hash(str)
-    local h = 0
-    for i = 1, #str do h = (h * 31 + str:byte(i)) % 1000000007 end
-    return tostring(h)
+  local h = 0
+  for i = 1, #str do h = (h * 31 + str:byte(i)) % 1000000007 end
+  return tostring(h)
 end
 
 local function getIPInfo()
-    local res = gg.makeRequest("http://ip-api.com/json")
-    if not res or not res.content then return "Unknown Location" end
-    local country, city, isp = res.content:match('"country":"(.-)".-"city":"(.-)".-"isp":"(.-)"')
-    return (country or "?") .. ", " .. (city or "?") .. " (" .. (isp or "?") .. ")"
+  -- gunakan safeRequest agar tidak hang
+  local res = safeRequest("http://ip-api.com/json")
+  if not res or not res.content then return "Unknown Location" end
+  local content = res.content
+  local country = content:match('"country":"(.-)"') or "?"
+  local city = content:match('"city":"(.-)"') or "?"
+  local isp = content:match('"isp":"(.-)"') or "?"
+  return country .. ", " .. city .. " (" .. isp .. ")"
 end
 
 local function sendTelegram(msg)
-    local encoded = msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-    local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded
-    gg.makeRequest(url)
+  if not msg or msg == "" then return end
+  local encoded = msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
+  local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded
+  -- prefer safeRequest; ignore failure
+  safeRequest(url)
 end
 
 local function generateRandomCode()
-    local charset, code = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", ""
-    for i = 1, 16 do
-        local rand = math.random(1, #charset)
-        code = code .. charset:sub(rand, rand)
-    end
-    return code
+  local charset, code = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", ""
+  for i = 1, 16 do
+    local rand = math.random(1, #charset)
+    code = code .. charset:sub(rand, rand)
+  end
+  return code
 end
 
 local function loadOrGenerateCode(path)
-    local f = io.open(path, "r")
-    if f then local code = f:read("*a") f:close() return code end
-    local code = generateRandomCode()
-    local w = io.open(path, "w") if w then w:write(code) w:close() end
-    return code
+  local f = io.open(path, "r")
+  if f then local code = f:read("*a") f:close() code = (code or ""):match("%S+") return code end
+  local code = generateRandomCode()
+  local w = io.open(path, "w") if w then w:write(code) w:close() end
+  return code
 end
 
 local function logUser(name)
-    local f = io.open(userLogFile, "a")
-    if f then f:write(name .. " | " .. os.date("%Y-%m-%d %H:%M:%S") .. "\n") f:close() end
+  local f = io.open(userLogFile, "a")
+  if f then f:write((name or "Unknown") .. " | " .. os.date("%Y-%m-%d %H:%M:%S") .. "\n") f:close() end
 end
 
 local function getSavedName()
-    local f = io.open(savedNameFile, "r")
-    if f then local n = f:read("*a") f:close() return n end
-    return nil
+  local f = io.open(savedNameFile, "r")
+  if f then local n = f:read("*a") f:close() return (n or ""):match("^%s*(.-)%s*$") end
+  return nil
 end
 
 local function promptUserName()
-    local saved = getSavedName()
-    if saved then return saved end
-    local input = gg.prompt({"👤 Enter your name:"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
-    local name = input[1] or "Unknown"
-    local f = io.open(savedNameFile, "w") if f then f:write(name) f:close() end
-    return name
+  local saved = getSavedName()
+  if saved and saved ~= "" then return saved end
+  local input = gg.prompt({"👤 Enter your name:"}, {""}, {"text"})
+  if not input then gg.alert("❌ Cancelled") os.exit() end
+  local name = input[1] or "Unknown"
+  local f = io.open(savedNameFile, "w") if f then f:write(name) f:close() end
+  return name
 end
 
--- 🔧 Perbaikan: Hitung jumlah device unik
+-- =========================
+-- 🔧 Device registry helpers
+-- =========================
 local function getUserCount(file)
-    local devices, f = {}, io.open(file, "r")
-    if f then
-        for line in f:lines() do
-            line = line:match("%S+") -- hapus spasi/baris kosong
-            if line and line ~= "" then devices[line] = true end
-        end
-        f:close()
+  local devices, f = {}, io.open(file, "r")
+  if f then
+    for line in f:lines() do
+      line = line:match("%S+") -- hapus spasi/baris kosong
+      if line and line ~= "" then devices[line] = true end
     end
-    local count = 0
-    for _ in pairs(devices) do count = count + 1 end
-    return count
+    f:close()
+  end
+  local count = 0
+  for _ in pairs(devices) do count = count + 1 end
+  return count
 end
 
 local function isDeviceBlacklisted()
-    local f = io.open(blacklistFile, "r")
-    if not f then return false end
-    local d = f:read("*a") f:close()
-    return d:find(getDeviceID(), 1, true) ~= nil
+  local f = io.open(blacklistFile, "r")
+  if not f then return false end
+  local d = f:read("*a") f:close()
+  return d:find(getDeviceID(), 1, true) ~= nil
 end
 
 local function registerDevice(file)
-    local f = io.open(file, "a") if f then f:write(getDeviceID() .. "\n") f:close() end
+  local f = io.open(file, "a") if f then f:write(getDeviceID() .. "\n") f:close() end
 end
 
 -- 🗂 Dynamic expired slot system
 local function getDeviceList(file)
-    local list, f = {}, io.open(file, "r")
-    if f then
-        for line in f:lines() do
-            if line ~= "" then table.insert(list, line) end
-        end
-        f:close()
+  local list, f = {}, io.open(file, "r")
+  if f then
+    for line in f:lines() do
+      line = line:match("%S+")
+      if line and line ~= "" then table.insert(list, line) end
     end
-    return list
+    f:close()
+  end
+  return list
 end
 
 local function saveDeviceList(file, list)
-    local f = io.open(file, "w")
-    if f then
-        for _, id in ipairs(list) do
-            f:write(id .. "\n")
-        end
-        f:close()
+  local f = io.open(file, "w")
+  if f then
+    for _, id in ipairs(list) do
+      f:write(id .. "\n")
     end
+    f:close()
+  end
 end
 
 -- 🔧 Perbaikan: addDeviceExpired tanpa duplikat
 local function addDeviceExpired(file, deviceID)
-    local list = getDeviceList(file)
-    for _, id in ipairs(list) do
-        if id == deviceID then return end -- sudah ada, jangan tambah lagi
-    end
-    table.insert(list, deviceID)
-    saveDeviceList(file, list)
+  local list = getDeviceList(file)
+  for _, id in ipairs(list) do
+    if id == deviceID then return end -- sudah ada, jangan tambah lagi
+  end
+  table.insert(list, deviceID)
+  saveDeviceList(file, list)
 end
 
 local function removeDeviceExpired(file, deviceID)
-    local list, newList = getDeviceList(file), {}
-    for _, id in ipairs(list) do
-        if id ~= deviceID then table.insert(newList, id) end
-    end
-    saveDeviceList(file, newList)
+  local list, newList = getDeviceList(file), {}
+  for _, id in ipairs(list) do
+    if id ~= deviceID then table.insert(newList, id) end
+  end
+  saveDeviceList(file, newList)
 end
 
 local function clearExpiredRegistry(file)
-    saveDeviceList(file, {}) -- kosongkan semua
+  saveDeviceList(file, {}) -- kosongkan semua
 end
 
--- 🧹 Reset
+-- ============================
+-- 🧹 Reset queue / reset util
+-- ============================
 local function processResetQueue()
-    local f = io.open(resetQueueFile, "r")
-    if not f then return end
-    local q = f:read("*a") f:close()
-    local dev = getDeviceID()
-    if q:find(dev, 1, true) then
-        os.remove(passFile)
-        os.remove(codeFile)
-        os.remove(savedNameFile)
-        removeDeviceExpired(expiredRegistryFile, dev) -- hapus dari slot expired
-        local w = io.open(resetQueueFile, "w")
-        if w then w:write(q:gsub(dev .. "\n", "")) w:close() end
-        gg.toast("🔁 Reset mode activated. Please log in again.")
-    end
+  local f = io.open(resetQueueFile, "r")
+  if not f then return end
+  local q = f:read("*a") f:close()
+  local dev = getDeviceID()
+  if q:find(dev, 1, true) then
+    -- delete saved login
+    pcall(os.remove, passFile)
+    pcall(os.remove, codeFile)
+    pcall(os.remove, savedNameFile)
+    removeDeviceExpired(expiredRegistryFile, dev) -- hapus dari slot expired
+    local w = io.open(resetQueueFile, "w")
+    if w then w:write((q:gsub(dev .. "\n", ""))) w:close() end
+    gg.toast("🔁 Reset mode activated. Please log in again.")
+  end
 end
 
 local function resetGeneratedCodes()
-    os.remove(permCodeFile)
-    os.remove("/sdcard/.azka_code_sent.txt")
-    clearExpiredRegistry(expiredRegistryFile) -- reset semua expired device
+  pcall(os.remove, permCodeFile)
+  pcall(os.remove, "/sdcard/.azka_code_sent.txt")
+  clearExpiredRegistry(expiredRegistryFile) -- reset semua expired device
 end
 
--- ⏳ Cooldown
+-- =================
+-- ⏳ Cooldown check
+-- =================
 local function canRequestNewCode()
-    local now = os.time()
-    local f = io.open(lastRequestFile, "r")
-    if f then
-        local last = tonumber(f:read("*a") or "0")
-        f:close()
-        if now - last < cooldownSeconds then
-            gg.alert("⏳ Wait " .. (cooldownSeconds - (now - last)) .. " seconds before requesting new code.")
-            return false
-        end
+  local now = os.time()
+  local f = io.open(lastRequestFile, "r")
+  if f then
+    local last = tonumber(f:read("*a") or "0")
+    f:close()
+    if now - last < cooldownSeconds then
+      gg.alert("⏳ Wait " .. (cooldownSeconds - (now - last)) .. " seconds before requesting new code.")
+      return false
     end
-    local w = io.open(lastRequestFile, "w")
-    if w then w:write(now) w:close() end
-    return true
+  end
+  local w = io.open(lastRequestFile, "w")
+  if w then w:write(now) w:close() end
+  return true
 end
 
--- 🔔 Show login summary (perbaikan hitung device unik)
+-- ============================
+-- 🔔 Show login summary (perbaikan)
+-- ============================
 local function showLoginSummary(name, kind)
-    local deviceID = getDeviceID()
-    local userType = kind == "permanent" and "Premium" or "Expired"
-    local gameName = gg.getTargetInfo().label or "Unknown Game"
-    local userID = hash(deviceID)
-    
-    -- hitung semua device unik
-    local devices = {}
-    for _, file in ipairs({expiredRegistryFile, permanentRegistryFile}) do
-        local f = io.open(file, "r")
-        if f then
-            for line in f:lines() do
-                line = line:match("%S+")
-                if line and line ~= "" then devices[line] = true end
-            end
-            f:close()
-        end
-    end
-    local count = 0
-    for _ in pairs(devices) do count = count + 1 end
-    
-    local limit = kind == "permanent" and "∞" or tostring(maxExpiredUsers)
-    local location = getIPInfo()
-    local scriptName = gg.getFile():match("[^/]+$") or "Unknown Script"
+  local deviceID = getDeviceID()
+  local userType = kind == "permanent" and "Premium" or "Expired"
+  local ok, info = pcall(gg.getTargetInfo)
+  local gameName = ok and (info and info.label or "Unknown Game") or "Unknown Game"
+  local userID = hash(deviceID)
 
-    local summary =
-    "✅ LOGIN SUMMARY\n\n" ..
-    "👤 Name        : " .. name .. "\n" ..
-    "🎮 Game        : " .. gameName .. "\n" ..
-    "🆔 User ID     : " .. userID .. "\n" ..
-    "🔐 Code Type   : " .. userType .. "\n" ..
-    "📱 Device      : " .. count .. " / " .. limit .. "\n" ..
-    "🌍 Location    : " .. location .. "\n" ..
-    "📄 Script      : " .. scriptName .. "\n" ..
-    "🕒 Time        : " .. os.date("%Y-%m-%d %H:%M:%S")
+  -- hitung semua device unik  
+  local devices = {}  
+  for _, file in ipairs({expiredRegistryFile, permanentRegistryFile}) do  
+      local f = io.open(file, "r")  
+      if f then  
+          for line in f:lines() do  
+              line = line:match("%S+")  
+              if line and line ~= "" then devices[line] = true end  
+          end  
+          f:close()  
+      end  
+  end  
+  local count = 0  
+  for _ in pairs(devices) do count = count + 1 end  
+  
+  local limit = kind == "permanent" and "∞" or tostring(maxExpiredUsers)  
+  local location = getIPInfo()  
+  local scriptName = (gg.getFile and gg.getFile():match and gg.getFile():match("[^/]+$")) or "Unknown Script"  
 
-    gg.alert(summary)
-    sendTelegram(summary)
+  local summary =  
+  "✅ LOGIN SUMMARY\n\n" ..  
+  "👤 Name        : " .. (name or "Unknown") .. "\n" ..  
+  "🎮 Game        : " .. gameName .. "\n" ..  
+  "🆔 User ID     : " .. userID .. "\n" ..  
+  "🔐 Code Type   : " .. userType .. "\n" ..  
+  "📱 Device      : " .. count .. " / " .. limit .. "\n" ..  
+  "🌍 Location    : " .. location .. "\n" ..  
+  "📄 Script      : " .. scriptName .. "\n" ..  
+  "🕒 Time        : " .. os.date("%Y-%m-%d %H:%M:%S")  
+
+  gg.alert(summary)  
+  sendTelegram(summary)
 end
 
--- 🔐 Code Entry
+-- =================
+-- 🔐 Code Entry Flow
+-- =================
 local function askUnifiedCodeEntry()
-    local input = gg.prompt({"🔐 Enter Your Code", "💾 Save this code?"}, {"", false}, {"text", "checkbox"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
-    local code, save = input[1], input[2]
-    local deviceID = getDeviceID()
-    local name
-    local today = os.date("%Y-%m-%d")
-    local codeType, expectedHash, regFile, storeFile
+  local input = gg.prompt({"🔐 Enter Your Code", "💾 Save this code?"}, {"", false}, {"text", "checkbox"})
+  if not input then gg.alert("❌ Cancelled") return end
+  local code, save = input[1], input[2]
+  if not code or code == "" then gg.alert("❌ No code entered") return end
 
-    if code == permanentCode then
-        codeType = "permanent"
-        expectedHash = hash(permanentCode .. deviceID)
-        regFile = permanentRegistryFile
-        storeFile = passFile
-        name = promptUserName()
+  local deviceID = getDeviceID()
+  local name
+  local today = os.date("%Y-%m-%d")
+  local codeType, expectedHash, regFile, storeFile
 
-    elseif code == expiredCode then
-        if today > expiredDate then
-            gg.alert("❌ Code expired on " .. expiredDate)
-            sendTelegram("❌ EXPIRED CODE DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)
-            os.remove(codeFile)
-            os.remove(savedNameFile)
-            os.remove(passFile)
-            clearExpiredRegistry(expiredRegistryFile)
-            resetGeneratedCodes()
-            gg.toast("🔁 Expired code reset. Please re-enter a new code.")
-            os.exit()
-        end
+  if code == permanentCode then  
+      codeType = "permanent"  
+      expectedHash = hash(permanentCode .. deviceID)  
+      regFile = permanentRegistryFile  
+      storeFile = passFile  
+      name = promptUserName()  
 
-        -- cek slot dynamic
-        local list = getDeviceList(expiredRegistryFile)
-        if #list >= maxExpiredUsers then
-            gg.alert("🚫 Slot penuh: " .. #list .. " / " .. maxExpiredUsers .. "\n❗ Tunggu ada slot kosong.")
-            sendTelegram("🚫 EXPIRED SLOT FULL\n📱 " .. deviceID .. "\n💯 " .. #list .. "/" .. maxExpiredUsers)
-            os.exit()
-        end
+  elseif code == expiredCode then  
+      if today > expiredDate then  
+          gg.alert("❌ Code expired on " .. expiredDate)  
+          sendTelegram("❌ EXPIRED CODE DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)  
+          pcall(os.remove, codeFile)
+          pcall(os.remove, savedNameFile)
+          pcall(os.remove, passFile)
+          clearExpiredRegistry(expiredRegistryFile)
+          resetGeneratedCodes()
+          gg.toast("🔁 Expired code reset. Please re-enter a new code.")  
+          return
+      end  
 
-        -- register device
-        addDeviceExpired(expiredRegistryFile, deviceID)
-        local slotNow = getUserCount(expiredRegistryFile)
-        local left = maxExpiredUsers - slotNow
+      -- cek slot dynamic  
+      local list = getDeviceList(expiredRegistryFile)  
+      if #list >= maxExpiredUsers then  
+          gg.alert("🚫 Slot penuh: " .. #list .. " / " .. maxExpiredUsers .. "\n❗ Tunggu ada slot kosong.")  
+          sendTelegram("🚫 EXPIRED SLOT FULL\n📱 " .. deviceID .. "\n💯 " .. #list .. "/" .. maxExpiredUsers)  
+          return
+      end  
 
-        -- 🔔 Selalu tampilkan slot status
-        gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..
-        "\n🟢 Sisa slot: " .. left .. "\n✅ Device kamu berhasil login.")
+      -- register device  
+      addDeviceExpired(expiredRegistryFile, deviceID)  
+      local slotNow = getUserCount(expiredRegistryFile)  
+      local left = maxExpiredUsers - slotNow  
 
-        codeType = "expired"
-        expectedHash = hash(expiredCode .. deviceID)
-        regFile = expiredRegistryFile
-        storeFile = codeFile
-        name = promptUserName()
+      gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..  
+      "\n🟢 Sisa slot: " .. left .. "\n✅ Device kamu berhasil login.")  
 
-    else
-        sendTelegram("❌ INVALID CODE\n📱 " .. deviceID)
-        gg.alert("❌ Invalid code")
-        os.exit()
-    end
+      codeType = "expired"  
+      expectedHash = hash(expiredCode .. deviceID)  
+      regFile = expiredRegistryFile  
+      storeFile = codeFile  
+      name = promptUserName()  
 
-    if save then
-        local f = io.open(storeFile, "w") if f then f:write(expectedHash) f:close() end
-        local g = io.open(savedNameFile, "w") if g then g:write(name) g:close() end
-    end
+  else  
+      sendTelegram("❌ INVALID CODE\n📱 " .. deviceID)  
+      gg.alert("❌ Invalid code")  
+      return
+  end  
 
-    registerDevice(regFile)
-    logUser(name)
-    loginSuccess = true
-    gg.toast("✅ Access granted")
-    sendTelegram("✅ " .. codeType:upper() .. " LOGIN SUCCESS\n👤 " .. name .. "\n📱 " .. deviceID .. "\n🌍 " .. getIPInfo() .. "\n🕒 " .. os.date())
-    showLoginSummary(name, codeType)
+  if save then  
+      local f = io.open(storeFile, "w") if f then f:write(expectedHash) f:close() end  
+      local g = io.open(savedNameFile, "w") if g then g:write(name) g:close() end  
+  end  
+
+  registerDevice(regFile)  
+  logUser(name)  
+  loginSuccess = true  
+  gg.toast("✅ Access granted")  
+  sendTelegram("✅ " .. codeType:upper() .. " LOGIN SUCCESS\n👤 " .. (name or "Unknown") .. "\n📱 " .. deviceID .. "\n🌍 " .. getIPInfo() .. "\n🕒 " .. os.date())  
+  showLoginSummary(name, codeType)
 end
 
--- 🚪 Entry point
+-- =================
+-- 🔁 Initial setup
+-- =================
 processResetQueue()
 math.randomseed(os.time())
+
 if isDeviceBlacklisted() then
-    sendTelegram("🚫 BLACKLISTED DEVICE\n📱 " .. getDeviceID())
-    gg.alert("🚫 Access denied. Your device is blacklisted.")
-    os.exit()
+  sendTelegram("🚫 BLACKLISTED DEVICE\n📱 " .. getDeviceID())
+  gg.alert("🚫 Access denied. Your device is blacklisted.")
+  os.exit()
 end
 
+-- Try to load permanent code from local file first; fallback generate.
 permanentCode = loadOrGenerateCode(permCodeFile)
 
--- 📤 Kirim ke Telegram saat awal
+-- jika githubBase di-set, coba fetch overriding codes dari repo (aman: tidak memaksa)
+if githubBase and githubBase ~= "" then
+  -- ambil permanent code dari file permcode.txt jika tersedia online
+  local rperm = safeRequest(githubBase .. "permcode.txt")
+  if rperm and rperm.content then
+    local codeOnline = (rperm.content or ""):match("%S+")
+    if codeOnline and codeOnline ~= "" then
+      permanentCode = codeOnline
+      -- simpan lokal supaya persist
+      local w = io.open(permCodeFile, "w") if w then w:write(permanentCode) w:close() end
+    end
+  end
+  -- ambil expired code & date dari file expiredcode.txt (format: CODE YYYY-MM-DD)
+  local rexp = safeRequest(githubBase .. "expiredcode.txt")
+  if rexp and rexp.content then
+    local codeOnline, dateOnline = (rexp.content or ""):match("^(%S+)%s+(%S+)")
+    if codeOnline and dateOnline then
+      expiredCode = codeOnline
+      expiredDate = dateOnline
+    end
+  end
+end
+
+-- 📤 Kirim ke Telegram saat awal (hanya jika belum pernah dikirim)
 local codeSentFlag = "/sdcard/.azka_code_sent.txt"
-local f = io.open(lastRequestFile, "r")
-local requestTime = f and tonumber(f:read("*a")) or 0
-if f then f:close() end
+local freq = io.open(lastRequestFile, "r")
+local requestTime = freq and tonumber(freq:read("*a")) or 0
+if freq then freq:close() end
 
 local shouldSend = (not io.open(codeSentFlag, "r")) or (os.time() - requestTime <= 2)
 if shouldSend then
-local msg =[[
+  local msg =[[
 🔑 <b>GENERATED CODES</b>
 
-💎 <b>PERMANENT CODE</b> : <code>]] .. permanentCode ..[[</code>
-⏳ <b>EXPIRED CODE</b>   : <code>]] .. expiredCode ..[[</code>
-📅 <b>Valid Until</b>   : <b>]] .. expiredDate ..[[</b>
-📂 <i>Script:</i> <code>]] .. (gg.getFile():match("[^/]+$") or "Unknown Script") ..[[</code>
+💎 <b>PERMANENT CODE</b> : <code>]] .. (permanentCode or "") ..[[</code>
+⏳ <b>EXPIRED CODE</b>   : <code>]] .. (expiredCode or "") ..[[</code>
+📅 <b>Valid Until</b>   : <b>]] .. (expiredDate or "") ..[[</b>
+📂 <i>Script:</i> <code>]] .. ((gg.getFile and gg.getFile():match and gg.getFile():match("[^/]+$")) or "Unknown Script") ..[[</code>
 🕒 <i>Generated at:</i> <b>]] .. os.date("%Y-%m-%d %H:%M:%S") ..[[</b>
 ]]
-local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
-local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
-gg.makeRequest(url)
-
-local sentFlag = io.open(codeSentFlag, "w")
-if sentFlag then sentFlag:write("sent") sentFlag:close() end
+  local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+  :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+  local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
+  safeRequest(url)
+  local sentFlag = io.open(codeSentFlag, "w")
+  if sentFlag then sentFlag:write("sent") sentFlag:close() end
 end
 
+-- =================
 -- 🔐 Auto login
+-- =================
 do
-local deviceID = getDeviceID()
-local permFile = io.open(passFile, "r")
-local expFile  = io.open(codeFile, "r")
+  local deviceID = getDeviceID()
+  local permFile = io.open(passFile, "r")
+  local expFile  = io.open(codeFile, "r")
 
-local permHash = permFile and permFile:read("*a") or ""
-local expHash  = expFile  and expFile:read("*a") or ""
-if permFile then permFile:close() end
-if expFile  then expFile:close() end
+  local permHash = permFile and permFile:read("*a") or ""
+  local expHash  = expFile  and expFile:read("*a") or ""
+  if permFile then permFile:close() end
+  if expFile  then expFile:close() end
 
-local name = getSavedName()
-local expectedPerm = hash(permanentCode .. deviceID)
-local expectedExp  = hash(expiredCode .. deviceID)
+  local name = getSavedName()
+  local expectedPerm = hash(permanentCode .. deviceID)
+  local expectedExp  = hash(expiredCode .. deviceID)
 
-if permHash == expectedPerm then
-loginSuccess = true
-
-elseif expHash == expectedExp then
-    local today = os.date("%Y-%m-%d")
-    if today > expiredDate then
-        gg.alert("❌ Code expired on " .. expiredDate)
-        sendTelegram("❌ EXPIRED AUTO LOGIN DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)
-        os.remove(codeFile)
-        os.remove(savedNameFile)
-        os.remove(passFile)
-        removeDeviceExpired(expiredRegistryFile, deviceID)
-        resetGeneratedCodes()
-        gg.toast("🔁 Auto login expired. Please enter a new code.")
-        os.exit()
-    end
-
-    if getUserCount(expiredRegistryFile) >= maxExpiredUsers then
-        gg.alert("🚫 Max expired users reached")
-        os.exit()
-    end
+  if permHash == expectedPerm then
     loginSuccess = true
 
-    -- 🔔 Tampilkan slot status **hanya sekali**
-    if not slotAlertShown then
-        local slotNow = getUserCount(expiredRegistryFile)
-        local left = maxExpiredUsers - slotNow
-        gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..
-                 "\n🟢 Remaining Slots: " .. left .. "\n✅ Your device has successfully logged in.")
-        slotAlertShown = true
-        end
-     end 
- end
+  elseif expHash == expectedExp then
+    local today = os.date("%Y-%m-%d")
+    if today > expiredDate then
+      gg.alert("❌ Code expired on " .. expiredDate)
+      sendTelegram("❌ EXPIRED AUTO LOGIN DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)
+      pcall(os.remove, codeFile)
+      pcall(os.remove, savedNameFile)
+      pcall(os.remove, passFile)
+      removeDeviceExpired(expiredRegistryFile, deviceID)
+      resetGeneratedCodes()
+      gg.toast("🔁 Auto login expired. Please enter a new code.")
+      os.exit()
+    end
 
--- 🧾 Tampilkan menu jika belum login
+    if getUserCount(expiredRegistryFile) >= maxExpiredUsers then  
+      gg.alert("🚫 Max expired users reached")  
+      os.exit()  
+    end  
+    loginSuccess = true
+
+    -- 🔔 Tampilkan slot status **hanya sekali**  
+    if not slotAlertShown then  
+      local slotNow = getUserCount(expiredRegistryFile)  
+      local left = maxExpiredUsers - slotNow  
+      gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..  
+               "\n🟢 Remaining Slots: " .. left .. "\n✅ Your device has successfully logged in.")  
+      slotAlertShown = true  
+    end  
+  end
+end
+
+-- =================
+-- 🧾 Tampilkan menu jika belum login (loop aman)
+-- =================
 if not loginSuccess then
-local menu = gg.choice({
-"🔐 Enter Code",
-"🔁 Request New Code",
-"❌ [ << Go Back >> ]"
-}, nil, "💎 ARH Secure Login")
+  while not loginSuccess do
+    local menu = gg.choice({
+      "🔐 Enter Code",
+      "🔁 Request New Code",
+      "❌ Exit"
+    }, nil, "💎 ARH Secure Login")
 
-if menu == 1 then
-askUnifiedCodeEntry()
-elseif menu == 2 then
-if canRequestNewCode() then
-resetGeneratedCodes()
-local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
-"👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
-"🎮 <b>Game:</b> " .. (gg.getTargetInfo().label or "Unknown Game") .. "\n" ..
-"🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
-"🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
-"📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
-"🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
+    if not menu then
+      -- user canceled
+      break
+    end
 
-local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+    if menu == 1 then
+      askUnifiedCodeEntry()
 
-local url = "https://api.telegram.org/bot" .. bot_token ..
-"/sendMessage?chat_id=" .. chat_id ..
-"&text=" .. encoded .. "&parse_mode=HTML"
+    elseif menu == 2 then
+      if canRequestNewCode() then
+        resetGeneratedCodes()
+        local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
+        "👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
+        "🎮 <b>Game:</b> " .. ((pcall(gg.getTargetInfo) and gg.getTargetInfo().label) or "Unknown Game") .. "\n" ..
+        "🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
+        "🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
+        "📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
+        "🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
 
-gg.makeRequest(url)
-gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+        local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+        :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
 
+        local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
+        safeRequest(url)
+        gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+      end
+
+    elseif menu == 3 then
+      gg.alert("Exiting...")
+	resetMode()
+      os.exit()
+    end
+    -- loop ulang sampai loginSuccess == true atau user exit
+  end
 end
-break
-elseif menu == 3 then
-resetMode()
-exit()
-else
-break
+
+-- Jika sampai sini sudah login, lanjutkan aktivitas script utama
+if loginSuccess then
+  -- Tempatkan logic setelah login di sini
+  -- Contoh: gg.alert("Welcome, you are logged in.")
+  gg.toast("✅ Logged in. Enjoy the script.")
 end
-end
+
+-- End of script
 
 local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
