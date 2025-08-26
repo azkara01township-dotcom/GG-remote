@@ -1421,8 +1421,11 @@ local msg =[[
 ]]  
 local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")  
 :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")  
-local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"  
-gg.makeRequest(url)  
+local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
+local res, err = safeRequest(url)
+if not res then
+  gg.toast("⚠️ Telegram send failed (" .. err .. ")")
+end
   
 local sentFlag = io.open(codeSentFlag, "w")  
 if sentFlag then sentFlag:write("sent") sentFlag:close() end  
