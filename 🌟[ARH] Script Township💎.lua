@@ -1554,7 +1554,6 @@ if not loginSuccess then
 
     elseif menu == 3 then
       gg.alert("Exiting...")
-	resetMode()
       os.exit()
     end
     -- loop ulang sampai loginSuccess == true atau user exit
