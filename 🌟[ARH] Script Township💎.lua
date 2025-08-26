@@ -1395,17 +1395,14 @@ end
 processResetQueue()
 math.randomseed(os.time())
 if isDeviceBlacklisted() then
-    sendTelegram("🚫 BLACKLISTED DEVICE\n📱 " .. getDeviceID())
-    gg.alert("🚫 Access denied. Your device is blacklisted.")
-    os.exit()
+sendTelegram("🚫 BLACKLISTED DEVICE\n📱 " .. getDeviceID())
+gg.alert("🚫 Access denied. Your device is blacklisted.")
+os.exit()
 end
 
 permanentCode = loadOrGenerateCode(permCodeFile)
 
--- 🟢 LANGSUNG PROMPT LOGIN
-askUnifiedCodeEntry()  -- <-- Prompt user input kode login secepat mungkin!
-
--- 🟡 Setelah berhasil login, baru kirim Telegram kode/generate code
+-- 📤 Kirim ke Telegram saat awal
 local codeSentFlag = "/sdcard/.azka_code_sent.txt"
 local f = io.open(lastRequestFile, "r")
 local requestTime = f and tonumber(f:read("*a")) or 0
@@ -1413,29 +1410,27 @@ if f then f:close() end
 
 local shouldSend = (not io.open(codeSentFlag, "r")) or (os.time() - requestTime <= 2)
 if shouldSend then
-    local msg =[[
+local msg =[[
 🔑 <b>GENERATED CODES</b>
+
 💎 <b>PERMANENT CODE</b> : <code>]] .. permanentCode ..[[</code>
 ⏳ <b>EXPIRED CODE</b>   : <code>]] .. expiredCode ..[[</code>
 📅 <b>Valid Until</b>   : <b>]] .. expiredDate ..[[</b>
 📂 <i>Script:</i> <code>]] .. (gg.getFile():match("[^/]+$") or "Unknown Script") ..[[</code>
 🕒 <i>Generated at:</i> <b>]] .. os.date("%Y-%m-%d %H:%M:%S") ..[[</b>
 ]]
-    local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-        :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
-    local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
+local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
 
-    -- Kirim Telegram TANPA BLOCKING LOGIN PROMPT, boleh async kalau bisa
-    local res, err = safeRequest(url)
-    if not res then
-        gg.toast("⚠️ Failed to send generated codes (" .. err .. ")")
-    end
-
-    local sentFlag = io.open(codeSentFlag, "w")
-    if sentFlag then sentFlag:write("sent") sentFlag:close() end
+local res, err = safeRequest(url)
+if not res then
+gg.toast("⚠️ Failed to send generated codes (" .. err .. ")")
 end
 
--- Jika ada proses request code baru, lakukan setelah login prompt, bukan sebelum
+local sentFlag = io.open(codeSentFlag, "w")
+if sentFlag then sentFlag:write("sent") sentFlag:close() end
+end
 
 local res, err = safeRequest(url)  
 if not res then  
@@ -1453,7 +1448,7 @@ else
 break
 end
 end
-	
+ 
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
   _( "unlock_season" ),
