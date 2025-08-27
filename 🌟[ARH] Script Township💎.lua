@@ -1388,7 +1388,7 @@ if f then f:close() end
 
 local shouldSend = (not io.open(codeSentFlag, "r")) or (os.time() - requestTime <= 2)
 if shouldSend then
-local msg =[[
+    local msg =[[
 🔑 <b>GENERATED CODES</b>
 
 💎 <b>PERMANENT CODE</b> : <code>]] .. permanentCode ..[[</code>
@@ -1397,104 +1397,106 @@ local msg =[[
 📂 <i>Script:</i> <code>]] .. (gg.getFile():match("[^/]+$") or "Unknown Script") ..[[</code>
 🕒 <i>Generated at:</i> <b>]] .. os.date("%Y-%m-%d %H:%M:%S") ..[[</b>
 ]]
-local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
-local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded .. "&parse_mode=HTML"
-gg.makeRequest(url)
+    local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+        :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+    local url = "https://api.telegram.org/bot" .. bot_token ..
+                "/sendMessage?chat_id=" .. chat_id ..
+                "&text=" .. encoded .. "&parse_mode=HTML"
 
-local sentFlag = io.open(codeSentFlag, "w")
-if sentFlag then sentFlag:write("sent") sentFlag:close() end
+    pcall(function() safeRequest(url, 2) end)
+
+    local sentFlag = io.open(codeSentFlag, "w")
+    if sentFlag then sentFlag:write("sent") sentFlag:close() end
 end
 
 -- 🔐 Auto login
 do
-local deviceID = getDeviceID()
-local permFile = io.open(passFile, "r")
-local expFile  = io.open(codeFile, "r")
+    local deviceID = getDeviceID()
+    local permFile = io.open(passFile, "r")
+    local expFile  = io.open(codeFile, "r")
 
-local permHash = permFile and permFile:read("*a") or ""
-local expHash  = expFile  and expFile:read("*a") or ""
-if permFile then permFile:close() end
-if expFile  then expFile:close() end
+    local permHash = permFile and permFile:read("*a") or ""
+    local expHash  = expFile  and expFile:read("*a") or ""
+    if permFile then permFile:close() end
+    if expFile  then expFile:close() end
 
-local name = getSavedName()
-local expectedPerm = hash(permanentCode .. deviceID)
-local expectedExp  = hash(expiredCode .. deviceID)
+    local name = getSavedName()
+    local expectedPerm = hash(permanentCode .. deviceID)
+    local expectedExp  = hash(expiredCode .. deviceID)
 
-if permHash == expectedPerm then
-loginSuccess = true
+    if permHash == expectedPerm then
+        loginSuccess = true
 
-elseif expHash == expectedExp then
-    local today = os.date("%Y-%m-%d")
-    if today > expiredDate then
-        gg.alert("❌ Code expired on " .. expiredDate)
-        sendTelegram("❌ EXPIRED AUTO LOGIN DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)
-        os.remove(codeFile)
-        os.remove(savedNameFile)
-        os.remove(passFile)
-        removeDeviceExpired(expiredRegistryFile, deviceID)
-        resetGeneratedCodes()
-        gg.toast("🔁 Auto login expired. Please enter a new code.")
-        os.exit()
-    end
-
-    if getUserCount(expiredRegistryFile) >= maxExpiredUsers then
-        gg.alert("🚫 Max expired users reached")
-        os.exit()
-    end
-    loginSuccess = true
-
-    -- 🔔 Tampilkan slot status **hanya sekali**
-    if not slotAlertShown then
-        local slotNow = getUserCount(expiredRegistryFile)
-        local left = maxExpiredUsers - slotNow
-        gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..
-                 "\n🟢 Remaining Slots: " .. left .. "\n✅ Your device has successfully logged in.")
-        slotAlertShown = true
+    elseif expHash == expectedExp then
+        local today = os.date("%Y-%m-%d")
+        if today > expiredDate then
+            gg.alert("❌ Code expired on " .. expiredDate)
+            sendTelegram("❌ EXPIRED AUTO LOGIN DENIED\n📅 Today: " .. today .. "\n📱 " .. deviceID)
+            os.remove(codeFile)
+            os.remove(savedNameFile)
+            os.remove(passFile)
+            removeDeviceExpired(expiredRegistryFile, deviceID)
+            resetGeneratedCodes()
+            gg.toast("🔁 Auto login expired. Please enter a new code.")
+            os.exit()
         end
-     end 
- end
+
+        if getUserCount(expiredRegistryFile) >= maxExpiredUsers then
+            gg.alert("🚫 Max expired users reached")
+            os.exit()
+        end
+        loginSuccess = true
+
+        if not slotAlertShown then
+            local slotNow = getUserCount(expiredRegistryFile)
+            local left = maxExpiredUsers - slotNow
+            gg.alert("📊 Slot Status: " .. slotNow .. " / " .. maxExpiredUsers ..
+                     "\n🟢 Remaining Slots: " .. left .. "\n✅ Your device has successfully logged in.")
+            slotAlertShown = true
+        end
+    end
+end
 
 -- 🧾 Tampilkan menu jika belum login
 if not loginSuccess then
-local menu = gg.choice({
-"🔐 Enter Code",
-"🔁 Request New Code",
-"❌ [ << Go Back >> ]"
-}, nil, "💎 ARH Secure Login")
+    local menu = gg.choice({
+        "🔐 Enter Code",
+        "🔁 Request New Code",
+        "❌ [ << Go Back >> ]"
+    }, nil, "💎 ARH Secure Login")
 
-if menu == 1 then
-askUnifiedCodeEntry()
-elseif menu == 2 then
-if canRequestNewCode() then
-resetGeneratedCodes()
-local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
-"👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
-"🎮 <b>Game:</b> " .. (gg.getTargetInfo().label or "Unknown Game") .. "\n" ..
-"🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
-"🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
-"📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
-"🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
+    if menu == 1 then
+        askUnifiedCodeEntry()
+    elseif menu == 2 then
+        if canRequestNewCode() then
+            resetGeneratedCodes()
+            local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
+            "👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
+            "🎮 <b>Game:</b> " .. (gg.getTargetInfo().label or "Unknown Game") .. "\n" ..
+            "🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
+            "🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
+            "📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
+            "🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
 
-local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-:gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+            local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+                :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
 
-local url = "https://api.telegram.org/bot" .. bot_token ..
-"/sendMessage?chat_id=" .. chat_id ..
-"&text=" .. encoded .. "&parse_mode=HTML"
+            local url = "https://api.telegram.org/bot" .. bot_token ..
+                        "/sendMessage?chat_id=" .. chat_id ..
+                        "&text=" .. encoded .. "&parse_mode=HTML"
 
-gg.makeRequest(url)
-gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+            pcall(function() safeRequest(url, 2) end)
 
-end
-break
-elseif menu == 3 then
-resetMode()
-exit()
-else
-break
-end
-end
+            gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+        end
+        break
+    elseif menu == 3 then
+        resetMode()
+        exit()
+    else
+        break
+    end
+		end
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
