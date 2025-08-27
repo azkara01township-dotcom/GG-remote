@@ -1442,38 +1442,40 @@ end
 end
 
 if not loginSuccess then
-local menu = gg.choice({
-"🔐 Enter Code",
-"🔁 Request New Code",
-"❌ [ << Go Back >> ]"
-}, nil, "💎 ARH Secure Login")
-if menu == 1 then
-    askUnifiedCodeEntry()
-elseif menu == 2 then
-    if canRequestNewCode() then
+    local menu = gg.choice({
+        "🔐 Enter Code",
+        "🔁 Request New Code",
+        "❌ [ << Go Back >> ]"
+    }, nil, "💎 ARH Secure Login")
+    if menu == 1 then
+        askUnifiedCodeEntry()
+    elseif menu == 2 then
+        if canRequestNewCode() then
+            resetGeneratedCodes()
+            local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
+            "👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
+            "🎮 <b>Game:</b> " .. (gg.getTargetInfo().label or "Unknown Game") .. "\n" ..
+            "🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
+            "🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
+            "📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
+            "🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
+            local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
+            :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
+            local url = "https://api.telegram.org/bot" .. bot_token ..
+            "/sendMessage?chat_id=" .. chat_id ..
+            "&text=" .. encoded .. "&parse_mode=HTML"
+            gg.makeRequest(url)
+            gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+            os.exit()
+        else
+            os.exit()
+        end
+    elseif menu == 3 then
         resetGeneratedCodes()
-        local msg = "📥 <b>NEW CODE REQUESTED</b>\n\n" ..
-        "👤 <b>Name:</b> " .. (getSavedName() or "Unknown") .. "\n" ..
-        "🎮 <b>Game:</b> " .. (gg.getTargetInfo().label or "Unknown Game") .. "\n" ..
-        "🆔 <b>User ID:</b> <code>" .. hash(getDeviceID()) .. "</code>\n" ..
-        "🌍 <b>Location:</b> " .. getIPInfo() .. "\n" ..
-        "📱 <b>Device:</b> " .. getDeviceID() .. "\n" ..
-        "🕒 <b>Time:</b> " .. os.date("%Y-%m-%d %H:%M:%S")
-        local encoded = msg:gsub("&", "%%26"):gsub("<", "%%3C"):gsub(">", "%%3E")
-        :gsub("\n", "%%0A"):gsub(" ", "%%20"):gsub(":", "%%3A"):gsub('"', "%%22")
-        local url = "https://api.telegram.org/bot" .. bot_token ..
-        "/sendMessage?chat_id=" .. chat_id ..
-        "&text=" .. encoded .. "&parse_mode=HTML"
-        gg.makeRequest(url)
-        gg.alert("🔁 Code request successful.\n\n📩 Please contact the admin to get your new code.\n🔄 Then reopen the script.")
+        os.exit()
+    else
+        os.exit()
     end
-    break
-elseif menu == 3 then
-    resetGeneratedCodes()
-    os.exit()
-else
-    break
-end
 		end
 		
   local menu = gg.choice({
