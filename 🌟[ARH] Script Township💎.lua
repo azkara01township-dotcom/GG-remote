@@ -18,22 +18,28 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 
 -- 🛡️ ARH SECURE SYSTEM v1.1 (English Version)
 
+-- 📞 Admin Contact
 local adminWA = "https://wa.me/62895610507233"
+
+-- 🔐 Telegram Logging
 local bot_token = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
 local chat_id = "1561442361"
 
+-- 📂 File & Folder Setup
 local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
-local expectedName = "🌟[ARH]Script Township💎.lua"
-local expiryDate = "20991231"
+local expectedName = "💎[ARH] Script Township💎.lua"
+local expiryDate = "20991231" -- YYYYMMDD
 
+-- 🌐 Language Setup
 local lang = "en"
 local langFile = "/sdcard/.langmode.txt"
 local f = io.open(langFile, "r")
 if f then lang = f:read("*l") or "en"; f:close() end
 
+-- 🌐 Translations
 local teks = {
   ["folder_not_found"] = {
     id = "❌ Folder '%s' tidak ditemukan atau tidak dapat diakses.\n\nSilakan buat folder ini secara manual.",
@@ -91,31 +97,27 @@ do
   end
 end
 
--- 🔄 Send Telegram message (fast, error handled, non-blocking)
+-- 🔄 Send Telegram message (background & timeout)
 local function sendTelegramLog(msg)
-  pcall(function()
-    local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-    msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-    local ok, res = pcall(function() return gg.makeRequest(url) end)
-    -- ignore errors, don't block
-  end)
+  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
+  local t = os.clock()
+  local ok = pcall(function() gg.makeRequest(url) end)
+  if not ok or os.clock() - t > 1 then return false end
+  return true
 end
 
--- 🌐 Server Date from Google (with timeout & fallback)
+-- 🌐 Server Date from Google (timeout 1s)
 local function getServerDate()
-  local start = os.clock()
-  local ok, r = pcall(function()
-    local req = gg.makeRequest("http://www.google.com")
-    -- force very short timeout
-    if not req or not req.headers or not req.headers.Date or (os.clock() - start) > 2 then
-      return nil
-    end
-    return req
-  end)
-  if not ok or not r or not r.headers or not r.headers.Date then
+  local t_start = os.clock()
+  local r = gg.makeRequest("http://www.google.com")
+  if not r or not r.headers or (os.clock() - t_start) > 1 then
     return os.date("%d%m%Y"), false
   end
   local dateStr = r.headers.Date
+  if not dateStr or type(dateStr) ~= "string" then
+    return os.date("%d%m%Y"), false
+  end
   local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
   local map = {
     Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06",
@@ -128,10 +130,13 @@ local function getServerDate()
   end
 end
 
--- 🔒 Time Tampering Detection (no exit unless mismatch)
+-- 🔒 Time Tampering Detection (timeout & fallback)
 local function checkTime()
+  local t_start = os.clock()
   local server, online = getServerDate()
   local device = os.date("%d%m%Y")
+  if (os.clock() - t_start) > 1 then online = false end
+
   if online and server ~= device then
     pcall(function()
       sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
@@ -145,9 +150,11 @@ local function checkTime()
   end
 end
 
--- ⌛ Expiry Check (no blocking)
+-- ⌛ Expiry Check (Telegram log background)
 if os.date("%Y%m%d") > expiryDate then
-  pcall(function() sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d")) end)
+  pcall(function()
+    sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+  end)
   local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
   if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
     gg.copyText(adminWA)
@@ -156,7 +163,7 @@ if os.date("%Y%m%d") > expiryDate then
   os.exit()
 end
 
--- 🔐 File Name Protection (no blocking)
+-- 🔐 File Name Protection (Telegram log background)
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
   pcall(function()
@@ -170,11 +177,11 @@ if current ~= expectedName then
   os.exit()
 end
 
--- 🌍 Get IP & Location (fast timeout & error handling)
+-- 🌍 Get IP & Location (timeout 1s)
 local function getIPData()
   local t = os.clock()
-  local ok, res = pcall(function() return gg.makeRequest("http://ip-api.com/json") end)
-  if not ok or not res or not res.content or (os.clock() - t) > 1.5 then
+  local res = gg.makeRequest("http://ip-api.com/json")
+  if not res or not res.content or os.clock() - t > 1 then
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -182,14 +189,16 @@ local function getIPData()
       isp = "Unknown ISP"
     }
   end
+
   local ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
   local country = res.content:match('"country":"(.-)"') or "Unknown Country"
   local city    = res.content:match('"city":"(.-)"') or "Unknown City"
   local isp     = res.content:match('"isp":"(.-)"') or "Unknown ISP"
+
   return { ip = ip, country = country, city = city, isp = isp }
 end
 
--- ♻️ Reset Log Setiap Tanggal 1 (non-blocking)
+-- ♻️ Reset Log Setiap Tanggal 1
 local function resetUserLogMonthly()
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
@@ -206,7 +215,7 @@ local function resetUserLogMonthly()
   end
 end
 
--- 📊 Tracking Pengguna (optimized, no spam Telegram, with error handling)
+-- 📊 Tracking Pengguna (non-blocking, Telegram log background)
 local function trackAndLog()
   local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local ipData = getIPData()
@@ -269,16 +278,13 @@ local function trackAndLog()
 end
 
 -- ✅ Inisialisasi Awal
-pcall(checkTime)               -- proteksi waktu
-pcall(resetUserLogMonthly)     -- reset log kalau tanggal 1
+checkTime()               -- proteksi waktu
+resetUserLogMonthly()     -- reset log kalau tanggal 1
 gg.toast(_("connecting"))
-gg.sleep(100)                  -- sleep sangat singkat
+gg.sleep(300)
 
 -- 📌 Jalankan logging di background (tidak block menu)
-pcall(function() trackAndLog() end)
-
--- Script ready lanjut ke menu/fitur utama
--- ... lanjutkan menu/fitur sesuai kebutuhan Anda ...
+pcall(trackAndLog)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
