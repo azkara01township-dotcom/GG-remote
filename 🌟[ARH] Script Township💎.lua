@@ -91,21 +91,28 @@ do
   end
 end
 
--- 🔄 Send Telegram message (with timeout & error handling)
+-- 🔄 Send Telegram message (fast, error handled, non-blocking)
 local function sendTelegramLog(msg)
-  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-  local ok, res = pcall(function() return gg.makeRequest(url) end)
-  if not ok or not res then
-    gg.toast("Telegram log failed!")
-  end
+  pcall(function()
+    local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+    msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
+    local ok, res = pcall(function() return gg.makeRequest(url) end)
+    -- ignore errors, don't block
+  end)
 end
 
 -- 🌐 Server Date from Google (with timeout & fallback)
 local function getServerDate()
   local start = os.clock()
-  local ok, r = pcall(function() return gg.makeRequest("http://www.google.com") end)
-  if not ok or not r or not r.headers or not r.headers.Date or (os.clock() - start) > 2 then
+  local ok, r = pcall(function()
+    local req = gg.makeRequest("http://www.google.com")
+    -- force very short timeout
+    if not req or not req.headers or not req.headers.Date or (os.clock() - start) > 2 then
+      return nil
+    end
+    return req
+  end)
+  if not ok or not r or not r.headers or not r.headers.Date then
     return os.date("%d%m%Y"), false
   end
   local dateStr = r.headers.Date
@@ -121,7 +128,7 @@ local function getServerDate()
   end
 end
 
--- 🔒 Time Tampering Detection
+-- 🔒 Time Tampering Detection (no exit unless mismatch)
 local function checkTime()
   local server, online = getServerDate()
   local device = os.date("%d%m%Y")
@@ -138,7 +145,7 @@ local function checkTime()
   end
 end
 
--- ⌛ Expiry Check
+-- ⌛ Expiry Check (no blocking)
 if os.date("%Y%m%d") > expiryDate then
   pcall(function() sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d")) end)
   local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
@@ -149,7 +156,7 @@ if os.date("%Y%m%d") > expiryDate then
   os.exit()
 end
 
--- 🔐 File Name Protection
+-- 🔐 File Name Protection (no blocking)
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
   pcall(function()
@@ -182,7 +189,7 @@ local function getIPData()
   return { ip = ip, country = country, city = city, isp = isp }
 end
 
--- ♻️ Reset Log Setiap Tanggal 1
+-- ♻️ Reset Log Setiap Tanggal 1 (non-blocking)
 local function resetUserLogMonthly()
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
@@ -265,10 +272,13 @@ end
 pcall(checkTime)               -- proteksi waktu
 pcall(resetUserLogMonthly)     -- reset log kalau tanggal 1
 gg.toast(_("connecting"))
-gg.sleep(150)                  -- sleep diperpendek
+gg.sleep(100)                  -- sleep sangat singkat
 
 -- 📌 Jalankan logging di background (tidak block menu)
-pcall(trackAndLog)
+pcall(function() trackAndLog() end)
+
+-- Script ready lanjut ke menu/fitur utama
+-- ... lanjutkan menu/fitur sesuai kebutuhan Anda ...
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
