@@ -30,8 +30,8 @@ local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
-local expectedName = "💎[ARH] Script Township💎.lua"
-local expiryDate = "20991231" -- YYYYMMDD
+local expectedName = "💎[ARH]Script Township💎.lua"
+local expiryDate = "YYYYMMDD" -- YYYYMMDD
 
 -- 🌐 Language Setup
 local lang = "en"
