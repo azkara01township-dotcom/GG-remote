@@ -1064,10 +1064,21 @@ local permanentCode
 local loginSuccess = false
 local startTime = os.time()
 
+-- ⏱️ Safe request dengan timeout
+local function safeRequest(url, timeout)
+    local t = os.clock()
+    local res = gg.makeRequest(url)
+    if not res or not res.content or (os.clock() - t) > (timeout or 3) then
+        return nil
+    end
+    return res
+end
+
 -- 📎 Utilities
 local function getDeviceID()
     local info = gg.getTargetInfo() or {}
-    return (info.label or "") .. "-" .. (info.versionCode or "") .. "-" .. (os.getenv("HOSTNAME") or "") .. "-" .. (gg.getDeviceId and gg.getDeviceId() or "")
+    return (info.label or "") .. "-" .. (info.versionCode or "") .. "-" ..
+           (os.getenv("HOSTNAME") or "") .. "-" .. (gg.getDeviceId and gg.getDeviceId() or "")
 end
 
 local function hash(str)
@@ -1076,17 +1087,27 @@ local function hash(str)
     return tostring(h)
 end
 
+-- 🌍 Optimasi getIPInfo (cache + timeout)
+local cachedLocation
 local function getIPInfo()
-    local res = gg.makeRequest("http://ip-api.com/json")
-    if not res or not res.content then return "Unknown Location" end
+    if cachedLocation then return cachedLocation end
+    local res = safeRequest("http://ip-api.com/json", 2)
+    if not res or not res.content then
+        cachedLocation = "Unknown Location"
+        return cachedLocation
+    end
     local country, city, isp = res.content:match('"country":"(.-)".-"city":"(.-)".-"isp":"(.-)"')
-    return (country or "?") .. ", " .. (city or "?") .. " (" .. (isp or "?") .. ")"
+    cachedLocation = (country or "?") .. ", " .. (city or "?") .. " (" .. (isp or "?") .. ")"
+    return cachedLocation
 end
 
+-- 🚀 Optimasi sendTelegram
 local function sendTelegram(msg)
     local encoded = msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-    local url = "https://api.telegram.org/bot" .. bot_token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. encoded
-    gg.makeRequest(url)
+    local url = "https://api.telegram.org/bot" .. bot_token ..
+                "/sendMessage?chat_id=" .. chat_id ..
+                "&text=" .. encoded
+    safeRequest(url, 2)
 end
 
 local function generateRandomCode()
@@ -1127,12 +1148,12 @@ local function promptUserName()
     return name
 end
 
--- 🔧 Perbaikan: Hitung jumlah device unik
+-- 🔧 Hitung device unik
 local function getUserCount(file)
     local devices, f = {}, io.open(file, "r")
     if f then
         for line in f:lines() do
-            line = line:match("%S+") -- hapus spasi/baris kosong
+            line = line:match("%S+")
             if line and line ~= "" then devices[line] = true end
         end
         f:close()
@@ -1175,11 +1196,10 @@ local function saveDeviceList(file, list)
     end
 end
 
--- 🔧 Perbaikan: addDeviceExpired tanpa duplikat
 local function addDeviceExpired(file, deviceID)
     local list = getDeviceList(file)
     for _, id in ipairs(list) do
-        if id == deviceID then return end -- sudah ada, jangan tambah lagi
+        if id == deviceID then return end
     end
     table.insert(list, deviceID)
     saveDeviceList(file, list)
@@ -1194,7 +1214,7 @@ local function removeDeviceExpired(file, deviceID)
 end
 
 local function clearExpiredRegistry(file)
-    saveDeviceList(file, {}) -- kosongkan semua
+    saveDeviceList(file, {})
 end
 
 -- 🧹 Reset
@@ -1207,7 +1227,7 @@ local function processResetQueue()
         os.remove(passFile)
         os.remove(codeFile)
         os.remove(savedNameFile)
-        removeDeviceExpired(expiredRegistryFile, dev) -- hapus dari slot expired
+        removeDeviceExpired(expiredRegistryFile, dev)
         local w = io.open(resetQueueFile, "w")
         if w then w:write(q:gsub(dev .. "\n", "")) w:close() end
         gg.toast("🔁 Reset mode activated. Please log in again.")
@@ -1217,7 +1237,7 @@ end
 local function resetGeneratedCodes()
     os.remove(permCodeFile)
     os.remove("/sdcard/.azka_code_sent.txt")
-    clearExpiredRegistry(expiredRegistryFile) -- reset semua expired device
+    clearExpiredRegistry(expiredRegistryFile)
 end
 
 -- ⏳ Cooldown
@@ -1237,14 +1257,13 @@ local function canRequestNewCode()
     return true
 end
 
--- 🔔 Show login summary (perbaikan hitung device unik)
+-- 🔔 Show login summary
 local function showLoginSummary(name, kind)
     local deviceID = getDeviceID()
     local userType = kind == "permanent" and "Premium" or "Expired"
     local gameName = gg.getTargetInfo().label or "Unknown Game"
     local userID = hash(deviceID)
-    
-    -- hitung semua device unik
+
     local devices = {}
     for _, file in ipairs({expiredRegistryFile, permanentRegistryFile}) do
         local f = io.open(file, "r")
@@ -1258,7 +1277,7 @@ local function showLoginSummary(name, kind)
     end
     local count = 0
     for _ in pairs(devices) do count = count + 1 end
-    
+
     local limit = kind == "permanent" and "∞" or tostring(maxExpiredUsers)
     local location = getIPInfo()
     local scriptName = gg.getFile():match("[^/]+$") or "Unknown Script"
@@ -1275,7 +1294,7 @@ local function showLoginSummary(name, kind)
     "🕒 Time        : " .. os.date("%Y-%m-%d %H:%M:%S")
 
     gg.alert(summary)
-    sendTelegram(summary)
+    pcall(function() sendTelegram(summary) end)
 end
 
 -- 🔐 Code Entry
