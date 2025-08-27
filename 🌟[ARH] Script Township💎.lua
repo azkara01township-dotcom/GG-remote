@@ -16,7 +16,7 @@ local banner =[[
 
 local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya Hermawan\n┇📅 %A, %d %B %Y | ⏰ %I:%M %p")
 
--- 🛡️ ARH SECURE SYSTEM v1.1 (English Version)
+-- 🛡️ ARH SECURE SYSTEM v1.1 (Optimized Anti-Hang Version)
 
 -- 📞 Admin Contact
 local adminWA = "https://wa.me/62895610507233"
@@ -30,8 +30,8 @@ local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
-local expectedName = "💎[ARH]Script Township💎.lua"
-local expiryDate = "YYYYMMDD" -- YYYYMMDD
+local expectedName = "💎[ARH] Script Township💎.lua"
+local expiryDate = "20991231" -- YYYYMMDD
 
 -- 🌐 Language Setup
 local lang = "en"
@@ -102,16 +102,19 @@ local function sendTelegramLog(msg)
   local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
   msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
   local t = os.clock()
-  local ok = pcall(function() gg.makeRequest(url) end)
-  if not ok or os.clock() - t > 1 then return false end
+  local ok = pcall(function()
+    local req = gg.makeRequest(url)
+    -- timeout dipaksa lebih singkat
+  end)
+  if not ok or os.clock() - t > 0.5 then return false end
   return true
 end
 
--- 🌐 Server Date from Google (timeout 1s)
+-- 🌐 Server Date from Google (timeout 0.5s)
 local function getServerDate()
   local t_start = os.clock()
   local r = gg.makeRequest("http://www.google.com")
-  if not r or not r.headers or (os.clock() - t_start) > 1 then
+  if not r or not r.headers or (os.clock() - t_start) > 0.5 then
     return os.date("%d%m%Y"), false
   end
   local dateStr = r.headers.Date
@@ -130,12 +133,12 @@ local function getServerDate()
   end
 end
 
--- 🔒 Time Tampering Detection (timeout & fallback)
+-- 🔒 Time Tampering Detection (background & fallback, dijalankan setelah menu utama)
 local function checkTime()
   local t_start = os.clock()
   local server, online = getServerDate()
   local device = os.date("%d%m%Y")
-  if (os.clock() - t_start) > 1 then online = false end
+  if (os.clock() - t_start) > 0.5 then online = false end
 
   if online and server ~= device then
     pcall(function()
@@ -151,37 +154,41 @@ local function checkTime()
 end
 
 -- ⌛ Expiry Check (Telegram log background)
-if os.date("%Y%m%d") > expiryDate then
-  pcall(function()
-    sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
-  end)
-  local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
-  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-    gg.copyText(adminWA)
-    gg.toast("Link admin disalin.")
+local function expiryCheck()
+  if os.date("%Y%m%d") > expiryDate then
+    pcall(function()
+      sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+    end)
+    local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
+    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+      gg.copyText(adminWA)
+      gg.toast("Link admin disalin.")
+    end
+    os.exit()
   end
-  os.exit()
 end
 
 -- 🔐 File Name Protection (Telegram log background)
-local current = gg.getFile():match("[^/]+$") or "Unknown"
-if current ~= expectedName then
-  pcall(function()
-    sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
-  end)
-  local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
-  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-    gg.copyText(adminWA)
-    gg.toast("Link admin disalin.")
+local function fileNameCheck()
+  local current = gg.getFile():match("[^/]+$") or "Unknown"
+  if current ~= expectedName then
+    pcall(function()
+      sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
+    end)
+    local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
+    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+      gg.copyText(adminWA)
+      gg.toast("Link admin disalin.")
+    end
+    os.exit()
   end
-  os.exit()
 end
 
--- 🌍 Get IP & Location (timeout 1s)
+-- 🌍 Get IP & Location (timeout 0.5s)
 local function getIPData()
   local t = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 1 then
+  if not res or not res.content or os.clock() - t > 0.5 then
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -277,14 +284,19 @@ local function trackAndLog()
   end
 end
 
--- ✅ Inisialisasi Awal
-checkTime()               -- proteksi waktu
+-- ====================== INISIALISASI AWAL ======================
 resetUserLogMonthly()     -- reset log kalau tanggal 1
 gg.toast(_("connecting"))
 gg.sleep(300)
 
--- 📌 Jalankan logging di background (tidak block menu)
-pcall(trackAndLog)
+-- ========== Proteksi & Logging DIJALANKAN DI BACKGROUND ==========
+-- Tidak block menu utama!
+pcall(function()
+  expiryCheck()
+  fileNameCheck()
+  checkTime()
+  trackAndLog()
+end)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
