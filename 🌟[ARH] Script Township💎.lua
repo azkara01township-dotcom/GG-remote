@@ -18,28 +18,20 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 
 -- 🛡️ ARH SECURE SYSTEM v1.1 (English Version)
 
--- 📞 Admin Contact
 local adminWA = "https://wa.me/62895610507233"
-
--- 🔐 Telegram Logging
 local bot_token = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
 local chat_id = "1561442361"
-
--- 📂 File & Folder Setup
 local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
 local expectedName = "💎[ARH] Script Township💎.lua"
-local expiryDate = "20991231" -- YYYYMMDD
-
--- 🌐 Language Setup
+local expiryDate = "20991231"
 local lang = "en"
 local langFile = "/sdcard/.langmode.txt"
 local f = io.open(langFile, "r")
 if f then lang = f:read("*l") or "en"; f:close() end
 
--- 🌐 Translations
 local teks = {
   ["folder_not_found"] = {
     id = "❌ Folder '%s' tidak ditemukan atau tidak dapat diakses.\n\nSilakan buat folder ini secara manual.",
@@ -85,52 +77,11 @@ do
     f:close()
     os.remove(dir .. "/.test")
   else
-    local btn = gg.alert(_(
-      "folder_not_found", dir
-    ), _("exit"), _("copy_folder"))
+    local btn = gg.alert(_("folder_not_found", dir), _("exit"), _("copy_folder"))
     if btn == 2 then
       gg.copyText("ARH_Script")
       gg.toast("📋 Folder name copied to clipboard!")
       gg.alert(_("folder_copied"))
-    end
-    os.exit()
-  end
-end
-
--- 🔄 Send Telegram message
-local function sendTelegramLog(msg)
-  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-  gg.makeRequest(url)
-end
-
--- 🌐 Server Date from Google (timeout lebih kecil)
-local function getServerDate()
-  local t = os.clock()
-  local r = gg.makeRequest("http://www.google.com")
-  if not r or not r.headers or os.clock() - t > 0.5 then
-    return os.date("%d%m%Y"), false
-  end
-  local dateStr = r.headers.Date
-  local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
-  local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
-  if d and m and y and map[m] then
-    return d..map[m]..y, true
-  else
-    return os.date("%d%m%Y"), false
-  end
-end
-
--- 🔒 Time Tampering Detection (blocking)
-local function checkTime()
-  local server, online = getServerDate()
-  local device = os.date("%d%m%Y")
-  if online and server ~= device then
-    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
-    local msg = "⚠️ Waktu device tidak sesuai!\n\n🌐 Server: "..server.."\n📱 Device: "..device.."\n\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
     end
     os.exit()
   end
@@ -159,11 +110,35 @@ if current ~= expectedName then
   os.exit()
 end
 
--- 🌍 Get IP & Location (timeout lebih kecil)
-local function getIPData()
+-- 🔄 Send Telegram message
+function sendTelegramLog(msg)
+  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
+  gg.makeRequest(url)
+end
+
+-- 🌐 Server Date from Google (timeout sangat kecil, fallback lokal)
+function getServerDate()
+  local t = os.clock()
+  local r = gg.makeRequest("http://www.google.com")
+  if not r or not r.headers or os.clock() - t > 0.2 then -- timeout super kecil!
+    return os.date("%d%m%Y"), false
+  end
+  local dateStr = r.headers.Date
+  local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
+  local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
+  if d and m and y and map[m] then
+    return d..map[m]..y, true
+  else
+    return os.date("%d%m%Y"), false
+  end
+end
+
+-- 🌍 Get IP & Location (timeout super kecil)
+function getIPData()
   local t = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 0.5 then
+  if not res or not res.content or os.clock() - t > 0.2 then
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -180,8 +155,8 @@ local function getIPData()
   return { ip = ip, country = country, city = city, isp = isp }
 end
 
--- ♻️ Reset Log Setiap Tanggal 1 (blocking)
-local function resetUserLogMonthly()
+-- ♻️ Reset Log Setiap Tanggal 1 (blocking, cepat)
+function resetUserLogMonthly()
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
   local lastReset = ""
@@ -195,8 +170,8 @@ local function resetUserLogMonthly()
   end
 end
 
--- 📊 Tracking Pengguna (background)
-local function trackAndLog()
+-- 📊 Tracking Pengguna (background, cepat)
+function trackAndLog()
   local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local ipData = getIPData()
   local waktu = os.date("%Y-%m-%d %H:%M:%S")
@@ -204,23 +179,15 @@ local function trackAndLog()
 
   local key = dev .. " | " .. ipData.ip
   local exists = false
-  local userList, userDetailMap = {}, {}
+  local userList = {}
   local totalUsers = 0
   local userJustAdded = false
 
   local f = io.open(userLogFile, "r")
   if f then
     for line in f:lines() do
-      local parts = {}
-      for part in string.gmatch(line, "([^|]+)") do
-        table.insert(parts, part:match("^%s*(.-)%s*$"))
-      end
-      local k = parts[1] .. " | " .. parts[2]
-      userList[k] = true
-      userDetailMap[k] = {
-        dev = parts[1], ip = parts[2], country = parts[3] or "?",
-        city = parts[4] or "?", isp = parts[5] or "?", waktu = parts[6] or "?"
-      }
+      local k = line:match("^(.-|.-)|")
+      if k then userList[k] = true end
       if k == key then exists = true end
     end
     f:close()
@@ -233,11 +200,6 @@ local function trackAndLog()
         dev, ipData.ip, ipData.country, ipData.city, ipData.isp, waktu))
       fw:close()
     end
-    userList[key] = true
-    userDetailMap[key] = {
-      dev = dev, ip = ipData.ip, country = ipData.country,
-      city = ipData.city, isp = ipData.isp, waktu = waktu
-    }
     userJustAdded = true
   end
 
@@ -257,24 +219,29 @@ local function trackAndLog()
   end
 end
 
--- ✅ Inisialisasi Awal (VERSI OPTIMAL, menu tetap muncul)
-local ok, err = pcall(function()
-  -- Blocking proteksi, tapi tidak langsung exit kalau error waktu server
-  checkTime()               -- proteksi waktu (blocking, fallback)
-  resetUserLogMonthly()     -- reset log kalau tanggal 1 (blocking)
-end)
-
-if not ok then
-  gg.toast("⚠️ Ada error proteksi: " .. tostring(err))
+-- 🔒 Time Tampering Detection (background, menu tetap muncul)
+function asyncCheckTime()
+  local server, online = getServerDate()
+  local device = os.date("%d%m%Y")
+  if online and server ~= device then
+    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
+    gg.alert(_("time_unsynced", server, device, adminWA), _("file_name_copied"), _("exit"))
+    os.exit()
+  elseif not online then
+    gg.toast("⚠️ Tidak bisa cek waktu server Google (offline?) — mode offline")
+    -- Lanjutkan saja, warn user jika mau
+  end
 end
 
-gg.toast(_("connecting")) -- Tampilkan loading secepat mungkin
+-- === LOGIN CEPAT ===
+resetUserLogMonthly()     -- reset log cepat, blocking
+gg.toast(_("connecting")) -- loading/menu langsung tampil
 
--- Logging user di background agar menu cepat
-pcall(trackAndLog)
-
--- Kurangi sleep, atau bisa dihilangkan
--- gg.sleep(100) -- Optional, jika tetap ingin delay
+-- Proteksi waktu & logging user DI BACKGROUND (tidak bikin menu lemot)
+pcall(function()
+  asyncCheckTime()      -- waktu server (background, super cepat)
+  trackAndLog()         -- logging user (background, super cepat)
+end)
 
 -- ... lanjutkan ke menu utama/mode script kamu ...
 ---------------------------------------------------------------------------------------------------------
