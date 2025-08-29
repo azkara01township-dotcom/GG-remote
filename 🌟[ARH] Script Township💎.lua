@@ -78,7 +78,7 @@ function _(key, ...)
   return t and string.format(t[lang] or t["id"], ...) or key
 end
 
--- 📁 Folder Writable Check
+-- 📁 Folder Writable Check (blocking)
 do
   local f = io.open(dir .. "/.test", "w")
   if f then
@@ -104,11 +104,11 @@ local function sendTelegramLog(msg)
   gg.makeRequest(url)
 end
 
--- 🌐 Server Date from Google
+-- 🌐 Server Date from Google (timeout lebih kecil)
 local function getServerDate()
   local t = os.clock()
   local r = gg.makeRequest("http://www.google.com")
-  if not r or not r.headers or os.clock() - t > 0.5 then      -- timeout lebih kecil
+  if not r or not r.headers or os.clock() - t > 0.5 then
     return os.date("%d%m%Y"), false
   end
   local dateStr = r.headers.Date
@@ -121,7 +121,7 @@ local function getServerDate()
   end
 end
 
--- 🔒 Time Tampering Detection
+-- 🔒 Time Tampering Detection (blocking)
 local function checkTime()
   local server, online = getServerDate()
   local device = os.date("%d%m%Y")
@@ -136,7 +136,7 @@ local function checkTime()
   end
 end
 
--- ⌛ Expiry Check
+-- ⌛ Expiry Check (blocking)
 if os.date("%Y%m%d") > expiryDate then
   sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
   local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
@@ -147,7 +147,7 @@ if os.date("%Y%m%d") > expiryDate then
   os.exit()
 end
 
--- 🔐 File Name Protection
+-- 🔐 File Name Protection (blocking)
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
   sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
@@ -159,11 +159,11 @@ if current ~= expectedName then
   os.exit()
 end
 
--- 🌍 Get IP & Location (faster timeout)
+-- 🌍 Get IP & Location (timeout lebih kecil)
 local function getIPData()
   local t = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 0.5 then   -- timeout lebih kecil
+  if not res or not res.content or os.clock() - t > 0.5 then
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -171,8 +171,6 @@ local function getIPData()
       isp = "Unknown ISP"
     }
   end
-  -- parsing...
-end
 
   local ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
   local country = res.content:match('"country":"(.-)"') or "Unknown Country"
@@ -182,7 +180,7 @@ end
   return { ip = ip, country = country, city = city, isp = isp }
 end
 
--- ♻️ Reset Log Setiap Tanggal 1
+-- ♻️ Reset Log Setiap Tanggal 1 (blocking)
 local function resetUserLogMonthly()
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
@@ -197,7 +195,7 @@ local function resetUserLogMonthly()
   end
 end
 
--- 📊 Tracking Pengguna (optimized, no spam Telegram)
+-- 📊 Tracking Pengguna (background)
 local function trackAndLog()
   local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local ipData = getIPData()
@@ -259,18 +257,18 @@ local function trackAndLog()
   end
 end
 
--- ✅ Inisialisasi Awal
+-- ✅ Inisialisasi Awal (VERSI OPTIMAL)
+checkTime()               -- proteksi waktu (blocking)
+resetUserLogMonthly()     -- reset log kalau tanggal 1 (blocking)
 gg.toast(_("connecting")) -- Tampilkan loading secepat mungkin
 
--- Jalankan proteksi dan logging di background agar menu cepat muncul
-pcall(function()
-  resetUserLogMonthly()  -- reset log (file I/O)
-  checkTime()            -- proteksi waktu (request Google)
-  trackAndLog()          -- logging user (request IP)
-end)
+-- Logging user di background agar menu cepat
+pcall(trackAndLog)
 
 -- Kurangi sleep, atau bisa dihilangkan
--- gg.sleep(100) -- Kalau tetap ingin delay, cukup kecil saja
+-- gg.sleep(100) -- Optional, jika tetap ingin delay
+
+-- ... lanjutkan ke menu utama/mode script kamu ...
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
