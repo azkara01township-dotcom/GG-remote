@@ -16,7 +16,7 @@ local banner =[[
 
 local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya Hermawan\n┇📅 %A, %d %B %Y | ⏰ %I:%M %p")
 
--- 🛡️ ARH SECURE SYSTEM v1.1 (Optimized Anti-Hang Version)
+-- 🛡️ ARH SECURE SYSTEM v1.1 (English Version)
 
 -- 📞 Admin Contact
 local adminWA = "https://wa.me/62895610507233"
@@ -97,35 +97,23 @@ do
   end
 end
 
--- 🔄 Send Telegram message (background & timeout)
+-- 🔄 Send Telegram message
 local function sendTelegramLog(msg)
   local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
   msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-  local t = os.clock()
-  local ok = pcall(function()
-    local req = gg.makeRequest(url)
-    -- timeout dipaksa lebih singkat
-  end)
-  if not ok or os.clock() - t > 0.5 then return false end
-  return true
+  gg.makeRequest(url)
 end
 
--- 🌐 Server Date from Google (timeout 0.5s)
+-- 🌐 Server Date from Google
 local function getServerDate()
-  local t_start = os.clock()
+  local t = os.clock()
   local r = gg.makeRequest("http://www.google.com")
-  if not r or not r.headers or (os.clock() - t_start) > 0.5 then
+  if not r or not r.headers or os.clock() - t > 0.5 then      -- timeout lebih kecil
     return os.date("%d%m%Y"), false
   end
   local dateStr = r.headers.Date
-  if not dateStr or type(dateStr) ~= "string" then
-    return os.date("%d%m%Y"), false
-  end
   local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
-  local map = {
-    Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06",
-    Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12"
-  }
+  local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
   if d and m and y and map[m] then
     return d..map[m]..y, true
   else
@@ -133,17 +121,12 @@ local function getServerDate()
   end
 end
 
--- 🔒 Time Tampering Detection (background & fallback, dijalankan setelah menu utama)
+-- 🔒 Time Tampering Detection
 local function checkTime()
-  local t_start = os.clock()
   local server, online = getServerDate()
   local device = os.date("%d%m%Y")
-  if (os.clock() - t_start) > 0.5 then online = false end
-
   if online and server ~= device then
-    pcall(function()
-      sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
-    end)
+    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
     local msg = "⚠️ Waktu device tidak sesuai!\n\n🌐 Server: "..server.."\n📱 Device: "..device.."\n\nHubungi admin: "..adminWA
     if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
       gg.copyText(adminWA)
@@ -153,42 +136,34 @@ local function checkTime()
   end
 end
 
--- ⌛ Expiry Check (Telegram log background)
-local function expiryCheck()
-  if os.date("%Y%m%d") > expiryDate then
-    pcall(function()
-      sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
-    end)
-    local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
-    end
-    os.exit()
+-- ⌛ Expiry Check
+if os.date("%Y%m%d") > expiryDate then
+  sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+  local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
+  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+    gg.copyText(adminWA)
+    gg.toast("Link admin disalin.")
   end
+  os.exit()
 end
 
--- 🔐 File Name Protection (Telegram log background)
-local function fileNameCheck()
-  local current = gg.getFile():match("[^/]+$") or "Unknown"
-  if current ~= expectedName then
-    pcall(function()
-      sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
-    end)
-    local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
-    end
-    os.exit()
+-- 🔐 File Name Protection
+local current = gg.getFile():match("[^/]+$") or "Unknown"
+if current ~= expectedName then
+  sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
+  local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
+  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+    gg.copyText(adminWA)
+    gg.toast("Link admin disalin.")
   end
+  os.exit()
 end
 
--- 🌍 Get IP & Location (timeout 0.5s)
+-- 🌍 Get IP & Location (faster timeout)
 local function getIPData()
   local t = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 0.5 then
+  if not res or not res.content or os.clock() - t > 0.5 then   -- timeout lebih kecil
     return {
       ip = "Unknown IP",
       country = "Unknown Country",
@@ -196,6 +171,8 @@ local function getIPData()
       isp = "Unknown ISP"
     }
   end
+  -- parsing...
+end
 
   local ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
   local country = res.content:match('"country":"(.-)"') or "Unknown Country"
@@ -216,13 +193,11 @@ local function resetUserLogMonthly()
     os.remove(userLogFile)
     local f2 = io.open(resetFile, "w")
     if f2 then f2:write(today); f2:close() end
-    pcall(function()
-      sendTelegramLog("♻️ AUTO RESET: Log pengguna direset\n📅 "..today)
-    end)
+    sendTelegramLog("♻️ AUTO RESET: Log pengguna direset\n📅 "..today)
   end
 end
 
--- 📊 Tracking Pengguna (non-blocking, Telegram log background)
+-- 📊 Tracking Pengguna (optimized, no spam Telegram)
 local function trackAndLog()
   local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local ipData = getIPData()
@@ -278,25 +253,24 @@ local function trackAndLog()
     msg = msg .. "\n🔗 IP: " .. ipData.ip
     msg = msg .. "\n🕓 Login Time: " .. waktu .. "\n"
     msg = msg .. "\n📌 TOTAL USERS: " .. totalUsers .. "\n\n"
-    pcall(function() sendTelegramLog(msg) end)
+    sendTelegramLog(msg)
     local f3 = io.open(lastLogFile, "w")
     if f3 then f3:write(now); f3:close() end
   end
 end
 
--- ====================== INISIALISASI AWAL ======================
-resetUserLogMonthly()     -- reset log kalau tanggal 1
-gg.toast(_("connecting"))
-gg.sleep(300)
+-- ✅ Inisialisasi Awal
+gg.toast(_("connecting")) -- Tampilkan loading secepat mungkin
 
--- ========== Proteksi & Logging DIJALANKAN DI BACKGROUND ==========
--- Tidak block menu utama!
+-- Jalankan proteksi dan logging di background agar menu cepat muncul
 pcall(function()
-  expiryCheck()
-  fileNameCheck()
-  checkTime()
-  trackAndLog()
+  resetUserLogMonthly()  -- reset log (file I/O)
+  checkTime()            -- proteksi waktu (request Google)
+  trackAndLog()          -- logging user (request IP)
 end)
+
+-- Kurangi sleep, atau bisa dihilangkan
+-- gg.sleep(100) -- Kalau tetap ingin delay, cukup kecil saja
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
