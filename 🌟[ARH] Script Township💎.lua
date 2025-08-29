@@ -16,8 +16,6 @@ local banner =[[
 
 local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya Hermawan\n┇📅 %A, %d %B %Y | ⏰ %I:%M %p")
 
--- 🛡️ ARH SECURE SYSTEM v1.1 (English Version)
-
 local adminWA = "https://wa.me/62895610507233"
 local bot_token = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
 local chat_id = "1561442361"
@@ -70,7 +68,7 @@ function _(key, ...)
   return t and string.format(t[lang] or t["id"], ...) or key
 end
 
--- 📁 Folder Writable Check (blocking)
+-- 📁 Folder Writable Check (blocking, wajib aman)
 do
   local f = io.open(dir .. "/.test", "w")
   if f then
@@ -87,9 +85,10 @@ do
   end
 end
 
--- ⌛ Expiry Check (blocking)
+-- ⌛ Expiry Check (blocking, wajib aman)
 if os.date("%Y%m%d") > expiryDate then
-  sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+  gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+    ("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d")):gsub(" ", "%%20"):gsub("\n", "%%0A"))
   local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
   if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
     gg.copyText(adminWA)
@@ -98,10 +97,11 @@ if os.date("%Y%m%d") > expiryDate then
   os.exit()
 end
 
--- 🔐 File Name Protection (blocking)
+-- 🔐 File Name Protection (blocking, wajib aman)
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
-  sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
+  gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+    ("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current):gsub(" ", "%%20"):gsub("\n", "%%0A"))
   local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
   if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
     gg.copyText(adminWA)
@@ -110,53 +110,8 @@ if current ~= expectedName then
   os.exit()
 end
 
--- 🔄 Send Telegram message
-function sendTelegramLog(msg)
-  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-  gg.makeRequest(url)
-end
-
--- 🌐 Server Date from Google (timeout sangat kecil, fallback lokal)
-function getServerDate()
-  local t = os.clock()
-  local r = gg.makeRequest("http://www.google.com")
-  if not r or not r.headers or os.clock() - t > 0.2 then -- timeout super kecil!
-    return os.date("%d%m%Y"), false
-  end
-  local dateStr = r.headers.Date
-  local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
-  local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
-  if d and m and y and map[m] then
-    return d..map[m]..y, true
-  else
-    return os.date("%d%m%Y"), false
-  end
-end
-
--- 🌍 Get IP & Location (timeout super kecil)
-function getIPData()
-  local t = os.clock()
-  local res = gg.makeRequest("http://ip-api.com/json")
-  if not res or not res.content or os.clock() - t > 0.2 then
-    return {
-      ip = "Unknown IP",
-      country = "Unknown Country",
-      city = "Unknown City",
-      isp = "Unknown ISP"
-    }
-  end
-
-  local ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
-  local country = res.content:match('"country":"(.-)"') or "Unknown Country"
-  local city    = res.content:match('"city":"(.-)"') or "Unknown City"
-  local isp     = res.content:match('"isp":"(.-)"') or "Unknown ISP"
-
-  return { ip = ip, country = country, city = city, isp = isp }
-end
-
--- ♻️ Reset Log Setiap Tanggal 1 (blocking, cepat)
-function resetUserLogMonthly()
+-- ♻️ Reset Log Setiap Tanggal 1 (blocking, super cepat)
+do
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
   local lastReset = ""
@@ -166,23 +121,63 @@ function resetUserLogMonthly()
     os.remove(userLogFile)
     local f2 = io.open(resetFile, "w")
     if f2 then f2:write(today); f2:close() end
-    sendTelegramLog("♻️ AUTO RESET: Log pengguna direset\n📅 "..today)
+    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+      ("♻️ AUTO RESET: Log pengguna direset\n📅 "..today):gsub(" ", "%%20"):gsub("\n", "%%0A"))
   end
 end
 
--- 📊 Tracking Pengguna (background, cepat)
-function trackAndLog()
-  local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
-  local ipData = getIPData()
+-- === MENU UTAMA MUNCUL INSTAN ===
+gg.toast(_("connecting")) -- loading/menu langsung tampil
+
+-- Proteksi waktu & logging user DI BACKGROUND (tidak bikin menu lemot sama sekali!)
+pcall(function()
+  -- === Validasi waktu server Google (online 100%) ===
+  local t = os.clock()
+  local r = gg.makeRequest("http://www.google.com")
+  local server, online
+  if not r or not r.headers or os.clock() - t > 0.1 then -- timeout super kecil 0.1 detik!
+    server, online = os.date("%d%m%Y"), false
+  else
+    local dateStr = r.headers.Date
+    local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
+    local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
+    if d and m and y and map[m] then
+      server = d..map[m]..y
+      online = true
+    else
+      server, online = os.date("%d%m%Y"), false
+    end
+  end
+
+  local device = os.date("%d%m%Y")
+  if online and server ~= device then
+    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+      ("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server):gsub(" ", "%%20"):gsub("\n", "%%0A"))
+    gg.alert(_("time_unsynced", server, device, adminWA), _("file_name_copied"), _("exit"))
+    os.exit()
+  elseif not online then
+    gg.toast("⚠️ Tidak bisa cek waktu server Google (offline?) — mode offline")
+  end
+
+  -- === Logging user (background, super cepat) ===
+  local devname = (gg.getTargetInfo() or {}).label or "Unknown Device"
+  local t2 = os.clock()
+  local res = gg.makeRequest("http://ip-api.com/json")
+  local ip, country, city, isp
+  if not res or not res.content or os.clock() - t2 > 0.1 then
+    ip, country, city, isp = "Unknown IP", "Unknown Country", "Unknown City", "Unknown ISP"
+  else
+    ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
+    country = res.content:match('"country":"(.-)"') or "Unknown Country"
+    city    = res.content:match('"city":"(.-)"') or "Unknown City"
+    isp     = res.content:match('"isp":"(.-)"') or "Unknown ISP"
+  end
   local waktu = os.date("%Y-%m-%d %H:%M:%S")
   local now = os.date("%Y%m%d")
+  local key = devname .. " | " .. ip
 
-  local key = dev .. " | " .. ipData.ip
   local exists = false
   local userList = {}
-  local totalUsers = 0
-  local userJustAdded = false
-
   local f = io.open(userLogFile, "r")
   if f then
     for line in f:lines() do
@@ -197,50 +192,21 @@ function trackAndLog()
     local fw = io.open(userLogFile, "a")
     if fw then
       fw:write(string.format("%s | %s | %s | %s | %s | %s\n",
-        dev, ipData.ip, ipData.country, ipData.city, ipData.isp, waktu))
+        devname, ip, country, city, isp, waktu))
       fw:close()
     end
-    userJustAdded = true
-  end
-
-  for _ in pairs(userList) do totalUsers = totalUsers + 1 end
-
-  if userJustAdded then
     local msg = "📊 DAILY LOG — " .. os.date("%d %b %Y") .. "\n"
-    msg = msg .. "\n🆕 NEW USER DETECTED!\n📱 Device: " .. dev
-    msg = msg .. "\n🌍 Location: " .. ipData.city .. ", " .. ipData.country
-    msg = msg .. "\n📡 Provider: " .. ipData.isp
-    msg = msg .. "\n🔗 IP: " .. ipData.ip
+    msg = msg .. "\n🆕 NEW USER DETECTED!\n📱 Device: " .. devname
+    msg = msg .. "\n🌍 Location: " .. city .. ", " .. country
+    msg = msg .. "\n📡 Provider: " .. isp
+    msg = msg .. "\n🔗 IP: " .. ip
     msg = msg .. "\n🕓 Login Time: " .. waktu .. "\n"
-    msg = msg .. "\n📌 TOTAL USERS: " .. totalUsers .. "\n\n"
-    sendTelegramLog(msg)
+    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+      msg:gsub(" ", "%%20"):gsub("\n", "%%0A"))
     local f3 = io.open(lastLogFile, "w")
     if f3 then f3:write(now); f3:close() end
   end
-end
 
--- 🔒 Time Tampering Detection (background, menu tetap muncul)
-function asyncCheckTime()
-  local server, online = getServerDate()
-  local device = os.date("%d%m%Y")
-  if online and server ~= device then
-    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
-    gg.alert(_("time_unsynced", server, device, adminWA), _("file_name_copied"), _("exit"))
-    os.exit()
-  elseif not online then
-    gg.toast("⚠️ Tidak bisa cek waktu server Google (offline?) — mode offline")
-    -- Lanjutkan saja, warn user jika mau
-  end
-end
-
--- === LOGIN CEPAT ===
-resetUserLogMonthly()     -- reset log cepat, blocking
-gg.toast(_("connecting")) -- loading/menu langsung tampil
-
--- Proteksi waktu & logging user DI BACKGROUND (tidak bikin menu lemot)
-pcall(function()
-  asyncCheckTime()      -- waktu server (background, super cepat)
-  trackAndLog()         -- logging user (background, super cepat)
 end)
 
 -- ... lanjutkan ke menu utama/mode script kamu ...
