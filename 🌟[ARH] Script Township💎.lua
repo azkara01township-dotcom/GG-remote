@@ -257,9 +257,17 @@ local function trackAndLog()
   end
 end
 
--- ✅ Inisialisasi Awal (VERSI OPTIMAL)
-checkTime()               -- proteksi waktu (blocking)
-resetUserLogMonthly()     -- reset log kalau tanggal 1 (blocking)
+-- ✅ Inisialisasi Awal (VERSI OPTIMAL, menu tetap muncul)
+local ok, err = pcall(function()
+  -- Blocking proteksi, tapi tidak langsung exit kalau error waktu server
+  checkTime()               -- proteksi waktu (blocking, fallback)
+  resetUserLogMonthly()     -- reset log kalau tanggal 1 (blocking)
+end)
+
+if not ok then
+  gg.toast("⚠️ Ada error proteksi: " .. tostring(err))
+end
+
 gg.toast(_("connecting")) -- Tampilkan loading secepat mungkin
 
 -- Logging user di background agar menu cepat
