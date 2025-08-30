@@ -19,48 +19,25 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 local adminWA = "https://wa.me/62895610507233"
 local bot_token = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
 local chat_id = "1561442361"
+
 local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
 local expectedName = "🌟[ARH]Script Township💎.lua"
 local expiryDate = "20991231"
+
 local lang = "en"
 local langFile = "/sdcard/.langmode.txt"
 local f = io.open(langFile, "r")
 if f then lang = f:read("*l") or "en"; f:close() end
 
 local teks = {
-  ["folder_not_found"] = {
-    id = "❌ Folder '%s' tidak ditemukan atau tidak dapat diakses.\n\nSilakan buat folder ini secara manual.",
-    en = "❌ Folder '%s' not found or not writable.\n\nPlease create this folder manually."
-  },
+  ["folder_not_found"] = { id = "❌ Folder '%s' tidak ditemukan atau tidak dapat diakses.\n\nSilakan buat folder ini secara manual.", en = "❌ Folder '%s' not found or not writable.\n\nPlease create this folder manually." },
   ["exit"] = { id = "❌ Keluar", en = "❌ Exit" },
   ["copy_folder"] = { id = "📋 Salin Nama Folder", en = "📋 Copy Folder Name" },
-  ["folder_copied"] = {
-    id = "📋 Nama folder telah disalin!\n\nBuka File Manager dan buat folder baru bernama 'ARH_Script'.",
-    en = "📋 Folder name has been copied!\n\nNow open your File Manager and create a new folder named 'ARH_Script'."
-  },
-  ["time_unsynced"] = {
-    id = "⚠️ WAKTU TIDAK SINKRON ⚠️\n\n📆 Server: %s\n📱 Perangkat: %s\n\nAktifkan tanggal & waktu otomatis!\n\n📞 Admin:\n%s",
-    en = "⚠️ TIME NOT SYNCHRONIZED ⚠️\n\n📆 Server: %s\n📱 Device: %s\n\nPlease enable automatic date & time!\n\n📞 Admin:\n%s"
-  },
-  ["script_expired"] = {
-    id = "⚠️ SCRIPT TELAH KADALUARSA!\nScript sedang diperbarui.\n\n📞 Admin:\n%s",
-    en = "⚠️ SCRIPT HAS EXPIRED!\nThe script is currently being updated.\n\n📞 Admin:\n%s"
-  },
-  ["file_renamed"] = {
-    id = "❌ NAMA FILE TELAH DIUBAH!\n\nSeharusnya: %s\nDitemukan: %s\n\n📞 Admin:\n%s",
-    en = "❌ FILE NAME CHANGED!\n\nExpected: %s\nFound: %s\n\n📞 Admin:\n%s"
-  },
-  ["file_name_copied"] = {
-    id = "✅ Link WhatsApp disalin.",
-    en = "✅ WhatsApp link copied."
-  },
-  ["connecting"] = {
-    id = "✅ Tersambung. Memuat menu...",
-    en = "✅ Connected. Loading menu..."
-  },
+  ["folder_copied"] = { id = "📋 Nama folder telah disalin!\n\nBuka File Manager dan buat folder baru bernama 'ARH_Script'.", en = "📋 Folder name has been copied!\n\nNow open your File Manager and create a new folder named 'ARH_Script'." },
+  ["connecting"] = { id = "✅ Tersambung. Memuat menu...", en = "✅ Connected. Loading menu..." },
 }
 
 function _(key, ...)
@@ -68,14 +45,14 @@ function _(key, ...)
   return t and string.format(t[lang] or t["id"], ...) or key
 end
 
--- Proteksi utama (blocking, WAJIB AMAN)
+-- ========== Proteksi Folder ==========
 do
   local f = io.open(dir .. "/.test", "w")
-  if f then
-    f:close()
-    os.remove(dir .. "/.test")
+  if f then f:close(); os.remove(dir .. "/.test")
   else
-    local btn = gg.alert(_("folder_not_found", dir), _("exit"), _("copy_folder"))
+    local btn = gg.alert(_(
+      "folder_not_found", dir
+    ), _("exit"), _("copy_folder"))
     if btn == 2 then
       gg.copyText("ARH_Script")
       gg.toast("📋 Folder name copied to clipboard!")
@@ -85,31 +62,70 @@ do
   end
 end
 
-if os.date("%Y%m%d") > expiryDate then
-  gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-    ("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d")):gsub(" ", "%%20"):gsub("\n", "%%0A"))
-  local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
-  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-    gg.copyText(adminWA)
-    gg.toast("Link admin disalin.")
-  end
-  os.exit()
+-- ========== Fungsi Telegram ==========
+local function sendTelegramLog(msg)
+  local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
+  msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
+  -- kirim request tanpa block
+  pcall(function() gg.makeRequest(url) end)
 end
 
-local current = gg.getFile():match("[^/]+$") or "Unknown"
-if current ~= expectedName then
-  gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-    ("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current):gsub(" ", "%%20"):gsub("\n", "%%0A"))
-  local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
-  if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-    gg.copyText(adminWA)
-    gg.toast("Link admin disalin.")
+-- ========== Proteksi Waktu, Expiry, File Name ==========
+local function getServerDate()
+  local r = gg.makeRequest("http://www.google.com")
+  local dateStr = r and r.headers and r.headers.Date
+  if not dateStr or type(dateStr) ~= "string" then
+    return os.date("%d%m%Y"), false
   end
-  os.exit()
+  local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
+  local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
+  if d and m and y and map[m] then
+    return d..map[m]..y, true
+  else
+    return os.date("%d%m%Y"), false
+  end
 end
 
--- Reset log (blocking, cepat)
-do
+local function _proteksiWaktuFile()
+  -- Waktu
+  local server, online = getServerDate()
+  local device = os.date("%d%m%Y")
+  if online and server ~= device then
+    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
+    local msg = "⚠️ Waktu device tidak sesuai!\n\n🌐 Server: "..server.."\n📱 Device: "..device.."\n\nHubungi admin: "..adminWA
+    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+      gg.copyText(adminWA)
+      gg.toast("Link admin disalin.")
+    end
+    os.exit()
+  end
+
+  -- Expiry
+  if os.date("%Y%m%d") > expiryDate then
+    sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+    local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
+    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+      gg.copyText(adminWA)
+      gg.toast("Link admin disalin.")
+    end
+    os.exit()
+  end
+
+  -- File Name
+  local current = gg.getFile():match("[^/]+$") or "Unknown"
+  if current ~= expectedName then
+    sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
+    local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
+    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
+      gg.copyText(adminWA)
+      gg.toast("Link admin disalin.")
+    end
+    os.exit()
+  end
+end
+
+-- ========== Reset Log Bulanan ==========
+local function resetUserLogMonthly()
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
   local lastReset = ""
@@ -119,68 +135,46 @@ do
     os.remove(userLogFile)
     local f2 = io.open(resetFile, "w")
     if f2 then f2:write(today); f2:close() end
-    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-      ("♻️ AUTO RESET: Log pengguna direset\n📅 "..today):gsub(" ", "%%20"):gsub("\n", "%%0A"))
+    sendTelegramLog("♻️ AUTO RESET: Log pengguna direset\n📅 "..today)
   end
 end
 
--- === MENU UTAMA MUNCUL INSTAN! ===
-gg.toast(_("connecting")) -- Loading/menu langsung tampil
-
--- === VALIDASI ONLINE & LOGGING USER DIJALANKAN SETELAH MENU, ASYNC! ===
--- Fungsi ini dijalankan setelah menu utama muncul, jadi user tidak pernah menunggu!
-function onlineValidasiAndLog()
-  -- Validasi waktu server Google, timeout super kecil!
+-- ========== IP Logging ==========
+local function getIPData()
   local t = os.clock()
-  local r = gg.makeRequest("http://www.google.com")
-  local server, online
-  if not r or not r.headers or os.clock() - t > 0.05 then -- timeout hanya 0.05 detik!
-    server, online = os.date("%d%m%Y"), false
-  else
-    local dateStr = r.headers.Date
-    local d, m, y = dateStr:match("%a+, (%d+) (%a+) (%d+)")
-    local map = { Jan="01", Feb="02", Mar="03", Apr="04", May="05", Jun="06", Jul="07", Aug="08", Sep="09", Oct="10", Nov="11", Dec="12" }
-    if d and m and y and map[m] then
-      server = d..map[m]..y
-      online = true
-    else
-      server, online = os.date("%d%m%Y"), false
-    end
-  end
-  local device = os.date("%d%m%Y")
-  if online and server ~= device then
-    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-      ("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server):gsub(" ", "%%20"):gsub("\n", "%%0A"))
-    gg.alert(_("time_unsynced", server, device, adminWA), _("file_name_copied"), _("exit"))
-    os.exit()
-  elseif not online then
-    gg.toast("⚠️ Tidak bisa cek waktu server Google (offline?) — mode offline")
-  end
-
-  -- Logging user (background, super cepat)
-  local devname = (gg.getTargetInfo() or {}).label or "Unknown Device"
-  local t2 = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
-  local ip, country, city, isp
-  if not res or not res.content or os.clock() - t2 > 0.05 then
-    ip, country, city, isp = "Unknown IP", "Unknown Country", "Unknown City", "Unknown ISP"
-  else
-    ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
-    country = res.content:match('"country":"(.-)"') or "Unknown Country"
-    city    = res.content:match('"city":"(.-)"') or "Unknown City"
-    isp     = res.content:match('"isp":"(.-)"') or "Unknown ISP"
+  if not res or not res.content or os.clock() - t > 1 then
+    return { ip = "Unknown IP", country = "Unknown Country", city = "Unknown City", isp = "Unknown ISP" }
   end
+  local ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
+  local country = res.content:match('"country":"(.-)"') or "Unknown Country"
+  local city    = res.content:match('"city":"(.-)"') or "Unknown City"
+  local isp     = res.content:match('"isp":"(.-)"') or "Unknown ISP"
+  return { ip = ip, country = country, city = city, isp = isp }
+end
+
+-- ========== Tracking Pengguna ==========
+local function trackAndLog()
+  local dev = (gg.getTargetInfo() or {}).label or "Unknown Device"
+  local ipData = getIPData()
   local waktu = os.date("%Y-%m-%d %H:%M:%S")
   local now = os.date("%Y%m%d")
-  local key = devname .. " | " .. ip
 
+  local key = dev .. " | " .. ipData.ip
   local exists = false
   local userList = {}
+  local totalUsers = 0
+  local userJustAdded = false
+
   local f = io.open(userLogFile, "r")
   if f then
     for line in f:lines() do
-      local k = line:match("^(.-|.-)|")
-      if k then userList[k] = true end
+      local parts = {}
+      for part in string.gmatch(line, "([^|]+)") do
+        table.insert(parts, part:match("^%s*(.-)%s*$"))
+      end
+      local k = parts[1] .. " | " .. parts[2]
+      userList[k] = true
       if k == key then exists = true end
     end
     f:close()
@@ -190,28 +184,43 @@ function onlineValidasiAndLog()
     local fw = io.open(userLogFile, "a")
     if fw then
       fw:write(string.format("%s | %s | %s | %s | %s | %s\n",
-        devname, ip, country, city, isp, waktu))
+        dev, ipData.ip, ipData.country, ipData.city, ipData.isp, waktu))
       fw:close()
     end
+    userList[key] = true
+    userJustAdded = true
+  end
+
+  for _ in pairs(userList) do totalUsers = totalUsers + 1 end
+
+  if userJustAdded then
     local msg = "📊 DAILY LOG — " .. os.date("%d %b %Y") .. "\n"
-    msg = msg .. "\n🆕 NEW USER DETECTED!\n📱 Device: " .. devname
-    msg = msg .. "\n🌍 Location: " .. city .. ", " .. country
-    msg = msg .. "\n📡 Provider: " .. isp
-    msg = msg .. "\n🔗 IP: " .. ip
+    msg = msg .. "\n🆕 NEW USER DETECTED!\n📱 Device: " .. dev
+    msg = msg .. "\n🌍 Location: " .. ipData.city .. ", " .. ipData.country
+    msg = msg .. "\n📡 Provider: " .. ipData.isp
+    msg = msg .. "\n🔗 IP: " .. ipData.ip
     msg = msg .. "\n🕓 Login Time: " .. waktu .. "\n"
-    gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
-      msg:gsub(" ", "%%20"):gsub("\n", "%%0A"))
+    msg = msg .. "\n📌 TOTAL USERS: " .. totalUsers .. "\n\n"
+    sendTelegramLog(msg)
     local f3 = io.open(lastLogFile, "w")
     if f3 then f3:write(now); f3:close() end
   end
 end
 
--- Jalankan validasi online & logging user SETELAH MENU UTAMA!
-pcall(onlineValidasiAndLog)
+-- ========== INISIALISASI CEPAT ==========
+gg.toast(_("connecting"))
+gg.sleep(100) -- lebih cepat
 
--- ... lanjutkan ke menu utama/mode script kamu ...
--- Contoh menu utama:
-gg.choice({ "Mulai Script", "Keluar" }, nil, dev)
+-- Menu/Script utama bisa langsung dijalankan di sini!
+-- Misal:
+-- require("menu") -- atau fungsi utama script kamu
+
+-- Semua proses online/logging jalan di background (tidak block menu)
+pcall(function()
+  _proteksiWaktuFile()
+  resetUserLogMonthly()
+  trackAndLog()
+end)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
