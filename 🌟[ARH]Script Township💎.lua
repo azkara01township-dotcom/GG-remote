@@ -24,7 +24,7 @@ local dir = "/sdcard/ARH_Script"
 local userLogFile = dir .. "/.userlog.txt"
 local lastLogFile = dir .. "/.lastlog"
 local resetFile = dir .. "/.lastreset"
-local expectedName = "🌟[ARH]Script Township💎.lua"
+local expectedName = "🌟[ARH] Script Township💎.lua"
 local expiryDate = "20991231"
 
 local lang = "en"
@@ -37,6 +37,22 @@ local teks = {
   ["exit"] = { id = "❌ Keluar", en = "❌ Exit" },
   ["copy_folder"] = { id = "📋 Salin Nama Folder", en = "📋 Copy Folder Name" },
   ["folder_copied"] = { id = "📋 Nama folder telah disalin!\n\nBuka File Manager dan buat folder baru bernama 'ARH_Script'.", en = "📋 Folder name has been copied!\n\nNow open your File Manager and create a new folder named 'ARH_Script'." },
+  ["time_unsynced"] = {
+    id = "⚠️ WAKTU TIDAK SINKRON ⚠️\n\n📆 Server: %s\n📱 Perangkat: %s\n\nAktifkan tanggal & waktu otomatis!\n\n📞 Admin:\n%s",
+    en = "⚠️ TIME NOT SYNCHRONIZED ⚠️\n\n📆 Server: %s\n📱 Device: %s\n\nPlease enable automatic date & time!\n\n📞 Admin:\n%s"
+  },
+  ["script_expired"] = {
+    id = "⚠️ SCRIPT TELAH KADALUARSA!\nScript sedang diperbarui.\n\n📞 Admin:\n%s",
+    en = "⚠️ SCRIPT HAS EXPIRED!\nThe script is currently being updated.\n\n📞 Admin:\n%s"
+  },
+  ["file_renamed"] = {
+    id = "❌ NAMA FILE TELAH DIUBAH!\n\nSeharusnya: %s\nDitemukan: %s\n\n📞 Admin:\n%s",
+    en = "❌ FILE NAME CHANGED!\n\nExpected: %s\nFound: %s\n\n📞 Admin:\n%s"
+  },
+  ["file_name_copied"] = {
+    id = "✅ Link WhatsApp disalin.",
+    en = "✅ WhatsApp link copied."
+  },
   ["connecting"] = { id = "✅ Tersambung. Memuat menu...", en = "✅ Connected. Loading menu..." },
 }
 
@@ -66,7 +82,6 @@ end
 local function sendTelegramLog(msg)
   local url = "https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
   msg:gsub(" ", "%%20"):gsub("\n", "%%0A")
-  -- kirim request tanpa block
   pcall(function() gg.makeRequest(url) end)
 end
 
@@ -86,42 +101,38 @@ local function getServerDate()
   end
 end
 
+local function showWarning(msg)
+  gg.toast(msg)
+  gg.alert(msg)
+end
+
 local function _proteksiWaktuFile()
-  -- Waktu
-  local server, online = getServerDate()
-  local device = os.date("%d%m%Y")
-  if online and server ~= device then
-    sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
-    local msg = "⚠️ Waktu device tidak sesuai!\n\n🌐 Server: "..server.."\n📱 Device: "..device.."\n\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
+  -- Jangan force exit, hanya warning
+  local status, err = pcall(function()
+    -- Waktu
+    local server, online = getServerDate()
+    local device = os.date("%d%m%Y")
+    if online and server ~= device then
+      sendTelegramLog("🚨 TIME TAMPERING DETECTED\n📱 Device: "..device.."\n🌐 Server: "..server)
+      showWarning(_(" "time_unsynced", server, device, adminWA ))
+      -- Tidak os.exit()
     end
-    os.exit()
-  end
 
-  -- Expiry
-  if os.date("%Y%m%d") > expiryDate then
-    sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
-    local msg = "⛔ Script kadaluarsa!\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
+    -- Expiry
+    if os.date("%Y%m%d") > expiryDate then
+      sendTelegramLog("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d"))
+      showWarning(_("script_expired", adminWA))
+      -- Tidak os.exit()
     end
-    os.exit()
-  end
 
-  -- File Name
-  local current = gg.getFile():match("[^/]+$") or "Unknown"
-  if current ~= expectedName then
-    sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
-    local msg = "⚠️ Nama file tidak sesuai!\n\n📌 Expected: "..expectedName.."\n❌ Found: "..current.."\n\nHubungi admin: "..adminWA
-    if gg.alert(msg, "📋 Copy Link", "❌ Exit") == 1 then
-      gg.copyText(adminWA)
-      gg.toast("Link admin disalin.")
+    -- File Name
+    local current = gg.getFile():match("[^/]+$") or "Unknown"
+    if current ~= expectedName then
+      sendTelegramLog("❌ FILE RENAMED!\nExpected: "..expectedName.."\nFound: "..current)
+      showWarning(_("file_renamed", expectedName, current, adminWA))
+      -- Tidak os.exit()
     end
-    os.exit()
-  end
+  end)
 end
 
 -- ========== Reset Log Bulanan ==========
@@ -209,9 +220,9 @@ end
 
 -- ========== INISIALISASI CEPAT ==========
 gg.toast(_("connecting"))
-gg.sleep(100) -- lebih cepat
+gg.sleep(100) -- menu langsung muncul
 
--- Menu/Script utama bisa langsung dijalankan di sini!
+-- Menu utama kamu
 -- Misal:
 -- require("menu") -- atau fungsi utama script kamu
 
