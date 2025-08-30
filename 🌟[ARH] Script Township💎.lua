@@ -68,7 +68,7 @@ function _(key, ...)
   return t and string.format(t[lang] or t["id"], ...) or key
 end
 
--- 📁 Folder Writable Check (blocking, wajib aman)
+-- Proteksi utama (blocking, WAJIB AMAN)
 do
   local f = io.open(dir .. "/.test", "w")
   if f then
@@ -85,7 +85,6 @@ do
   end
 end
 
--- ⌛ Expiry Check (blocking, wajib aman)
 if os.date("%Y%m%d") > expiryDate then
   gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
     ("⏳ SCRIPT EXPIRED — " .. os.date("%Y-%m-%d")):gsub(" ", "%%20"):gsub("\n", "%%0A"))
@@ -97,7 +96,6 @@ if os.date("%Y%m%d") > expiryDate then
   os.exit()
 end
 
--- 🔐 File Name Protection (blocking, wajib aman)
 local current = gg.getFile():match("[^/]+$") or "Unknown"
 if current ~= expectedName then
   gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
@@ -110,7 +108,7 @@ if current ~= expectedName then
   os.exit()
 end
 
--- ♻️ Reset Log Setiap Tanggal 1 (blocking, super cepat)
+-- Reset log (blocking, cepat)
 do
   local now = os.date("*t")
   local today = string.format("%04d-%02d-%02d", now.year, now.month, now.day)
@@ -126,16 +124,17 @@ do
   end
 end
 
--- === MENU UTAMA MUNCUL INSTAN ===
-gg.toast(_("connecting")) -- loading/menu langsung tampil
+-- === MENU UTAMA MUNCUL INSTAN! ===
+gg.toast(_("connecting")) -- Loading/menu langsung tampil
 
--- Proteksi waktu & logging user DI BACKGROUND (tidak bikin menu lemot sama sekali!)
-pcall(function()
-  -- === Validasi waktu server Google (online 100%) ===
+-- === VALIDASI ONLINE & LOGGING USER DIJALANKAN SETELAH MENU, ASYNC! ===
+-- Fungsi ini dijalankan setelah menu utama muncul, jadi user tidak pernah menunggu!
+function onlineValidasiAndLog()
+  -- Validasi waktu server Google, timeout super kecil!
   local t = os.clock()
   local r = gg.makeRequest("http://www.google.com")
   local server, online
-  if not r or not r.headers or os.clock() - t > 0.1 then -- timeout super kecil 0.1 detik!
+  if not r or not r.headers or os.clock() - t > 0.05 then -- timeout hanya 0.05 detik!
     server, online = os.date("%d%m%Y"), false
   else
     local dateStr = r.headers.Date
@@ -148,7 +147,6 @@ pcall(function()
       server, online = os.date("%d%m%Y"), false
     end
   end
-
   local device = os.date("%d%m%Y")
   if online and server ~= device then
     gg.makeRequest("https://api.telegram.org/bot"..bot_token.."/sendMessage?chat_id="..chat_id.."&text="..
@@ -159,12 +157,12 @@ pcall(function()
     gg.toast("⚠️ Tidak bisa cek waktu server Google (offline?) — mode offline")
   end
 
-  -- === Logging user (background, super cepat) ===
+  -- Logging user (background, super cepat)
   local devname = (gg.getTargetInfo() or {}).label or "Unknown Device"
   local t2 = os.clock()
   local res = gg.makeRequest("http://ip-api.com/json")
   local ip, country, city, isp
-  if not res or not res.content or os.clock() - t2 > 0.1 then
+  if not res or not res.content or os.clock() - t2 > 0.05 then
     ip, country, city, isp = "Unknown IP", "Unknown Country", "Unknown City", "Unknown ISP"
   else
     ip      = res.content:match('"query":"(.-)"') or "Unknown IP"
@@ -206,10 +204,14 @@ pcall(function()
     local f3 = io.open(lastLogFile, "w")
     if f3 then f3:write(now); f3:close() end
   end
+end
 
-end)
+-- Jalankan validasi online & logging user SETELAH MENU UTAMA!
+pcall(onlineValidasiAndLog)
 
 -- ... lanjutkan ke menu utama/mode script kamu ...
+-- Contoh menu utama:
+gg.choice({ "Mulai Script", "Keluar" }, nil, dev)
 ---------------------------------------------------------------------------------------------------------
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
