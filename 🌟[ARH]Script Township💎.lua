@@ -1,3 +1,77 @@
+-- Fetch the current date from an HTTP server
+local function getCurrentDate()
+  local response = gg.makeRequest("http://www.google.com")
+  if response == nil or response.headers == nil then
+    gg.alert("⚠️ Failed to retrieve time from the server!\nPlease ensure you are connected to the internet.")
+    os.exit()
+  end
+
+  local serverDate = response.headers["Date"]
+  if serverDate == nil then
+    gg.alert("⚠️ Time header not found in server response!")
+    os.exit()
+  end
+
+  -- Example format: "Fri, 20 Jun 2025 12:34:56 GMT"
+  local day, month, year = serverDate:match("%a+, (%d+) (%a+) (%d+)")
+  if not day or not month or not year then
+    gg.alert("⚠️ Failed to parse the time format from the server!")
+    os.exit()
+  end
+
+  -- Convert month name to number
+  local monthMap = {
+    Jan = "01", Feb = "02", Mar = "03", Apr = "04",
+    May = "05", Jun = "06", Jul = "07", Aug = "08",
+    Sep = "09", Oct = "10", Nov = "11", Dec = "12"
+  }
+
+  local monthNum = monthMap[month]
+  if not monthNum then
+    gg.alert("⚠️ Unrecognized month format: " .. month)
+    os.exit()
+  end
+
+  -- Final result format: DDMMYYYY
+  return string.format("%02d%s%s", tonumber(day), monthNum, year)
+end
+
+-- Detect system time manipulation
+local function checkAntiTimeChange()
+  local serverDate = getCurrentDate()
+  local deviceDate = os.date("%d%m%Y") -- Same format: DDMMYYYY
+
+  if serverDate ~= deviceDate then
+    gg.alert([[
+⚠️ SYSTEM TIME CHANGE DETECTED ⚠️
+
+🛑 The device date does not match the server time.
+
+📆 Server : ]] .. serverDate .. "\n📱 Device : " .. deviceDate ..[[
+
+Please enable automatic date & time settings on your device.
+    ]])
+    os.exit()
+  end
+end
+
+if os.date("%Y%m%d") > "yyyymmdd" then  -- 🔒 Expiry Date (YYYYMMDD)
+ local expired = "⚠️ Script Under Maintenance\nAn update is currently in progress. Please be patient.\nFor more information, visit our WhatsApp channel."
+  gg.alert(expired)
+  print(expired)
+  return
+end
+
+local fileName = gg.getFile():match("[^/]+$")  -- Get current script file name
+local expectedName = "🌟[ARH] Script Township🌟.lua"         -- The name you want to protect
+
+if fileName ~= expectedName then
+  local error = "❌ Do not rename the script!\n\nExpected: " .. expectedName .. "\nFound: " .. fileName
+  print(error)
+  gg.alert(error)
+  return
+end
+
 -- 💎 Premium Script Menu
 function Main()
   menuRunning = true
