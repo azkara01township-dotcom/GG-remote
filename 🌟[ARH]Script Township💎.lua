@@ -1056,7 +1056,7 @@ local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 local manualCode = "ARH-MASTER-2025"
 
 -- 📅 Expire date (format: YYYY-MM-DD)
-local expireDate = "2025-12-31"
+local expireDate = "2025-09-5"
 
 -- 📌 Fungsi utilitas
 local function getDeviceID()
@@ -1134,8 +1134,8 @@ else
   if code == permanentCode or code == manualCode then
     -- 🚨 Batas maksimal device 20
     if not isDeviceRegistered(deviceID) then
-      if #usedDevices >= 20 then
-        gg.alert("⛔ Code expired: already used on 20 devices")
+      if #usedDevices >= 1 then
+        gg.alert("⛔ Code expired: already used on 1 devices")
         os.exit()
       else
         -- Tambahkan device ke daftar
