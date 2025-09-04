@@ -1046,14 +1046,14 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE)
 
 local passFile        = "/sdcard/.azka_pass"
 local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local savedNameFile   = "/sdcard/.azka_username.txt"
 local userLogFile     = "/sdcard/.azka_userlog.txt"
 
--- Import ulang fungsi yg dibutuhkan
+-- 📌 Fungsi utilitas
 local function getDeviceID()
   local info = gg.getTargetInfo() or {}
   return (info.label or "") .. "-" ..
@@ -1099,7 +1099,7 @@ local function logUser(name)
   end
 end
 
--- Baca kode permanent
+-- 📂 Ambil permanent code
 local f = io.open(permCodeFile, "r")
 local permanentCode = f and f:read("*a") or nil
 if f then f:close() end
@@ -1109,24 +1109,37 @@ if not permanentCode then
   os.exit()
 end
 
--- 🔑 Prompt kode dari user
-local input = gg.prompt({"🔐 Enter Your Permanent Code", "💾 Save this code?"}, {"", false}, {"text", "checkbox"})
-if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
-local code, save = input[1], input[2]
-
 local deviceID = getDeviceID()
-if code == permanentCode then
-  local expectedHash = hash(permanentCode .. deviceID)
-  if save then
-    local f = io.open(passFile, "w")
-    if f then f:write(expectedHash) f:close() end
-  end
+local expectedHash = hash(permanentCode .. deviceID)
+
+-- 🔍 Cek apakah sudah pernah disimpan
+local pf = io.open(passFile, "r")
+local savedHash = pf and pf:read("*a") or nil
+if pf then pf:close() end
+
+if savedHash == expectedHash then
+  -- ✅ Auto login
   local name = promptUserName()
   logUser(name)
-  gg.toast("✅ Access granted")
+  gg.toast("✅ Auto-login success (saved code)")
 else
-  gg.alert("❌ Invalid code")
-  os.exit()
+  -- 🔑 Prompt pertama kali
+  local input = gg.prompt({"🔐 Enter Your Permanent Code"}, {""}, {"text"})
+  if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+  local code = input[1]
+
+  if code == permanentCode then
+    -- Simpan hash agar auto login kedepannya
+    local f = io.open(passFile, "w")
+    if f then f:write(expectedHash) f:close() end
+
+    local name = promptUserName()
+    logUser(name)
+    gg.toast("✅ Access granted & code saved")
+  else
+    gg.alert("❌ Invalid code")
+    os.exit()
+  end
 		end
 		
   local menu = gg.choice({
