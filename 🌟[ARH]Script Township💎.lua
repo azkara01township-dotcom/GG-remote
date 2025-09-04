@@ -1046,14 +1046,17 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES, MANUAL CODE)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES, DATE EXPIRE, MANUAL CODE)
 
-local passFile       = "/sdcard/.azka_pass"
-local permCodeFile   = "/sdcard/.azka_current_perm.txt"
+local passFile        = "/sdcard/.azka_pass"
+local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
--- 🔑 Master manual code (bypass semua)
-local manualCode = "ARHMASTER-2025"
+-- 🔑 Master manual code (bypass semua batasan)
+local manualCode = "ARH-MASTER-2025"
+
+-- 📅 Expire date (format: YYYY-MM-DD)
+local expireDate = "2025-12-31"
 
 -- 📌 Fungsi utilitas
 local function getDeviceID()
@@ -1070,6 +1073,12 @@ local function hash(str)
     h = (h * 31 + str:byte(i)) % 1000000007
   end
   return tostring(h)
+end
+
+-- 📅 Cek tanggal expire
+local function isExpiredDate()
+  local today = os.date("%Y-%m-%d")
+  return today > expireDate
 end
 
 -- 📂 Ambil permanent code
@@ -1108,6 +1117,12 @@ local function isDeviceRegistered(id)
   return false
 end
 
+-- 🚨 Cek tanggal expired dulu
+if isExpiredDate() then
+  gg.alert("⛔ Code expired by date limit (" .. expireDate .. ")")
+  os.exit()
+end
+
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (saved code)")
 else
@@ -1119,8 +1134,8 @@ else
   if code == permanentCode or code == manualCode then
     -- 🚨 Batas maksimal device 20
     if not isDeviceRegistered(deviceID) then
-      if #usedDevices >= 3 then
-        gg.alert("⛔ Code expired: already used on 3 devices")
+      if #usedDevices >= 20 then
+        gg.alert("⛔ Code expired: already used on 20 devices")
         os.exit()
       else
         -- Tambahkan device ke daftar
@@ -1137,7 +1152,7 @@ else
     gg.alert("❌ Invalid code")
     os.exit()
   end
-end
+		end
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
