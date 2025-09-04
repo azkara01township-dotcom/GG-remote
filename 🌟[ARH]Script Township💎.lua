@@ -1046,12 +1046,10 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, NO USERNAME)
 
-local passFile        = "/sdcard/.azka_pass"
-local permCodeFile    = "/sdcard/.azka_current_perm.txt"
-local savedNameFile   = "/sdcard/.azka_username.txt"
-local userLogFile     = "/sdcard/.azka_userlog.txt"
+local passFile      = "/sdcard/.azka_pass"
+local permCodeFile  = "/sdcard/.azka_current_perm.txt"
 
 -- 📌 Fungsi utilitas
 local function getDeviceID()
@@ -1068,35 +1066,6 @@ local function hash(str)
     h = (h * 31 + str:byte(i)) % 1000000007
   end
   return tostring(h)
-end
-
-local function getSavedName()
-  local f = io.open(savedNameFile, "r")
-  if f then
-    local n = f:read("*a")
-    f:close()
-    return n
-  end
-  return nil
-end
-
-local function promptUserName()
-  local saved = getSavedName()
-  if saved then return saved end
-  local input = gg.prompt({"👤 Enter your name:"}, {""}, {"text"})
-  if not input then gg.alert("❌ Cancelled") os.exit() end
-  local name = input[1] or "Unknown"
-  local f = io.open(savedNameFile, "w")
-  if f then f:write(name) f:close() end
-  return name
-end
-
-local function logUser(name)
-  local f = io.open(userLogFile, "a")
-  if f then
-    f:write(name .. " | " .. os.date("%Y-%m-%d %H:%M:%S") .. "\n")
-    f:close()
-  end
 end
 
 -- 📂 Ambil permanent code
@@ -1119,12 +1088,10 @@ if pf then pf:close() end
 
 if savedHash == expectedHash then
   -- ✅ Auto login
-  local name = promptUserName()
-  logUser(name)
   gg.toast("✅ Auto-login success (saved code)")
 else
   -- 🔑 Prompt pertama kali
-  local input = gg.prompt({"🔐 Enter Your Permanent Code"}, {""}, {"text"})
+  local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
   if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
   local code = input[1]
 
@@ -1132,9 +1099,6 @@ else
     -- Simpan hash agar auto login kedepannya
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
-
-    local name = promptUserName()
-    logUser(name)
     gg.toast("✅ Access granted & code saved")
   else
     gg.alert("❌ Invalid code")
