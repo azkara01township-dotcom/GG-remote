@@ -1046,18 +1046,22 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, NO USERNAME)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES, MANUAL CODE)
 
-local passFile      = "/sdcard/.azka_pass"
-local permCodeFile  = "/sdcard/.azka_current_perm.txt"
+local passFile       = "/sdcard/.azka_pass"
+local permCodeFile   = "/sdcard/.azka_current_perm.txt"
+local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
+
+-- 🔑 Master manual code (bypass semua)
+local manualCode = "ARHMASTER-2025"
 
 -- 📌 Fungsi utilitas
 local function getDeviceID()
   local info = gg.getTargetInfo() or {}
   return (info.label or "") .. "-" ..
-  (info.versionCode or "") .. "-" ..
-  (os.getenv("HOSTNAME") or "") .. "-" ..
-  (gg.getDeviceId and gg.getDeviceId() or "")
+         (info.versionCode or "") .. "-" ..
+         (os.getenv("HOSTNAME") or "") .. "-" ..
+         (gg.getDeviceId and gg.getDeviceId() or "")
 end
 
 local function hash(str)
@@ -1081,21 +1085,50 @@ end
 local deviceID = getDeviceID()
 local expectedHash = hash(permanentCode .. deviceID)
 
--- 🔍 Cek apakah sudah pernah disimpan
+-- 🔍 Cek apakah sudah pernah disimpan (auto login)
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
+-- 📂 Load daftar device yang sudah pakai code
+local usedDevices = {}
+local df = io.open(usedDevicesFile, "r")
+if df then
+  for line in df:lines() do
+    usedDevices[#usedDevices+1] = line
+  end
+  df:close()
+end
+
+-- 🚨 Cek apakah device sudah terdaftar
+local function isDeviceRegistered(id)
+  for _, d in ipairs(usedDevices) do
+    if d == id then return true end
+  end
+  return false
+end
+
 if savedHash == expectedHash then
-  -- ✅ Auto login
   gg.toast("✅ Auto-login success (saved code)")
 else
   -- 🔑 Prompt pertama kali
   local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-  if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+  if not input then gg.alert("❌ Cancelled") os.exit() end
   local code = input[1]
 
-  if code == permanentCode then
+  if code == permanentCode or code == manualCode then
+    -- 🚨 Batas maksimal device 20
+    if not isDeviceRegistered(deviceID) then
+      if #usedDevices >= 3 then
+        gg.alert("⛔ Code expired: already used on 3 devices")
+        os.exit()
+      else
+        -- Tambahkan device ke daftar
+        local dfw = io.open(usedDevicesFile, "a")
+        if dfw then dfw:write(deviceID .. "\n") dfw:close() end
+      end
+    end
+
     -- Simpan hash agar auto login kedepannya
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
@@ -1104,7 +1137,7 @@ else
     gg.alert("❌ Invalid code")
     os.exit()
   end
-		end
+end
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
