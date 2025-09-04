@@ -1111,7 +1111,7 @@ end
 
 -- 🔑 Prompt kode dari user
 local input = gg.prompt({"🔐 Enter Your Permanent Code", "💾 Save this code?"}, {"", false}, {"text", "checkbox"})
-if not input then gg.alert("❌ Cancelled") os.exit() end
+if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
 local code, save = input[1], input[2]
 
 local deviceID = getDeviceID()
