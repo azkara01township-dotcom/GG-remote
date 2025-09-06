@@ -1046,16 +1046,16 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES, DATE EXPIRE, MANUAL CODE)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile        = "/sdcard/.azka_pass"
 local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
--- 🔑 Master manual code (bypass semua batasan)
+-- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
 
--- 📅 Expire date (format: YYYY-MM-DD, pakai 2 digit bulan & hari)
+-- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-05"
 
 -- 📌 Fungsi utilitas
@@ -1075,19 +1075,10 @@ local function hash(str)
   return tostring(h)
 end
 
--- 📅 Cek tanggal expire (pakai timestamp biar valid)
+-- 📅 Cek tanggal expired (hanya untuk manualCode)
 local function isExpiredDate()
-  local y, m, d = expireDate:match("(%d+)%-(%d+)%-(%d+)")
-  local expTime = os.time({
-    year  = tonumber(y),
-    month = tonumber(m),
-    day   = tonumber(d),
-    hour  = 23,
-    min   = 59,
-    sec   = 59
-  })
-  local now = os.time()
-  return now > expTime
+  local today = os.date("%Y-%m-%d")
+  return today > expireDate
 end
 
 -- 📂 Ambil permanent code
@@ -1108,7 +1099,7 @@ local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
--- 📂 Load daftar device yang sudah pakai code
+-- 📂 Load daftar device manualCode
 local usedDevices = {}
 local df = io.open(usedDevicesFile, "r")
 if df then
@@ -1118,7 +1109,6 @@ if df then
   df:close()
 end
 
--- 🚨 Cek apakah device sudah terdaftar
 local function isDeviceRegistered(id)
   for _, d in ipairs(usedDevices) do
     if d == id then return true end
@@ -1126,49 +1116,43 @@ local function isDeviceRegistered(id)
   return false
 end
 
+-- ✅ Jika sudah auto-login dengan permanent code
 if savedHash == expectedHash then
-  gg.toast("✅ Auto-login success (saved code)")
+  gg.toast("✅ Auto-login success (Permanent Code)")
 else
-  -- 🔑 Prompt sampai benar
   while true do
+    -- 🔑 Prompt masukin code
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then 
-      gg.alert("❌ Cancelled")
-	resetMode()
-      os.exit()
-    end
+    if not input then gg.alert("❌ Cancelled") os.exit() end
     local code = input[1]
 
-    -- 🚨 Cek expired hanya kalau bukan manual code
-    if isExpiredDate() and code ~= manualCode then
-      gg.alert("⛔ Code expired by date limit (" .. expireDate .. ")")
-	resetMode()
-      os.exit()
-    end
+    if code == permanentCode then
+      -- Permanent tanpa batas
+      local f = io.open(passFile, "w")
+      if f then f:write(expectedHash) f:close() end
+      gg.toast("✅ Access granted with Permanent Code")
+      break
 
-    if code == permanentCode or code == manualCode then
-      -- 🚨 Batas maksimal device 20
-      if not isDeviceRegistered(deviceID) then
-        if #usedDevices >= 20 then
-          gg.alert("⛔ Code expired: already used on 20 devices")
-		resetMode()
-          os.exit()
-        else
-          -- Tambahkan device ke daftar
-          local dfw = io.open(usedDevicesFile, "a")
-          if dfw then dfw:write(deviceID .. "\n") dfw:close() end
+    elseif code == manualCode then
+      -- 🚨 Cek expired dulu
+      if isExpiredDate() then
+        gg.alert("⛔ Manual code expired on " .. expireDate)
+      else
+        -- 🚨 Cek batas 20 device
+        if not isDeviceRegistered(deviceID) then
+          if #usedDevices >= 20 then
+            gg.alert("⛔ Manual code already used on 20 devices")
+          else
+            local dfw = io.open(usedDevicesFile, "a")
+            if dfw then dfw:write(deviceID .. "\n") dfw:close() end
+          end
         end
+        gg.toast("✅ Access granted with Manual Code")
+        break
       end
 
-      -- Simpan hash agar auto login kedepannya  
-      local f = io.open(passFile, "w")  
-      if f then f:write(expectedHash) f:close() end  
-      gg.toast("✅ Access granted & code saved")
-      break  -- keluar dari loop kalau sukses
-
     else
-      gg.alert("❌ Invalid code, please try again.")
-      -- balik lagi ke prompt
+      gg.alert("❌ Invalid code, please try again")
     end
   end
 		end
