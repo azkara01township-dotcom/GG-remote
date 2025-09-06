@@ -1116,6 +1116,39 @@ local function isDeviceRegistered(id)
   return false
 end
 
+-- 🗑️ Hapus device dari daftar (slot kosong)
+local function removeDevice(id)
+  local newList = {}
+  for _, d in ipairs(usedDevices) do
+    if d ~= id then
+      newList[#newList+1] = d
+    end
+  end
+  usedDevices = newList
+  local dfw = io.open(usedDevicesFile, "w")
+  if dfw then
+    for _, d in ipairs(usedDevices) do
+      dfw:write(d .. "\n")
+    end
+    dfw:close()
+  end
+end
+
+-- ➕ Daftarkan device baru (kalau ada slot kosong)
+local function registerDevice(id)
+  if not isDeviceRegistered(id) then
+    if #usedDevices >= 20 then
+      gg.alert("⛔ Manual code already used on 20 devices\nPlease wait until a slot is free.")
+      return false
+    else
+      local dfw = io.open(usedDevicesFile, "a")
+      if dfw then dfw:write(id .. "\n") dfw:close() end
+      usedDevices[#usedDevices+1] = id
+    end
+  end
+  return true
+end
+
 -- ✅ Jika sudah auto-login dengan permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
@@ -1123,7 +1156,7 @@ else
   while true do
     -- 🔑 Prompt masukin code
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+    if not input then gg.alert("❌ Cancelled") os.exit() end
     local code = input[1]
 
     if code == permanentCode then
@@ -1138,17 +1171,16 @@ else
       if isExpiredDate() then
         gg.alert("⛔ Manual code expired on " .. expireDate)
       else
-        -- 🚨 Cek batas 20 device
-        if not isDeviceRegistered(deviceID) then
-          if #usedDevices >= 20 then
-            gg.alert("⛔ Manual code already used on 20 devices")
-          else
-            local dfw = io.open(usedDevicesFile, "a")
-            if dfw then dfw:write(deviceID .. "\n") dfw:close() end
+        if registerDevice(deviceID) then
+          gg.alert("✅ Access granted with Manual Code\n\n⚠️ Your slot will be released after exit.")
+          -- Hook untuk hapus slot setelah user keluar
+          local oldExit = os.exit
+          os.exit = function(...)
+            removeDevice(deviceID)
+            return oldExit(...)
           end
+          break
         end
-        gg.toast("✅ Access granted with Manual Code")
-        break
       end
 
     else
@@ -1156,7 +1188,7 @@ else
     end
   end
 		end
-
+		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
   _( "unlock_season" ),
