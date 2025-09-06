@@ -1046,7 +1046,7 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+ -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile        = "/sdcard/.azka_pass"
 local permCodeFile    = "/sdcard/.azka_current_perm.txt"
@@ -1092,7 +1092,8 @@ if not permanentCode then
 end
 
 local deviceID = getDeviceID()
-local expectedHash = hash(permanentCode .. deviceID)
+local expectedHashPermanent = hash(permanentCode .. deviceID)
+local expectedHashManual    = hash(manualCode .. deviceID)
 
 -- 🔍 Cek apakah sudah pernah disimpan (auto login)
 local pf = io.open(passFile, "r")
@@ -1104,7 +1105,9 @@ local usedDevices = {}
 local df = io.open(usedDevicesFile, "r")
 if df then
   for line in df:lines() do
-    usedDevices[#usedDevices+1] = line
+    if line ~= "" then
+      usedDevices[#usedDevices+1] = line
+    end
   end
   df:close()
 end
@@ -1137,8 +1140,8 @@ end
 -- ➕ Daftarkan device baru (kalau ada slot kosong)
 local function registerDevice(id)
   if not isDeviceRegistered(id) then
-    if #usedDevices >= 20 then
-      gg.alert("⛔ Manual code already used on 20 devices\nPlease wait until a slot is free.")
+    if #usedDevices >= 10 then
+      gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
       return false
     else
       local dfw = io.open(usedDevicesFile, "a")
@@ -1149,9 +1152,18 @@ local function registerDevice(id)
   return true
 end
 
--- ✅ Jika sudah auto-login dengan permanent code
-if savedHash == expectedHash then
+-- ✅ Jika sudah auto-login
+if savedHash == expectedHashPermanent then
   gg.toast("✅ Auto-login success (Permanent Code)")
+elseif savedHash == expectedHashManual then
+  gg.toast("✅ Auto-login success (Manual Code)")
+  gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n⚠️ Your slot will be released after exit.")
+  -- Hook hapus slot saat keluar
+  local oldExit = os.exit
+  os.exit = function(...)
+    removeDevice(deviceID)
+    return oldExit(...)
+  end
 else
   while true do
     -- 🔑 Prompt masukin code
@@ -1162,8 +1174,8 @@ else
     if code == permanentCode then
       -- Permanent tanpa batas
       local f = io.open(passFile, "w")
-      if f then f:write(expectedHash) f:close() end
-      gg.toast("✅ Access granted with Permanent Code")
+      if f then f:write(expectedHashPermanent) f:close() end
+      gg.alert("✅ Access granted with Permanent Code\n\n🌍 Active Users: " .. #usedDevices .. "/10")
       break
 
     elseif code == manualCode then
@@ -1172,7 +1184,10 @@ else
         gg.alert("⛔ Manual code expired on " .. expireDate)
       else
         if registerDevice(deviceID) then
-          gg.alert("✅ Access granted with Manual Code\n\n⚠️ Your slot will be released after exit.")
+          -- Save hash manual → auto login
+          local f = io.open(passFile, "w")
+          if f then f:write(expectedHashManual) f:close() end
+          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10\n⚠️ Your slot will be released after exit.")
           -- Hook untuk hapus slot setelah user keluar
           local oldExit = os.exit
           os.exit = function(...)
