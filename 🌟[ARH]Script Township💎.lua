@@ -1215,14 +1215,23 @@ end
 
 -- 🔄 Auto-refresh timestamp supaya tidak dianggap keluar
 gg.setVisible(false)
-while true do
-  local dev = findDevice(deviceID)
-  if dev then
-    dev.lastSeen = os.time()
-    saveDevices()
+-- 🔄 Auto-refresh timestamp (background task)
+local function heartbeat()
+  while true do
+    local dev = findDevice(deviceID)
+    if dev then
+      dev.lastSeen = os.time()
+      saveDevices()
+    end
+    gg.sleep(60000) -- update tiap 60 detik
   end
-  gg.sleep(60000) -- update tiap 60 detik
 end
+
+-- Jalankan heartbeat di thread terpisah
+pcall(function() heartbeat() end)
+
+-- ✅ Setelah login sukses, lanjut ke main menu kamu
+-- mainMenu()
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
