@@ -1046,11 +1046,16 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
- -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+-- 📂 File dan folder disamarkan agar tidak mencurigakan
 
-local passFile        = "/sdcard/.azka_pass"
-local permCodeFile    = "/sdcard/.azka_current_perm.txt"
-local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
+-- 📂 Base hidden folder (nama samaran)
+local baseDir = "/sdcard/.syscache_az/"
+
+-- 📂 File paths (nama file juga disamarkan)
+local passFile        = baseDir .. ".p.dat"
+local permCodeFile    = baseDir .. ".c.dat"
+local usedDevicesFile = baseDir .. ".u.dat"
 
 -- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
@@ -1058,13 +1063,42 @@ local manualCode = "ARH-MASTER-2025"
 -- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-06"
 
+-- 📌 Cek folder bisa dipakai (tanpa os.execute)
+local function ensureDir(path)
+  local testFile = path .. ".test"
+  local f = io.open(testFile, "w")
+  if f then
+    f:write("ok")
+    f:close()
+    os.remove(testFile)
+    return true
+  end
+  return false
+end
+
+-- 🔄 Kalau gagal pakai folder samaran → fallback ke /sdcard/.azka_hidden/
+if not ensureDir(baseDir) then
+  baseDir = "/sdcard/.azka_hidden/"
+  passFile        = baseDir .. ".p.dat"
+  permCodeFile    = baseDir .. ".c.dat"
+  usedDevicesFile = baseDir .. ".u.dat"
+end
+
 -- 📌 Fungsi utilitas
-local function getDeviceID()
+local function getDeviceInfo()
   local info = gg.getTargetInfo() or {}
-  return (info.label or "") .. "-" ..
-         (info.versionCode or "") .. "-" ..
-         (os.getenv("HOSTNAME") or "") .. "-" ..
-         (gg.getDeviceId and gg.getDeviceId() or "")
+  local deviceId = gg.getDeviceId and gg.getDeviceId() or "Unknown"
+  return {
+    brand  = info.label or "Unknown",
+    ver    = info.versionCode or "Unknown",
+    host   = os.getenv("HOSTNAME") or "Unknown",
+    id     = deviceId
+  }
+end
+
+local function getDeviceID()
+  local d = getDeviceInfo()
+  return d.brand .. "-" .. d.ver .. "-" .. d.host .. "-" .. d.id
 end
 
 local function hash(str)
@@ -1091,7 +1125,8 @@ if not permanentCode then
   os.exit()
 end
 
-local deviceID = getDeviceID()
+local deviceID   = getDeviceID()
+local deviceInfo = getDeviceInfo()
 local expectedHashPermanent = hash(permanentCode .. deviceID)
 local expectedHashManual    = hash(manualCode .. deviceID)
 
@@ -1157,8 +1192,9 @@ if savedHash == expectedHashPermanent then
   gg.toast("✅ Auto-login success (Permanent Code)")
 elseif savedHash == expectedHashManual then
   gg.toast("✅ Auto-login success (Manual Code)")
-  gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n⚠️ Your slot will be released after exit.")
-  -- Hook hapus slot saat keluar
+  gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
+           "\n🔑 Device ID: " .. deviceInfo.id ..
+           "\n⚠️ Your slot will be released after exit.")
   local oldExit = os.exit
   os.exit = function(...)
     removeDevice(deviceID)
@@ -1166,29 +1202,27 @@ elseif savedHash == expectedHashManual then
   end
 else
   while true do
-    -- 🔑 Prompt masukin code
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
     if not input then gg.alert("❌ Cancelled") os.exit() end
     local code = input[1]
 
     if code == permanentCode then
-      -- Permanent tanpa batas
       local f = io.open(passFile, "w")
       if f then f:write(expectedHashPermanent) f:close() end
-      gg.alert("✅ Access granted with Permanent Code\n\n🌍 Active Users: " .. #usedDevices .. "/10")
+      gg.alert("✅ Access granted with Permanent Code")
       break
 
     elseif code == manualCode then
-      -- 🚨 Cek expired dulu
       if isExpiredDate() then
         gg.alert("⛔ Manual code expired on " .. expireDate)
       else
         if registerDevice(deviceID) then
-          -- Save hash manual → auto login
           local f = io.open(passFile, "w")
           if f then f:write(expectedHashManual) f:close() end
-          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10\n⚠️ Your slot will be released after exit.")
-          -- Hook untuk hapus slot setelah user keluar
+          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
+                   "\n📱 Brand: " .. deviceInfo.brand ..
+                   "\n🔑 Device ID: " .. deviceInfo.id ..
+                   "\n⚠️ Your slot will be released after exit.")
           local oldExit = os.exit
           os.exit = function(...)
             removeDevice(deviceID)
