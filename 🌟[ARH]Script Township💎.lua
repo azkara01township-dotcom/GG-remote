@@ -1053,7 +1053,7 @@ local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
 local manualCode = "ARH-MASTER-2025"
-local expireDate = "2025-09-06"
+local expireDate = "2025-09-10"
 local MAX_USERS  = 10 -- max manual users, easy to edit
 local SLOT_TIMEOUT = 5 -- seconds
 
@@ -1192,7 +1192,7 @@ end
 if not savedHash then
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
     local code = input[1]
 
     if code == permanentCode then
