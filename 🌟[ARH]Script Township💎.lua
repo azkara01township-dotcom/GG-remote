@@ -1052,169 +1052,177 @@ local passFile        = "/sdcard/.ulog_craft"
 local permCodeFile    = "/sdcard/.brush_viu.txt"
 local usedDevicesFile = "/sdcard/.vutlenot.txt
 
+-- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
+
+-- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-06"
 
--- 📌 Utility
+-- ⏱ Slot otomatis dilepas setelah 5 detik jika user tidak login lagi
+local manualCodeLimitSec = 5
+
+-- 📌 Fungsi utilitas
 local function getDeviceInfo()
-  local info = gg.getTargetInfo() or {}
-  local deviceId = "Unknown"
-  if gg.getDeviceId then
-    local ok, id = pcall(gg.getDeviceId)
-    if ok and id and id ~= "" then deviceId = id end
-  end
-  return {
-    brand  = info.label or "Unknown",
-    ver    = info.versionCode or "Unknown",
-    host   = os.getenv("HOSTNAME") or "Unknown",
-    id     = deviceId
-  }
+    local info = gg.getTargetInfo() or {}
+    local deviceId = gg.getDeviceId and gg.getDeviceId() or "Unknown"
+    return {
+        brand  = info.label or "Unknown",
+        ver    = info.versionCode or "Unknown",
+        host   = os.getenv("HOSTNAME") or "Unknown",
+        id     = deviceId
+    }
 end
 
 local function getDeviceID()
-  local d = getDeviceInfo()
-  return d.brand .. "-" .. d.ver .. "-" .. d.host .. "-" .. d.id
+    local d = getDeviceInfo()
+    return d.brand .. "-" .. d.ver .. "-" .. d.host .. "-" .. d.id
 end
 
 local function hash(str)
-  local h = 0
-  for i = 1, #str do
-    h = (h * 31 + str:byte(i)) % 1000000007
-  end
-  return tostring(h)
+    local h = 0
+    for i = 1, #str do
+        h = (h * 31 + str:byte(i)) % 1000000007
+    end
+    return tostring(h)
 end
 
+-- 📅 Cek tanggal expired (hanya untuk manualCode)
 local function isExpiredDate()
-  local today = os.date("%Y-%m-%d")
-  return today > expireDate
+    local today = os.date("%Y-%m-%d")
+    return today > expireDate
 end
 
--- 📂 Load permanent code
+-- 📂 Ambil permanent code
 local f = io.open(permCodeFile, "r")
 local permanentCode = f and f:read("*a") or nil
 if f then f:close() end
 
 if not permanentCode then
-  gg.alert("❌ Permanent code not found. Please re-run main script.")
-  os.exit()
+    gg.alert("❌ Permanent code not found. Please re-run main script.")
+    os.exit()
 end
 
-local deviceInfo = getDeviceInfo()
 local deviceID   = getDeviceID()
+local deviceInfo = getDeviceInfo()
 local expectedHashPermanent = hash(permanentCode .. deviceID)
 local expectedHashManual    = hash(manualCode .. deviceID)
 
--- 🔍 Auto-login
+-- 🔍 Cek apakah sudah pernah disimpan (auto login)
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
--- 📂 Load used devices
-local function loadUsedDevices()
-  local list = {}
-  local df = io.open(usedDevicesFile, "r")
-  if df then
+-- 📂 Load daftar device manualCode dengan lastActive
+local usedDevices = {}
+local df = io.open(usedDevicesFile, "r")
+if df then
     for line in df:lines() do
-      if line ~= "" then list[#list+1] = line end
+        if line ~= "" then
+            local id, ts = line:match("([^|]+)|([^|]+)")
+            if id and ts then
+                usedDevices[#usedDevices+1] = {id=id, lastActive=tonumber(ts)}
+            end
+        end
     end
     df:close()
-  end
-  return list
 end
 
-local usedDevices = loadUsedDevices()
+-- 🕒 Hapus slot yang sudah tidak aktif lebih dari manualCodeLimitSec
+local function cleanupExpiredSlots()
+    local now = os.time()
+    local newList = {}
+    for _, d in ipairs(usedDevices) do
+        if now - d.lastActive <= manualCodeLimitSec then
+            newList[#newList+1] = d
+        end
+    end
+    usedDevices = newList
+    local dfw = io.open(usedDevicesFile, "w")
+    if dfw then
+        for _, d in ipairs(usedDevices) do
+            dfw:write(d.id .. "|" .. d.lastActive .. "\n")
+        end
+        dfw:close()
+    end
+end
+
+cleanupExpiredSlots()
 
 local function isDeviceRegistered(id)
-  for _, d in ipairs(usedDevices) do
-    if d == id then return true end
-  end
-  return false
-end
-
-local function saveUsedDevices()
-  local dfw = io.open(usedDevicesFile, "w")
-  if dfw then
     for _, d in ipairs(usedDevices) do
-      dfw:write(d .. "\n")
+        if d.id == id then return true end
     end
-    dfw:close()
-  end
-end
-
-local function removeDevice(id)
-  local newList = {}
-  for _, d in ipairs(usedDevices) do
-    if d ~= id then newList[#newList+1] = d end
-  end
-  usedDevices = newList
-  saveUsedDevices()
+    return false
 end
 
 local function registerDevice(id)
-  if not isDeviceRegistered(id) then
-    if #usedDevices >= 10 then
-      gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
-      return false
-    else
-      usedDevices[#usedDevices+1] = id
-      saveUsedDevices()
-    end
-  end
-  return true
-end
-
--- 🛠️ Override os.exit untuk hapus device real-time
-local function setupExitHandler()
-  local oldExit = os.exit
-  os.exit = function(...)
-    removeDevice(deviceID)
-    return oldExit(...)
-  end
-end
-
--- ✅ Auto-login check
-if savedHash == expectedHashPermanent then
-  gg.toast("✅ Auto-login success (Permanent Code)")
-elseif savedHash == expectedHashManual then
-  gg.toast("✅ Auto-login success (Manual Code)")
-  gg.alert("🌍 Active Users: " .. #usedDevices .. "/10" ..
-           "\n📱 Brand: " .. deviceInfo.brand ..
-           "\n🔑 Device ID: " .. deviceInfo.id ..
-           "\n⚠️ Your slot will be released after exit.")
-  setupExitHandler()
-else
-  while true do
-    local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
-    local code = input[1]
-
-    if code == permanentCode then
-      local f = io.open(passFile, "w")
-      if f then f:write(expectedHashPermanent) f:close() end
-      gg.alert("✅ Access granted with Permanent Code")
-      break
-
-    elseif code == manualCode then
-      if isExpiredDate() then
-        gg.alert("⛔ Manual code expired on " .. expireDate)
-      else
-        if registerDevice(deviceID) then
-          local f = io.open(passFile, "w")
-          if f then f:write(expectedHashManual) f:close() end
-          -- reload usedDevices untuk realtime count
-          usedDevices = loadUsedDevices()
-          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
-                   "\n📱 Brand: " .. deviceInfo.brand ..
-                   "\n🔑 Device ID: " .. deviceInfo.id ..
-                   "\n⚠️ Your slot will be released after exit.")
-          setupExitHandler()
-          break
+    local now = os.time()
+    if not isDeviceRegistered(id) then
+        if #usedDevices >= 10 then
+            gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
+            return false
+        else
+            usedDevices[#usedDevices+1] = {id=id, lastActive=now}
         end
-      end
     else
-      gg.alert("❌ Invalid code, please try again")
+        -- update lastActive jika sudah terdaftar
+        for _, d in ipairs(usedDevices) do
+            if d.id == id then d.lastActive = now end
+        end
     end
-  end
+    -- simpan kembali
+    local dfw = io.open(usedDevicesFile, "w")
+    if dfw then
+        for _, d in ipairs(usedDevices) do
+            dfw:write(d.id .. "|" .. d.lastActive .. "\n")
+        end
+        dfw:close()
+    end
+    return true
+end
+
+-- ✅ Jika sudah auto-login
+if savedHash == expectedHashPermanent then
+    gg.toast("✅ Auto-login success (Permanent Code)")
+
+elseif savedHash == expectedHashManual then
+    registerDevice(deviceID)  -- update lastActive
+    gg.toast("✅ Auto-login success (Manual Code)")
+    gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
+             "\n🔑 Device ID: " .. deviceInfo.id ..
+             "\n⚠️ Your slot will tetap tercatat, dan otomatis dilepas setelah 5 detik tidak login lagi.")
+
+else
+    while true do
+        local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
+        if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+        local code = input[1]
+
+        if code == permanentCode then
+            local f = io.open(passFile, "w")
+            if f then f:write(expectedHashPermanent) f:close() end
+            gg.alert("✅ Access granted with Permanent Code")
+            break
+
+        elseif code == manualCode then
+            if isExpiredDate() then
+                gg.alert("⛔ Manual code expired on " .. expireDate)
+            else
+                if registerDevice(deviceID) then
+                    local f = io.open(passFile, "w")
+                    if f then f:write(expectedHashManual) f:close() end
+                    gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
+                             "\n📱 Brand: " .. deviceInfo.brand ..
+                             "\n🔑 Device ID: " .. deviceInfo.id ..
+                             "\n⚠️ Slot akan otomatis dilepas jika tidak login selama 5 detik.")
+                    break
+                end
+            end
+
+        else
+            gg.alert("❌ Invalid code, please try again")
+        end
+    end
 		end
 		
   local menu = gg.choice({
