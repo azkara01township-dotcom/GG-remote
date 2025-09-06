@@ -1048,9 +1048,9 @@ function Main()
 
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS + DEVICE INFO)
 		
-local passFile        = "/sdcard/.ulog_craft"
-local permCodeFile    = "/sdcard/.brush_viu.txt"
-local usedDevicesFile = "/sdcard/.vutlenot.txt
+local passFile        = "/sdcard/.azka_pass"
+local permCodeFile    = "/sdcard/.azka_current_perm.txt"
+local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
 -- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
