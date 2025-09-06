@@ -1052,20 +1052,17 @@ local passFile        = "/sdcard/.ulog_craft"
 local permCodeFile    = "/sdcard/.brush_viu.txt"
 local usedDevicesFile = "/sdcard/.vutlenot.txt"
 
--- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
-
--- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-06"
 
--- 📌 Fungsi utilitas
+-- 🔹 Device info lebih akurat
 local function getDeviceInfo()
   local info = gg.getTargetInfo() or {}
-  local deviceId = gg.getDeviceId and gg.getDeviceId() or "Unknown"
+  local deviceId = (gg.getDeviceId and gg.getDeviceId()) or (info.device or "UnknownDevice")
   return {
-    brand  = info.label or "Unknown",
-    ver    = info.versionCode or "Unknown",
-    host   = os.getenv("HOSTNAME") or "Unknown",
+    brand  = info.label or "UnknownBrand",
+    ver    = info.versionCode or "UnknownVer",
+    host   = os.getenv("HOSTNAME") or "UnknownHost",
     id     = deviceId
   }
 end
@@ -1083,17 +1080,15 @@ local function hash(str)
   return tostring(h)
 end
 
--- 📅 Cek tanggal expired (hanya untuk manualCode)
 local function isExpiredDate()
   local today = os.date("%Y-%m-%d")
   return today > expireDate
 end
 
--- 📂 Ambil permanent code
+-- 📂 Load permanent code
 local f = io.open(permCodeFile, "r")
 local permanentCode = f and f:read("*a") or nil
 if f then f:close() end
-
 if not permanentCode then
   gg.alert("❌ Permanent code not found. Please re-run main script.")
   os.exit()
@@ -1104,76 +1099,77 @@ local deviceInfo = getDeviceInfo()
 local expectedHashPermanent = hash(permanentCode .. deviceID)
 local expectedHashManual    = hash(manualCode .. deviceID)
 
--- 🔍 Cek apakah sudah pernah disimpan (auto login)
+-- 🔍 Load saved hash (auto-login)
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
--- 📂 Load daftar device manualCode
-local usedDevices = {}
-local df = io.open(usedDevicesFile, "r")
-if df then
-  for line in df:lines() do
-    if line ~= "" then
-      usedDevices[#usedDevices+1] = line
+-- 📂 Fungsi load device list
+local function loadUsedDevices()
+  local list = {}
+  local df = io.open(usedDevicesFile, "r")
+  if df then
+    for line in df:lines() do
+      if line ~= "" then table.insert(list, line) end
     end
+    df:close()
   end
-  df:close()
+  return list
+end
+
+local function saveUsedDevices(list)
+  local dfw = io.open(usedDevicesFile, "w")
+  if dfw then
+    for _, d in ipairs(list) do dfw:write(d.."\n") end
+    dfw:close()
+  end
 end
 
 local function isDeviceRegistered(id)
-  for _, d in ipairs(usedDevices) do
+  local devices = loadUsedDevices()
+  for _, d in ipairs(devices) do
     if d == id then return true end
   end
   return false
 end
 
--- 🗑️ Hapus device dari daftar (slot kosong)
-local function removeDevice(id)
-  local newList = {}
-  for _, d in ipairs(usedDevices) do
-    if d ~= id then
-      newList[#newList+1] = d
-    end
-  end
-  usedDevices = newList
-  local dfw = io.open(usedDevicesFile, "w")
-  if dfw then
-    for _, d in ipairs(usedDevices) do
-      dfw:write(d .. "\n")
-    end
-    dfw:close()
-  end
-end
-
--- ➕ Daftarkan device baru (kalau ada slot kosong)
 local function registerDevice(id)
+  local devices = loadUsedDevices()
   if not isDeviceRegistered(id) then
-    if #usedDevices >= 10 then
-      gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
+    if #devices >= 10 then
+      gg.alert("⛔ Manual code full ("..#devices.."/10 users)\nPlease wait until a slot is free.")
       return false
     else
-      local dfw = io.open(usedDevicesFile, "a")
-      if dfw then dfw:write(id .. "\n") dfw:close() end
-      usedDevices[#usedDevices+1] = id
+      table.insert(devices, id)
+      saveUsedDevices(devices)
     end
   end
   return true
 end
 
--- ✅ Jika sudah auto-login
+local function removeDevice(id)
+  local devices = loadUsedDevices()
+  local newList = {}
+  for _, d in ipairs(devices) do
+    if d ~= id then table.insert(newList, d) end
+  end
+  saveUsedDevices(newList)
+end
+
+-- 🔹 Override os.exit agar remove device real-time
+local oldExit = os.exit
+os.exit = function(...)
+  removeDevice(deviceID)
+  return oldExit(...)
+end
+
+-- ✅ Auto-login check
 if savedHash == expectedHashPermanent then
   gg.toast("✅ Auto-login success (Permanent Code)")
 elseif savedHash == expectedHashManual then
   gg.toast("✅ Auto-login success (Manual Code)")
-  gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
-           "\n🔑 Device ID: " .. deviceInfo.id ..
-           "\n⚠️ Your slot will be released after exit.")
-  local oldExit = os.exit
-  os.exit = function(...)
-    removeDevice(deviceID)
-    return oldExit(...)
-  end
+  local devices = loadUsedDevices()
+  gg.alert("🌍 Active Users: "..#devices.."/10\n📱 Brand: "..deviceInfo.brand.."\n🔑 Device ID: "..deviceInfo.id.."\n⚠️ Your slot will be released after exit.")
 else
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
@@ -1188,20 +1184,16 @@ else
 
     elseif code == manualCode then
       if isExpiredDate() then
-        gg.alert("⛔ Manual code expired on " .. expireDate)
+        gg.alert("⛔ Manual code expired on "..expireDate)
       else
         if registerDevice(deviceID) then
           local f = io.open(passFile, "w")
           if f then f:write(expectedHashManual) f:close() end
-          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
-                   "\n📱 Brand: " .. deviceInfo.brand ..
-                   "\n🔑 Device ID: " .. deviceInfo.id ..
+          local devices = loadUsedDevices()
+          gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: "..#devices.."/10"..
+                   "\n📱 Brand: "..deviceInfo.brand..
+                   "\n🔑 Device ID: "..deviceInfo.id..
                    "\n⚠️ Your slot will be released after exit.")
-          local oldExit = os.exit
-          os.exit = function(...)
-            removeDevice(deviceID)
-            return oldExit(...)
-          end
           break
         end
       end
