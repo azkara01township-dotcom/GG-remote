@@ -1048,8 +1048,7 @@ function Main()
 
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS + DEVICE INFO)
 local dur = "/sdcard/.syscache_az"  -- 📂 folder aman & tersembunyi
-os.execute("mkdir -p " .. dur)      -- pastikan folder ada
-		
+
 local passFile        = dur .."/.azka_pass"
 local permCodeFile    = dur .."/.azka_current_perm.txt"
 local usedDevicesFile = dur .."/.azka_used_devices.txt"
@@ -1179,7 +1178,7 @@ elseif savedHash == expectedHashManual then
 else
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
     local code = input[1]
 
     if code == permanentCode then
