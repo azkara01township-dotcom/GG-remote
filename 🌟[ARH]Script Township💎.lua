@@ -1216,14 +1216,13 @@ end
 -- 🔄 Auto-refresh timestamp supaya tidak dianggap keluar
 gg.setVisible(false)
 while true do
-  os.remove("") -- dummy biar loop jalan
   local dev = findDevice(deviceID)
   if dev then
     dev.lastSeen = os.time()
     saveDevices()
   end
-  gg.sleep(60000) -- update setiap 60 detik
-		end
+  gg.sleep(60000) -- update tiap 60 detik
+end
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
