@@ -1046,163 +1046,82 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 20 ACTIVE DEVICES, AUTO-REMOVE ON EXIT + AUTO-REFRESH QUEUE + USER COUNT DISPLAY)
+-- 💎 ARH EXPIRED LOGIN HANDLER (LIMIT 20 USERS, SHOW COUNTER)
 
-local passFile        = "/sdcard/.azka_pass"
-local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
+local expireCodeFile  = "/sdcard/.azka_current_expired.txt"
 
--- 🔑 Master manual code (bypass semua batasan)
-local manualCode = "ARH-MASTER-2025"
+local expireCode = "ARH-EXPIRED-2025" -- contoh expired code
+local maxUsers   = 20
 
--- 📅 Expire date
-local expireDate = "2025-9-5"
+-- 📂 Baca isi file dengan aman
+local function readFile(path)
+    local f = io.open(path, "r")
+    if not f then return nil end
+    local c = f:read("*a")
+    f:close()
+    return c
+end
 
--- 📌 Fungsi utilitas
+-- 📂 Tulis file dengan aman
+local function writeFile(path, data)
+    local f = io.open(path, "w+")
+    if not f then return false end
+    f:write(data)
+    f:close()
+    return true
+end
+
+-- 🔢 Hitung user yang sudah login dengan expired code
+local function getUserCount()
+    local data = readFile(usedDevicesFile)
+    if not data or data == "" then return 0 end
+    local lines = {}
+    for line in data:gmatch("[^\r\n]+") do
+        table.insert(lines, line)
+    end
+    return #lines
+end
+
+-- 💾 Simpan device baru
+local function saveDevice(id)
+    local f = io.open(usedDevicesFile, "a+")
+    f:write(id .. "\n")
+    f:close()
+end
+
+-- 📱 Dapatkan ID unik device
 local function getDeviceID()
-  local info = gg.getTargetInfo() or {}
-  return (info.label or "") .. "-" ..
-         (info.versionCode or "") .. "-" ..
-         (os.getenv("HOSTNAME") or "") .. "-" ..
-         (gg.getDeviceId and gg.getDeviceId() or "")
+    local info = gg.getTargetInfo()
+    return (info and info.packageName or "unknown") .. "-" .. os.date("%Y%m%d%H%M%S")
 end
 
-local function hash(str)
-  local h = 0
-  for i = 1, #str do
-    h = (h * 31 + str:byte(i)) % 1000000007
-  end
-  return tostring(h)
-end
+-- 🚪 Login expired code
+function loginExpired()
+    local input = gg.prompt({"Enter Expired Code:"}, nil, {"text"})
+    if not input then os.exit() end
 
--- 📅 Cek tanggal expire pakai timestamp
-local function isExpiredDate()
-  local today = os.time{year=os.date("%Y"), month=os.date("%m"), day=os.date("%d")}
-  local y,m,d = expireDate:match("(%d+)%-(%d+)%-(%d+)")
-  if not y or not m or not d then return false end
-  local expTime = os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d)}
-  return today > expTime
-end
-
--- 📂 Ambil permanent code
-local f = io.open(permCodeFile, "r")
-local permanentCode = f and f:read("*a") or nil
-if f then f:close() end
-
-if not permanentCode then
-  gg.alert("❌ Permanent code not found. Please re-run main script.")
-  os.exit()
-end
-
-local deviceID = getDeviceID()
-local expectedHash = hash(permanentCode .. deviceID)
-
--- 🔍 Cek apakah sudah pernah disimpan (auto login)
-local pf = io.open(passFile, "r")
-local savedHash = pf and pf:read("*a") or nil
-if pf then pf:close() end
-
--- 📂 Load daftar device yang sudah pakai code
-local function loadDevices()
-  local list = {}
-  local df = io.open(usedDevicesFile, "r")
-  if df then
-    for line in df:lines() do
-      if line ~= "" then list[#list+1] = line end
-    end
-    df:close()
-  end
-  return list
-end
-
-local usedDevices = loadDevices()
-
--- 🚨 Fungsi: cek device terdaftar
-local function isDeviceRegistered(id)
-  for _, d in ipairs(usedDevices) do
-    if d == id then return true end
-  end
-  return false
-end
-
--- 🚨 Fungsi: simpan daftar device
-local function saveDevices(list)
-  local dfw = io.open(usedDevicesFile, "w")
-  if dfw then
-    for _, d in ipairs(list) do
-      dfw:write(d .. "\n")
-    end
-    dfw:close()
-  end
-end
-
--- 🚨 Fungsi: hapus device saat keluar
-local function removeDevice(id)
-  local newList = {}
-  for _, d in ipairs(usedDevices) do
-    if d ~= id then
-      newList[#newList+1] = d
-    end
-  end
-  usedDevices = newList
-  saveDevices(usedDevices)
-end
-
--- ⛔ Expired date check + tampilkan jumlah user
-if isExpiredDate() then
-  usedDevices = loadDevices()
-  gg.alert("⛔ Code expired by date limit (" .. expireDate .. ")\nCurrent users: " .. #usedDevices .. "/20")
-  os.exit()
-end
-
--- 🔑 Login function
-local function doLogin()
-  usedDevices = loadDevices()
-
-  if savedHash == expectedHash then
-    gg.toast("✅ Auto-login success (" .. #usedDevices .. "/20)")
-    return true
-  end
-
-  local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-  if not input then gg.alert("❌ Cancelled") os.exit() end
-  local code = input[1]
-
-  if code == permanentCode or code == manualCode then
-    if not isDeviceRegistered(deviceID) then
-      while true do
-        usedDevices = loadDevices()
-        if #usedDevices < 20 then
-          usedDevices[#usedDevices+1] = deviceID
-          saveDevices(usedDevices)
-          break
-        else
-          local btn = gg.alert("⏳ All 20 slots are currently used.\nRetry in 5 seconds...", "Wait", "Cancel")
-          if btn == 2 then os.exit() end
-          gg.sleep(5000) -- tunggu 5 detik lalu cek lagi
-        end
-      end
+    if input[1] ~= expireCode then
+        gg.alert("❌ Wrong code!")
+        os.exit()
     end
 
-    local f = io.open(passFile, "w")
-    if f then f:write(expectedHash) f:close() end
-    gg.alert("✅ Access granted (" .. #usedDevices .. "/20)")
-    return true
-  else
-    gg.alert("❌ Invalid code")
-    os.exit()
-  end
+    local userCount = getUserCount()
+    if userCount >= maxUsers then
+        gg.alert("🚫 Limit reached (" .. maxUsers .. "/" .. maxUsers .. ")")
+        os.exit()
+    end
+
+    -- Simpan device baru
+    local deviceID = getDeviceID()
+    saveDevice(deviceID)
+
+    local newCount = userCount + 1
+    gg.alert("✅ Expired code accepted!\n👥 Users: " .. newCount .. "/" .. maxUsers)
 end
 
--- 🚀 Mulai login
-doLogin()
-
--- 🛑 Hook os.exit supaya otomatis hapus device
-local real_exit = os.exit
-os.exit = function(...)
-  removeDevice(deviceID)
-  real_exit(...)
-		end
+-- 🚀 Jalankan login expired
+loginExpired()
 		
   local menu = gg.choice({
 _( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
