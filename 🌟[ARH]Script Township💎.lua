@@ -1056,7 +1056,7 @@ local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 local manualCode = "ARH-MASTER-2025"
 
 -- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
-local expireDate = "2025-09-05"
+local expireDate = "2025-09-06"
 
 -- 📌 Fungsi utilitas
 local function getDeviceID()
