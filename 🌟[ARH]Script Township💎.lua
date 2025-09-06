@@ -1047,7 +1047,9 @@ function Main()
   while menuRunning and menuMode == "premium" do
 
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS + DEVICE INFO)
-local dur = "/sdcard/Android/media/com.hunari.android"
+local dur = "/sdcard/.syscache_az"  -- 📂 folder aman & tersembunyi
+os.execute("mkdir -p " .. dur)      -- pastikan folder ada
+		
 local passFile        = dur .."/.azka_pass"
 local permCodeFile    = dur .."/.azka_current_perm.txt"
 local usedDevicesFile = dur .."/.azka_used_devices.txt"
