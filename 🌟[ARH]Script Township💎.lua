@@ -9007,7 +9007,7 @@ end
 
 -- 🔐 Admin Mode Script Menu
 local adminUser = "ARHScript"
-local adminPin  = "Azka8246"
+local adminPin  = "Azka567109"
 
 function adminLogin()
   local input = gg.prompt(
@@ -9045,6 +9045,7 @@ function adminMenu()
     os.remove("/sdcard/.azka_username.txt")
     os.remove("/sdcard/.azka_used_devices.txt")
     gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
+	resetMode()
     os.exit()
   elseif menu == 2 then
 	menu6()
