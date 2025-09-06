@@ -8966,6 +8966,7 @@ end
 function menu6()
   local title = banner
   local menu = gg.choice({
+	"adminLogin",
     _( "about_script" ),
     _( "contact_dev" ),
     _( "reset_default" ),
@@ -8975,16 +8976,13 @@ function menu6()
 
   if not menu then gg.toast("⚠️ No option selected!") return end
 
-  if menu == 1 then
+	if menu == 6 then
+    adminLogin()
+  elseif menu == 1 then
     about1()
   elseif menu == 2 then
     about2()
   elseif menu == 3 then
-	os.remove("/sdcard/.azka_pass")
-os.remove("/sdcard/.azka_current_perm.txt")
-os.remove("/sdcard/.azka_blacklist.txt")
-os.remove("/sdcard/.azka_username.txt")
-os.remove("/sdcard/.azka_used_devices.txt")
     resetMode()
     menuRunning = false
   elseif menu == 4 then
@@ -9004,6 +9002,52 @@ os.remove("/sdcard/.azka_used_devices.txt")
   menu6()
   elseif menu == 5 then
     if menuMode == "free" then freekey() else Main() end
+  end
+end
+
+-- 🔐 Admin Mode Script Menu
+local adminUser = "ARHScript"
+local adminPin  = "Azka8246"
+
+function adminLogin()
+  local input = gg.prompt(
+    {"👤 Username", "🔑 PIN"},
+    {"", ""},
+    {"text", "text"}
+  )
+
+  if not input then
+    gg.alert("❌ Cancelled")
+    return
+  end
+
+  local user = input[1]
+  local pin  = input[2]
+
+  if user == adminUser and pin == adminPin then
+    gg.toast("✅ Welcome, Admin "..user)
+    adminMenu()
+  else
+    gg.alert("❌ Invalid Username or PIN!")
+  end
+end
+
+function adminMenu()
+  local menu = gg.choice({
+    "🔁 Reset User Logs",
+    "🚪 Exit Admin Menu"
+  }, nil, "⚙️ ARH Admin Reset Logs")
+
+  if menu == 1 then
+    os.remove("/sdcard/.azka_pass")
+    os.remove("/sdcard/.azka_current_perm.txt")
+    os.remove("/sdcard/.azka_blacklist.txt")
+    os.remove("/sdcard/.azka_username.txt")
+    os.remove("/sdcard/.azka_used_devices.txt")
+    gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
+    os.exit()
+  elseif menu == 2 then
+    gg.toast("👋 Exiting Admin Mode...")
   end
 end
 
