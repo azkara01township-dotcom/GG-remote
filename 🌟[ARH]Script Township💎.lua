@@ -1046,14 +1046,14 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
- -- 💎 ARH PERMANENT LOGIN HANDLER (ENGLISH, AUTO SLOT + 5-SECOND REFRESH)
+-- 💎 ARH PERMANENT LOGIN HANDLER (ENGLISH, AUTO SLOT + 5-SECOND REFRESH, NO PROMPT AFTER LOGIN)
 
 local passFile        = "/sdcard/.azka_pass"
 local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
 local manualCode = "ARH-MASTER-2025"
-local expireDate = "2025-09-10"
+local expireDate = "2025-09-06"
 local MAX_USERS  = 10 -- max manual users, easy to edit
 local SLOT_TIMEOUT = 5 -- seconds
 
@@ -1072,11 +1072,6 @@ if not permanentCode then
   gg.alert("❌ Permanent code not found. Please re-run main script.")
   os.exit()
 end
-
--- 🔍 Auto-login
-local pf = io.open(passFile, "r")
-local savedHash = pf and pf:read("*a") or nil
-if pf then pf:close() end
 
 -- 📂 Load & Save devices
 local function loadUsedDevices()
@@ -1163,18 +1158,41 @@ local function setupExitHandler(code)
   end
 end
 
--- ✅ Auto-login check
-if savedHash == permanentCode then
-  gg.toast("✅ Auto-login success (Permanent Code)")
-elseif savedHash == manualCode then
+-- 🔍 Load saved hash
+local pf = io.open(passFile, "r")
+local savedHash = pf and pf:read("*a") or nil
+if pf then pf:close() end
+
+local function autoLogin(codeType)
   local devices = cleanExpiredSlots()
-  gg.toast("✅ Auto-login success (Manual Code)")
-  gg.alert("🌍 Active Users: " .. #devices .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after 5 seconds of idle.")
-  setupExitHandler(manualCode)
-else
+  if codeType == manualCode then
+    if registerDevice(manualCode) then
+      gg.toast("✅ Auto-login success (Manual Code)")
+      gg.alert("🌍 Active Users: " .. #devices .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after 5 seconds of idle.")
+      setupExitHandler(manualCode)
+      return true
+    else
+      return false
+    end
+  elseif codeType == permanentCode then
+    gg.toast("✅ Auto-login success (Permanent Code)")
+    return true
+  end
+  return false
+end
+
+-- ✅ Attempt auto-login first
+if savedHash == permanentCode or savedHash == manualCode then
+  if not autoLogin(savedHash) then
+    savedHash = nil -- fallback to prompt if slot full
+  end
+end
+
+-- 🔐 Prompt only if no saved hash or manual slot full
+if not savedHash then
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+    if not input then gg.alert("❌ Cancelled") os.exit() end
     local code = input[1]
 
     if code == permanentCode then
@@ -1188,6 +1206,8 @@ else
         gg.alert("⛔ Manual code expired on " .. expireDate)
       else
         if registerDevice(manualCode) then
+          local f = io.open(passFile, "w")
+          if f then f:write(manualCode) f:close() end
           local devices = cleanExpiredSlots()
           gg.alert("✅ Access granted with Manual Code\n🌍 Active Users: " .. #devices .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after 5 seconds of idle.")
           setupExitHandler(manualCode)
