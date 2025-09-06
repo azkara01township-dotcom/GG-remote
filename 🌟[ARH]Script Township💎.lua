@@ -1126,12 +1126,6 @@ local function isDeviceRegistered(id)
   return false
 end
 
--- 🚨 Cek tanggal expired dulu
-if isExpiredDate() then
-  gg.alert("⛔ Code expired by date limit (" .. expireDate .. ")")
-  os.exit()
-end
-
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (saved code)")
 else
@@ -1145,11 +1139,19 @@ else
     end
     local code = input[1]
 
+    -- 🚨 Cek expired hanya kalau bukan manual code
+    if isExpiredDate() and code ~= manualCode then
+      gg.alert("⛔ Code expired by date limit (" .. expireDate .. ")")
+	resetMode()
+      os.exit()
+    end
+
     if code == permanentCode or code == manualCode then
       -- 🚨 Batas maksimal device 20
       if not isDeviceRegistered(deviceID) then
         if #usedDevices >= 20 then
           gg.alert("⛔ Code expired: already used on 20 devices")
+		resetMode()
           os.exit()
         else
           -- Tambahkan device ke daftar
