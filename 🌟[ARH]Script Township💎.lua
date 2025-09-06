@@ -9034,9 +9034,9 @@ end
 
 function adminMenu()
   local menu = gg.choice({
-    "🔁 Reset User Logs",
-    "🚪 Exit Admin Menu"
-  }, nil, "⚙️ ARH Admin Reset Logs")
+    "🔁  Reset User Logs",
+    "❌  Exit Admin Menu"
+  }, {}, "⚙️ ARH Admin Reset Logs")
 
   if menu == 1 then
     os.remove("/sdcard/.azka_pass")
@@ -9047,6 +9047,7 @@ function adminMenu()
     gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
     os.exit()
   elseif menu == 2 then
+	menu6()
     gg.toast("👋 Exiting Admin Mode...")
   end
 end
