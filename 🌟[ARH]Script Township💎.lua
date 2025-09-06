@@ -8978,7 +8978,7 @@ function menu6()
 
 	if menu == 6 then
     adminLogin()
-  elseif menu == 1 then
+  if menu == 1 then
     about1()
   elseif menu == 2 then
     about2()
