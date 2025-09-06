@@ -1046,43 +1046,17 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
--- 📂 File dan folder disamarkan agar tidak mencurigakan
-
--- 📂 Base hidden folder (nama samaran)
-local baseDir = "/sdcard/.syscache_az/"
-
--- 📂 File paths (nama file juga disamarkan)
-local passFile        = baseDir .. ".p.dat"
-local permCodeFile    = baseDir .. ".c.dat"
-local usedDevicesFile = baseDir .. ".u.dat"
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS + DEVICE INFO)
+local dur = "/sdcard/Android/media/com.hunari.android"
+local passFile        = dur .."/.azka_pass"
+local permCodeFile    = dur .."/.azka_current_perm.txt"
+local usedDevicesFile = dur .."/.azka_used_devices.txt"
 
 -- 🔑 Master manual code (punya batasan expired + device limit)
-local manualCode = "ARH-MASTER-2025"
+local manualCode = "ARH-Freecode"
 
 -- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-06"
-
--- 📌 Cek folder bisa dipakai (tanpa os.execute)
-local function ensureDir(path)
-  local testFile = path .. ".test"
-  local f = io.open(testFile, "w")
-  if f then
-    f:write("ok")
-    f:close()
-    os.remove(testFile)
-    return true
-  end
-  return false
-end
-
--- 🔄 Kalau gagal pakai folder samaran → fallback ke /sdcard/.azka_hidden/
-if not ensureDir(baseDir) then
-  baseDir = "/sdcard/.azka_hidden/"
-  passFile        = baseDir .. ".p.dat"
-  permCodeFile    = baseDir .. ".c.dat"
-  usedDevicesFile = baseDir .. ".u.dat"
-end
 
 -- 📌 Fungsi utilitas
 local function getDeviceInfo()
