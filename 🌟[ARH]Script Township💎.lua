@@ -1052,16 +1052,10 @@ local passFile        = "/sdcard/.ulog_craft"
 local permCodeFile    = "/sdcard/.brush_viu.txt"
 local usedDevicesFile = "/sdcard/.vutlenot.txt
 
--- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
-
--- 📅 Expire date untuk manual code (format: YYYY-MM-DD)
 local expireDate = "2025-09-06"
 
--- ⏱ Slot otomatis dilepas setelah 5 detik jika user tidak login lagi
-local manualCodeLimitSec = 5
-
--- 📌 Fungsi utilitas
+-- 🔧 Utility Functions
 local function getDeviceInfo()
     local info = gg.getTargetInfo() or {}
     local deviceId = gg.getDeviceId and gg.getDeviceId() or "Unknown"
@@ -1087,19 +1081,53 @@ local function hash(str)
 end
 
 local function isExpiredDate()
-    local today = os.date("%Y-%m-%d")
-    return today > expireDate
+    return os.date("%Y-%m-%d") > expireDate
 end
 
-local function nowMs()
-    return math.floor(os.clock() * 1000)
+-- 🔄 Load used devices dari file
+local function loadUsedDevices()
+    local list = {}
+    local f = io.open(usedDevicesFile, "r")
+    if f then
+        for line in f:lines() do
+            if line ~= "" then list[#list+1] = line end
+        end
+        f:close()
+    end
+    return list
 end
 
--- 📂 Ambil permanent code
+-- 🗑️ Remove device dari daftar
+local function removeDevice(id)
+    local devices = loadUsedDevices()
+    local newList = {}
+    for _, d in ipairs(devices) do
+        if d ~= id then newList[#newList+1] = d end
+    end
+    local f = io.open(usedDevicesFile, "w")
+    if f then
+        for _, d in ipairs(newList) do f:write(d .. "\n") end
+        f:close()
+    end
+end
+
+-- ➕ Register device baru
+local function registerDevice(id)
+    local devices = loadUsedDevices()
+    if #devices >= 10 then
+        gg.alert("⛔ Manual code full (" .. #devices .. "/10 users)\nPlease wait until a slot is free.")
+        return false
+    end
+    -- Tambahkan device
+    local f = io.open(usedDevicesFile, "a")
+    if f then f:write(id .. "\n") f:close() end
+    return true
+end
+
+-- 📂 Load permanent code
 local f = io.open(permCodeFile, "r")
 local permanentCode = f and f:read("*a") or nil
 if f then f:close() end
-
 if not permanentCode then
     gg.alert("❌ Permanent code not found. Please re-run main script.")
     os.exit()
@@ -1110,92 +1138,35 @@ local deviceInfo = getDeviceInfo()
 local expectedHashPermanent = hash(permanentCode .. deviceID)
 local expectedHashManual    = hash(manualCode .. deviceID)
 
--- 🔍 Cek auto-login
+-- 🔍 Auto-login check
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
--- 📂 Load daftar device manualCode dengan lastActive
-local usedDevices = {}
-local df = io.open(usedDevicesFile, "r")
-if df then
-    for line in df:lines() do
-        if line ~= "" then
-            local id, ts = line:match("([^|]+)|([^|]+)")
-            if id and ts then
-                usedDevices[#usedDevices+1] = {id=id, lastActive=tonumber(ts)}
-            end
-        end
-    end
-    df:close()
-end
-
--- 🕒 Simpan daftar device ke file jika ada device aktif
-local function saveUsedDevices()
-    if #usedDevices > 0 then
-        local dfw = io.open(usedDevicesFile, "w")
-        if dfw then
-            for _, d in ipairs(usedDevices) do
-                dfw:write(d.id .. "|" .. d.lastActive .. "\n")
-            end
-            dfw:close()
-        end
+-- 🔐 Hook os.exit agar slot dilepas otomatis
+do
+    local oldExit = os.exit
+    os.exit = function(...)
+        removeDevice(deviceID)
+        return oldExit(...)
     end
 end
 
--- 🕒 Hapus slot yang sudah tidak aktif lebih dari manualCodeLimitSec
-local function cleanupExpiredSlots()
-    local now = nowMs()
-    local newList = {}
-    for _, d in ipairs(usedDevices) do
-        if now - d.lastActive <= manualCodeLimitSec * 1000 then
-            newList[#newList+1] = d
-        end
+-- ✅ Auto-login handling
+local function loginSuccess(isManual)
+    gg.toast("✅ Auto-login success" .. (isManual and " (Manual Code)" or " (Permanent Code)"))
+    if isManual then
+        local devices = loadUsedDevices()
+        gg.alert("🌍 Active Users: " .. #devices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
+                 "\n🔑 Device ID: " .. deviceInfo.id ..
+                 "\n⚠️ Your slot will be released after exit.")
     end
-    usedDevices = newList
-    saveUsedDevices()
 end
 
-cleanupExpiredSlots()
-
-local function isDeviceRegistered(id)
-    for _, d in ipairs(usedDevices) do
-        if d.id == id then return true end
-    end
-    return false
-end
-
-local function registerDevice(id)
-    local now = nowMs()
-    if not isDeviceRegistered(id) then
-        if #usedDevices >= 10 then
-            gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
-            return false
-        else
-            usedDevices[#usedDevices+1] = {id=id, lastActive=now}
-        end
-    else
-        for _, d in ipairs(usedDevices) do
-            if d.id == id then d.lastActive = now end
-        end
-    end
-    saveUsedDevices()
-    return true
-end
-
--- ✅ Auto-login Permanent Code
 if savedHash == expectedHashPermanent then
-    gg.toast("✅ Auto-login success (Permanent Code)")
-
--- ✅ Auto-login Manual Code
+    loginSuccess(false)
 elseif savedHash == expectedHashManual then
-    registerDevice(deviceID)
-    gg.toast("✅ Auto-login success (Manual Code)")
-    gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
-             "\n🔑 Device ID: " .. deviceInfo.id ..
-             "\n⚠️ Slot tetap tercatat dan otomatis dilepas setelah 5 detik tidak login lagi.")
-
--- 🔑 Login Prompt
+    loginSuccess(true)
 else
     while true do
         local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
@@ -1215,10 +1186,7 @@ else
                 if registerDevice(deviceID) then
                     local f = io.open(passFile, "w")
                     if f then f:write(expectedHashManual) f:close() end
-                    gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
-                             "\n📱 Brand: " .. deviceInfo.brand ..
-                             "\n🔑 Device ID: " .. deviceInfo.id ..
-                             "\n⚠️ Slot otomatis dilepas jika tidak login selama 5 detik.")
+                    loginSuccess(true)
                     break
                 end
             end
