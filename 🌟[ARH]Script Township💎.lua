@@ -1123,7 +1123,7 @@ else
   while true do
     -- 🔑 Prompt masukin code
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
     local code = input[1]
 
     if code == permanentCode then
@@ -8980,6 +8980,11 @@ function menu6()
   elseif menu == 2 then
     about2()
   elseif menu == 3 then
+	os.remove("/sdcard/.azka_pass")
+os.remove("/sdcard/.azka_current_perm.txt")
+os.remove("/sdcard/.azka_blacklist.txt")
+os.remove("/sdcard/.azka_username.txt")
+os.remove("/sdcard/.azka_used_devices.txt")
     resetMode()
     menuRunning = false
   elseif menu == 4 then
