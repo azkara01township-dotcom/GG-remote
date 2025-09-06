@@ -8966,7 +8966,7 @@ end
 function menu6()
   local title = banner
   local menu = gg.choice({
-	"adminLogin",
+	"⚙️  Admin Login",
     _( "about_script" ),
     _( "contact_dev" ),
     _( "reset_default" ),
@@ -8976,16 +8976,16 @@ function menu6()
 
   if not menu then gg.toast("⚠️ No option selected!") return end
 
-	if menu == 6 then
+	if menu == 1 then
     adminLogin()
-  if menu == 1 then
-    about1()
   elseif menu == 2 then
-    about2()
+    about1()
   elseif menu == 3 then
+    about2()
+  elseif menu == 4 then
     resetMode()
     menuRunning = false
-  elseif menu == 4 then
+  elseif menu == 5 then
   local langList = {
     "🇺🇸 English" .. (lang == "en" and "  ✓" or ""),
     "🇮🇩 Indonesia" .. (lang == "id" and "  ✓" or "")
@@ -9000,7 +9000,7 @@ function menu6()
   end
   saveLang()
   menu6()
-  elseif menu == 5 then
+  elseif menu == 6 then
     if menuMode == "free" then freekey() else Main() end
   end
 end
@@ -9011,7 +9011,7 @@ local adminPin  = "Azka8246"
 
 function adminLogin()
   local input = gg.prompt(
-    {"👤 Username", "🔑 PIN"},
+    {"👤 Username", "🔑 Password"},
     {"", ""},
     {"text", "text"}
   )
@@ -9028,7 +9028,7 @@ function adminLogin()
     gg.toast("✅ Welcome, Admin "..user)
     adminMenu()
   else
-    gg.alert("❌ Invalid Username or PIN!")
+    gg.alert("❌ Invalid Username or Password!")
   end
 end
 
