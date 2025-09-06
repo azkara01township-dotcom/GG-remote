@@ -1047,10 +1047,10 @@ function Main()
   while menuRunning and menuMode == "premium" do
 
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT 10 DEVICES UNTUK MANUAL CODE, DATE EXPIRE, PERMANENT TANPA BATAS + DEVICE INFO)
-
-local passFile        = "/sdcard/.azka_pass"
-local permCodeFile    = "/sdcard/.azka_current_perm.txt"
-local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
+		
+local passFile        = "/sdcard/.ulog_craft"
+local permCodeFile    = "/sdcard/.brush_viu.txt"
+local usedDevicesFile = "/sdcard/.vutlenot.txt"
 
 -- 🔑 Master manual code (punya batasan expired + device limit)
 local manualCode = "ARH-MASTER-2025"
@@ -9094,11 +9094,11 @@ function adminMenu()
   }, {}, "⚙️ ARH Admin Reset Logs")
 
   if menu == 1 then
-    os.remove("/sdcard/.nopas.txt")
-    os.remove("/sdcard/.jurognoa.txt")
-    os.remove("/sdcard/.blackout.txt")
-    os.remove("/sdcard/.begaotalo.txt")
-    os.remove("/sdcard/.fintalog.txt")
+    os.remove("/sdcard/.ulog_craft.text")
+    os.remove("/sdcard/.brush_viu.txt")
+    os.remove("/sdcard/.plon_getin.txt")
+    os.remove("/sdcard/.jarnogipa.txt")
+    os.remove("/sdcard/.vutlenot.txt")
     gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
 	resetMode()
     os.exit()
