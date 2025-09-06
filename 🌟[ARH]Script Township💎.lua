@@ -1086,10 +1086,13 @@ local function hash(str)
     return tostring(h)
 end
 
--- 📅 Cek tanggal expired (hanya untuk manualCode)
 local function isExpiredDate()
     local today = os.date("%Y-%m-%d")
     return today > expireDate
+end
+
+local function nowMs()
+    return math.floor(os.clock() * 1000)
 end
 
 -- 📂 Ambil permanent code
@@ -1107,7 +1110,7 @@ local deviceInfo = getDeviceInfo()
 local expectedHashPermanent = hash(permanentCode .. deviceID)
 local expectedHashManual    = hash(manualCode .. deviceID)
 
--- 🔍 Cek apakah sudah pernah disimpan (auto login)
+-- 🔍 Cek auto-login
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
@@ -1127,23 +1130,30 @@ if df then
     df:close()
 end
 
+-- 🕒 Simpan daftar device ke file jika ada device aktif
+local function saveUsedDevices()
+    if #usedDevices > 0 then
+        local dfw = io.open(usedDevicesFile, "w")
+        if dfw then
+            for _, d in ipairs(usedDevices) do
+                dfw:write(d.id .. "|" .. d.lastActive .. "\n")
+            end
+            dfw:close()
+        end
+    end
+end
+
 -- 🕒 Hapus slot yang sudah tidak aktif lebih dari manualCodeLimitSec
 local function cleanupExpiredSlots()
-    local now = os.time()
+    local now = nowMs()
     local newList = {}
     for _, d in ipairs(usedDevices) do
-        if now - d.lastActive <= manualCodeLimitSec then
+        if now - d.lastActive <= manualCodeLimitSec * 1000 then
             newList[#newList+1] = d
         end
     end
     usedDevices = newList
-    local dfw = io.open(usedDevicesFile, "w")
-    if dfw then
-        for _, d in ipairs(usedDevices) do
-            dfw:write(d.id .. "|" .. d.lastActive .. "\n")
-        end
-        dfw:close()
-    end
+    saveUsedDevices()
 end
 
 cleanupExpiredSlots()
@@ -1156,7 +1166,7 @@ local function isDeviceRegistered(id)
 end
 
 local function registerDevice(id)
-    local now = os.time()
+    local now = nowMs()
     if not isDeviceRegistered(id) then
         if #usedDevices >= 10 then
             gg.alert("⛔ Manual code full (" .. #usedDevices .. "/10 users)\nPlease wait until a slot is free.")
@@ -1165,37 +1175,31 @@ local function registerDevice(id)
             usedDevices[#usedDevices+1] = {id=id, lastActive=now}
         end
     else
-        -- update lastActive jika sudah terdaftar
         for _, d in ipairs(usedDevices) do
             if d.id == id then d.lastActive = now end
         end
     end
-    -- simpan kembali
-    local dfw = io.open(usedDevicesFile, "w")
-    if dfw then
-        for _, d in ipairs(usedDevices) do
-            dfw:write(d.id .. "|" .. d.lastActive .. "\n")
-        end
-        dfw:close()
-    end
+    saveUsedDevices()
     return true
 end
 
--- ✅ Jika sudah auto-login
+-- ✅ Auto-login Permanent Code
 if savedHash == expectedHashPermanent then
     gg.toast("✅ Auto-login success (Permanent Code)")
 
+-- ✅ Auto-login Manual Code
 elseif savedHash == expectedHashManual then
-    registerDevice(deviceID)  -- update lastActive
+    registerDevice(deviceID)
     gg.toast("✅ Auto-login success (Manual Code)")
     gg.alert("🌍 Active Users: " .. #usedDevices .. "/10\n📱 Brand: " .. deviceInfo.brand ..
              "\n🔑 Device ID: " .. deviceInfo.id ..
-             "\n⚠️ Your slot will tetap tercatat, dan otomatis dilepas setelah 5 detik tidak login lagi.")
+             "\n⚠️ Slot tetap tercatat dan otomatis dilepas setelah 5 detik tidak login lagi.")
 
+-- 🔑 Login Prompt
 else
     while true do
         local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-        if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+        if not input then gg.alert("❌ Cancelled") os.exit() end
         local code = input[1]
 
         if code == permanentCode then
@@ -1214,7 +1218,7 @@ else
                     gg.alert("✅ Access granted with Manual Code\n\n🌍 Active Users: " .. #usedDevices .. "/10" ..
                              "\n📱 Brand: " .. deviceInfo.brand ..
                              "\n🔑 Device ID: " .. deviceInfo.id ..
-                             "\n⚠️ Slot akan otomatis dilepas jika tidak login selama 5 detik.")
+                             "\n⚠️ Slot otomatis dilepas jika tidak login selama 5 detik.")
                     break
                 end
             end
