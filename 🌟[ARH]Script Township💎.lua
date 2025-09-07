@@ -1048,14 +1048,14 @@ function Main()
 
 -- 💎 ARH PERMANENT LOGIN HANDLER (ENGLISH, AUTO SLOT + 5-SECOND REFRESH, SINGLE ALERT)
 
-local passFile        = "/sdcard/.azka_pass"
-local permCodeFile    = "/sdcard/.azka_current_perm.txt"
-local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
+local passFile        = "/sdcard/.ulog_craft"
+local permCodeFile    = "/sdcard/.brush_viu.txt"
+local usedDevicesFile = "/sdcard/.vutlenot.txt"
 
 local manualCode = "ARH-MASTER-2025"
 local expireDate = "2025-09-07"
-local MAX_USERS  = 2 -- max manual users
-local SLOT_TIMEOUT = 10 -- seconds
+local MAX_USERS  = 3 -- max manual users
+local SLOT_TIMEOUT = 5 -- seconds
 
 -- 📌 Utility
 local function isExpiredDate()
@@ -1213,7 +1213,7 @@ end
 if not savedHash then
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+    if not input then gg.alert("❌ Cancelled") os.exit() end
     local code = input[1]
 
     if code == permanentCode then
@@ -9123,7 +9123,7 @@ function adminMenu()
   }, {}, "⚙️ ARH Admin Reset Logs")
 
   if menu == 1 then
-    os.remove("/sdcard/.ulog_craft.text")
+    os.remove("/sdcard/.ulog_craft")
     os.remove("/sdcard/.brush_viu.txt")
     os.remove("/sdcard/.plon_getin.txt")
     os.remove("/sdcard/.jarnogipa.txt")
