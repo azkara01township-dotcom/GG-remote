@@ -1053,9 +1053,9 @@ local permCodeFile       = "/sdcard/.brush_viu.txt"
 local expiredDevicesFile = "/sdcard/.vutlenot.txt"
 
 -- 🔑 Expired code
-local expiredCode   = "ARH-EXPIRED-2025"
+local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-10"
+local expireDate50  = "2025-09-08"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
@@ -1132,44 +1132,46 @@ local function getDeviceInfoFull()
   )
 end
 
+-- 🔐 Status login
+local loginOK = false
+local shownExpiredAlert = false  -- 🔔 biar alert expired hanya sekali per restart
+
 -- ✅ Auto-login permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
-  return
+  loginOK = true
 end
 
 -- ✅ Auto-login expired code
-if isExpiredDeviceRegistered(deviceID) then
+if not loginOK and isExpiredDeviceRegistered(deviceID) then
   if isExpiredDate50() then
-    gg.alert("⛔ Expired code expired on " .. expireDate50)
-    os.exit()
+    gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
+  else
+    gg.toast("✅ Auto-login success (Expired Code)")
+    if not shownExpiredAlert then
+      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+      shownExpiredAlert = true
+    end
+    loginOK = true
   end
-  gg.toast("✅ Auto-login success (Expired Code)")
-
-  -- 🔔 Alert hanya sekali per login script
-  gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
-  return
 end
 
--- 🔑 Kalau belum ada auto-login, minta kode
-while true do
+-- 🔑 Kalau belum ada auto-login, minta kode manual
+while not loginOK do
   local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
   if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
   local code = input[1]
 
   if code == permanentCode then
-    -- Permanent tanpa batas
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
     gg.toast("✅ Access granted with Permanent Code")
-    break
+    loginOK = true
 
   elseif code == expiredCode then
-    -- 🚨 Cek expired dulu
     if isExpiredDate50() then
-      gg.alert("⛔ Expired code expired on " .. expireDate50)
+      gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
-      -- 🚨 Cek batas device sesuai expiredLimit
       if not isExpiredDeviceRegistered(deviceID) then
         if #expiredDevices >= expiredLimit then
           gg.alert("⛔ Expired code already used on " .. expiredLimit .. " devices, access denied")
@@ -1180,12 +1182,12 @@ while true do
         end
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
-
-      -- 🔔 Alert hanya sekali per login script
-      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
-      break
+      if not shownExpiredAlert then
+        gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+        shownExpiredAlert = true
+      end
+      loginOK = true
     end
-
   else
     gg.alert("❌ Invalid code, please try again")
   end
