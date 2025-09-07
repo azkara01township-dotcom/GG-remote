@@ -1115,8 +1115,8 @@ end
 
 -- 📌 Register device and refresh timestamp
 local function registerDevice(code)
-  local devices = loadUsedDevices()
   local now = os.time()
+  local devices = cleanExpiredSlots() -- selalu fresh
   local exists = false
 
   for _, d in ipairs(devices) do
@@ -1128,13 +1128,8 @@ local function registerDevice(code)
   end
 
   if not exists then
-    local activeCount = 0
-    for _, d in ipairs(devices) do
-      if now - d.ts < SLOT_TIMEOUT then activeCount = activeCount + 1 end
-    end
-
-    if activeCount >= MAX_USERS then
-      gg.alert("⛔ Manual code full (" .. activeCount .. "/" .. MAX_USERS .. " users)\nPlease wait until a slot is free.")
+    if #devices >= MAX_USERS then
+      gg.alert("⛔ Manual code full (" .. #devices .. "/" .. MAX_USERS .. " users)\nPlease wait until a slot is free.")
       return false
     else
       table.insert(devices, {code=code, ts=now})
@@ -1145,6 +1140,7 @@ local function registerDevice(code)
   return true
 end
 
+-- 📌 Remove device (digunakan saat exit)
 local function removeDevice(code)
   local devices = loadUsedDevices()
   local newList = {}
@@ -1154,7 +1150,7 @@ local function removeDevice(code)
   saveUsedDevices(newList)
 end
 
--- 🛠️ Override os.exit to remove device in real-time
+-- 🛠️ Override os.exit untuk real-time cleanup
 local function setupExitHandler(code)
   local oldExit = os.exit
   os.exit = function(...)
@@ -1167,15 +1163,10 @@ end
 local alertShown = false
 local function showActiveAlertOnce(code)
   if alertShown then return end
-  local devices = loadUsedDevices()
-  local now = os.time()
-  local count = 0
-  for _, d in ipairs(devices) do
-    if now - d.ts < SLOT_TIMEOUT or d.code == code then
-      count = count + 1
-    end
-  end
-  gg.alert("🌍 Active Users: " .. count .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after " .. SLOT_TIMEOUT .. " seconds of idle.")
+  local devices = cleanExpiredSlots() -- daftar selalu segar
+  gg.alert("🌍 Active Users: " .. #devices .. "/" .. MAX_USERS ..
+           "\n⚠️ Your slot will be released automatically after " ..
+           SLOT_TIMEOUT .. " seconds of idle.")
   alertShown = true
 end
 
@@ -1205,7 +1196,7 @@ end
 -- ✅ Attempt auto-login first
 if savedHash == permanentCode or savedHash == manualCode then
   if not autoLogin(savedHash) then
-    savedHash = nil -- fallback to prompt if slot full
+    savedHash = nil -- fallback ke prompt kalau slot penuh
   end
 end
 
@@ -1238,7 +1229,6 @@ if not savedHash then
     else
       gg.alert("❌ Invalid code, please try again")
     end
-
   end
 		end
 		
