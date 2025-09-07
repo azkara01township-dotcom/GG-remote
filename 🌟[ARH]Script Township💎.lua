@@ -1163,7 +1163,7 @@ local function setupExitHandler(code)
   end
 end
 
--- 🔔 Show accurate active user alert (only once per session)
+-- 🔔 Show accurate active user alert (only once per script session)
 local alertShown = false
 local function showActiveAlertOnce(code)
   if alertShown then return end
@@ -1213,7 +1213,7 @@ end
 if not savedHash then
   while true do
     local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-    if not input then gg.alert("❌ Cancelled") os.exit() end
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
     local code = input[1]
 
     if code == permanentCode then
@@ -1238,6 +1238,7 @@ if not savedHash then
     else
       gg.alert("❌ Invalid code, please try again")
     end
+
   end
 		end
 		
