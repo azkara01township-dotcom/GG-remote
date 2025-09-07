@@ -1046,15 +1046,15 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (ENGLISH, AUTO SLOT + 5-SECOND REFRESH, NO PROMPT AFTER LOGIN)
+-- 💎 ARH PERMANENT LOGIN HANDLER (ENGLISH, AUTO SLOT + 5-SECOND REFRESH, FIXED ALERT)
 
 local passFile        = "/sdcard/.azka_pass"
 local permCodeFile    = "/sdcard/.azka_current_perm.txt"
 local usedDevicesFile = "/sdcard/.azka_used_devices.txt"
 
 local manualCode = "ARH-MASTER-2025"
-local expireDate = "2025-09-10"
-local MAX_USERS  = 10 -- max manual users, easy to edit
+local expireDate = "2025-09-07"
+local MAX_USERS  = 10 -- max manual users
 local SLOT_TIMEOUT = 5 -- seconds
 
 -- 📌 Utility
@@ -1099,44 +1099,49 @@ local function saveUsedDevices(list)
   end
 end
 
+-- 📌 Clean expired slots (but keep alert count accurate)
 local function cleanExpiredSlots()
   local now = os.time()
   local devices = loadUsedDevices()
-  local newList = {}
+  local activeList = {}
   for _, d in ipairs(devices) do
     if now - d.ts < SLOT_TIMEOUT then
-      table.insert(newList, d)
+      table.insert(activeList, d)
     end
   end
-  saveUsedDevices(newList)
-  return newList
+  saveUsedDevices(activeList)
+  return activeList
 end
 
-local function isDeviceRegistered(code)
-  local devices = cleanExpiredSlots()
-  for _, d in ipairs(devices) do
-    if d.code == code then return true end
-  end
-  return false
-end
-
+-- 📌 Register device and refresh timestamp
 local function registerDevice(code)
-  local devices = cleanExpiredSlots()
-  if not isDeviceRegistered(code) then
-    if #devices >= MAX_USERS then
-      gg.alert("⛔ Manual code full (" .. #devices .. "/" .. MAX_USERS .. " users)\nPlease wait until a slot is free.")
+  local devices = loadUsedDevices()
+  local now = os.time()
+  local exists = false
+
+  for _, d in ipairs(devices) do
+    if d.code == code then
+      d.ts = now
+      exists = true
+      break
+    end
+  end
+
+  if not exists then
+    local activeCount = 0
+    for _, d in ipairs(devices) do
+      if now - d.ts < SLOT_TIMEOUT then activeCount = activeCount + 1 end
+    end
+
+    if activeCount >= MAX_USERS then
+      gg.alert("⛔ Manual code full (" .. activeCount .. "/" .. MAX_USERS .. " users)\nPlease wait until a slot is free.")
       return false
     else
-      table.insert(devices, {code=code, ts=os.time()})
-      saveUsedDevices(devices)
+      table.insert(devices, {code=code, ts=now})
     end
-  else
-    -- refresh timestamp if still active
-    for _, d in ipairs(devices) do
-      if d.code == code then d.ts = os.time() end
-    end
-    saveUsedDevices(devices)
   end
+
+  saveUsedDevices(devices)
   return true
 end
 
@@ -1158,17 +1163,29 @@ local function setupExitHandler(code)
   end
 end
 
+-- 🔔 Show accurate active user alert
+local function showActiveAlert(code)
+  local devices = loadUsedDevices()
+  local now = os.time()
+  local count = 0
+  for _, d in ipairs(devices) do
+    if now - d.ts < SLOT_TIMEOUT or d.code == code then
+      count = count + 1
+    end
+  end
+  gg.alert("🌍 Active Users: " .. count .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after " .. SLOT_TIMEOUT .. " seconds of idle.")
+end
+
 -- 🔍 Load saved hash
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
 
 local function autoLogin(codeType)
-  local devices = cleanExpiredSlots()
   if codeType == manualCode then
     if registerDevice(manualCode) then
       gg.toast("✅ Auto-login success (Manual Code)")
-      gg.alert("🌍 Active Users: " .. #devices .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after 5 seconds of idle.")
+      showActiveAlert(manualCode)
       setupExitHandler(manualCode)
       return true
     else
@@ -1208,8 +1225,7 @@ if not savedHash then
         if registerDevice(manualCode) then
           local f = io.open(passFile, "w")
           if f then f:write(manualCode) f:close() end
-          local devices = cleanExpiredSlots()
-          gg.alert("✅ Access granted with Manual Code\n🌍 Active Users: " .. #devices .. "/" .. MAX_USERS .. "\n⚠️ Your slot will be released automatically after 5 seconds of idle.")
+          showActiveAlert(manualCode)
           setupExitHandler(manualCode)
           break
         end
