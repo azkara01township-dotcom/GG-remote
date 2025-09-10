@@ -1061,8 +1061,8 @@ local expireDate50  = "2025-09-10"
 local expiredLimit  = 50
 
 -- 📞 Telegram setup (isi sesuai bot Anda)
-local BOT_TOKEN = "YOUR_BOT_TOKEN"
-local CHAT_ID   = "YOUR_CHAT_ID"
+local BOT_TOKEN = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
+local CHAT_ID   = "1561442361"
 
 -- 📌 Utilitas
 local function getDeviceID()
