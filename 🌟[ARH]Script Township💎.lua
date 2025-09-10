@@ -1049,9 +1049,9 @@ function Main()
 		-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 -- 📂 File paths
-local passFile           = "/sdcard/.azka_pass"
-local permCodeFile       = "/sdcard/.azka_current_perm.txt"
-local expiredDevicesFile = "/sdcard/.azka_expired_users.txt"
+local passFile           = "/sdcard/.ulog_craft"
+local permCodeFile       = "/sdcard/.brush_viu.txt"
+local expiredDevicesFile = "/sdcard/.vutlenot.txt"
 
 -- 🔑 Expired code
 local expiredCode   = "ARH-EXPIRED-2025"
