@@ -1046,25 +1046,20 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
-		-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
--- 📂 File paths
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu.txt"
-local expiredDevicesFile = "/sdcard/.vutlenot.txt"
+local permCodeFile       = "/sdcard/.brush_viu"
+local expiredDevicesFile = "/sdcard/.vutlenot"
 
 -- 🔑 Expired code
-local expiredCode   = "ARH-EXPIRED-2025"
+local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-10"
+local expireDate50  = "2025-09-15"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
--- 📞 Telegram setup (isi sesuai bot Anda)
-local BOT_TOKEN = "7868543142:AAGImJe7Hc9PKmWEE7Hgpx9A1rAPO-x5JqQ"
-local CHAT_ID   = "1561442361"
-
--- 📌 Utilitas
+-- 📌 Fungsi utilitas
 local function getDeviceID()
   local info = gg.getTargetInfo() or {}
   return (info.label or "") .. "-" ..
@@ -1081,41 +1076,27 @@ local function hash(str)
   return tostring(h)
 end
 
-local function writeFile(path, content)
-  local f = io.open(path, "w")
-  if f then f:write(content) f:close() end
-end
-
-local function generateUserID()
-  return hash(getDeviceID())
-end
-
-local function sendTelegram(msg)
-  local url = "https://api.telegram.org/bot" .. BOT_TOKEN .. "/sendMessage"
-  local payload = "chat_id=" .. CHAT_ID .. "&text=" .. gg.utf8to32(msg) .. "&parse_mode=HTML"
-  gg.makeRequest(url, payload, "POST")
-end
-
 -- 📅 Cek tanggal expired (untuk expiredCode)
 local function isExpiredDate50()
   local today = os.date("%Y-%m-%d")
   return today > expireDate50
 end
 
--- 📂 Ambil permanent code dari file
+-- 📂 Ambil permanent code
 local f = io.open(permCodeFile, "r")
 local permanentCode = f and f:read("*a") or nil
 if f then f:close() end
 
 if not permanentCode then
   gg.alert("❌ Permanent code not found. Please re-run main script.")
+  resetMode()
   os.exit()
 end
 
 local deviceID = getDeviceID()
 local expectedHash = hash(permanentCode .. deviceID)
 
--- 📂 Baca hash login sebelumnya
+-- 🔍 Cek apakah sudah pernah disimpan (auto login permanent)
 local pf = io.open(passFile, "r")
 local savedHash = pf and pf:read("*a") or nil
 if pf then pf:close() end
@@ -1135,81 +1116,62 @@ local function isExpiredDeviceRegistered(id)
     if d == id then return true end
   end
   return false
-end
+  end
 
--- 📌 Info device
+-- 📌 Device Info (dummy data, bisa Anda sambungkan dengan API kalau mau real)
 local function getDeviceInfoFull()
   local info = gg.getTargetInfo() or {}
   local user   = os.getenv("USER") or "UnknownUser"
   local brand  = info.packageName or "UnknownBrand"
   local devid  = deviceID or "UnknownID"
-  local waktu  = os.date("%Y-%m-%d %H:%M:%S")
+  local lokasi = os.date("%Y-%m-%d %H:%M:%S") .. " (Local)" -- contoh, bisa diganti API lokasi
+  local konek  = "Online" -- placeholder, tidak ada API koneksi di GG
   
   return string.format(
-    "👤 User: %s\n📱 Brand: %s\n🆔 DeviceID: %s\n🕒 Waktu: %s",
-    user, brand, devid, waktu
+    "👤 User: %s\n📱 Brand: %s\n🆔 DeviceID: %s\n🌍 Lokasi: %s\n📡 Koneksi: %s",
+    user, brand, devid, lokasi, konek
   )
 end
 
--- ✅ Auto-login permanent
+-- 🔐 Status login
+local loginOK = false
+local shownExpiredAlert = false  -- 🔔 biar alert expired hanya sekali per restart
+
+-- ✅ Auto-login permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
-  return
+  loginOK = true
 end
 
--- ✅ Auto-login expired
-if isExpiredDeviceRegistered(deviceID) then
+-- ✅ Auto-login expired code
+if not loginOK and isExpiredDeviceRegistered(deviceID) then
   if isExpiredDate50() then
-    gg.alert("⛔ Expired code expired on " .. expireDate50)
-    os.exit()
+    gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
+  else
+    gg.toast("✅ Auto-login success (Expired Code)")
+    if not shownExpiredAlert then
+      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+      shownExpiredAlert = true
+    end
+    loginOK = true
   end
-  gg.toast("✅ Auto-login success (Expired Code)")
-  gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
-  return
 end
 
--- 🔑 Kalau belum ada auto-login, minta kode
-while true do
+-- 🔑 Kalau belum ada auto-login, minta kode manual
+while not loginOK do
   local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-  if not input then gg.alert("❌ Cancelled") os.exit() end
+  if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
   local code = input[1]
 
   if code == permanentCode then
-    -- Permanent login
-    writeFile(passFile, expectedHash)
+    local f = io.open(passFile, "w")
+    if f then f:write(expectedHash) f:close() end
     gg.toast("✅ Access granted with Permanent Code")
-
-    -- 📤 Kirim log Telegram sekali
-    local devInfo = gg.getTargetInfo() or {}
-    local brand   = devInfo.label or "Unknown Brand"
-    local script  = gg.getFile():match("[^/]+$") or "Unknown Script"
-    local waktu   = os.date("%Y-%m-%d %H:%M:%S")
-
-    local ipData = { ip="Unknown", isp="Unknown", city="Unknown", country="Unknown" }
-    local res = gg.makeRequest("http://ip-api.com/json")
-    if res and res.content then
-      ipData.ip      = res.content:match('"query":"(.-)"') or ipData.ip
-      ipData.isp     = res.content:match('"isp":"(.-)"') or ipData.isp
-      ipData.city    = res.content:match('"city":"(.-)"') or ipData.city
-      ipData.country = res.content:match('"country":"(.-)"') or ipData.country
-    end
-
-    local loginMsg = "✅ <b>LOGIN PERMANEN SUKSES</b>\n\n" ..
-      "🆔 <b>User ID</b>: <code>" .. generateUserID() .. "</code>" ..
-      "\n📱 <b>Brand</b>: " .. brand ..
-      "\n📡 <b>Network</b>: " .. ipData.isp ..
-      "\n🌍 <b>Location</b>: " .. ipData.city .. ", " .. ipData.country ..
-      "\n🌐 <b>IP</b>: " .. ipData.ip ..
-      "\n📂 <b>Script</b>: " .. script ..
-      "\n🕒 <b>Time</b>: " .. waktu
-    sendTelegram(loginMsg)
-
-    break
+    loginOK = true
 
   elseif code == expiredCode then
-    -- Expired login
     if isExpiredDate50() then
-      gg.alert("⛔ Expired code expired on " .. expireDate50)
+      gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
       if not isExpiredDeviceRegistered(deviceID) then
         if #expiredDevices >= expiredLimit then
@@ -1221,11 +1183,13 @@ while true do
         end
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
-      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
-      break
+      if not shownExpiredAlert then
+        gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+        shownExpiredAlert = true
+      end
+      loginOK = true
     end
-
-  else
+    else
     gg.alert("❌ Invalid code, please try again")
   end
 		end
