@@ -7653,7 +7653,7 @@ local indev = dev
     return
   elseif menu == 1 then cardbadge()
   elseif menu == 2 then packbadge()
-  elseif menu == 3 then gp2()
+  elseif menu == 3 then gp3()
   end
 end
 
