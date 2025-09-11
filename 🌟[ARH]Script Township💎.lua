@@ -1049,8 +1049,8 @@ function Main()
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu"
-local expiredDevicesFile = "/sdcard/.vutlenot"
+local permCodeFile       = "/sdcard/.brush_viu.txt"
+local expiredDevicesFile = "/sdcard/.vutlenot.txt"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
@@ -1118,7 +1118,7 @@ local function isExpiredDeviceRegistered(id)
   return false
 end
 
--- 📌 Alert login info (hanya sekali setelah kode dimasukkan)
+-- 📌 Alert login info (hanya sekali setelah kode dimasukkan manual)
 local function showLoginInfo(mode)
   local now = os.date("%Y-%m-%d %H:%M:%S")
   local expDate = expireDate50
@@ -1147,15 +1147,10 @@ end
 
 -- 🔐 Status login
 local loginOK = false
-local shownExpiredAlert = false  -- 🔔 biar alert hanya sekali
 
 -- ✅ Auto-login permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
-  if not shownExpiredAlert then
-    showLoginInfo("Permanent Code")
-    shownExpiredAlert = true
-  end
   loginOK = true
 end
 
@@ -1165,10 +1160,6 @@ if not loginOK and isExpiredDeviceRegistered(deviceID) then
     gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
   else
     gg.toast("✅ Auto-login success (Expired Code)")
-    if not shownExpiredAlert then
-      showLoginInfo("Expired Code")
-      shownExpiredAlert = true
-    end
     loginOK = true
   end
 end
@@ -1183,10 +1174,7 @@ while not loginOK do
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
     gg.toast("✅ Access granted with Permanent Code")
-    if not shownExpiredAlert then
-      showLoginInfo("Permanent Code")
-      shownExpiredAlert = true
-    end
+    showLoginInfo("Permanent Code") -- 📌 Alert muncul sekali saja di sini
     loginOK = true
 
   elseif code == expiredCode then
@@ -1203,10 +1191,7 @@ while not loginOK do
         end
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
-      if not shownExpiredAlert then
-        showLoginInfo("Expired Code")
-        shownExpiredAlert = true
-      end
+      showLoginInfo("Expired Code") -- 📌 Alert muncul sekali saja di sini
       loginOK = true
     end
   else
