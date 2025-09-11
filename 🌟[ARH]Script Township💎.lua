@@ -1046,11 +1046,11 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+  -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu"
-local expiredDevicesFile = "/sdcard/.vutlenot"
+local permCodeFile       = "/sdcard/.brush_viu.txt"
+local expiredDevicesFile = "/sdcard/.vutlenot.txt"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
@@ -1116,20 +1116,19 @@ local function isExpiredDeviceRegistered(id)
     if d == id then return true end
   end
   return false
-  end
+end
 
--- 📌 Device Info (dummy data, bisa Anda sambungkan dengan API kalau mau real)
-local function getDeviceInfoFull()
+-- 📌 Device Info (lebih rapi & konsisten)
+local function getDeviceInfoFull(mode)
   local info = gg.getTargetInfo() or {}
-  local user   = os.getenv("USER") or "UnknownUser"
-  local brand  = info.packageName or "UnknownBrand"
-  local devid  = deviceID or "UnknownID"
-  local lokasi = os.date("%Y-%m-%d %H:%M:%S") .. " (Local)" -- contoh, bisa diganti API lokasi
-  local konek  = "Online" -- placeholder, tidak ada API koneksi di GG
-  
+  local devidHash = hash(deviceID)
+  local label = info.label or "UnknownApp"
+  local ver   = info.versionCode or "?"
+  local now   = os.date("%Y-%m-%d %H:%M:%S")
+
   return string.format(
-    "👤 User: %s\n📱 Brand: %s\n🆔 DeviceID: %s\n🌍 Lokasi: %s\n📡 Koneksi: %s",
-    user, brand, devid, lokasi, konek
+    "🆔 User ID: %s\n📱 Target: %s (v%s)\n📅 Login: %s\n🔑 Mode: %s",
+    devidHash, label, ver, now, mode
   )
 end
 
@@ -1140,6 +1139,7 @@ local shownExpiredAlert = false  -- 🔔 biar alert expired hanya sekali per res
 -- ✅ Auto-login permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
+  gg.alert("✅ Permanent Login Success\n\n" .. getDeviceInfoFull("Permanent Code"))
   loginOK = true
 end
 
@@ -1150,7 +1150,8 @@ if not loginOK and isExpiredDeviceRegistered(deviceID) then
   else
     gg.toast("✅ Auto-login success (Expired Code)")
     if not shownExpiredAlert then
-      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
+        "\n\n" .. getDeviceInfoFull("Expired Code"))
       shownExpiredAlert = true
     end
     loginOK = true
@@ -1167,6 +1168,7 @@ while not loginOK do
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
     gg.toast("✅ Access granted with Permanent Code")
+    gg.alert("✅ Permanent Login Success\n\n" .. getDeviceInfoFull("Permanent Code"))
     loginOK = true
 
   elseif code == expiredCode then
@@ -1184,12 +1186,13 @@ while not loginOK do
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
       if not shownExpiredAlert then
-        gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit .. "\n\n" .. getDeviceInfoFull())
+        gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
+          "\n\n" .. getDeviceInfoFull("Expired Code"))
         shownExpiredAlert = true
       end
       loginOK = true
     end
-    else
+  else
     gg.alert("❌ Invalid code, please try again")
   end
 		end
