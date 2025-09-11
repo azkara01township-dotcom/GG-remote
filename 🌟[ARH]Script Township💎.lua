@@ -1046,7 +1046,7 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
-  -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
+-- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
 local permCodeFile       = "/sdcard/.brush_viu"
@@ -1118,28 +1118,44 @@ local function isExpiredDeviceRegistered(id)
   return false
 end
 
--- 📌 Device Info (lebih rapi & konsisten)
-local function getDeviceInfoFull(mode)
-  local info = gg.getTargetInfo() or {}
-  local devidHash = hash(deviceID)
-  local label = info.label or "UnknownApp"
-  local ver   = info.versionCode or "?"
-  local now   = os.date("%Y-%m-%d %H:%M:%S")
+-- 📌 Alert login info (hanya sekali setelah kode dimasukkan)
+local function showLoginInfo(mode)
+  local now = os.date("%Y-%m-%d %H:%M:%S")
+  local expDate = expireDate50
+  local header, usersInfo, message
 
-  return string.format(
-    "🆔 User ID: %s\n📱 Target: %s (v%s)\n📅 Login: %s\n🔑 Mode: %s",
-    devidHash, label, ver, now, mode
-  )
+  if mode == "Permanent Code" then
+    header = "✅ Permanent Login Success"
+    usersInfo = "🆔 User ID: " .. hash(deviceID) .. "\n"
+    message = string.format(
+      "%s\n\n%s📅 Login: %s\n🔑 Type: %s",
+      header, usersInfo, now, mode
+    )
+
+  elseif mode == "Expired Code" then
+    header = "✅ Expired Login Success"
+    usersInfo = "📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
+                "\n🆔 User ID: " .. hash(deviceID) .. "\n"
+    message = string.format(
+      "%s\n\n%s📅 Login: %s\n⏳ Expire Date: %s\n🔑 Type: %s",
+      header, usersInfo, now, expDate, mode
+    )
+  end
+
+  gg.alert(message)
 end
 
 -- 🔐 Status login
 local loginOK = false
-local shownExpiredAlert = false  -- 🔔 biar alert expired hanya sekali per restart
+local shownExpiredAlert = false  -- 🔔 biar alert hanya sekali
 
 -- ✅ Auto-login permanent code
 if savedHash == expectedHash then
   gg.toast("✅ Auto-login success (Permanent Code)")
-  gg.alert("✅ Permanent Login Success\n\n" .. getDeviceInfoFull("Permanent Code"))
+  if not shownExpiredAlert then
+    showLoginInfo("Permanent Code")
+    shownExpiredAlert = true
+  end
   loginOK = true
 end
 
@@ -1150,8 +1166,7 @@ if not loginOK and isExpiredDeviceRegistered(deviceID) then
   else
     gg.toast("✅ Auto-login success (Expired Code)")
     if not shownExpiredAlert then
-      gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
-        "\n\n" .. getDeviceInfoFull("Expired Code"))
+      showLoginInfo("Expired Code")
       shownExpiredAlert = true
     end
     loginOK = true
@@ -1168,7 +1183,10 @@ while not loginOK do
     local f = io.open(passFile, "w")
     if f then f:write(expectedHash) f:close() end
     gg.toast("✅ Access granted with Permanent Code")
-    gg.alert("✅ Permanent Login Success\n\n" .. getDeviceInfoFull("Permanent Code"))
+    if not shownExpiredAlert then
+      showLoginInfo("Permanent Code")
+      shownExpiredAlert = true
+    end
     loginOK = true
 
   elseif code == expiredCode then
@@ -1186,8 +1204,7 @@ while not loginOK do
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
       if not shownExpiredAlert then
-        gg.alert("📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
-          "\n\n" .. getDeviceInfoFull("Expired Code"))
+        showLoginInfo("Expired Code")
         shownExpiredAlert = true
       end
       loginOK = true
