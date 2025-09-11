@@ -19,7 +19,7 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
 local teks = {
-	["cache_cleared"] = { id = "🗑️ Cache dibersihkan (game di-restart)", en = "🗑️ Cache cleared (game restarted)"},
+["cache_cleared"] = { id = "🗑️ Cache dibersihkan (game di-restart)", en = "🗑️ Cache cleared (game restarted)"},
   ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
   ["addr_refreshed"] = {id = "✅ Alamat diperbarui. Klik ikon GG untuk lanjut...",en = "✅ Address refreshed. Click GG icon to continue..." },
   ["addr_found"] = {id = "✅ Alamat ditemukan: 0x",en = "✅ Address found: 0x"},
@@ -29,370 +29,411 @@ local teks = {
   ["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
   ["free_script"] = {id="🔓  Skrip Gratis", en="🔓  Free Script"},
   ["premium_script"] = {id="💎  Skrip Premium", en="💎  Premium Script"},
-  ["buy_key"] = {id="🔑  Beli Kunci", en="🔑  Buy Key"},
+  ["buy_key"] = {id="🔑  Beli Kunci Premium", en="🔑  Buy Premium Key"},
   ["exit_script"] = {id="❌  [ << Keluar Skrip >> ]", en="❌  [ << Exit Script >> ]"},
   
-  ["unlock_season"] = {id="🌟  Buka Season Pass", en="🌟  Unlock Season Pass"},
-  ["freeze_rewards"] = {id="❄️  Bekukan Hadiah", en="❄️  Freeze Rewards"},
-  ["change_reward"] = {id="🎁  Ubah Tipe Hadiah", en="🎁  Change Reward Type"},
-  ["misc_mods"] = {id="🛠️  Modifikasi Lainnya", en="🛠️  Miscellaneous Mods"},
-  ["script_info"] = {id="ℹ️  Informasi Skrip", en="ℹ️  Script Information"},
-  ["invalid_selection"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
-  ["menu_closed"] = {id="❌ Menu ditutup.", en="❌ Menu closed."},
+  ----Menu Free----
   
-  ["astro_fail_title"] = {id = "Gagal Membuka Mistis Pass",en = "Mythic Pass Unlock Failed"},
-  ["astro_fail_body"] = {id = "🔍 Nilai tidak ditemukan.\nCoba lagi atau mulai ulang game.",en = "🔍 No matching values found.\nTry again or restart the game."},
-  ["astro_success"] = {id = "Mistis Pass Berhasil Dibuka!",en = "Mythic Pass Unlocked!"},
+  ["free_menu_freemenu"] = {id="📜 Menu Skrip Gratis", en="📜 Free Script Menu"},
+  ["unlock_season_freemenu"] = {id="🌟  Buka Season Pass", en="🌟  Unlock Season Pass"},
+  ["freeze_rewards_freemenu"] = {id="❄️  Bekukan Hadiah", en="❄️  Freeze Rewards"},
+  ["change_reward_freemenu"] = {id="🎁  Ubah Tipe Hadiah", en="🎁  Change Reward Type"},
+  ["misc_mods_freemenu"] = {id="🛠️  Modifikasi Lainnya", en="🛠️  Miscellaneous Mods"},
+  ["script_info_freemenu"] = {id="ℹ️  Informasi Skrip", en="ℹ️  Script Information"},
+  ["invalid_selection_freemenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
+  ["menu_closed_freemenu"] = {id="❌ Menu ditutup.", en="❌ Menu closed."},
+  ["exit_script_freemenu"] = {id="❌  [ << Keluar Skrip >> ]", en="❌  [ << Exit Script >> ]"},
   
-  ["freeze_title"] = {id = "Aktivasi Pembekuan Hadiah", en = "Freeze Rewards Activation"},
-  ["freeze_confirm"] = {id = "Yakin ingin mengaktifkan fitur Pembekuan Hadiah?", en = "Are you sure you want to activate Freeze Rewards?"},
-  ["freeze_explain"] = {id = "Ini akan membekukan nilai hadiah di memori.", en = "This will freeze reward values in memory."},
-  ["cancel_info"] = {id = "Batal jika ragu atau ingin kembali.", en = "Cancel if you're unsure or want to go back."},
-  ["proceed"] = {id = "Lanjutkan", en = "Proceed"},
-  ["cancel"] = {id = "Batal", en = "Cancel"},
-  ["cancelled"] = {id = "Operasi dibatalkan.", en = "Operation cancelled."},
-  ["freeze_active"] = {id = "Pembekuan Hadiah diaktifkan.", en = "Freeze Rewards activated."},
-  ["freeze_failed"] = {id = "Gagal Membekukan", en = "Freeze Failed"},
-  ["freeze_not_found"] = {id = "Tidak ada nilai yang cocok ditemukan.\nSilakan coba lagi atau mulai ulang game.", en = "No matching values found.\nPlease try again or restart the game."},
-  ["freeze_done"] = {id = "Pembekuan Hadiah Aktif", en = "Freeze Rewards Activated"},
+  ----GP Free----
   
-  ["freeze_inactive_title"] = {id = "Fitur Freeze Rewards Tidak Aktif",en = "Freeze Rewards Not Active"},
-  ["freeze_required"] = {id = "Fitur ini memerlukan aktivasi Freeze Rewards terlebih dahulu.",en = "This feature requires 'Freeze Rewards' to be enabled first."},
-  ["freeze_instruction"] = {id = "Silakan aktifkan terlebih dahulu dari menu *Freeze Rewards* sebelum melanjutkan.",en = "Please go to the *Freeze Rewards* menu and activate it before using this menu."},
-  ["freeze_location"] = {id = "Lokasi: Skrip Gratis → Freeze Rewards",en = "Location: Free Script → Freeze Rewards"},
-  ["smelt_ingots"] = {id = "🪙  Batangan Logam",en = "🪙 Smelt Ingots"},
-  ["mining_tools1"] = {id = "⛏️  Alat Tambang",en = "⛏️ Mining Tools"},
-  ["redeem_coupons"] = {id = "🎟️  Tukar Kupon",en = "🎟️ Redeem Coupons"},
-  ["add_gems"] = {id = "💎  Tambah Permata",en = "💎 Add Gems"},
-  ["match3_boosters1"] = {id = "🧩  Booser Match-3",en = "🧩 Match-3 Boosters"},
-  ["community_materials"] = {id = "🏗️  Material Komunitas",en = "🏗️ Community Materials"},
-  ["claim_perks"] = {id = "🎉  Klaim Bonus & Hadiah",en = "🎉 Claim Perks & Bonuses"},
-  ["go_back"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
-  ["menu_closed"] = {id = "Menu ditutup.",en = "Menu closed."},
-  ["invalid_option"] = {id = "Opsi tidak valid.",en = "Invalid option."},
+  ["astro_fail_title_gpfree"] = {id = "Gagal Membuka Pass Musiman",en = "Season Pass Unlock Failed"},
+  ["astro_fail_body_gpfree"] = {id = "🔍 Nilai tidak ditemukan.\nCoba lagi atau mulai ulang game.",en = "🔍 No matching values found.\nTry again or restart the game."},
+  ["astro_success_gpfree"] = {id = " Pass Musiman Berhasil Dibuka!",en = "Season Pass Unlocked!"},
   
-  ["menu4_title"] = {id = "📦  Menu Hadiah Tambahan",en = "📦 Bonus Rewards Menu"},
-  ["menu4_opt1"] = {id = "🚁  T-Cash dari Helikopter",en = "🚁 T-Cash from Helicopter"},
-  ["menu4_opt2"] = {id = "🌾  EXP dari Panen Gandum",en = "🌾 EXP from Wheat Harvest"},
-  ["menu4_opt3"] = {id = "🎁  Kotak Pabrik Gratis",en = "🎁 Free Factory Boxes"},
-  ["menu4_opt4"] = {id = "🚧  Perluas Lahan (Tanpa Pop)",en = "🚧 Expand Land (No Pop)"},
-  ["menu4_opt5"] = {id = "🏭  Leleh Instan di Pabrik",en = "🏭 Instant Smelting"},
-  ["menu4_opt6"] = {id = "🐮  Produksi Peternakan Cepat",en = "🐮 Fast Farm Production"},
-  ["menu4_opt7"] = {id = "⚡  Isi Ulang Energi Adventure",en = "⚡ Refill Adventure Energy"},
-  ["menu_back"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
-  ["menu_none_selected"] = {id = "Tidak ada opsi yang dipilih.",en = "No option selected."},
-  ["menu_invalid"] = {id = "Opsi tidak valid dipilih.",en = "Invalid option selected."},
+  ----Freeze menu----
   
-  ["free_menu"] = {id="📜 Menu Skrip Gratis", en="📜 Free Script Menu"},
-["premium_menu"] = {id="📜 Menu Skrip Premium", en="📜 Premium Script Menu"},
-["special_hack"] = {id="💠  Hack Spesial", en="💠  Special Hack"}, -- 🔹 Tambahan baru
-["limited_events"] = {id="🎯  Event Terbatas", en="🎯  Limited-Time Events"},
-["skip_time"] = {id = "⏩  Lewati Waktu", en = "⏩  Skip Time"},
-["farming_products"] = {id="🚜  Produk & Pertanian", en="🚜  Farming & Products"},
+  ["freeze_title_freezeinfo"] = {id = "Aktivasi Pembekuan Hadiah", en = "Freeze Rewards Activation"},
+  ["freeze_confirm_freezeinfo"] = {id = "Yakin ingin mengaktifkan fitur Pembekuan Hadiah?", en = "Are you sure you want to activate Freeze Rewards?"},
+  ["freeze_explain_freezeinfo"] = {id = "Ini akan membekukan nilai hadiah di memori.", en = "This will freeze reward values in memory."},
+  ["cancel_info_freezeinfo"] = {id = "Batal jika ragu atau ingin kembali.", en = "Cancel if you're unsure or want to go back."},
+  ["proceed_freezeinfo"] = {id = "Lanjutkan", en = "Proceed"},
+  ["cancel_freezeinfo"] = {id = "Batal", en = "Cancel"},
+  ["cancelled_freezeinfo"] = {id = "Operasi dibatalkan.", en = "Operation cancelled."},
+
+  ["freeze_active_freezeinfo"] = {id = "Pembekuan Hadiah diaktifkan.", en = "Freeze Rewards activated."},
+  ["freeze_failed_freezeinfo"] = {id = "Gagal Membekukan", en = "Freeze Failed"},
+  ["freeze_not_found_freezeinfo"] = {id = "Tidak ada nilai yang cocok ditemukan.\nSilakan coba lagi atau mulai ulang game.", en = "No matching values found.\nPlease try again or restart the game."},
+  ["freeze_done_freezeinfo"] = {id = "Pembekuan Hadiah Aktif", en = "Freeze Rewards Activated"},
   
-  ["unlock_pass"] = {id = "🌟  Buka Season Pass", en = "🌟  Unlock Season Pass"},
-  ["freeze_rewards"] = {id = "❄️  Bekukan Hadiah ", en = "❄️  Freeze Rewards "},
-  ["skins_decor"] = {id = "🎭  Skin, Avatar & Dekorasi", en = "🎭  Skins, Avatars & Decorations"},
-  ["add_cash"] = {id = "💵  Tambah T-Cash", en = "💵  Add T-Cash"},
-  ["boosters"] = {id = "🚀  Booster & Power-Up", en = "🚀  Boosters & Power-Ups"},
-  ["redeem_coupon"] = {id = "🎟️  Tukar Kupon", en = "🎟️  Redeem Coupons"},
-  ["add_gems"] = {id = "💎  Tambah Permata", en = "💎  Add Gems"},
-  ["special_product"] = {id = "🛍️  Produk Spesial", en = "🛍️  Special Products"},
-  ["claim_bonus"] = {id = "🎉  Klaim Bonus & Keuntungan", en = "🎉  Claim Perks & Bonuses"},
-  ["go_back"] = {id = "❌  [ << Kembali >> ]", en = "❌  [ << Go Back >> ]"},
-  ["menu_closed"] = {id = "❌ Menu ditutup.", en = "❌ Menu closed."},
-  ["invalid_option"] = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option selected."},
+  ----Change Reward Free----
   
-  ["sp_unlock_title"] = {id = "🎫 Pilih Season Pass yang akan dibuka", en = "🎫 Choose Season Pass to Unlock"},
-["sp_cancelled"] = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
-["sp_no_found"] = {id = "❌ Tidak ditemukan.\n", en = "❌ No matching value found.\n"},
-["sp_copied"] = {id = "📋 Data %s disalin.", en = "📋 %s data copied."},
-["sp_target_nf"] = {id = "⚠️ ID target %s tidak ditemukan!", en = "⚠️ Target ID %s not found!"},
-["sp_applied"] = {id = "✅ Konten %s diterapkan ke ID %s", en = "✅ %s content applied to ID %s"},
-["sp_done"] = {id = "🎉 Season Pass berhasil diperbarui.\nSilakan restart atau masuk ulang game.", en = "🎉 Season Pass updated.\nPlease restart or re-enter the game."},
-["sp_astro_ok"] = {id = "✅ Astro Pass berhasil dibuka!", en = "✅ Astro Pass Unlocked!"},
-
-["sp_astro"] = {id = "🎎 Buka Season Pass Saat Ini: Jepang", en = "🎎 Unlock Current Pass: Japanese"},
-["sp_mythic"] = {id = "❓ Buka Season Pass Berikutnya: Unknow", en = "❓ Unlock Next Pass: Unknow"},
-["sp_japan"] = {id = "❓ Buka Season Pass Berikutnya: Unknow", en = "❓ Unlock Next Pass: Unknow"},
-
-["freeze_required_title"] = {id = "Fitur Freeze Belum Aktif", en = "Freeze Rewards Not Active"},
-["freeze_required_desc1"] = {id = "Fitur ini membutuhkan Freeze Rewards aktif.",en = "This feature requires 'Freeze Rewards' to be enabled first."},
-["freeze_required_desc2"] = {id = "Silakan aktifkan Freeze Rewards terlebih dahulu.",en = "Please go to the *Freeze Rewards* menu and activate it before using this menu."},
-["freeze_required_location"] = {id = "Lokasi: Premium Script → Unlock Season Pass → Freeze Rewards",en = "Location: Premium Script → Unlock Season Pass → Freeze Rewards"},
-
-["add_tcash"] = {id = "Tambah T-Cash", en = "Add T-Cash"},
-["add_coins"] = {id = "Tambah Koin", en = "Add Coins"},
-["add_regatta"] = {id = "Tambah Token Regatta", en = "Add Regatta Tokens"},
-["add_clover"] = {id = "Tambah Semanggi", en = "Add Lucky Clover"},
-["add_statuecoins"] = {id = "Tambah Koin Patung", en = "Add Statue Coins"},
-["go_back1"] = {id = "Kembali", en = "Go Back"},
-["no_option_selected"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option"] = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
-
-  ["tcash"]       = {id = "💵 T-Cash", en = "💵 T-Cash"},
-  ["coin"]        = {id = "💰 Koin", en = "💰 Coins"},
-  ["regatta"]     = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
-  ["clover"]      = {id = "🍀 Semanggi", en = "🍀 Clover"},
-  ["statue"]      = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
-  ["invalid"]     = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
-  ["set_to"]      = {id = " diatur menjadi ", en = " set to "},
-  ["applied"]     = {id = " diterapkan ✅", en = " applied ✅"},
+["smelt_ingots_changefree"] = {id = "🪙  Batangan Logam",en = "🪙 Smelt Ingots"},
+  ["mining_tools1_changefree"] = {id = "⛏️  Alat Tambang",en = "⛏️ Mining Tools"},
+  ["redeem_coupons_changefree"] = {id = "🎟️  Tukar Kupon",en = "🎟️ Redeem Coupons"},
+  ["add_gems_changefree"] = {id = "💎  Tambah Permata",en = "💎 Add Gems"},
+  ["match3_boosters_changefree"] = {id = "🧩  Booser Match-3",en = "🧩 Match-3 Boosters"},
+  ["community_materials_changefree"] = {id = "🏗️  Material Komunitas",en = "🏗️ Community Materials"},
+  ["claim_perks_changefree"] = {id = "🎉  Klaim Bonus & Hadiah",en = "🎉 Claim Perks & Bonuses"},
+  ["go_back_changefree"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
+  ["menu_closed_changefree"] = {id = "Menu ditutup.",en = "Menu closed."},
+  ["invalid_option_changefree"] = {id = "Opsi tidak valid.",en = "Invalid option."},
   
-  ["match3_boosters"] = {id = "Booster Match-3", en = "Match-3 Boosters"},
-["lab_boosters"] = {id = "Booster Laboratorium", en = "Lab Boosters"},
-["freeze_not_active"] = {id = "Bekukan Hadiah Tidak Aktif", en = "Freeze Rewards Not Active"},
-["freeze_required_msg"] = {id = "Fitur ini memerlukan 'Bekukan Hadiah' diaktifkan terlebih dahulu.",en = "This feature requires 'Freeze Rewards' to be enabled first."},
-["freeze_location_info"] = {id = "Silakan buka menu Premium → Season Pass → Bekukan Hadiah",en = "Please go to the Premium menu → Season Pass → Freeze Rewards"},
-["no_option_selected"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option"] = {id = "Opsi tidak valid.", en = "Invalid option."},
-
-  ["rainbow_ball"] = {id = "Bola Pelangi", en = "Rainbow Ball"},
-  ["bomb"] = {id = "Bom", en = "Bomb"},
-  ["rocket"] = {id = "Roket", en = "Rocket"},
-  ["jackhammer"] = {id = "Jackhammer", en = "Jackhammer"},
-  ["hydrant"] = {id = "Hydran", en = "Hydrant"},
-  ["gloves"] = {id = "Sarung Tangan", en = "Gloves"},
-  ["infinite_lives_30"] = {id = "30 Hari Nyawa Tak Terbatas", en = "30-Day Infinite Lives"},
-  ["double_points_30"] = {id = "30 Hari Poin Ganda", en = "30-Day Double Points"},
-  ["rainbow_ball_30"] = {id = "30 Hari Bola Pelangi", en = "30-Day Rainbow Ball"},
-  ["bomb_30"] = {id = "30 Hari Bom", en = "30-Day Bomb"},
-  ["rocket_30"] = {id = "30 Hari Roket", en = "30-Day Rocket"},
-  ["energy_adventure"] = {id = "Energi Petualangan", en = "Energy of Adventure"},
-  ["exploder_adventure"] = {id = "Petualangan Ledakan", en = "Exploder Adventure"},
-  ["go_back"] = {id = "Kembali", en = "Go Back"},
-  ["no_option_selected"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-  ["invalid_selection"] = {id = "Pilihan tidak valid.", en = "Invalid selection."},
-
-["booster_amount"] = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
-["no_input"] = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_range"] = {id = "🚫 Jumlah tidak valid.\nMasukkan angka antara 1 dan", en = "🚫 Invalid input.\nEnter a number between 1 and"},
-["template_not_found"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
-["template_copied"] = {id = "📋 Template disalin", en = "📋 Template copied"},
-["booster_applied"] = {id = "Booster diterapkan:", en = "Booster applied:"},
-["success_30d"] = {id = "Booster 30 Hari diterapkan", en = "30-Day booster applied."},
-
-["rainbow_amount"] = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball booster amount"},
-["bomb_amount"]    = {id = "Masukkan jumlah Bomb", en = "Enter Bomb booster amount"},
-["rocket_amount"]  = {id = "Masukkan jumlah Rocket", en = "Enter Rocket booster amount"},
-["jack_amount"]    = {id = "Masukkan jumlah Jackhammer", en = "Enter Jackhammer booster amount"},
-["hydrant_amount"] = {id = "Masukkan jumlah Hydrant", en = "Enter Hydrant booster amount"},
-["gloves_amount"]  = {id = "Masukkan jumlah Gloves", en = "Enter Gloves booster amount"},
-
-["adventure_energy_prompt"] = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:",en = "⚡ Enter Adventure Energy amount [1–100000]:"},
-["exploder_adventure_prompt"] = {id = "💥 Masukkan jumlah Petualangan Peledak [1–5000]:",en = "💥 Enter Exploder Adventure amount [1–5000]:"},
-["invalid_value_energy"] = {id = "🚫 Nilai tidak valid. Masukkan angka antara 1 hingga 100000.",en = "🚫 Invalid value. Must be between 1 and 100000."},
-["invalid_value_exploder"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 hingga 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
-["toast_energy_applied"] = {id = "⚡ Energi Petualangan disetel ke: %d ✅",en = "⚡ Adventure Energy set to: %d ✅"},
-["toast_exploder_applied"] = {id = "💥 Petualangan Peledak disetel ke: %d ✅",en = "💥 Exploder Adventure set to: %d ✅"},
-
-["profitable_flight"] = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
-["rich_fields"] = {id = "Ladang Subur", en = "Rich Fields"},
-["record_demand"] = {id = "Permintaan Tertinggi", en = "Record Demand"},
-["busy_trade"] = {id = "Perdagangan Sibuk", en = "Busy Trade"},
-["smart_navigation"] = {id = "Navigasi Cerdas", en = "Smart Navigation"},
-["active_cooperation"] = {id = "Kooperasi Aktif", en = "Active Cooperation"},
-["efficient_smelting"] = {id = "Peleburan Efisien", en = "Efficient Smelting"},
-["vibrant_market"] = {id = "Pasar Meriah", en = "Vibrant Market"},
-["high_speed_production"] = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
-["super_harvest"] = {id = "Panen Super", en = "Super Harvest"},
-["advanced_farming"] = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
-["generous_customers"] = {id = "Pelanggan Dermawan", en = "Generous Customers"},
-["see_the_light"] = {id = "Melihat Terang", en = "See the Light"},
-["shortcut"] = {id = "Jalan Pintas", en = "Shortcut"},
-["extra_hands"] = {id = "Tambahan Tangan", en = "Extra Pair of Hands"},
-["spacious_barn"] = {id = "Lumbung Luas", en = "Spacious Barn"},
-["large_request"] = {id = "Permintaan Besar", en = "Large Request"},
-["favorable_voyage"] = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
-["[go_back]"] = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
-["no_option_selected"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option"] = {id = "Pilihan tidak valid.", en = "Invalid option."},
-
-["no_match"] = {id = "❌ Nilai tidak ditemukan. Tidak dapat menerapkan ",en = "❌ No matching value found. Cannot apply "},
-["enter_amount"] = {id = "Masukkan jumlah booster [1–500]:",en = "Enter booster amount [1–500]:"},
-["no_amount"] = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 hingga 500.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 500."},
-["ref_not_found"] = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ",en = "❌ Reference not found. Cannot apply "},
-["unnamed_booster"] = {id = "Pelayaran Menguntungkan",en = "Favorable Voyage"},
-
-["lab1"]  = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
-["lab2"]  = {id = "Ladang Kaya", en = "Rich Fields"},
-["lab3"]  = {id = "Permintaan Tinggi", en = "Record Demand"},
-["lab4"]  = {id = "Perdagangan Sibuk", en = "Busy Trade"},
-["lab5"]  = {id = "Navigasi Cerdas", en = "Smart Navigation"},
-["lab6"]  = {id = "Kerja Sama Aktif", en = "Active Cooperation"},
-["lab7"]  = {id = "Peleburan Efisien", en = "Efficient Smelting"},
-["lab8"]  = {id = "Pasar Ramai", en = "Vibrant Market"},
-["lab9"]  = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
-["lab10"] = {id = "Panen Super", en = "Super-Harvest"},
-["lab11"] = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
-["lab12"] = {id = "Pelanggan Dermawan", en = "Generous Customer"},
-["lab13"] = {id = "Melihat Cahaya", en = "See the Light"},
-["lab14"] = {id = "Jalur Pintas", en = "Shortcut"},
-["lab15"] = {id = "Bantuan Tambahan", en = "Extra Pair of Hands"},
-["lab16"] = {id = "Lumbung Luas", en = "Spacious Barn"},
-["lab17"] = {id = "Permintaan Besar", en = "Large Request"},
-
-["freeze_inactive"] = {id = "🚫 Freeze Reward belum aktif\n\n❄️ Fitur ini memerlukan 'Freeze Reward' diaktifkan terlebih dahulu.\n\n➡️ Silakan buka menu *Freeze Reward* dan aktifkan sebelum memakai menu ini.\n\n🧩 Lokasi: Script Premium → Buka Season Pass → Freeze Reward",en = "🚫 Freeze Rewards Not Active\n\n❄️ This feature requires 'Freeze Rewards' to be enabled first.\n\n➡️ Please go to the *Freeze Rewards* menu and activate it before using this menu.\n\n🧩 Location: Premium Script → Unlock Season Pass → Freeze Rewards"},
-["coupon_loader"]  = {id = "Kupon Pengisian Barang",             en = "Loader Coupon"},
-["coupon_dealer"]  = {id = "Kupon Sewa Pedagang",        en = "Hire Dealer Coupon"},
-["coupon_barn"]    = {id = "Kupon Upgrade Lumbung",    en = "Upgrade Barn Coupon"},
-["coupon_city"]    = {id = "Kupon Perluas Kota",       en = "Expand City Coupon"},
-["coupon_factory"] = {id = "Kupon Upgrade Pabrik",     en = "Upgrade Factory Coupon"},
-["coupon_train"]   = {id = "Kupon Upgrade Kereta",     en = "Upgrade Train Coupon"},
-["coupon_island"]  = {id = "Kupon Upgrade Pulau",      en = "Upgrade Island Coupon"},
-["back1"]           = {id = "[ << Kembali >> ]",        en = "[ << Go Back >> ]"},
-["no_option"]      = {id = "❌ Tidak ada opsi dipilih.",en = "❌ No option selected."},
-["invalid_option"] = {id = "⚠️ Opsi tidak valid.",     en = "⚠️ Invalid option selected."},
-
-  ["loader_coupon"] = {id = "Masukkan jumlah Kupon Pengisian Barang", en = "Enter Loader Coupon amount"},
-  ["dealer_coupon"] = {id = "Masukkan jumlah Kupon Sewa Pedagang", en = "Enter Hire Dealer Coupon amount"},
-  ["barn_coupon"] = {id = "Masukkan jumlah Kupon Upgrade Lumbung", en = "Enter Barn Upgrade Coupon amount"},
-  ["city_coupon"] = {id = "Masukkan jumlah Kupon Perluasan Kota", en = "Enter City Expansion Coupon amount"},
-  ["factory_coupon"] = {id = "Masukkan jumlah Kupon Upgrade Pabrik", en = "Enter Factory Upgrade Coupon amount"},
-  ["train_coupon"] = {id = "Masukkan jumlah Kupon Upgrade Kereta", en = "Enter Train Upgrade Coupon amount"},
-  ["island_coupon"] = {id = "Masukkan jumlah Kupon Upgrade Pulau", en = "Enter Island Upgrade Coupon amount"},
-  ["no_amount"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nDibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-  ["invalid_range"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara", en = "🚫 Invalid input.\nPlease enter a number between"},
-  ["Loader Coupon"] = {id = "Kupon Pengisian Barang", en = "Loader Coupon"},
-  ["Hire Dealer Coupon"] = {id = "Kupon Sewa Pedagang", en = "Hire Dealer Coupon"},
-  ["Barn Upgrade Coupon"] = {id = "Kupon Upgrade Lumbung", en = "Barn Upgrade Coupon"},
-  ["City Expansion Coupon"] = {id = "Kupon Perluas Kota", en = "City Expansion Coupon"},
-  ["Factory Upgrade Coupon"] = {id = "Kupon Upgrade Pabrik", en = "Factory Upgrade Coupon"},
-  ["Train Upgrade Coupon"] = {id = "Kupon Upgrade Kereta", en = "Train Upgrade Coupon"},
-["Island Upgrade Coupon"] = {id = "Kupon Upgrade Pulau", en = "Island Upgrade Coupon"},
-
-  ["freeze_not_active"] = {id ="Freeze Rewards belum aktif", en = "Freeze Rewards Not Active"},
-  ["freeze_required"]   = {id ="Fitur ini memerlukan 'Freeze Rewards' diaktifkan terlebih dahulu.", en = "This feature requires 'Freeze Rewards' to be enabled first."},
-  ["freeze_location"]   = {id ="Silakan ke menu Premium → Unlock Season Pass → Freeze Rewards", en = "Please go to the Premium menu → Unlock Season Pass → Freeze Rewards"},
-  ["orange_gem"]        = {id ="Permata Jingga", en = "Orange Gem"},
-  ["green_gem"]         = {id ="Permata Hijau",en =  "Green Gem"},
-  ["red_gem"]           = {id ="Permata Merah",en =  "Red Gem"},
-  ["go_back"]           = {id ="Kembali", en = "Go Back"},
-  ["no_option_selected"]= {id ="Tidak ada opsi yang dipilih.", en = "No option selected."},
-  ["invalid_option"]    = {id ="Opsi tidak valid.", en = "Invalid option selected."},
-
-  ["gem_not_found"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game.",en = "❌ Address not found.\nTry restarting the game."},
-  ["no_input"] = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-  ["invalid_input"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 dan ",en = "🚫 Invalid input.\nPlease enter a number between 1 and "},
-  ["enter_amount"] = {id = "Masukkan jumlah",en = "Enter amount of"},
-  ["reward_set"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
-  ["orange_gem"] = {id = "Permata Jingga", en = "Orange Gem"},
-  ["green_gem"]  = {id = "Permata Hijau",  en = "Green Gem"},
-  ["red_gem"]    = {id = "Permata Merah",  en = "Red Gem"},
-
-  ["freeze_off_title"]     = {id = "Hadiah Beku Tidak Aktif", en = "Freeze Rewards Not Active"},
-  ["freeze_off_body1"]     = {id = "Fitur ini membutuhkan 'Freeze Rewards' diaktifkan terlebih dahulu.", en = "This feature requires 'Freeze Rewards' to be enabled first."},
-  ["freeze_off_body2"]     = {id = "Silakan buka menu *Freeze Rewards* dan aktifkan sebelum menggunakan menu ini.", en = "Please go to the *Freeze Rewards* menu and activate it before using this menu."},
-  ["freeze_off_location"]  = {id = "Lokasi: Script Premium → Season Pass → Freeze Rewards", en = "Location: Premium Script → Unlock Season Pass → Freeze Rewards"},
-  ["metal_ingots"]         = {id = "Batangan Logam", en = "Metal Ingots"},
-  ["mining_tools"]         = {id = "Alat Tambang", en = "Mining Tools"},
-  ["community_tools"]      = {id = "Alat Bangunan Komunitas", en = "Community Building Tools"},
-  ["barn_tools"]           = {id = "Alat Upgrade Lumbung", en = "Barn Upgrade Tools"},
-  ["expansion_tools"]      = {id = "Alat Ekspansi Kota", en = "City Expansion Tools"},
-  ["go_back"]              = {id = "Kembali", en = "Go Back"},
-  ["no_option"]            = {id = "Tidak ada opsi dipilih", en = "No options selected"},
-  ["invalid_option"]       = {id = "Opsi tidak valid dipilih", en = "Invalid option selected"},
-
-["bronze_ingot"]   = {id = "Batangan Perunggu", en = "Bronze Ingot"},
-["silver_ingot"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
-["gold_ingot"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
-["platinum_ingot"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
-["go_back"]        = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
-["no_option"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
-
-  ["pickaxe"] = {id = "Beliung", en = "Pickaxe"},
-  ["tnt"] = {id = "TNT", en = "TNT"},
-  ["dynamite"] = {id = "Dinamit", en = "Dynamite"},
-  ["x2_ore_bonus"] = {id = "Bonus Bijih ×2 (30 Hari)", en = "×2 Ore Bonus (30 Days)"},
-  ["go_back"] = {id = "Kembali", en = "Go Back"},
-  ["no_option_selected"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-  ["invalid_option"] = {id = "Opsi tidak valid.", en = "Invalid option selected."},
-
-  ["mining_prompt"] = {id = "Masukkan jumlah",en = "Enter amount"},
-  ["cancel_input"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-  ["invalid_input"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara",en = "🚫 Invalid input.\nPlease enter a number between"},
-  ["not_found"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
-  ["success_bonus"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
-  ["pickaxes"] = {id = "Beliung", en = "Pickaxes"},
-  ["tnt"] = {id = "TNT", en = "TNT"},
-  ["dynamite"] = {id = "Dinamit", en = "Dynamite"},
-  ["ore_bonus"] = {id = "Bonus Tambang ×2 (30 Hari)", en = "30-Day ×2 Ore Bonus"},
-
-["glass"]         = {id = "Kaca", en = "Glass"},
-["bricks"]        = {id = "Bata", en = "Bricks"},
-["slab"]          = {id = "Lempengan", en = "Slab"},
-["jackhammer"]    = {id = "Bor Beton", en = "Jackhammer"},
-["electric_saw"]  = {id = "Gergaji Listrik", en = "Electric Saw"},
-["drill"]         = {id = "Bor", en = "Drill"},
-["back"]          = {id = "Kembali", en = "Go Back"},
-["no_option_selected"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option"]     = {id = "Opsi tidak valid.", en = "Invalid option selected."},
-
-["input_construct"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
-["no_amount"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
-["reward_set"] = {id = "{emoji} {label} diatur ke: {amount} ✅",en = "{emoji} {label} reward set to: {amount} ✅"},
-["glass"] = {id = "Kaca", en = "Glass"},
-["bricks"] = {id = "Batu Bata", en = "Bricks"},
-["slabs"] = {id = "Lempengan", en = "Slabs"},
-["jackhammer"] = {id = "Bor Beton", en = "Jackhammer"},
-["saw"] = {id = "Gergaji Listrik", en = "Electric Saw"},
-["drill"] = {id = "Bor", en = "Drill"},
-
-["hammer"] = {id = "Palu", en = "Hammer"},
-["nail"] = {id = "Paku", en = "Nail"},
-["red_paint"] = {id = "Cat Merah", en = "Red Paint"},
-["choose_barn_material"] = {id = "Pilih Material Lumbung:", en = "Choose Barn Material:"},
-["go_back"] = {id = "Kembali", en = "Go Back"},
-["no_option"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option"] = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
-
-  ["hammers"] = {id = "Palu", en = "Hammers"},
-  ["nails"] = {id = "Paku", en = "Nails"},
-  ["red_paint"] = {id = "Cat Merah", en = "Red Paint"},
-  ["enter_amount"] = {id = "Masukkan jumlah [1-5000]", en = "Enter amount [1-5000]"},
-  ["invalid_input"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan 5000.", en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
-  ["barn_reward_set"] = {id = "Hadiah lumbung diatur menjadi", en = "Barn reward set to"},
-
-  ["saw"]         = { id = "Gergaji", en = "Saw" },
-  ["axe"]         = { id = "Kapak", en = "Axe" },
-  ["shovel"]      = { id = "Sekop", en = "Shovel" },
-  ["go_back"]     = { id = "[ << Kembali >> ]", en = "[ << Go Back >> ]" },
-  ["no_option"]   = { id = "Tidak ada opsi yang dipilih.", en = "No option selected." },
-  ["invalid_option"] = { id = "Opsi tidak valid.", en = "Invalid option selected." },
+  ----Aneka Ragam Hack----
   
-    ["enter_amount"] = {id = "Masukkan jumlah:",en = "Enter amount:"},
-    ["invalid_input"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 hingga 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
-    ["reward_set"] = {id = "Hadiah diset ke",en = "Reward set to"},
-    ["saw"] = {id = "Gergaji", en = "Saw"},
-    ["axe"] = {id = "Kapak", en = "Axe"},
-    ["shovel"] = {id = "Sekop", en = "Shovel"},
+  ["menu4_opt1_hackfree"] = {id = "🚁  T-Cash dari Helikopter",en = "🚁 T-Cash from Helicopter"},
+  ["menu4_opt2_hackfree"] = {id = "🌾  EXP dari Panen Gandum",en = "🌾 EXP from Wheat Harvest"},
+  ["menu4_opt3_hackfree"] = {id = "🎁  Kotak Pabrik Gratis",en = "🎁 Free Factory Boxes"},
+  ["menu4_opt4_hackfree"] = {id = "🚧  Perluas Lahan (Tanpa Pop)",en = "🚧 Expand Land (No Pop)"},
+  ["menu4_opt5_hackfree"] = {id = "🏭  Leleh Instan di Pabrik",en = "🏭 Instant Smelting"},
+  ["menu4_opt6_hackfree"] = {id = "🐮  Produksi Peternakan Cepat",en = "🐮 Fast Farm Production"},
+  ["menu4_opt7_hackfree"] = {id = "⚡  Isi Ulang Energi Adventure",en = "⚡ Refill Adventure Energy"},
+  ["menu_back_hackfree"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
+  ["menu_none_selected_hackfree"] = {id = "Tidak ada opsi yang dipilih.",en = "No option selected."},
+  ["menu_invalid_hackfree"] = {id = "Opsi tidak valid dipilih.",en = "Invalid option selected."},
+  
+  ----Premium Menu----
+  
+["premium_menu_premenu"] = {id="📜 Menu Skrip Premium", en="📜 Premium Script Menu"},
+["special_hack_premenu"] = {id="💠  Hack Spesial", en="💠  Special Hack"}, -- 🔹 Tambahan baru
+["unlock_season_premenu"] = {id="🌟  Buka Season Pass", en="🌟  Unlock Season Pass"},
+["limited_events_premenu"] = {id="🎯  Event Terbatas", en="🎯  Limited-Time Events"},
+["skip_time_premenu"] = {id = "⏩  Lewati Waktu", en = "⏩  Skip Time"},
+["farming_products_premenu"] = {id="🚜  Produk & Pertanian", en="🚜  Farming & Products"},
+["misc_mods_premenu"] = {id="🛠️  Modifikasi Lainnya", en="🛠️  Miscellaneous Mods"},
+["script_info_premenu"] = {id="ℹ️  Informasi Skrip", en="ℹ️  Script Information"},
+["exit_script_premenu"] = {id="❌  [ << Keluar Skrip >> ]", en="❌  [ << Exit Script >> ]"},
+["invalid_selection_premenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
+  
+  ----Menu Hack RW Premium----
+  
+  ["unlock_pass_rwpremium"] = {id = "🌟  Buka Season Pass", en = "🌟  Unlock Season Pass"},
+  ["freeze_rewards_rwpremium"] = {id = "❄️  Bekukan Hadiah ", en = "❄️  Freeze Rewards "},
+  ["skins_decor_rwpremium"] = {id = "🎭  Skin, Avatar & Dekorasi", en = "🎭  Skins, Avatars & Decorations"},
+  ["add_cash_rwpremium"] = {id = "💵  Tambah T-Cash", en = "💵  Add T-Cash"},
+  ["boosters_rwpremium"] = {id = "🚀  Booster & Power-Up", en = "🚀  Boosters & Power-Ups"},
+  ["redeem_coupon_rwpremium"] = {id = "🎟️  Tukar Kupon", en = "🎟️  Redeem Coupons"},
+  ["add_gems_rwpremium"] = {id = "💎  Tambah Permata", en = "💎  Add Gems"},
+  ["special_product_rwpremium"] = {id = "🛍️  Produk Spesial", en = "🛍️  Special Products"},
+  ["claim_bonus_rwpremium"] = {id = "🎉  Klaim Bonus & Keuntungan", en = "🎉  Claim Perks & Bonuses"},
+  ["go_back_rwpremium"] = {id = "❌  [ << Kembali >> ]", en = "❌  [ << Go Back >> ]"},
+  ["menu_closed_rwpremium"] = {id = "❌ Menu ditutup.", en = "❌ Menu closed."},
+  ["invalid_option_rwpremium"] = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option selected."},
+  
+  ----GP 3 jenis----
+  
+  ["sp_astro_spegp"] = {id = "🎎 Buka Season Pass Saat Ini: Jepang", en = "🎎 Unlock Current Pass: Japanese"},
+["sp_mythic_spegp"] = {id = "🎸 Buka Season Pass Selanjutnya: Rock N Roll",en = "🎸 Unlock Next Season Pass: Rock N Roll"},
+["sp_japan_spegp"] = {id = "🦇 Buka Season Pass Berikutnya: Halloween", en = "🦇 Unlock Next Pass: Halloween"},
+  
+  ["sp_unlock_title_spegp"] = {id = "🎫 Pilih Season Pass yang akan dibuka", en = "🎫 Choose Season Pass to Unlock"},
+["sp_cancelled_spegp"] = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
+["sp_no_found_spegp"] = {id = "❌ Tidak ditemukan.\n", en = "❌ No matching value found.\n"},
+["sp_cancelled_spegp2"] = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
+["sp_copied_spegp"] = {id = "📋 Data %s disalin.", en = "📋 %s data copied."},
+["sp_target_nf_spegp"] = {id = "⚠️ ID target %s tidak ditemukan!", en = "⚠️ Target ID %s not found!"},
+["sp_applied_spegp"] = {id = "✅ Konten %s diterapkan ke ID %s", en = "✅ %s content applied to ID %s"},
+["sp_done_spegp"] = {id = "🎉 Season Pass berhasil diperbarui.\nSilakan restart atau masuk ulang game.", en = "🎉 Season Pass updated.\nPlease restart or re-enter the game."},
+["sp_astro_ok_spegp"] = {id = "✅ Pass Musiman berhasil dibuka!", en = "✅ Season Pass Unlocked!"},
 
-["freeze_not_active"] = {id = "🚫 Freeze Rewards Belum Aktif\n\n❄️ Fitur ini memerlukan 'Freeze Rewards' diaktifkan terlebih dahulu.\n\n➡️ Silakan buka menu *Freeze Rewards* dan aktifkan sebelum menggunakan menu ini.\n\n🧩 Lokasi: Script Premium → Unlock Season Pass → Freeze Rewards",en = "🚫 Freeze Rewards Not Active\n\n❄️ This feature requires 'Freeze Rewards' to be enabled first.\n\n➡️ Please go to the *Freeze Rewards* menu and activate it before using this menu.\n\n🧩 Location: Premium Script → Unlock Season Pass → Freeze Rewards"},
-["no_option"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
-["invalid_option"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
-["express_plane"] = { id = "✈️  Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
-["instant_crop"]  = { id = "🌾  Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
-["fast_farm"]     = { id = "🐄  Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
-["instant_build"] = { id = "🏗️  Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
-["unlimited_barn"] = { id = "🏡  Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
-["train_booster"] = { id = "⏱️  Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
-["double_train"]  = { id = "🚃  Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
-["go_back"]       = { id = "❌  [ << Kembali >> ]", en = "❌  [ << Go Back >> ]" },
+----Tambah Cash----
 
-  ["perk_express_plane"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
-  ["perk_instant_crop"] = {id = "Panen Tanaman Instan", en = "Instant Crop Harvest"},
-  ["perk_rapid_farm"] = {id = "Produksi Peternakan Cepat", en = "Rapid Farm Production"},
-  ["perk_instant_building"] = {id = "Konstruksi Bangunan Instan", en = "Instant Building Construction"},
-  ["perk_unlimited_barn"] = {id = "Kapasitas Lumbung Tak Terbatas", en = "Unlimited Barn Capacity"},
-  ["perk_train_boost"] = {id = "Booster Waktu Kereta", en = "Train Time Booster"},
-  ["perk_double_train"] = {id = "Gerbong Kereta Ganda", en = "Double Train Carriages"},
-  ["enter_barn_boost"] = {id = "Masukkan persentase boost lumbung (1-20000):", en = "Enter barn boost percentage (1-20000):"},
-  ["source_not_found"] = {id = "❌ Struktur sumber tidak ditemukan.", en = "❌ Source structure not found."},
-  ["perk_applied"] = {id = "perk berhasil diterapkan!", en = "perk applied!"},
+["add_tcash_tambahduit"] = {id = "Tambah T-Cash", en = "Add T-Cash"},
+["add_coins_tambahduit"] = {id = "Tambah Koin", en = "Add Coins"},
+["add_regatta_tambahduit"] = {id = "Tambah Token Regatta", en = "Add Regatta Tokens"},
+["add_clover_tambahduit"] = {id = "Tambah Semanggi", en = "Add Lucky Clover"},
+["add_statuecoins_tambahduit"] = {id = "Tambah Koin Patung", en = "Add Statue Coins"},
+["go_back_tambahduit"] = {id = "Kembali", en = "Go Back"},
+["no_option_selected_tambahduit"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
+["invalid_option_tambahduit"] = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
 
+  ["tcash_tambahduit"]       = {id = "💵 T-Cash", en = "💵 T-Cash"},
+  ["coin_tambahduit"]        = {id = "💰 Koin", en = "💰 Coins"},
+  ["regatta_tambahduit"]     = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
+  ["clover_tambahduit"]      = {id = "🍀 Semanggi", en = "🍀 Clover"},
+  ["statue_tambahduit"]      = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
+  ["invalid_tambahduit"]     = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
+  ["set_to_tambahduit"]      = {id = " diatur menjadi ", en = " set to "},
+  ["applied_tambahduit"]     = {id = " diterapkan ✅", en = " applied ✅"},
+  
+  ----menu boost----
+  
+  ["match3_boosters_menuboost"] = {id = "Booster Match-3", en = "Match-3 Boosters"},
+["lab_boosters_menuboost"] = {id = "Booster Laboratorium", en = "Lab Boosters"},
+["go_back_menuboost"] = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
+["no_option_selected_menuboost"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
+["invalid_option_menuboost"] = {id = "Opsi tidak valid.", en = "Invalid option."},
+
+----event boost----
+
+  ["rainbow_ball_eventboost"] = {id = "Bola Pelangi", en = "Rainbow Ball"},
+  ["bomb_eventboost"] = {id = "Bom", en = "Bomb"},
+  ["rocket_eventboost"] = {id = "Roket", en = "Rocket"},
+  ["jackhammer_eventboost"] = {id = "Jackhammer", en = "Jackhammer"},
+  ["hydrant_eventboost"] = {id = "Hydran", en = "Hydrant"},
+  ["gloves_eventboost"] = {id = "Sarung Tangan", en = "Gloves"},
+  ["infinite_lives_30_eventboost"] = {id = "30 Hari Nyawa Tak Terbatas", en = "30-Day Infinite Lives"},
+  ["double_points_30_eventboost"] = {id = "30 Hari Poin Ganda", en = "30-Day Double Points"},
+  ["rainbow_ball_30_eventboost"] = {id = "30 Hari Bola Pelangi", en = "30-Day Rainbow Ball"},
+  ["bomb_30_eventboost"] = {id = "30 Hari Bom", en = "30-Day Bomb"},
+  ["rocket_30_eventboost"] = {id = "30 Hari Roket", en = "30-Day Rocket"},
+  ["energy_adventure_eventboost"] = {id = "Energi Petualangan", en = "Energy of Adventure"},
+  ["exploder_adventure_eventboost"] = {id = "Petualangan Ledakan", en = "Exploder Adventure"},
+  ["go_back_eventboost"] = {id = "Kembali", en = "Go Back"},
+  ["no_option_selected_eventboost"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
+  ["invalid_selection_eventboost"] = {id = "Pilihan tidak valid.", en = "Invalid selection."},
+
+["booster_amount_eventboost"] = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
+["no_input_eventboost"] = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_range_eventboost"] = {id = "🚫 Jumlah tidak valid.\nMasukkan angka antara 1 dan", en = "🚫 Invalid input.\nEnter a number between 1 and"},
+["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
+["template_copied_eventboost"] = {id = "📋 Template disalin", en = "📋 Template copied"},
+["booster_applied_eventboost"] = {id = "Booster diterapkan:", en = "Booster applied:"},
+["success_30d_eventboost"] = {id = "Booster 30 Hari diterapkan", en = "30-Day booster applied."},
+
+["rainbow_amount_eventboost"] = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball booster amount"},
+["bomb_amount_eventboost"]    = {id = "Masukkan jumlah Bomb", en = "Enter Bomb booster amount"},
+["rocket_amount_eventboost"]  = {id = "Masukkan jumlah Rocket", en = "Enter Rocket booster amount"},
+["jack_amount_eventboost"]    = {id = "Masukkan jumlah Jackhammer", en = "Enter Jackhammer booster amount"},
+["hydrant_amount_eventboost"] = {id = "Masukkan jumlah Hydrant", en = "Enter Hydrant booster amount"},
+["gloves_amount_eventboost"]  = {id = "Masukkan jumlah Gloves", en = "Enter Gloves booster amount"},
+
+["adventure_energy_prompt_eventboost"] = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:",en = "⚡ Enter Adventure Energy amount [1–100000]:"},
+["exploder_adventure_prompt_eventboost"] = {id = "💥 Masukkan jumlah Petualangan Peledak [1–5000]:",en = "💥 Enter Exploder Adventure amount [1–5000]:"},
+["invalid_value_energy_eventboost"] = {id = "🚫 Nilai tidak valid. Masukkan angka antara 1 hingga 100000.",en = "🚫 Invalid value. Must be between 1 and 100000."},
+["invalid_value_exploder_eventboost"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 hingga 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+["toast_energy_applied_eventboost"] = {id = "⚡ Energi Petualangan disetel ke: %d ✅",en = "⚡ Adventure Energy set to: %d ✅"},
+["toast_exploder_applied_eventboost"] = {id = "💥 Petualangan Peledak disetel ke: %d ✅",en = "💥 Exploder Adventure set to: %d ✅"},
+
+----lab boost----
+
+["profitable_flight_labboost"] = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
+["rich_fields_labboost"] = {id = "Ladang Subur", en = "Rich Fields"},
+["record_demand_labboost"] = {id = "Permintaan Tertinggi", en = "Record Demand"},
+["busy_trade_labboost"] = {id = "Perdagangan Sibuk", en = "Busy Trade"},
+["smart_navigation_labboost"] = {id = "Navigasi Cerdas", en = "Smart Navigation"},
+["active_cooperation_labboost"] = {id = "Kooperasi Aktif", en = "Active Cooperation"},
+["efficient_smelting_labboost"] = {id = "Peleburan Efisien", en = "Efficient Smelting"},
+["vibrant_market_labboost"] = {id = "Pasar Meriah", en = "Vibrant Market"},
+["high_speed_production_labboost"] = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
+["super_harvest_labboost"] = {id = "Panen Super", en = "Super Harvest"},
+["advanced_farming_labboost"] = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
+["generous_customers_labboost"] = {id = "Pelanggan Dermawan", en = "Generous Customers"},
+["see_the_light_labboost"] = {id = "Melihat Terang", en = "See the Light"},
+["shortcut_labboost"] = {id = "Jalan Pintas", en = "Shortcut"},
+["extra_hands_labboost"] = {id = "Tambahan Tangan", en = "Extra Pair of Hands"},
+["spacious_barn_labboost"] = {id = "Lumbung Luas", en = "Spacious Barn"},
+["large_request_labboost"] = {id = "Permintaan Besar", en = "Large Request"},
+["favorable_voyage_labboost"] = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
+["go_back_labboost"] = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
+["no_option_selected_labboost"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
+["invalid_option_labboost"] = {id = "Pilihan tidak valid.", en = "Invalid option."},
+
+["no_match_labboost"] = {id = "❌ Nilai tidak ditemukan. Tidak dapat menerapkan ",en = "❌ No matching value found. Cannot apply "},
+["enter_amount_labboost"] = {id = "Masukkan jumlah booster [1–500]:",en = "Enter booster amount [1–500]:"},
+["no_amount_labboost"] = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_input_labboost"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 hingga 500.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 500."},
+["invalid_amount_labboost"] = {id="❗ Jumlah tidak valid. Masukkan antara 1 dan 500.", en="❗ Invalid amount. Please enter between 1 and 500."},
+["ref_not_found_labboost"] = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ",en = "❌ Reference not found. Cannot apply "},
+["unnamed_booster_labboost"] = {id = "Pelayaran Menguntungkan",en = "Favorable Voyage"},
+
+["lab1_labboost"]  = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
+["lab2_labboost"]  = {id = "Ladang Kaya", en = "Rich Fields"},
+["lab3_labboost"]  = {id = "Permintaan Tinggi", en = "Record Demand"},
+["lab4_labboost"]  = {id = "Perdagangan Sibuk", en = "Busy Trade"},
+["lab5_labboost"]  = {id = "Navigasi Cerdas", en = "Smart Navigation"},
+["lab6_labboost"]  = {id = "Kerja Sama Aktif", en = "Active Cooperation"},
+["lab7_labboost"]  = {id = "Peleburan Efisien", en = "Efficient Smelting"},
+["lab8_labboost"]  = {id = "Pasar Ramai", en = "Vibrant Market"},
+["lab9_labboost"]  = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
+["lab10_labboost"] = {id = "Panen Super", en = "Super-Harvest"},
+["lab11_labboost"] = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
+["lab12_labboost"] = {id = "Pelanggan Dermawan", en = "Generous Customer"},
+["lab13_labboost"] = {id = "Melihat Cahaya", en = "See the Light"},
+["lab14_labboost"] = {id = "Jalur Pintas", en = "Shortcut"},
+["lab15_labboost"] = {id = "Bantuan Tambahan", en = "Extra Pair of Hands"},
+["lab16_labboost"] = {id = "Lumbung Luas", en = "Spacious Barn"},
+["lab17_labboost"] = {id = "Permintaan Besar", en = "Large Request"},
+
+----kuponpon----
+
+["coupon_loader_kuponpon"]  = {id = "Kupon Pengisian Barang",             en = "Loader Coupon"},
+["coupon_dealer_kuponpon"]  = {id = "Kupon Sewa Pedagang",        en = "Hire Dealer Coupon"},
+["coupon_barn_kuponpon"]    = {id = "Kupon Upgrade Lumbung",    en = "Upgrade Barn Coupon"},
+["coupon_city_kuponpon"]    = {id = "Kupon Perluas Kota",       en = "Expand City Coupon"},
+["coupon_factory_kuponpon"] = {id = "Kupon Upgrade Pabrik",     en = "Upgrade Factory Coupon"},
+["coupon_train_kuponpon"]   = {id = "Kupon Upgrade Kereta",     en = "Upgrade Train Coupon"},
+["coupon_island_kuponpon"]  = {id = "Kupon Upgrade Pulau",      en = "Upgrade Island Coupon"},
+["back_kuponpon"]           = {id = "[ << Kembali >> ]",        en = "[ << Go Back >> ]"},
+["no_option_kuponpon"]      = {id = "❌ Tidak ada opsi dipilih.",en = "❌ No option selected."},
+["invalid_option_kuponpon"] = {id = "⚠️ Opsi tidak valid.",     en = "⚠️ Invalid option selected."},
+
+  ["loader_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Pengisian Barang", en = "Enter Loader Coupon amount"},
+  ["dealer_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Sewa Pedagang", en = "Enter Hire Dealer Coupon amount"},
+  ["barn_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Lumbung", en = "Enter Barn Upgrade Coupon amount"},
+  ["city_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Perluasan Kota", en = "Enter City Expansion Coupon amount"},
+  ["factory_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Pabrik", en = "Enter Factory Upgrade Coupon amount"},
+  ["train_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Kereta", en = "Enter Train Upgrade Coupon amount"},
+  ["island_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Pulau", en = "Enter Island Upgrade Coupon amount"},
+  ["no_amount_kuponpon"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nDibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_range_kuponpon"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara", en = "🚫 Invalid input.\nPlease enter a number between"},
+  ["Loader Coupon_kuponpon"] = {id = "Kupon Pengisian Barang", en = "Loader Coupon"},
+  ["Hire Dealer Coupon_kuponpon"] = {id = "Kupon Sewa Pedagang", en = "Hire Dealer Coupon"},
+  ["Barn Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Lumbung", en = "Barn Upgrade Coupon"},
+  ["City Expansion Coupon_kuponpon"] = {id = "Kupon Perluas Kota", en = "City Expansion Coupon"},
+  ["Factory Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Pabrik", en = "Factory Upgrade Coupon"},
+  ["Train Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Kereta", en = "Train Upgrade Coupon"},
+  ["Island Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Pulau", en = "Island Upgrade Coupon"},
+
+  ----gem----
+  
+  ["orange_gem_gemgem"]        = {id ="Permata Jingga", en = "Orange Gem"},
+  ["green_gem_gemgem"]         = {id ="Permata Hijau",en =  "Green Gem"},
+  ["red_gem_gemgem"]           = {id ="Permata Merah",en =  "Red Gem"},
+  ["go_back_gemgem"]           = {id ="Kembali", en = "Go Back"},
+  ["no_option_selected_gemgem"]= {id ="Tidak ada opsi yang dipilih.", en = "No option selected."},
+  ["invalid_option_gemgem"]    = {id ="Opsi tidak valid.", en = "Invalid option selected."},
+
+  ["gem_not_found_gemgem"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game.",en = "❌ Address not found.\nTry restarting the game."},
+  ["no_input_gemgem"] = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_input_gemgem"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 dan ",en = "🚫 Invalid input.\nPlease enter a number between 1 and "},
+  ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
+  ["reward_set_gemgem"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
+  ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
+  ["green_gem_gemgem"]  = {id = "Permata Hijau",  en = "Green Gem"},
+  ["red_gem_gemgem"]    = {id = "Permata Merah",  en = "Red Gem"},
+
+  ----material----
+  
+  ["metal_ingots_materialyal"]         = {id = "Batangan Logam", en = "Metal Ingots"},
+  ["mining_tools_materialyal"]         = {id = "Alat Tambang", en = "Mining Tools"},
+  ["community_tools_materialyal"]      = {id = "Alat Bangunan Komunitas", en = "Community Building Tools"},
+  ["barn_tools_materialyal"]           = {id = "Alat Upgrade Lumbung", en = "Barn Upgrade Tools"},
+  ["expansion_tools_materialyal"]      = {id = "Alat Ekspansi Kota", en = "City Expansion Tools"},
+  ["go_back_materialyal"]              = {id = "Kembali", en = "Go Back"},
+  ["no_option_materialyal"]            = {id = "Tidak ada opsi dipilih", en = "No options selected"},
+  ["invalid_option_materialyal"]       = {id = "Opsi tidak valid dipilih", en = "Invalid option selected"},
+
+----batangan----
+
+["bronze_ingot_batangtang"]   = {id = "Batangan Perunggu", en = "Bronze Ingot"},
+["silver_ingot_batangtang"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
+["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
+["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
+["go_back_batangtang"]        = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
+["no_option_batangtang"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
+["invalid_option_batangtang"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
+
+ ["enter_amount_batangtang"] = {id = "Masukkan jumlah", en = "Enter amount"},
+  ["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.", en = "🚫 Invalid input."},
+  ["invalid_range_batangtang"] = {id = "Masukkan angka antara", en = "Please enter a number between"},
+  ["no_input_batangtang"] = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["set_to_batangtang"] = {id = "diset ke", en = "set to"},
+  ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
+  ["silver_batangtang"] = {id = "Batang Perak",    en = "Silver Ingots"},
+  ["gold_batangtang"]   = {id = "Batang Emas",     en = "Gold Ingots"},
+  ["platinum_batangtang"] = {id = "Batang Platinum", en = "Platinum Ingots"},
+
+----gali----
+
+  ["pickaxe_macul"] = {id = "Beliung", en = "Pickaxe"},
+  ["tnt_macul"] = {id = "TNT", en = "TNT"},
+  ["dynamite_macul"] = {id = "Dinamit", en = "Dynamite"},
+  ["x2_ore_bonus_macul"] = {id = "Bonus Bijih ×2 (30 Hari)", en = "×2 Ore Bonus (30 Days)"},
+  ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
+  ["no_option_selected_macul"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
+  ["invalid_option_macul"] = {id = "Opsi tidak valid.", en = "Invalid option selected."},
+
+  ["mining_prompt_macul"] = {id = "Masukkan jumlah",en = "Enter amount"},
+  ["cancel_input_macul"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_input_macul"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara",en = "🚫 Invalid input.\nPlease enter a number between"},
+  ["not_found_macul"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
+  ["success_bonus_macul"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
+  ["pickaxes_macul"] = {id = "Beliung", en = "Pickaxes"},
+  ["tnt_macul"] = {id = "TNT", en = "TNT"},
+  ["dynamite_macul"] = {id = "Dinamit", en = "Dynamite"},
+  ["ore_bonus_macul"] = {id = "Bonus Tambang ×2 (30 Hari)", en = "30-Day ×2 Ore Bonus"},
+
+----material gedung----
+
+["glass_matdung"]         = {id = "Kaca", en = "Glass"},
+["bricks_matdung"]        = {id = "Bata", en = "Bricks"},
+["slab_matdung"]          = {id = "Lempengan", en = "Slab"},
+["jackhammer_matdung"]    = {id = "Bor Beton", en = "Jackhammer"},
+["electric_saw_matdung"]  = {id = "Gergaji Listrik", en = "Electric Saw"},
+["drill_matdung"]         = {id = "Bor", en = "Drill"},
+["back_matdung"]          = {id = "Kembali", en = "Go Back"},
+["no_option_selected_matdung"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
+["invalid_option_matdung"]     = {id = "Opsi tidak valid.", en = "Invalid option selected."},
+
+["input_construct_matdung"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
+["no_amount_matdung"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
+["reward_set_matdung"] = {id = "{emoji} {label} diatur ke: {amount} ✅",en = "{emoji} {label} reward set to: {amount} ✅"},
+["glass_matdung"] = {id = "Kaca", en = "Glass"},
+["bricks_matdung"] = {id = "Batu Bata", en = "Bricks"},
+["slabs_matdung"] = {id = "Lempengan", en = "Slabs"},
+["jackhammer_matdung"] = {id = "Bor Beton", en = "Jackhammer"},
+["saw_matdung"] = {id = "Gergaji Listrik", en = "Electric Saw"},
+["drill_matdung"] = {id = "Bor", en = "Drill"},
+
+----alat gudang----
+
+["hammer_gudangdang"] = {id = "Palu", en = "Hammer"},
+["nail_gudangdang"] = {id = "Paku", en = "Nail"},
+["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
+["go_back_gudangdang"] = {id = "Kembali", en = "Go Back"},
+["no_option_gudangdang"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
+["invalid_option_gudangdang"] = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
+
+  ["hammers_gudangdang"] = {id = "Palu", en = "Hammers"},
+  ["nails_gudangdang"] = {id = "Paku", en = "Nails"},
+  ["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
+  ["enter_amount_gudangdang"] = {id = "Masukkan jumlah [1-5000]", en = "Enter amount [1-5000]"},
+  ["invalid_input_gudangdang"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan 5000.", en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+  ["barn_reward_set_gudangdang"] = {id = "Hadiah lumbung diatur menjadi", en = "Barn reward set to"},
+
+----alat luas----
+
+  ["saw_waswas"]         = { id = "Gergaji", en = "Saw" },
+  ["axe_waswas"]         = { id = "Kapak", en = "Axe" },
+  ["shovel_waswas"]      = { id = "Sekop", en = "Shovel" },
+  ["go_back_waswas"]     = { id = "[ << Kembali >> ]", en = "[ << Go Back >> ]" },
+  ["no_option_waswas"]   = { id = "Tidak ada opsi yang dipilih.", en = "No option selected." },
+  ["invalid_option_waswas"] = { id = "Opsi tidak valid.", en = "Invalid option selected." },
+  
+    ["enter_amount_waswas"] = {id = "Masukkan jumlah:",en = "Enter amount:"},
+    ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 hingga 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+    ["reward_set_waswas"] = {id = "Hadiah diset ke",en = "Reward set to"},
+    ["saw_waswas"] = {id = "Gergaji", en = "Saw"},
+    ["axe_waswas"] = {id = "Kapak", en = "Axe"},
+    ["shovel_waswas"] = {id = "Sekop", en = "Shovel"},
+
+----tunjangan----
+
+["no_option_keuntungan"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
+["invalid_option_keuntungan"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
+["express_plane_keuntungan"] = { id = "✈️  Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
+["instant_crop_keuntungan"]  = { id = "🌾  Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
+["fast_farm_keuntungan"]     = { id = "🐄  Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
+["instant_build_keuntungan"] = { id = "🏗️  Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
+["unlimited_barn_keuntungan"] = { id = "🏡  Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
+["train_booster_keuntungan"] = { id = "⏱️  Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
+["double_train_keuntungan"]  = { id = "🚃  Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
+["go_back_keuntungan"]       = { id = "❌  [ << Kembali >> ]", en = "❌  [ << Go Back >> ]" },
+
+  ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
+  ["perk_instant_crop_keuntungan"] = {id = "Panen Tanaman Instan", en = "Instant Crop Harvest"},
+  ["perk_rapid_farm_keuntungan"] = {id = "Produksi Peternakan Cepat", en = "Rapid Farm Production"},
+  ["perk_instant_building_keuntungan"] = {id = "Konstruksi Bangunan Instan", en = "Instant Building Construction"},
+  ["perk_unlimited_barn_keuntungan"] = {id = "Kapasitas Lumbung Tak Terbatas", en = "Unlimited Barn Capacity"},
+  ["perk_train_boost_keuntungan"] = {id = "Booster Waktu Kereta", en = "Train Time Booster"},
+  ["perk_double_train_keuntungan"] = {id = "Gerbong Kereta Ganda", en = "Double Train Carriages"},
+  ["enter_barn_boost_keuntungan"] = {id = "Masukkan persentase boost lumbung (1-20000):", en = "Enter barn boost percentage (1-20000):"},
+  ["source_not_found_keuntungan"] = {id = "❌ Struktur sumber tidak ditemukan.", en = "❌ Source structure not found."},
+  ["perk_applied_keuntungan"] = {id = "perk berhasil diterapkan!", en = "perk applied!"},
+
+----penambah----
+	
   ["input_oder1"] = {id = {"💰 Koin [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Tanpa Batas]"},en = {"💰 Coins [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Unlimited]"}},
   ["no_input"] = {id = "⚠️ Tidak ada input.\nOperasi dibatalkan.",en = "⚠️ No input provided.\nOperation cancelled."},
   ["zero_values"] = {id = "⚠️ Semua nilai nol.\nHadiah tidak diterapkan.",en = "⚠️ All values are zero.\nNo rewards applied."},
@@ -782,7 +823,7 @@ function getAddr()
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("1599361808;5;30::73", gg.TYPE_DWORD)
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
   gg.refineNumber("30", gg.TYPE_DWORD)
   local results = gg.getResults(1)
 
@@ -906,27 +947,27 @@ function freekey()
   menuRunning = true
   while menuRunning and menuMode == "free" do
     local menuList = {
-      _( "unlock_season" ),
-      _( "freeze_rewards" ) .. " " .. cstatus_featureX
+      _( "unlock_season_freemenu" ),
+      _( "freeze_rewards_freemenu" ) .. " " .. cstatus_featureX
     }
 
     local idxChangeReward = nil
     if rewardVisible then
-      table.insert(menuList, _( "change_reward" ))
+      table.insert(menuList, _( "change_reward_freemenu" ))
       idxChangeReward = #menuList
     end
 
     local idxMisc = #menuList + 1
-    table.insert(menuList, _( "misc_mods" ))
+    table.insert(menuList, _( "misc_mods_freemenu" ))
 
     local idxInfo = #menuList + 1
-    table.insert(menuList, _( "script_info" ))
+    table.insert(menuList, _( "script_info_freemenu" ))
 
     local idxExit = #menuList + 1
-    table.insert(menuList, _( "exit_script" ))
+    table.insert(menuList, _( "exit_script_freemenu" ))
 
-    local menu = gg.choice(menuList, {}, _( "free_menu" ))
-    if not menu then gg.toast(_( "menu_closed" )) break end
+    local menu = gg.choice(menuList, {}, _( "free_menu_freemenu" ))
+    if not menu then gg.toast(_( "menu_closed_freemenu" )) break end
 
     if menu == 1 then menue1()
     elseif menu == 2 then menue2()
@@ -934,7 +975,7 @@ function freekey()
     elseif menu == idxMisc then menue4()
     elseif menu == idxInfo then menu6()
     elseif menu == idxExit then exit() menuRunning = false break
-    else gg.toast(_( "invalid_selection" ))
+    else gg.toast(_( "invalid_selection_freemenu" ))
     end
   end
   menuRunning = false
@@ -949,7 +990,7 @@ function menue1()
 
   local results = gg.getResults(10)
   if #results < 1 then
-    gg.alert("❌ " .. _("astro_fail_title") .. "\n\n🔍 " .. _("astro_fail_body"))
+    gg.alert("❌ " .. _("astro_fail_title_gpfree") .. "\n\n🔍 " .. _("astro_fail_body_gpfree"))
     return
   end
 
@@ -961,34 +1002,24 @@ function menue1()
   end
 
   gg.setValues(edits)
-  gg.toast("✅ " .. _("astro_success"))
+  gg.toast("✅ " .. _("astro_success_gpfree"))
 end
 
 function menue3()
-  if cstatus_featureX == off then
-    gg.alert(
-      "🚫 " .. _("freeze_inactive_title") .. "\n\n" ..
-      "❄️ " .. _("freeze_required") .. "\n\n" ..
-      "➡️ " .. _("freeze_instruction") .. "\n\n" ..
-      "🧩 " .. _("freeze_location")
-    )
-    return
-  end
-
   local title = banner
   local menu = gg.choice({
-    _("smelt_ingots"),        -- 🪙 Smelt Ingots
-    _("mining_tools1"),        -- ⛏️ Mining Tools
-    _("redeem_coupons"),      -- 🎟️ Redeem Coupons
-    _("add_gems"),            -- 💎 Add Gems
-    _("match3_boosters1"),     -- 🧩 Match-3 Boosters
-    _("community_materials"), -- 🏗️ Community Materials
-    _("claim_perks"),         -- 🎉 Claim Perks
-    _("go_back")              -- ❌ [ << Go Back >> ]
+    _("smelt_ingots_changefree"),        -- 🪙 Smelt Ingots
+    _("mining_tools1_changefree"),        -- ⛏️ Mining Tools
+    _("redeem_coupons_changefree"),      -- 🎟️ Redeem Coupons
+    _("add_gems_changefree"),            -- 💎 Add Gems
+    _("match3_boosters_changefree"),     -- 🧩 Match-3 Boosters
+    _("community_materials_changefree"), -- 🏗️ Community Materials
+    _("claim_perks_changefree"),         -- 🎉 Claim Perks
+    _("go_back_changefree")              -- ❌ [ << Go Back >> ]
   }, {}, title)
 
   if not menu then
-    gg.toast("❌ " .. _("menu_closed"))
+    gg.toast("❌ " .. _("menu_closed_changefree"))
     return
   end
 
@@ -996,25 +1027,25 @@ function menue3()
   if actions[menu] then
     actions[menu]()
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_changefree"))
   end
 end
 
 function menue4()
-  local title = _( "menu4_title" )
+  local title = banner
   local menu = gg.choice({
-    _( "menu4_opt1" ), -- 🚁 T-Cash dari Helikopter
-    _( "menu4_opt2" ), -- 🌾 EXP dari Panen Gandum
-    _( "menu4_opt3" ), -- 🎁 Kotak Pabrik Gratis
-    _( "menu4_opt4" ), -- 🚧 Perluas Lahan
-    _( "menu4_opt5" ), -- 🏭 Leleh Instan
-    _( "menu4_opt6" ), -- 🐮 Produksi Peternakan Cepat
-    _( "menu4_opt7" ), -- ⚡ Isi Ulang Energi Adventure
-    _( "menu_back" )   -- ❌ Kembali
+    _( "menu4_opt1_hackfree" ), -- 🚁 T-Cash dari Helikopter
+    _( "menu4_opt2_hackfree" ), -- 🌾 EXP dari Panen Gandum
+    _( "menu4_opt3_hackfree" ), -- 🎁 Kotak Pabrik Gratis
+    _( "menu4_opt4_hackfree" ), -- 🚧 Perluas Lahan
+    _( "menu4_opt5_hackfree" ), -- 🏭 Leleh Instan
+    _( "menu4_opt6_hackfree" ), -- 🐮 Produksi Peternakan Cepat
+    _( "menu4_opt7_hackfree" ), -- ⚡ Isi Ulang Energi Adventure
+    _( "menu_back_hackfree" )   -- ❌ Kembali
   }, {}, title)
 
   if not menu then
-    return gg.toast("❌ " .. _("menu_none_selected"))
+    return gg.toast("❌ " .. _("menu_none_selected_hackfree"))
   end
 
   local actions = {
@@ -1031,7 +1062,7 @@ function menue4()
   if actions[menu] then
     actions[menu]()
   else
-    return gg.toast("⚠️ " .. _("menu_invalid"))
+    return gg.toast("⚠️ " .. _("menu_invalid_hackfree"))
   end
 
   if menu ~= 8 then
@@ -1055,7 +1086,7 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-30"
+local expireDate50  = "2025-09-15"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
@@ -1215,16 +1246,16 @@ while not loginOK do
     end
 		end
 		
-  local menu = gg.choice({
-_( "special_hack" ),  -- 🔹 Menu baru di atas limited_events
-  _( "unlock_season" ),
-  _( "limited_events" ),
-  _( "skip_time" ),     -- 🔹 Menu baru di bawah limited_events (sudah ada)
-  _( "farming_products" ),
-  _( "misc_mods" ),
-  _( "script_info" ),
-  _( "exit_script" )
-}, {}, _( "premium_menu" ))
+local menu = gg.choice({
+_( "special_hack_premenu" ),  -- 🔹 Menu baru di atas limited_events
+  _( "unlock_season_premenu" ),
+  _( "limited_events_premenu" ),
+  _( "skip_time_premenu" ),     -- 🔹 Menu baru di bawah limited_events (sudah ada)
+  _( "farming_products_premenu" ),
+  _( "misc_mods_premenu" ),
+  _( "script_info_premenu" ),
+  _( "exit_script_premenu" )
+}, {}, _( "premium_menu_premenu" ))
 
 if menu == nil then break end
 if menu == 2 then
@@ -1245,7 +1276,7 @@ elseif menu == 8 then
   exit()
   menuRunning = false
 else
-  gg.toast(_( "invalid_selection" ))
+  gg.toast(_( "invalid_selection_premenu" ))
 end
 break
 end
@@ -1257,26 +1288,26 @@ rewardVisible = rewardVisible or false  -- bersifat sementara (reset tiap restar
 function menu1()
   local title = banner
   local menuList = {
-    _("unlock_pass"), -- 1
-    _("freeze_rewards") .. cstatus_featureX -- 2
+    _("unlock_pass_rwpremium"), -- 1
+    _("freeze_rewards_rwpremium") .. cstatus_featureX -- 2
   }
 
   if rewardVisible then
-    table.insert(menuList, _("skins_decor"))      -- 3
-    table.insert(menuList, _("add_cash"))         -- 4
-    table.insert(menuList, _("boosters"))         -- 5
-    table.insert(menuList, _("redeem_coupon"))    -- 6
-    table.insert(menuList, _("add_gems"))         -- 7
-    table.insert(menuList, _("special_product"))  -- 8
-    table.insert(menuList, _("claim_bonus"))      -- 9
+    table.insert(menuList, _("skins_decor_rwpremium"))      -- 3
+    table.insert(menuList, _("add_cash_rwpremium"))         -- 4
+    table.insert(menuList, _("boosters_rwpremium"))         -- 5
+    table.insert(menuList, _("redeem_coupon_rwpremium"))    -- 6
+    table.insert(menuList, _("add_gems_rwpremium"))         -- 7
+    table.insert(menuList, _("special_product_rwpremium"))  -- 8
+    table.insert(menuList, _("claim_bonus_rwpremium"))      -- 9
   end
 
-  table.insert(menuList, _("go_back")) -- 10 (atau 3 jika rewardVisible = false)
+  table.insert(menuList, _("go_back_rwpremium")) -- 10 (atau 3 jika rewardVisible = false)
 
   local menu = gg.choice(menuList, {}, title)
 
   if not menu then
-    gg.toast(_("menu_closed"))
+    gg.toast(_("menu_closed_rwpremium"))
     return  -- ⛔ Stop di sini, jangan lanjut ke loop
   end
 
@@ -1302,7 +1333,7 @@ function menu1()
     Main()
     return
   else
-    gg.toast(_("invalid_option"))
+    gg.toast(_("invalid_option_rwpremium"))
     return
   end
 
@@ -1319,13 +1350,11 @@ end
 function gp1() -- 🎫 Unlock Season Pass Variants
   gg.clearResults()
   local pilihan = gg.choice({
-    _( "sp_mythic" ),
-    _( "sp_japan" ),
-  }, nil, _( "sp_unlock_title" ))
-  if not pilihan then
-    gg.alert(_( "sp_cancelled" ))
-    return
-  end
+    _( "sp_astro_spegp" ),
+    _( "sp_mythic_spegp" ),
+    _( "sp_japan_spegp" ),
+  }, nil, _( "sp_unlock_title_spegp" ))
+  if not pilihan then return gg.alert(_( "sp_cancelled_spegp" )) end
 
   -- 🔓 Unlock specific pass
   local function unlockPass(id, label)
@@ -1334,8 +1363,8 @@ function gp1() -- 🎫 Unlock Season Pass Variants
     gg.searchNumber("1937011470;" .. id .. ":25", gg.TYPE_DWORD)
     gg.refineNumber("1937011470", gg.TYPE_DWORD)
     local res = gg.getResults(10)
-    if not res or #res == 0 then
-      return nil, _( "sp_no_found" ) .. label .. " " .. _( "sp_cancelled" )
+    if #res == 0 then
+      return nil, _( "sp_no_found_spegp" ) .. label .. " " .. _( "sp_cancelled_spegp2" )
     end
 
     for _, v in ipairs(res) do
@@ -1352,30 +1381,23 @@ function gp1() -- 🎫 Unlock Season Pass Variants
   -- 📋 Copy pass content from sourceID to targetIDs
   local function copyPass(sourceID, sourceLabel, targetIDs)
     local srcRes, err = unlockPass(sourceID, sourceLabel)
-    if err or not srcRes or #srcRes == 0 then
-      return gg.alert(err or _( "sp_no_found" ) .. sourceLabel)
-    end
+    if err then return gg.alert(err) end
 
-    -- Pastikan tidak error kalau srcRes kosong
-    local baseSrc = srcRes[1] and (srcRes[1].address + 0x18)
-    if not baseSrc then
-      return gg.alert(_( "sp_no_found" ) .. sourceLabel)
-    end
-
+    local baseSrc = srcRes[1].address + 0x18
     local data = {}
     for i = 0, 67 do
       table.insert(data, {address = baseSrc + i * 4, flags = gg.TYPE_DWORD})
     end
     data = gg.getValues(data)
-    gg.toast(string.format(_( "sp_copied" ), sourceLabel))
+    gg.toast(string.format(_( "sp_copied_spegp" ), sourceLabel))
 
     for _, targetID in ipairs(targetIDs) do
       gg.clearResults()
       gg.searchNumber("1937011470;" .. targetID .. ":25", gg.TYPE_DWORD)
       gg.refineNumber("1937011470", gg.TYPE_DWORD)
       local tgt = gg.getResults(10)
-      if not tgt or #tgt == 0 then
-        gg.toast(string.format(_( "sp_target_nf" ), targetID))
+      if #tgt == 0 then
+        gg.toast(string.format(_( "sp_target_nf_spegp" ), targetID))
       else
         for _, v in ipairs(tgt) do
           local base = v.address + 0x18
@@ -1389,23 +1411,22 @@ function gp1() -- 🎫 Unlock Season Pass Variants
           end
           gg.setValues(paste)
         end
-        gg.toast(string.format(_( "sp_applied" ), sourceLabel, targetID))
+        gg.toast(string.format(_( "sp_applied_spegp" ), sourceLabel, targetID))
       end
     end
-    gg.alert(_( "sp_done" ))
+    gg.alert(_( "sp_done_spegp" ))
   end
 
   -- 📌 Handle options
   if pilihan == 1 then
-    local res, err = unlockPass(610, "Mythic Pass")
-    if err then
-      gg.alert(err)
-      return
-    end
-    gg.toast(_( "sp_astro_ok" ))
+    local res, err = unlockPass(620, "Astro Pass")
+    if err then return gg.alert(err) end
+    a2()
+    gg.toast(_( "sp_astro_ok_spegp" ))
   elseif pilihan == 2 then
-    -- Unlock dulu Japan Pass sebelum copy
-    copyPass(620, "Japanese Pass", {610})
+    copyPass(630, "Mythic Pass", {620})
+  elseif pilihan == 3 then
+    copyPass(640, "Japanese Pass", {620, 630})
   end
 end
 
@@ -1417,23 +1438,23 @@ end
 function gp2(caller)
   if cstatus_featureX == off then
     local confirm = gg.alert(
-      "❄️ " .. _("freeze_title") .. " ❄️\n\n" ..
-      "⚠️ " .. _("freeze_confirm") .. "\n\n" ..
-      "✅ " .. _("freeze_explain") .. "\n" ..
-      "❌ " .. _("cancel_info"),
-      "🚀 " .. _("proceed"),
-      "❌ " .. _("cancel")
+      "❄️ " .. _("freeze_title_freezeinfo") .. " ❄️\n\n" ..
+      "⚠️ " .. _("freeze_confirm_freezeinfo") .. "\n\n" ..
+      "✅ " .. _("freeze_explain_freezeinfo") .. "\n" ..
+      "❌ " .. _("cancel_info_freezeinfo"),
+      "🚀 " .. _("proceed_freezeinfo"),
+      "❌ " .. _("cancel_freezeinfo")
     )
 
     if confirm ~= 1 then
-      gg.toast("🔕 " .. _("cancelled"))
+      gg.toast("🔕 " .. _("cancelled_freezeinfo"))
       return
     end
 
     -- Aktifkan fitur tanpa alert kedua
     cstatus_featureX = on
     rewardVisible = true
-    gg.toast("✅ " .. _("freeze_active"))
+    gg.toast("✅ " .. _("freeze_active_freezeinfo"))
   end
 
   -- 🔍 Memory Freeze
@@ -1444,7 +1465,7 @@ function gp2(caller)
 
   local count = gg.getResultCount()
   if count == 0 then
-    gg.alert("❌ " .. _("freeze_failed") .. "\n\n" .. _("freeze_not_found"))
+    gg.alert("❌ " .. _("freeze_failed_freezeinfo") .. "\n\n" .. _("freeze_not_found_freezeinfo"))
     return
   end
 
@@ -1467,33 +1488,23 @@ function gp2(caller)
     end
   end
 
-  typingToast("✅ " .. _("freeze_done"), 70)
+  typingToast("✅ " .. _("freeze_done_freezeinfo"), 70)
   gg.clearResults()
 end
 
 function gp4() -- 💰 Currency Menu
-  if cstatus_featureX == off then
-    gg.alert(
-      "🚫 " .. _("freeze_required_title") .. "\n\n" ..
-      "❄️ " .. _("freeze_required_desc1") .. "\n\n" ..
-      "➡️ " .. _("freeze_required_desc2") .. "\n\n" ..
-      "🧩 " .. _("freeze_required_location")
-    )
-    return
-  end
-
   local indev = dev
   local menu = gg.choice({
-    "💵  " .. _("add_tcash"),
-    "💰  " .. _("add_coins"),
-    "🪙  " .. _("add_regatta"),
-    "🍀  " .. _("add_clover"),
-    "🗽  " .. _("add_statuecoins"),
-    "❌  [ << " .. _("go_back1") .. " >> ]"
+    "💵  " .. _("add_tcash_tambahduit"),
+    "💰  " .. _("add_coins_tambahduit"),
+    "🪙  " .. _("add_regatta_tambahduit"),
+    "🍀  " .. _("add_clover_tambahduit"),
+    "🗽  " .. _("add_statuecoins_tambahduit"),
+    "❌  [ << " .. _("go_back_tambahduit") .. " >> ]"
   }, {}, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_tambahduit"))
     return
   end
 
@@ -1509,7 +1520,7 @@ function gp4() -- 💰 Currency Menu
   if actions[menu] then
     actions[menu]()
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_tambahduit"))
     return
   end
 
@@ -1537,7 +1548,7 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
     local input = gg.prompt({label .. " [" .. min .. "–" .. max .. "]:"}, nil, {"number"})
     amount = tonumber(input and input[1])
     if not amount or amount < min or amount > max then
-      gg.alert(_( "invalid" ) .. min .. " dan " .. max .. ".")
+      gg.alert(_( "invalid_tambahduit" ) .. min .. " dan " .. max .. ".")
       return
     end
   end
@@ -1554,48 +1565,39 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
   table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
 
   gg.setValues(edits)
-  gg.toast(label .. (amount and (_("set_to") .. amount .. " ✅") or _("applied")))
+  gg.toast(label .. (amount and (_("set_to_tambahduit") .. amount .. " ✅") or _("applied_tambahduit")))
 end
 
-function cash1() applyCurrencyReward("tcash", {
+function cash1() applyCurrencyReward("tcash_tambahduit", {
   {-0x48, 0x73616308}, {-0x44, 0x68}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
 }, {1, 25000}) end
 
-function cash2() applyCurrencyReward("coin", {
+function cash2() applyCurrencyReward("coin_tambahduit", {
   {-0x48, 0x696F630A}, {-0x44, 0x736E}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
 }, {1, 999999}) end
 
-function cash3() applyCurrencyReward("regatta", {
+function cash3() applyCurrencyReward("regatta_tambahduit", {
   {-0x48, 0x67655214}, {-0x44, 0x43617461}, {-0x40, 0x687361}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
 }, {1, 2000}) end
 
-function cash4() applyCurrencyReward("clover", {
+function cash4() applyCurrencyReward("clover_tambahduit", {
   {-0x48, 0x6F6C630C}, {-0x44, 0x726576}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
 }, {1, 50}) end
 
-function cash5() applyCurrencyReward("statue", {
+function cash5() applyCurrencyReward("statue_tambahduit", {
   {-0x48, 1635021594}, {-0x44, 1600484724}, {-0x40, 1953067639}, {-0x3C, 29285}, {-0x38,0}, {-0x34,0}, {-0x30,0}
 }, nil, 1) end
 
 function gp5()
-  if cstatus_featureX == off then
-    gg.alert(
-      "🚫 " .. _("freeze_not_active") .. "\n\n" ..
-      "❄️ " .. _("freeze_required_msg") .. "\n\n" ..
-      "➡️ " .. _("freeze_location_info")
-    )
-    return
-  end
-
   local title = banner
   local menu = gg.choice({
-    "🧩  " .. _("match3_boosters"),
-    "🧪  " .. _("lab_boosters"),
-    "" .. _("go_back")
+    "🧩  " .. _("match3_boosters_menuboost"),
+    "🧪  " .. _("lab_boosters_menuboost"),
+    "❌  " .. _("go_back_menuboost")
   }, {}, title)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_menuboost"))
     return
   end
 
@@ -1609,7 +1611,7 @@ function gp5()
   if selectedAction then
     selectedAction()
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_menuboost"))
   end
 end
 
@@ -1623,29 +1625,29 @@ function boost1(caller)
   local menu, actions = {}, {}
 
   -- Booster Umum (Free & Premium)
-  table.insert(menu, "🎲  " .. _("rainbow_ball"))     table.insert(actions, booster1)
-  table.insert(menu, "💣  " .. _("bomb"))             table.insert(actions, booster2)
-  table.insert(menu, "🚀  " .. _("rocket"))           table.insert(actions, booster3)
+  table.insert(menu, "🎲  " .. _("rainbow_ball_eventboost"))     table.insert(actions, booster1)
+  table.insert(menu, "💣  " .. _("bomb_eventboost"))             table.insert(actions, booster2)
+  table.insert(menu, "🚀  " .. _("rocket_eventboost"))           table.insert(actions, booster3)
 
   -- Booster Tambahan (Premium Only)
   if caller ~= "free" then
-    table.insert(menu, "🔨  " .. _("jackhammer"))             table.insert(actions, booster4)
-    table.insert(menu, "🚿  " .. _("hydrant"))                table.insert(actions, booster5)
-    table.insert(menu, "🧤  " .. _("gloves"))                 table.insert(actions, booster6)
-    table.insert(menu, "❤️  " .. _("infinite_lives_30"))     table.insert(actions, booster7)
-    table.insert(menu, "✨  " .. _("double_points_30"))       table.insert(actions, booster8)
-    table.insert(menu, "🎲  " .. _("rainbow_ball_30"))        table.insert(actions, booster9)
-    table.insert(menu, "💣  " .. _("bomb_30"))                table.insert(actions, booster10)
-    table.insert(menu, "🚀  " .. _("rocket_30"))              table.insert(actions, booster11)
-    table.insert(menu, "⚡  " .. _("energy_adventure"))       table.insert(actions, booster12)
-    table.insert(menu, "💥  " .. _("exploder_adventure"))     table.insert(actions, booster13)
+    table.insert(menu, "🔨  " .. _("jackhammer_eventboost"))             table.insert(actions, booster4)
+    table.insert(menu, "🚿  " .. _("hydrant_eventboost"))                table.insert(actions, booster5)
+    table.insert(menu, "🧤  " .. _("gloves_eventboost"))                 table.insert(actions, booster6)
+    table.insert(menu, "❤️  " .. _("infinite_lives_30_eventboost"))     table.insert(actions, booster7)
+    table.insert(menu, "✨  " .. _("double_points_30_eventboost"))       table.insert(actions, booster8)
+    table.insert(menu, "🎲  " .. _("rainbow_ball_30_eventboost"))        table.insert(actions, booster9)
+    table.insert(menu, "💣  " .. _("bomb_30_eventboost"))                table.insert(actions, booster10)
+    table.insert(menu, "🚀  " .. _("rocket_30_eventboost"))              table.insert(actions, booster11)
+    table.insert(menu, "⚡  " .. _("energy_adventure_eventboost"))       table.insert(actions, booster12)
+    table.insert(menu, "💥  " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
   end
 
-  table.insert(menu, "❌  [ << " .. _("go_back1") .. " >> ]")
+  table.insert(menu, "❌  [ << " .. _("go_back_eventboost") .. " >> ]")
 
   local choice = gg.choice(menu, {}, indev)
   if not choice then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_eventboost"))
     return
   end
 
@@ -1662,7 +1664,7 @@ function boost1(caller)
   if selected then
     selected(caller)
   else
-    gg.toast("⚠️ " .. _("invalid_selection"))
+    gg.toast("⚠️ " .. _("invalid_selection_eventboost"))
   end
 
   while true do
@@ -1684,12 +1686,12 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   local amount = tonumber(input and input[1])
 
   if not amount then
-    gg.alert(_ ("no_input"))
+    gg.alert(_ ("no_input_eventboost"))
     return
   end
 
   if amount < 1 or amount > maxLimit then
-    gg.alert(_ ("invalid_range") .. " " .. maxLimit .. ".")
+    gg.alert(_ ("invalid_range_eventboost") .. " " .. maxLimit .. ".")
     return
   end
 
@@ -1704,7 +1706,7 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   table.insert(patch, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
 
   gg.setValues(patch)
-  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied") .. " " .. amount)
+  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount)
 end
 
 -- 🔧 Booster dengan waktu 30 hari
@@ -1718,7 +1720,7 @@ local function patchTimedBooster(emoji, name, hexData)
   end
 
   gg.setValues(patch)
-  gg.toast("✅ " .. emoji .. " " .. name .. " - " .. _ ("success_30d"))
+  gg.toast("✅ " .. emoji .. " " .. name .. " - " .. _ ("success_30d_eventboost"))
 end
 
 local function patchTimedBooster(emoji, name, hexData)
@@ -1755,11 +1757,11 @@ end
 local function apply30DayBooster(name, offset)
   local copied = copyPatchTemplate(offset)
   if not copied then
-    gg.alert(_ ("template_not_found") .. " " .. name)
+    gg.alert(_ ("template_not_found_eventboost") .. " " .. name)
     return
   end
 
-  gg.alert(_ ("template_copied") .. ": " .. name)
+  gg.alert(_ ("template_copied_eventboost") .. ": " .. name)
 
   local target = getAddr()
   if not target then return end
@@ -1778,17 +1780,17 @@ local function apply30DayBooster(name, offset)
   end
 
   gg.setValues(patch)
-  gg.toast("✅ 30-Day " .. name .. " " .. _ ("booster_applied"))
+  gg.toast("✅ 30-Day " .. name .. " " .. _ ("booster_applied_eventboost"))
 end
 
 -- ✅ Booster Functions
-function booster1(caller) patchBooster("🎲", "Rainbow Ball", "rainbow_amount", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount", {{-0x48,1110666508},{-0x44,6450543},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster1(caller) patchBooster("🎲", "Rainbow Ball", "rainbow_amount_eventboost", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{-0x48,1110666508},{-0x44,6450543},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 
-function booster4(caller) patchBooster("🔨", "Jackhammer", "jack_amount", {{-0x48,1211329808},{-0x44,1701670241},{-0x40,114},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster5(caller) patchBooster("🚿", "Hydrant", "hydrant_amount", {{-0x48,1395879196},{-0x44,1734632812},{-0x40,1835100261},{-0x3C,7497069},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster6(caller) patchBooster("🧤", "Gloves", "gloves_amount", {{-0x48,1194552590},{-0x44,1702260588},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster4(caller) patchBooster("🔨", "Jackhammer", "jack_amount_eventboost", {{-0x48,1211329808},{-0x44,1701670241},{-0x40,114},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster5(caller) patchBooster("🚿", "Hydrant", "hydrant_amount_eventboost", {{-0x48,1395879196},{-0x44,1734632812},{-0x40,1835100261},{-0x3C,7497069},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster6(caller) patchBooster("🧤", "Gloves", "gloves_amount_eventboost", {{-0x48,1194552590},{-0x44,1702260588},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 
 function booster7() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
 function booster8() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
@@ -1800,10 +1802,10 @@ function booster11() apply30DayBooster("🚀 Rocket", 0x60) end
 function booster12()
   local addr = getAddr()
   if not addr then return end
-  local prompt = gg.prompt({_("adventure_energy_prompt")}, nil, {"number"})
+  local prompt = gg.prompt({_("adventure_energy_prompt_eventboost")}, nil, {"number"})
   local energy = tonumber(prompt and prompt[1])
   if not energy or energy < 1 or energy > 100000 then
-    gg.alert(_("invalid_value_energy"))
+    gg.alert(_("invalid_value_energy_eventboost"))
     return
   end
   local patch = {1886938400,1953064037,1164865385,1735550318,121,0,0,energy}
@@ -1815,16 +1817,16 @@ function booster12()
   table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
   table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
   gg.setValues(edits)
-  gg.toast(string.format(_("toast_energy_applied"), energy))
+  gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
 end
 
 function booster13()
   local addr = getAddr()
   if not addr then return end
-  local prompt = gg.prompt({_("exploder_adventure_prompt")}, nil, {"number"})
+  local prompt = gg.prompt({_("exploder_adventure_prompt_eventboost")}, nil, {"number"})
   local amount = tonumber(prompt and prompt[1])
   if not amount or amount < 1 or amount > 5000 then
-    gg.alert(_("invalid_value_exploder"))
+    gg.alert(_("invalid_value_exploder_eventboost"))
     return
   end
   local patch = {1886938394,1953064037,1416523625,1862292558,419456110,113,0,amount}
@@ -1836,35 +1838,35 @@ function booster13()
   table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
   table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
   gg.setValues(edits)
-  gg.toast(string.format(_("toast_exploder_applied"), amount))
+  gg.toast(string.format(_("toast_exploder_applied_eventboost"), amount))
 end
 
 function boost2()
   local indev = dev
   local menu = gg.choice({
-    "✈️  " .. _("profitable_flight"),
-    "🌾  " .. _("rich_fields"),
-    "📈  " .. _("record_demand"),
-    "🚚  " .. _("busy_trade"),
-    "🧭  " .. _("smart_navigation"),
-    "🤝  " .. _("active_cooperation"),
-    "🔥  " .. _("efficient_smelting"),
-    "🛒  " .. _("vibrant_market"),
-    "⚙️  " .. _("high_speed_production"),
-    "🌽  " .. _("super_harvest"),
-    "🌾  " .. _("advanced_farming"),
-    "💰  " .. _("generous_customers"),
-    "💡  " .. _("see_the_light"),
-    "🚀  " .. _("shortcut"),
-    "🙌  " .. _("extra_hands"),
-    "🏡  " .. _("spacious_barn"),
-    "📦  " .. _("large_request"),
-    "⛵  " .. _("favorable_voyage"),
-    "❌  " .. _("[go_back]")
+    "✈️  " .. _("profitable_flight_labboost"),
+    "🌾  " .. _("rich_fields_labboost"),
+    "📈  " .. _("record_demand_labboost"),
+    "🚚  " .. _("busy_trade_labboost"),
+    "🧭  " .. _("smart_navigation_labboost"),
+    "🤝  " .. _("active_cooperation_labboost"),
+    "🔥  " .. _("efficient_smelting_labboost"),
+    "🛒  " .. _("vibrant_market_labboost"),
+    "⚙️  " .. _("high_speed_production_labboost"),
+    "🌽  " .. _("super_harvest_labboost"),
+    "🌾  " .. _("advanced_farming_labboost"),
+    "💰  " .. _("generous_customers_labboost"),
+    "💡  " .. _("see_the_light_labboost"),
+    "🚀  " .. _("shortcut_labboost"),
+    "🙌  " .. _("extra_hands_labboost"),
+    "🏡  " .. _("spacious_barn_labboost"),
+    "📦  " .. _("large_request_labboost"),
+    "⛵  " .. _("favorable_voyage_labboost"),
+    "❌  " .. _("go_back_labboost")
   }, {}, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_labboost"))
     return
   end
 
@@ -1880,7 +1882,7 @@ function boost2()
       -- opsional: efek visual atau suara bisa ditambahkan di sini
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_labboost"))
   end
 
 -- Re-show the menu unless user chose "Back"
@@ -1899,19 +1901,19 @@ end
   function applyLabBooster(label, emoji, name)
   local addr = getAddr()
   if not addr then
-    gg.alert(_("no_match", name))
+    gg.alert(_("no_match_labboost", name))
     return
   end
 
-  local prompt = gg.prompt({emoji .. " " .. _("enter_amount")}, nil, {"number"})
+  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost")}, nil, {"number"})
   if not prompt then
-    gg.alert(_("no_amount"))
+    gg.alert(_("no_amount_labboost"))
     return
   end
 
   local amt = tonumber(prompt[1])
   if not amt or amt < 1 or amt > 500 then
-    gg.alert(_("invalid_input"))
+    gg.alert(_("invalid_input_labboost"))
     return
   end
 
@@ -1948,12 +1950,12 @@ return gg.getValues(copied)
 end
 
 function lab18(name, offset)
-  name = name or _("unnamed_booster")
+  name = name or _("unnamed_booster_labboost")
   offset = offset or -0x8
 
   local copied = copyPatchTemplate(offset)
   if not copied then
-    gg.alert(_("ref_not_found", name))
+    gg.alert(_("ref_not_found_labboost", name))
     return
   end
 
@@ -1970,15 +1972,15 @@ function lab18(name, offset)
 
   patch[7] = {address = addr + 6 * 4, value = 0, flags = gg.TYPE_DWORD} -- duration
 
-  local input = gg.prompt({"⛵ " .. _("enter_amount")}, nil, {"number"})
+  local input = gg.prompt({"⛵ " .. _("enter_amount_labboost")}, nil, {"number"})
   local val = tonumber(input and input[1])
   if not val or val < 1 or val > 500 then
-    gg.alert(_("invalid_amount"))
+    gg.alert(_("invalid_amount_labboost"))
     return
   end
 
   patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
-  for _, o in ipairs({0x58, 0x60, 0x68}) do
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(patch, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -1987,23 +1989,23 @@ function lab18(name, offset)
 end
 
 -- 🧪 Booster Lab Functions (lab1 to lab17)
-function lab1()  applyLabBooster({0x6F6F4222,0x69417473,0x726F7072,0x696F4374,0x0000736E,0x00000000}, "✈️", _("lab1")) end
-function lab2()  applyLabBooster({0x6F6F4226,0x70537473,0x55646565,0x72614870,0x74736576,0x00000000}, "🌾", _("lab2")) end
-function lab3()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x64724F70,0x00007265,0x00000000}, "📈", _("lab3")) end
-function lab4()  applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61654470,0x0072656C,0x00000000}, "🚚", _("lab4")) end
-function lab5()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x69685370,0x00007370,0x00000000}, "🧭", _("lab5")) end
-function lab6()  applyLabBooster({0x6F6F4228,0x6C437473,0x65486E61,0x6552706C,0x73657571,0x00000074}, "🤝", _("lab6")) end
-function lab7()  applyLabBooster({0x6F6F4222,0x69547473,0x6D53656D,0x65746C65,0x00007972,0x00000000}, "🔥", _("lab7")) end
-function lab8()  applyLabBooster({0x6F6F421E,0x69547473,0x614D656D,0x74656B72,0x00000000,0x00000000}, "🛒", _("lab8")) end
-function lab9()  applyLabBooster({0x6F6F4220,0x69547473,0x6146656D,0x726F7463,0x00000079,0x00000000}, "⚙️", _("lab9")) end
-function lab10() applyLabBooster({0x6F6F4226,0x72507473,0x6375646F,0x72614874,0x74736576,0x00000000}, "🌽", _("lab10")) end
-function lab11() applyLabBooster({0x6F6F4220,0x72507473,0x6375646F,0x72614674,0x0000006D,0x00000000}, "🌾", _("lab11")) end
-function lab12() applyLabBooster({0x6F6F421E,0x6F4D7473,0x4F79656E,0x72656472,0x00000000,0x00000000}, "💰", _("lab12")) end
-function lab13() applyLabBooster({0x6F6F4220,0x614C7473,0x7265746E,0x6E694D6E,0x00000065,0x00000000}, "💡", _("lab13")) end
-function lab14() applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61725470,0x00736E69,0x00000000}, "🚀", _("lab14")) end
-function lab15() applyLabBooster({0x6F6F4224,0x6F447473,0x656C6275,0x74636146,0x0079726F,0x00000000}, "🙌", _("lab15")) end
-function lab16() applyLabBooster({0x6F6F4228,0x74537473,0x6761726F,0x70614365,0x74696361,0x00000079}, "🏡", _("lab16")) end
-function lab17() applyLabBooster({0x6F6F421C,0x614D7473,0x6E6F4478,0x00657461,0x74696361,0x00000079}, "📦", _("lab17")) end
+function lab1()  applyLabBooster({0x6F6F4222,0x69417473,0x726F7072,0x696F4374,0x0000736E,0x00000000}, "✈️", _("lab1_labboost")) end
+function lab2()  applyLabBooster({0x6F6F4226,0x70537473,0x55646565,0x72614870,0x74736576,0x00000000}, "🌾", _("lab2_labboost")) end
+function lab3()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x64724F70,0x00007265,0x00000000}, "📈", _("lab3_labboost")) end
+function lab4()  applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61654470,0x0072656C,0x00000000}, "🚚", _("lab4_labboost")) end
+function lab5()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x69685370,0x00007370,0x00000000}, "🧭", _("lab5_labboost")) end
+function lab6()  applyLabBooster({0x6F6F4228,0x6C437473,0x65486E61,0x6552706C,0x73657571,0x00000074}, "🤝", _("lab6_labboost")) end
+function lab7()  applyLabBooster({0x6F6F4222,0x69547473,0x6D53656D,0x65746C65,0x00007972,0x00000000}, "🔥", _("lab7_labboost")) end
+function lab8()  applyLabBooster({0x6F6F421E,0x69547473,0x614D656D,0x74656B72,0x00000000,0x00000000}, "🛒", _("lab8_labboost")) end
+function lab9()  applyLabBooster({0x6F6F4220,0x69547473,0x6146656D,0x726F7463,0x00000079,0x00000000}, "⚙️", _("lab9_labboost")) end
+function lab10() applyLabBooster({0x6F6F4226,0x72507473,0x6375646F,0x72614874,0x74736576,0x00000000}, "🌽", _("lab10_labboost")) end
+function lab11() applyLabBooster({0x6F6F4220,0x72507473,0x6375646F,0x72614674,0x0000006D,0x00000000}, "🌾", _("lab11_labboost")) end
+function lab12() applyLabBooster({0x6F6F421E,0x6F4D7473,0x4F79656E,0x72656472,0x00000000,0x00000000}, "💰", _("lab12_labboost")) end
+function lab13() applyLabBooster({0x6F6F4220,0x614C7473,0x7265746E,0x6E694D6E,0x00000065,0x00000000}, "💡", _("lab13_labboost")) end
+function lab14() applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61725470,0x00736E69,0x00000000}, "🚀", _("lab14_labboost")) end
+function lab15() applyLabBooster({0x6F6F4224,0x6F447473,0x656C6275,0x74636146,0x0079726F,0x00000000}, "🙌", _("lab15_labboost")) end
+function lab16() applyLabBooster({0x6F6F4228,0x74537473,0x6761726F,0x70614365,0x74696361,0x00000079}, "🏡", _("lab16_labboost")) end
+function lab17() applyLabBooster({0x6F6F421C,0x614D7473,0x6E6F4478,0x00657461,0x74696361,0x00000079}, "📦", _("lab17_labboost")) end
 
 -- ✅ Alias rw3() untuk akses dari menue3
 function rw3()
@@ -2012,25 +2014,20 @@ end
 
 -- ✅ Menu Kupon Utama (dipakai juga di gp8)
 function gp6(caller)
-  if cstatus_featureX == off then
-    gg.alert(_("freeze_inactive"))
-    return
-  end
-
   local indev = dev
   local menu = gg.choice({
-    "🚚  " .. _("coupon_loader"),
-    "🧑‍💼  " .. _("coupon_dealer"),
-    "🏡  " .. _("coupon_barn"),
-    "🌆  " .. _("coupon_city"),
-    "🏭  " .. _("coupon_factory"),
-    "🚆  " .. _("coupon_train"),
-    "🏝️  " .. _("coupon_island"),
-    "❌  " .. _("back1")
+    "🚚  " .. _("coupon_loader_kuponpon"),
+    "🧑‍💼  " .. _("coupon_dealer_kuponpon"),
+    "🏡  " .. _("coupon_barn_kuponpon"),
+    "🌆  " .. _("coupon_city_kuponpon"),
+    "🏭  " .. _("coupon_factory_kuponpon"),
+    "🚆  " .. _("coupon_train_kuponpon"),
+    "🏝️  " .. _("coupon_island_kuponpon"),
+    "❌  " .. _("back_kuponpon")
   }, {}, indev)
 
   if not menu then
-    gg.toast(_("no_option"))
+    gg.toast(_("no_option_kuponpon"))
     return
   end
 
@@ -2049,7 +2046,7 @@ function gp6(caller)
     end
     return
   else
-    gg.toast(_("invalid_option"))
+    gg.toast(_("invalid_option_kuponpon"))
     return
   end
 
@@ -2076,9 +2073,9 @@ function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
 
   local prompt = gg.prompt({emoji .. " " .. _(promptKey) .. " [1–" .. maxAmount .. "]:"}, nil, {"number"})
   local amt = tonumber(prompt and prompt[1])
-  if not amt then return gg.alert(_("no_amount")) end
+  if not amt then return gg.alert(_("no_amount_kuponpon")) end
   if amt < 1 or amt > maxAmount then
-    return gg.alert(_("invalid_range") .. " 1 – " .. maxAmount)
+    return gg.alert(_("invalid_range_kuponpon") .. " 1 – " .. maxAmount)
   end
 
   local edits = {}
@@ -2095,43 +2092,43 @@ function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
 end
 
 -- 🎟️ Kupon-Kupon
-function kupon1(caller) applyCoupon("Loader Coupon", "🚚", "loader_coupon", 25000, caller, {
+function kupon1(caller) applyCoupon("Loader Coupon", "🚚", "loader_coupon_kuponpon", 25000, caller, {
   [-0x48]=1970225964, [-0x44]=1282305904, [-0x40]=1415864687,
   [-0x3C]=1852399986, [-0x38]=1886546241, [-0x34]=7631471,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon2(caller) applyCoupon("Hire Dealer Coupon", "🧑‍💼", "dealer_coupon", 10000, caller, {
+function kupon2(caller) applyCoupon("Hire Dealer Coupon", "🧑‍💼", "dealer_coupon_kuponpon", 10000, caller, {
   [-0x48]=0x756F4320, [-0x44]=0x486E6F70, [-0x40]=0x44657269,
   [-0x3C]=0x656C6165, [-0x38]=0x00000072, [-0x34]=0,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon3(caller) applyCoupon("Barn Upgrade Coupon", "🏡", "barn_coupon", 5000, caller, {
+function kupon3(caller) applyCoupon("Barn Upgrade Coupon", "🏡", "barn_coupon_kuponpon", 5000, caller, {
   [-0x48]=1701996056, [-0x44]=1651327333, [-0x40]=1850307169,
   [-0x3C]=99, [-0x38]=0, [-0x34]=0,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon4(caller) applyCoupon("City Expansion Coupon", "🌆", "city_coupon", 5000, caller, {
+function kupon4(caller) applyCoupon("City Expansion Coupon", "🌆", "city_coupon_kuponpon", 5000, caller, {
   [-0x48]=1701996058, [-0x44]=1886930277, [-0x40]=1769172577,
   [-0x3C]=28271, [-0x38]=0, [-0x34]=0,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon5(caller) applyCoupon("Factory Upgrade Coupon", "🏭", "factory_coupon", 5000, caller, {
+function kupon5(caller) applyCoupon("Factory Upgrade Coupon", "🏭", "factory_coupon_kuponpon", 5000, caller, {
   [-0x48]=1970225960, [-0x44]=1433300848, [-0x40]=1634887536,
   [-0x3C]=1632003428, [-0x38]=1919906915, [-0x34]=121,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon6(caller) applyCoupon("Train Upgrade Coupon", "🚆", "train_coupon", 5000, caller, {
+function kupon6(caller) applyCoupon("Train Upgrade Coupon", "🚆", "train_coupon_kuponpon", 5000, caller, {
   [-0x48]=1970225956, [-0x44]=1433300848, [-0x40]=1634887536,
   [-0x3C]=1918133604, [-0x38]=7235937, [-0x34]=120,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
 
-function kupon7(caller) applyCoupon("Island Upgrade Coupon", "🏝️", "island_coupon", 5000, caller, {
+function kupon7(caller) applyCoupon("Island Upgrade Coupon", "🏝️", "island_coupon_kuponpon", 5000, caller, {
   [-0x48]=1970225958, [-0x44]=1433300848, [-0x40]=1634887536,
   [-0x3C]=1934189924, [-0x38]=1684955500, [-0x34]=0,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
@@ -2143,25 +2140,16 @@ function rw4()
 end
 
 function gp7(caller)
-  if cstatus_featureX == off then
-    gg.alert(
-      "🚫 " .. _("freeze_not_active") .. "\n\n" ..
-      "❄️ " .. _("freeze_required") .. "\n\n" ..
-      "➡️ " .. _("freeze_location")
-    )
-    return
-  end
-
   local indev = dev
   local menu = gg.choice({
-    "🟧  " .. _("orange_gem"),
-    "🟩  " .. _("green_gem"),
-    "🟥  " .. _("red_gem"),
-    "❌  [ << " .. _("go_back1") .. " >> ]"
+    "🟧  " .. _("orange_gem_gemgem"),
+    "🟩  " .. _("green_gem_gemgem"),
+    "🟥  " .. _("red_gem_gemgem"),
+    "❌  [ << " .. _("go_back_gemgem") .. " >> ]"
   }, {}, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_gemgem"))
     return
   end
 
@@ -2176,7 +2164,7 @@ function gp7(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_gemgem"))
     return
   end
 
@@ -2195,22 +2183,22 @@ end
 function applyGemReward(label, emoji, gemId, caller)
   local base = getAddr()
   if not base then
-    gg.alert("❌ " .. label .. " " .. _("gem_not_found"))
+    gg.alert("❌ " .. label .. " " .. _("gem_not_found_gemgem"))
     return
   end
 
   local max = (caller == "free") and 100 or 10000
-  local promptText = string.format("%s %s %s [1–%d]:", emoji, _("enter_amount"), label, max)
+  local promptText = string.format("%s %s %s [1–%d]:", emoji, _("enter_amount_gemgem"), label, max)
   local p = gg.prompt({promptText}, nil, {"number"})
   local val = tonumber(p and p[1])
 
   if not val then
-    gg.alert(_("no_input"))
+    gg.alert(_("no_input_gemgem"))
     return
   end
 
   if val < 1 or val > max then
-    gg.alert(_("invalid_input") .. max .. ".")
+    gg.alert(_("invalid_input_gemgem") .. max .. ".")
     return
   end
 
@@ -2228,37 +2216,27 @@ function applyGemReward(label, emoji, gemId, caller)
   dw(0x20, 0)
 
   gg.setValues(a)
-  gg.toast(string.format("%s %s %s %s 💎", emoji, label, _("reward_set"), val))
+  gg.toast(string.format("%s %s %s %s 💎", emoji, label, _("reward_set_gemgem"), val))
 end
 
 -- 🔸 Specific Gem Wrappers
-function gem1(caller) applyGemReward(_("orange_gem"), "🟧", 49, caller) end
-function gem2(caller) applyGemReward(_("green_gem"),  "🟩", 50, caller) end
-function gem3(caller) applyGemReward(_("red_gem"),    "🟥", 51, caller) end
+function gem1(caller) applyGemReward(_("orange_gem_gemgem"), "🟧", 49, caller) end
+function gem2(caller) applyGemReward(_("green_gem_gemgem"),  "🟩", 50, caller) end
+function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller) end
   
   function gp8()
-  if cstatus_featureX == off then
-    gg.alert(
-      "🚫 " .. _("freeze_off_title") .. "\n\n" ..
-      "❄️ " .. _("freeze_off_body1") .. "\n\n" ..
-      "➡️ " .. _("freeze_off_body2") .. "\n\n" ..
-      "🧩 " .. _("freeze_off_location")
-    )
-    return
-  end
-
   local title = banner
   local menu = gg.choice({
-    "🏅  " .. _("metal_ingots"),
-    "⛏️  " .. _("mining_tools"),
-    "🧰  " .. _("community_tools"),
-    "🏡  " .. _("barn_tools"),
-    "🚧  " .. _("expansion_tools"),
-    "❌  [ << " .. _("go_back1") .. " >> ]"
+    "🏅  " .. _("metal_ingots_materialyal"),
+    "⛏️  " .. _("mining_tools_materialyal"),
+    "🧰  " .. _("community_tools_materialyal"),
+    "🏡  " .. _("barn_tools_materialyal"),
+    "🚧  " .. _("expansion_tools_materialyal"),
+    "❌  [ << " .. _("go_back_materialyal") .. " >> ]"
   }, {}, title)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option"))
+    gg.toast("❌ " .. _("no_option_materialyal"))
     return
   elseif menu == 1 then tools1()
   elseif menu == 2 then tools2()
@@ -2266,7 +2244,7 @@ function gem3(caller) applyGemReward(_("red_gem"),    "🟥", 51, caller) end
   elseif menu == 4 then tools4()
   elseif menu == 5 then tools5()
   elseif menu == 6 then menu1()
-  else gg.toast("⚠️ " .. _("invalid_option"))
+  else gg.toast("⚠️ " .. _("invalid_option_materialyal"))
   end
 end
 
@@ -2280,15 +2258,15 @@ function tools1(caller)
   _G.ingotCaller = caller -- Simpan caller secara global
 
   local menu = gg.choice({
-    "🥉  " .. _("bronze_ingot"),
-    "🥈  " .. _("silver_ingot"),
-    "🥇  " .. _("gold_ingot"),
-    "🏅  " .. _("platinum_ingot"),
-    "❌  [ << " .. _("go_back1") .. " >> ]"
+    "🥉  " .. _("bronze_ingot_batangtang"),
+    "🥈  " .. _("silver_ingot_batangtang"),
+    "🥇  " .. _("gold_ingot_batangtang"),
+    "🏅  " .. _("platinum_ingot_batangtang"),
+    "❌  [ << " .. _("go_back_batangtang") .. " >> ]"
   }, {}, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option"))
+    gg.toast("❌ " .. _("no_option_batangtang"))
     return
   end
 
@@ -2307,7 +2285,7 @@ function tools1(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_batangtang"))
     return
   end
 
@@ -2322,17 +2300,22 @@ function tools1(caller)
 end
 
 -- ✅ Fungsi utama untuk memberi reward Ingot
-function applyIngotReward(label, emoji, hexes)
+function applyIngotReward(labelKey, emoji, hexes)
   local base = getAddr()
   if not base then return end
 
   local maxval = _G.ingotCaller == "free" and 100 or 5000
-  local prompt = gg.prompt({emoji .. " Enter " .. label .. " amount [1–" .. maxval .. "]:"}, nil, {"number"})
+  local prompt = gg.prompt({
+    emoji .. " " .. _( "enter_amount_batangtang") .. " " .. _(labelKey) .. " [1–" .. maxval .. "]:"
+  }, nil, {"number"})
   local val = tonumber(prompt and prompt[1])
 
   if not val or val < 1 or val > maxval then
-    gg.alert(val and ("🚫 Invalid input.\nPlease enter a number between 1 and " .. maxval .. ".")
-                  or  "⚠️ No amount entered.\nOperation cancelled.")
+    if val then
+      gg.alert(_( "invalid_input_batangtang") .. "\n" .. _( "invalid_range_batangtang") .. " 1–" .. maxval .. ".")
+    else
+      gg.alert(_( "no_input_batangtang"))
+    end
     return
   end
 
@@ -2354,33 +2337,33 @@ function applyIngotReward(label, emoji, hexes)
   end
 
   gg.setValues(a)
-  gg.toast(emoji .. " " .. label .. " set to: " .. val .. " ✅")
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "set_to_batangtang") .. ": " .. val .. " ✅")
 end
 
 -- ✅ Fungsi-fungsi ingot individual
 function batang1()
-  applyIngotReward("Bronze Ingots", "🥉", {
+  applyIngotReward("bronze", "🥉", {
     0x6F724228, 0x42657A6E, 0x696C6C75,
     0x6F436E6F, 0x65746E75, 0x00000072
   })
 end
 
 function batang2()
-  applyIngotReward("Silver Ingots", "🥈", {
+  applyIngotReward("silver", "🥈", {
     0x6C695328, 0x42726576, 0x696C6C75,
     0x6F436E6F, 0x65746E75, 0x00000072
   })
 end
 
 function batang3()
-  applyIngotReward("Gold Ingots", "🥇", {
+  applyIngotReward("gold", "🥇", {
     0x6C6F4724, 0x6C754264, 0x6E6F696C,
     0x6E756F43, 0x00726574, 0x00000000
   })
 end
 
 function batang4()
-  applyIngotReward("Platinum Ingots", "🏅", {
+  applyIngotReward("platinum", "🏅", {
     0x616C502C, 0x756E6974, 0x6C75426D,
     0x6E6F696C, 0x6E756F43, 0x00726574
   })
@@ -2397,25 +2380,25 @@ function tools2(caller)
   local options, actions = {}, {}
 
   -- Tambahkan item normal
-  table.insert(options, "⛏️  " .. _("pickaxe"))
+  table.insert(options, "⛏️  " .. _("pickaxe_macul"))
   table.insert(actions, altam1)
-  table.insert(options, "🧨  " .. _("tnt"))
+  table.insert(options, "🧨  " .. _("tnt_macul"))
   table.insert(actions, altam2)
-  table.insert(options, "💣  " .. _("dynamite"))
+  table.insert(options, "💣  " .. _("dynamite_macul"))
   table.insert(actions, altam3)
 
   -- Bonus hanya untuk premium
   if caller ~= "free" then
-    table.insert(options, "🔁  " .. _("x2_ore_bonus"))
+    table.insert(options, "🔁  " .. _("x2_ore_bonus_macul"))
     table.insert(actions, altam4)
   end
 
-  table.insert(options, "❌  [ << " .. _("go_back1") .. " >> ]")
+  table.insert(options, "❌  [ << " .. _("go_back1l_macul") .. " >> ]")
 
   local subMenu = gg.choice(options, {}, indev)
 
   if subMenu == nil then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_macul"))
     return
   end
 
@@ -2429,7 +2412,7 @@ function tools2(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_macul"))
     return
   end
 
@@ -2447,7 +2430,7 @@ end
 function applyMiningReward(label, emoji, itemId, caller, duration)
   local base = getAddr()
   if not base then
-    gg.alert("❌ " .. label .. " - " .. _("not_found"))
+    gg.alert("❌ " .. label .. " - " .. _("not_found_macul"))
     return
   end
 
@@ -2471,14 +2454,14 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
     val = duration
   else
     local max = (caller == "free") and 500 or 25000
-    local input = gg.prompt({emoji .. " " .. _("mining_prompt") .. " " .. label .. " [1–" .. max .. "]:"}, nil, {"number"})
+    local input = gg.prompt({emoji .. " " .. _("mining_prompt_macul") .. " " .. label .. " [1–" .. max .. "]:"}, nil, {"number"})
     val = tonumber(input and input[1])
     if not val then
-      gg.alert(_("cancel_input"))
+      gg.alert(_("cancel_input_macul"))
       return
     end
     if val < 1 or val > max then
-      gg.alert(_("invalid_input") .. " 1 - " .. max .. ".")
+      gg.alert(_("invalid_input_macul") .. " 1 - " .. max .. ".")
       return
     end
 
@@ -2496,17 +2479,17 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
   gg.setValues(edits)
 
   if duration then
-    gg.toast(emoji .. " " .. label .. " " .. _("success_bonus"))
+    gg.toast(emoji .. " " .. label .. " " .. _("success_bonus_macul"))
   else
     gg.toast(emoji .. " " .. label .. " set to: " .. val .. " ✅")
   end
 end
 
 -- 🧱 Modular Calls
-function altam1(caller) applyMiningReward(_("pickaxes"),  "⛏️", 3304708, caller) end
-function altam2(caller) applyMiningReward(_("tnt"),       "🧨", 3239172, caller) end
-function altam3(caller) applyMiningReward(_("dynamite"),  "💣", 3370244, caller) end
-function altam4(caller) applyMiningReward(_("ore_bonus"), "🔁", 3237230, caller, 2592000) end
+function altam1(caller) applyMiningReward(_("pickaxes_macul"),  "⛏️", 3304708, caller) end
+function altam2(caller) applyMiningReward(_("tnt_macul"),       "🧨", 3239172, caller) end
+function altam3(caller) applyMiningReward(_("dynamite_macul"),  "💣", 3370244, caller) end
+function altam4(caller) applyMiningReward(_("ore_bonus_macul"), "🔁", 3237230, caller, 2592000) end
 
 -- ✅ Alias rw7() untuk akses dari menue3
 function rw6()
@@ -2517,17 +2500,17 @@ end
 function tools3(caller)
   local indev = dev
   local menu = gg.choice({
-    "🪟  " .. _("glass"),
-    "🧱  " .. _("bricks"),
-    "🪵  " .. _("slab"),
-    "🔨  " .. _("jackhammer"),
-    "⚙️  " .. _("electric_saw"),
-    "🪛  " .. _("drill"),
-    "❌  [ << " .. _("back") .. " >> ]"
+    "🪟  " .. _("glass_matdung"),
+    "🧱  " .. _("bricks_matdung"),
+    "🪵  " .. _("slab_matdung"),
+    "🔨  " .. _("jackhammer_matdung"),
+    "⚙️  " .. _("electric_saw_matdung"),
+    "🪛  " .. _("drill_matdung"),
+    "❌  [ << " .. _("back_matdung") .. " >> ]"
   }, {}, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected"))
+    gg.toast("❌ " .. _("no_option_selected_matdung"))
     return
   end
 
@@ -2545,7 +2528,7 @@ function tools3(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_matdung"))
     return
   end
 
@@ -2567,17 +2550,17 @@ function applyConstructReward(label, emoji, hexList, caller)
   if not base then return end
 
   local max = (caller == "free") and 100 or 5000
-  local promptText = _("input_construct"):gsub("{label}", label):gsub("{max}", max)
+  local promptText = _("input_construct_matdung"):gsub("{label}", label):gsub("{max}", max)
   local prompt = gg.prompt({emoji .. " " .. promptText}, nil, {"number"})
   local amount = tonumber(prompt and prompt[1])
 
   if not amount then
-    gg.alert(_("[no_amount]"))
+    gg.alert(_("no_amount_matdung"))
     return
   end
 
   if amount < 1 or amount > max then
-    local msg = _("invalid_input"):gsub("{max}", max)
+    local msg = _("invalid_input_matdung"):gsub("{max}", max)
     gg.alert(msg)
     return
   end
@@ -2591,42 +2574,42 @@ function applyConstructReward(label, emoji, hexList, caller)
 
   gg.setValues(edits)
 
-  local msg = _("reward_set"):gsub("{emoji}", emoji):gsub("{label}", label):gsub("{amount}", amount)
+  local msg = _("reward_set_matdung"):gsub("{emoji}", emoji):gsub("{label}", label):gsub("{amount}", amount)
   gg.toast(msg)
 end
 
 -- ✅ Fungsi hadiah spesifik
-function gekom1(caller) applyConstructReward(_("glass"), "🪟", {
+function gekom1(caller) applyConstructReward(_("glass_matdung"), "🪟", {
   {-0x48, 0x616C470A}, {-0x44, 0x00007373}, {-0x40, 0xA4A23A90},
   {-0x3C, 0x8EFCC1BB}, {-0x38, 0x23330000}, {-0x34, 0x6F},
   {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0}, {0x18, 0}, {0x20, 0}
 }, caller) end
 
-function gekom2(caller) applyConstructReward(_("bricks"), "🧱", {
+function gekom2(caller) applyConstructReward(_("bricks_matdung"), "🧱", {
   {-0x48, 0x6972420A}, {-0x44, 0x00006B63}, {-0x40, 0}, {-0x3C, 0},
   {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
   {0x18, 0}, {0x20, 0}
 }, caller) end
 
-function gekom3(caller) applyConstructReward(_("slabs"), "🪵", {
+function gekom3(caller) applyConstructReward(_("slabs_matdung"), "🪵", {
   {-0x48, 0x696C500A}, {-0x44, 0x00006174}, {-0x40, 0}, {-0x3C, 0},
   {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
   {0x18, 0}, {0x20, 0}
 }, caller) end
 
-function gekom4(caller) applyConstructReward(_("jackhammer"), "🔨", {
+function gekom4(caller) applyConstructReward(_("jackhammer_matdung"), "🔨", {
   {-0x48, 1667328532}, {-0x44, 1835100267}, {-0x40, 7497069}, {-0x3C, 0},
   {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
   {0x18, 0}, {0x20, 0}
 }, caller) end
 
-function gekom5(caller) applyConstructReward(_("saw"), "⚙️", {
+function gekom5(caller) applyConstructReward(_("saw_matdung"), "⚙️", {
   {-0x48, 2003791888}, {-0x44, 1634955877}, {-0x40, 119}, {-0x3C, 0},
   {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
   {0x18, 0}, {0x20, 0}
 }, caller) end
 
-function gekom6(caller) applyConstructReward(_("drill"), "🪛", {
+function gekom6(caller) applyConstructReward(_("drill_matdung"), "🪛", {
   {-0x48, 1769104394}, {-0x44, 1627417708}, {-0x40, 119}, {-0x3C, 0},
   {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
   {0x18, 0}, {0x20, 0}
@@ -2635,14 +2618,14 @@ function gekom6(caller) applyConstructReward(_("drill"), "🪛", {
 function tools4()
   local indev = dev
   local menu = gg.choice({
-    "🔨  " .. _("hammer"),
-    "📍  " .. _("nail"),
-    "🪣  " .. _("red_paint"),
-    "❌  [ << " .. _("go_back1") .. " >> ]"
+    "🔨  " .. _("hammer_gudangdang"),
+    "📍  " .. _("nail_gudangdang"),
+    "🪣  " .. _("red_paint_gudangdang"),
+    "❌  [ << " .. _("go_back_gudangdang") .. " >> ]"
   }, {}, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option"))
+    gg.toast("❌ " .. _("no_option_gudangdang"))
     return
   end
 
@@ -2658,7 +2641,7 @@ function tools4()
     if menu >= 1 and menu <= 3 then
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_gudangdang"))
     return
   end
 
@@ -2678,10 +2661,10 @@ function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
   local base = getAddr()
   if not base then return end
 
-  local p = gg.prompt({emoji .. " " .. _( "enter_amount" ) .. " " .. _( labelKey ) .. ":"}, nil, {"number"})
+  local p = gg.prompt({emoji .. " " .. _( "enter_amount_gudangdang" ) .. " " .. _( labelKey ) .. ":"}, nil, {"number"})
   local amount = tonumber(p and p[1])
   if not amount or amount < 1 or amount > 5000 then
-    gg.alert(_( "invalid_input" ))
+    gg.alert(_( "invalid_input_gudangdang" ))
     return
   end
 
@@ -2700,33 +2683,33 @@ function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
   end
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set" ) .. ": " .. amount .. " ✅")
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set_gudangdang" ) .. ": " .. amount .. " ✅")
 end
 
 -- 📦 Item lumbung
 function lumbung1()
-  applyBarnReward("hammers", "🔨", 0x6D616812, 0x4D72656D, 0x00007461)
+  applyBarnReward("hammers_gudangdang", "🔨", 0x6D616812, 0x4D72656D, 0x00007461)
 end
 
 function lumbung2()
-  applyBarnReward("nails", "📍", 0x69616E0E, 0x74614D6C, 0x00000000)
+  applyBarnReward("nails_gudangdang", "📍", 0x69616E0E, 0x74614D6C, 0x00000000)
 end
 
 function lumbung3()
-  applyBarnReward("red_paint", "🪣", 0x69617016, 0x6552746E, 0x74614D64)
+  applyBarnReward("red_paint_gudangdang", "🪣", 0x69617016, 0x6552746E, 0x74614D64)
 end
 
 function tools5()
   local indev = dev
   local menu = gg.choice({
-    "🪚  " .. _("saw" ),
-    "🪓  " .. _("axe" ),
-    "🪏  " .. _("shovel" ),
-    "" .. _("go_back" )
+    "🪚  " .. _("saw_waswas" ),
+    "🪓  " .. _("axe_waswas" ),
+    "🪏  " .. _("shovel_waswas" ),
+    "❌  " .. _("go_back_waswas" )
   }, {}, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option"))
+    gg.toast("❌ " .. _("no_option_waswas"))
     return
   end
 
@@ -2743,7 +2726,7 @@ function tools5()
       -- bisa tambahkan aksi lain di sini kalau perlu
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option"))
+    gg.toast("⚠️ " .. _("invalid_option_waswas"))
     return
   end
 
@@ -2764,11 +2747,11 @@ function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     if not base then return end
 
     local label = _(labelKey)
-    local p = gg.prompt({emoji .. " " .. _("enter_amount") .. " " .. label}, nil, {"number"})
+    local p = gg.prompt({emoji .. " " .. _("enter_amount_waswas") .. " " .. label}, nil, {"number"})
 
     local amount = tonumber(p and p[1])
     if not amount or amount < 1 or amount > 5000 then
-        gg.alert(_("invalid_input"))
+        gg.alert(_("invalid_input_waswas"))
         return
     end
 
@@ -2792,13 +2775,13 @@ function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     end
 
     gg.setValues(patch)
-    gg.toast(emoji .. " " .. label .. " " .. _("reward_set") .. ": " .. amount .. " ✅")
+    gg.toast(emoji .. " " .. label .. " " .. _("reward_set_waswas") .. ": " .. amount .. " ✅")
 end
 
 -- 🔧 Tool Reward Functions
-function luas1() applyExpansionReward("saw", "🪚", 1414419462) end
-function luas2() applyExpansionReward("axe", "🪓", 1702387974) end
-function luas3() applyExpansionReward("shovel", "🪏", 1667854344, 107) end
+function luas1() applyExpansionReward("saw_waswas", "🪚", 1414419462) end
+function luas2() applyExpansionReward("axe_waswas", "🪓", 1702387974) end
+function luas3() applyExpansionReward("shovel_waswas", "🪏", 1667854344, 107) end
 
 -- 🔹 Fungsi menu rw7
 function rw7()
@@ -2807,33 +2790,28 @@ end
 
 -- 🔹 Fungsi utama gp9 dengan multi bahasa
 function gp9(caller)
-  if cstatus_featureX == off then
-    gg.alert(_("freeze_not_active"))
-    return
-  end
-
   local indev = dev
   local isPremium = (caller ~= "free")
 
   -- Susun menu sesuai status premium
   local menuLabels = {
-    _("express_plane"),
-    _("instant_crop"),
-    _("fast_farm"),
+    _("express_plane_keuntungan"),
+    _("instant_crop_keuntungan"),
+    _("fast_farm_keuntungan"),
   }
 
   if isPremium then
-    table.insert(menuLabels, _("instant_build"))
-    table.insert(menuLabels, _("unlimited_barn"))
+    table.insert(menuLabels, _("instant_build_keuntungan"))
+    table.insert(menuLabels, _("unlimited_barn_keuntungan"))
   end
 
-  table.insert(menuLabels, _("train_booster"))
-  table.insert(menuLabels, _("double_train"))
-  table.insert(menuLabels, _("go_back"))
+  table.insert(menuLabels, _("train_booster_keuntungan"))
+  table.insert(menuLabels, _("double_train_keuntungan"))
+  table.insert(menuLabels, _("go_back_keuntungan"))
 
   local menu = gg.choice(menuLabels, {}, indev)
   if not menu then
-    gg.toast(_("no_option"))
+    gg.toast(_("no_option_keuntungan"))
     return
   end
 
@@ -2861,7 +2839,7 @@ function gp9(caller)
     end
     return
   else
-    gg.toast(_("invalid_option"))
+    gg.toast(_("invalid_option_keuntungan"))
     return
   end
 
@@ -2891,7 +2869,7 @@ function applyPerk(labelKey, emoji, values)
   end
 
   gg.setValues(addrList)
-  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied"))
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied_keuntungan"))
 end
 
 function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
@@ -2901,7 +2879,7 @@ function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
   gg.refineNumber(matchValue, gg.TYPE_DWORD)
   local src = gg.getResults(1)
   if #src == 0 then
-    gg.alert(_[source_not_found])
+    gg.alert(_"source_not_found")
     return
   end
 
@@ -2950,12 +2928,12 @@ function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
   end
 
   gg.setValues(newValues)
-  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied"))
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied_keuntungan"))
 end
 
 -- 📌 Perk functions multi bahasa
 function perk1()
-  applyPerk("perk_express_plane", "✈️", {
+  applyPerk("perk_express_plane_keuntungan", "✈️", {
     {offset = -0x48, value = 1599099684},
     {offset = -0x44, value = 1936682818},
     {offset = -0x40, value = 1701860212},
@@ -2971,7 +2949,7 @@ function perk1()
 end
 
 function perk2()
-  applyPerk("perk_instant_crop", "🌾", {
+  applyPerk("perk_instant_crop_keuntungan", "🌾", {
     {offset = -0x48, value = 1599099692},
     {offset = -0x44, value = 1936682818},
     {offset = -0x40, value = 1701860212},
@@ -2987,7 +2965,7 @@ function perk2()
 end
 
 function perk3()
-  applyPerk("perk_rapid_farm", "🐄", {
+  applyPerk("perk_rapid_farm_keuntungan", "🐄", {
     {offset = -0x48, value = 1599099688},
     {offset = -0x44, value = 1936682818},
     {offset = -0x40, value = 1701860212},
@@ -3003,7 +2981,7 @@ function perk3()
 end
 
 function perk4()
-  applyCopiedPerk("perk_instant_building", "🏗️", 24, {
+  applyCopiedPerk("perk_instant_building_keuntungan", "🏗️", 24, {
     {offset = 24, value = 0},
     {offset = 0x58, value = 0},
     {offset = 0x60, value = 0},
@@ -3013,13 +2991,13 @@ function perk4()
 end
 
 function perk5()
-  applyCopiedPerk("perk_unlimited_barn", "🏡", 23, {
+  applyCopiedPerk("perk_unlimited_barn_keuntungan", "🏡", 23, {
     {offset = 24, value = 0},
     {offset = 0x58, value = 0},
     {offset = 0x60, value = 0},
     {offset = 0x68, value = 0}
   }, {
-    prompt = "enter_barn_boost",
+    prompt = "enter_barn_boost_keuntungan",
     offset = 28,
     min = 1,
     max = 20000
@@ -3027,7 +3005,7 @@ function perk5()
 end
 
 function perk6()
-  applyPerk("perk_train_boost", "🚆", {
+  applyPerk("perk_train_boost_keuntungan", "🚆", {
     {offset = -0x48, value = 0x5F50532A},
     {offset = -0x44, value = 0x736F6F42},
     {offset = -0x40, value = 0x65705374},
@@ -3043,7 +3021,7 @@ function perk6()
 end
 
 function perk7()
-  applyPerk("perk_double_train", "🚃", {
+  applyPerk("perk_double_train_keuntungan", "🚃", {
     {offset = -0x48, value = 0x5F505322},
     {offset = -0x44, value = 0x736F6F42},
     {offset = -0x40, value = 0x61725474},
@@ -3059,15 +3037,6 @@ function perk7()
 end
 
 function gp3()
-if cstatus_featureX == off then
-    gg.alert(
-      "🚫 Freeze Rewards Not Active\n\n" ..
-      "❄️ This feature requires 'Freeze Rewards' to be enabled first.\n\n" ..
-      "➡️ Please go to the *Freeze Rewards* menu and activate it before using this menu.\n\n" ..
-      "🧩 Location: Premium Script → Unlock Season Pass → Freeze Rewards"
-    )
-    return
-  end
   local title = banner
   local menu = gg.choice({
   "🎍  Decoration Collection",
@@ -3119,6 +3088,24 @@ local indev = dev
   elseif menu == 7 then coldekor7()
   elseif menu == 8 then gp3()
   end
+end
+
+-- ✨ Placeholder for unavailable decorations
+local function dekorNotAvailable()
+  gg.alert("⚠️ This decoration is not available yet.\nPlease wait for the next update.\n\nThank you!")
+  minidekor()
+end
+
+function coldekor1()
+  dekorNotAvailable()
+end
+
+function coldekor5()
+  dekorNotAvailable()
+end
+
+function coldekor6()
+  dekorNotAvailable()
 end
 
 function coldekor2()
@@ -3257,7 +3244,7 @@ function lanterndecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -3425,7 +3412,7 @@ function easterdecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -3615,7 +3602,7 @@ function valentinedecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -3857,7 +3844,7 @@ function specialdecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4064,7 +4051,7 @@ function raredecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4271,7 +4258,7 @@ function unikdecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4487,7 +4474,7 @@ function limiteddecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4688,7 +4675,7 @@ function premiumdecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4896,7 +4883,7 @@ function classicdecor(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -4946,8 +4933,8 @@ function classicdekor39() classicdecor(0x6E88, "Deep sea explorers", "🤿") end
 function classicdekor40() classicdecor(0x7188, "Spring holiday", "🌸") end
 function classicdekor41() classicdecor(0x7488, "Knife throwing", "🔪") end
 
-
 function kums1()
+local indev = dev
   local menu = gg.choice({
 "🚁  Helicopter Skins",
 "✈️  Airplane Skins",
@@ -4955,7 +4942,7 @@ function kums1()
 "🛳️  Ship Skins",
 "🏯  Fortress Skins",
     "❌  [ << Go Back >> ]"
-  }, {}, "🎨 Choose a Skin to Change Your Style")
+  }, {}, indev)
 
     if menu == nil then
     gg.toast("⚠️ No options selected")
@@ -4987,8 +4974,9 @@ local indev = dev
 end
 
 function skinhel1()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🛸  Flying Saucer Hangar",
@@ -5012,27 +5000,46 @@ function skinhel1()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🚁  Helicopter Skins Collection")
+  local choice = gg.multiChoice(skins, nil, "🚁 Select an Helipad Skins:")
   if not choice then return end
 
-  if choice == 19 then
-    colek1()
-    return
-  end
-
-  local func = _G["pad" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function pad" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      skinhel1()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek1) == "function" then
+        colek1()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["pad" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Helipad " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Helipad" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Helipad have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5103,7 +5110,7 @@ function applyHelipadSkin(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5131,8 +5138,9 @@ function pad17() applyHelipadSkin(-0x210, "Festive Helipad", "🐉") end
 function pad18() applyHelipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
 
 function skinhel2()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🛸  Turbo Saucer",
@@ -5148,7 +5156,7 @@ function skinhel2()
     "🕵️  Surveillance Airship",
     "🎃  Flying Cauldron",
     "🎭  Feathery Helicopter",
-    "??  Egg Chopper",
+    "🐰  Egg Chopper",
     "💧  Flying Bathyscaphe",
     "🏴‍☠️  Pirate Helicopter",
     "🐉  Festive Helicopter",
@@ -5156,27 +5164,46 @@ function skinhel2()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🚁  Helicopter Skins Collection")
+local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
   if not choice then return end
 
-  if choice == 19 then
-    colek1()
-    return
-  end
-
-  local func = _G["hel" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function hel" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      skinhel2()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek1) == "function" then
+        colek1()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["hel" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Helicopter " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Helicopter" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Helicopter have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5250,7 +5277,7 @@ function applyHelicopterSkin(offset, label, emoji)
   table.insert(values, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(values, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
 
-  for _, o in ipairs({0x58, 0x60, 0x68}) do
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(values, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5260,7 +5287,7 @@ end
 
 function hel1()  applyHelicopterSkin(-0x50,  "Turbo Saucer", "🛸") end
 function hel2()  applyHelicopterSkin(-0xD0, "Robot Courier", "🤖") end
-function hel3()  applyHelicopterSkin(-0x150, "Santa's Sleigh", "🎄") end
+function hel3()  applyHelicopterSkin(-0x150, "Santa's Sleigh", "??") end
 function hel4()  applyHelicopterSkin(-0x10,  "Private Helicopter", "🎩") end
 function hel5()  applyHelicopterSkin(0x30,   "Eggplant Helicopter", "🥗") end
 function hel6()  applyHelicopterSkin(0x70,   "Flying Carpet", "🕌") end
@@ -5295,8 +5322,9 @@ local indev = dev
 end
 
 function bandara1()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🛫  Aeriel Portal",
@@ -5319,27 +5347,46 @@ function bandara1()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🛩️ Select an Airport Skin")
+  local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airport Skin:")
   if not choice then return end
 
-  if choice == 18 then
-    colek2()
-    return
-  end
-
-  local func = _G["das" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function das" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      bandara1()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[18] then
+      if type(colek2) == "function" then
+        colek2()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 17 do
+      if choice[i] then
+        local func = _G["das" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Airport " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Airport" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Airport have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5426,7 +5473,7 @@ function applyAirportSkin(input, emoji, label)
   table.insert(vals, {address = addr + 28, value = 1, flags = gg.TYPE_DWORD})
 
   -- 🧹 Kosongkan offset sampah
-  for _, o in ipairs{0x58, 0x60, 0x68} do
+  for _, o in ipairs{0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C} do
     table.insert(vals, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5454,8 +5501,9 @@ function das16() applyAirportSkin({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0
 function das17() applyAirportSkin({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "🕌", "Arabian Airport") end
 
 function bandara2()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🛫  Ultra Plane",
@@ -5478,27 +5526,46 @@ function bandara2()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🛩️ Select an Airplane Skin")
+local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
   if not choice then return end
 
-  if choice == 18 then
-    colek2()
-    return
-  end
-
-  local func = _G["wat" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function wat" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      bandara2()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[18] then
+      if type(colek2) == "function" then
+        colek2()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 17 do
+      if choice[i] then
+        local func = _G["wat" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Airplane " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Airplane" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Airplane have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5561,7 +5628,7 @@ function applyAirplaneSkin(offset, emoji, label)
   -- Tambah nilai tetap & reset offset tak terpakai
   table.insert(newVals, {address = addr + 6*4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = addr + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs{0x58, 0x60, 0x68} do
+  for _, o in ipairs{0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C} do
     table.insert(newVals, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5608,8 +5675,9 @@ local indev = dev
 end
 
 function kret1()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🌺  Flower Station",
@@ -5633,27 +5701,46 @@ function kret1()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🚆 Select an Station Skin")
+  local choice = gg.multiChoice(skins, nil, "🚆 Select an Station Skin:")
   if not choice then return end
 
-  if choice == 19 then
-    colek3()
-    return
-  end
-
-  local func = _G["sta" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function sta" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      kret1()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek3) == "function" then
+        colek3()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["sta" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Station " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Station" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Station have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5719,7 +5806,7 @@ function applyStationSkin(offset, label)
   end
   table.insert(write, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(write, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs({0x58, 0x60, 0x68}) do
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(write, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5750,8 +5837,9 @@ function sta18() applyStationSkin(-0x358, "🏛️ Mythic Station") end
 -------------------------------------------------
 
 function kret2()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
     "🌺  Flower Train",
@@ -5775,27 +5863,46 @@ function kret2()
 "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🚆 Select an Train Skin")
+local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
   if not choice then return end
 
-  if choice == 19 then
-    colek3()
-    return
-  end
-
-  local func = _G["ret" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function ret" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      kret2()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek3) == "function" then
+        colek3()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["ret" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Train " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Train" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Train have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -5867,7 +5974,7 @@ function applyTrainSkin(offset, emoji, label)
   table.insert(patched, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(patched, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
 
-  for _, o in ipairs({0x58, 0x60, 0x68}) do
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(patched, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -5915,8 +6022,9 @@ local indev = dev
 end
 
 function laut1()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🏴‍☠️  Pirate Harbor",
@@ -5937,27 +6045,46 @@ function laut1()
 "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🛳️ Select Port Skin:")
+local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
   if not choice then return end
 
-  if choice == 16 then
-    colek4()
-    return
-  end
-
-  local func = _G["buhan" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function buhan" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      laut1()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[16] then
+      if type(colek4) == "function" then
+        colek4()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 15 do
+      if choice[i] then
+        local func = _G["buhan" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Port " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Port" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Port have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -6032,7 +6159,7 @@ function applyPortSkin(offset, emoji, label)
   -- ➕ Fixed + 🧹 Clear
   table.insert(patch, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(patch, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs({0x58, 0x60, 0x68}) do
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(patch, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -6059,8 +6186,9 @@ function buhan15() applyPortSkin(0x3b4,  "Arctic Port",           "❄️")   en
 -------------------------------------------------
 
 function laut2()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🏴‍☠️  Pirate Galleon",
@@ -6081,27 +6209,46 @@ function laut2()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🛳️ Select Ship Skin:")
+local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
   if not choice then return end
 
-  if choice == #skins then
-    colek4() -- Back to previous menu
-    return
-  end
-
-  local func = _G["kap" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function kap" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      laut2()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[16] then
+      if type(colek4) == "function" then
+        colek4()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 15 do
+      if choice[i] then
+        local func = _G["kap" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Ship " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Ship" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Ship have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -6165,7 +6312,7 @@ function applyShipSkin(offset, emoji, label)
   -- ➕ Fixed + Clear
   table.insert(patch, {address = target + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(patch, {address = target + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(patch, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
   gg.setValues(patch)
@@ -6191,8 +6338,9 @@ function kap15() applyShipSkin(0x1b8,  "Arctic Ship",           "❄️")   end
 -------------------------------------------------
 
 function colek5()
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
   local skins = {
 "🏴‍☠️  Pirate Shack",
@@ -6212,27 +6360,46 @@ function colek5()
     "❌  [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🏯 Select Fortress Skin:")
+local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
   if not choice then return end
 
-  if choice == 15 then
-    kums1()
-    return
-  end
-
-  local func = _G["pulo" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-    gg.alert("⚠️ Function pulo" .. choice .. "() not found.")
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      colek5()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[15] then
+      if type(kums1) == "function" then
+        kums1()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 14 do
+      if choice[i] then
+        local func = _G["pulo" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Fortress " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Fortress" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Fortress have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -6296,7 +6463,7 @@ function applyFortressSkin(offset, emoji, label)
   -- ➕ Fixed + Cleanup
   table.insert(patch, {address = target + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
   table.insert(patch, {address = target + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(patch, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
   gg.setValues(patch)
@@ -6387,7 +6554,7 @@ while true do
         local func = _G["signEvent" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ City Townsign " .. i .. " Event applied.\n👉 Claim it in-game now!")
+          gg.toast("✅ City Townsign " .. i .. " Event applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -6473,7 +6640,7 @@ function applySignEvent(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -6553,7 +6720,7 @@ if not choice then
         local func = _G["signRandom" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ City Townsign " .. i .. " Random applied.\n👉 Claim it in-game now!")
+          gg.toast("✅ City Townsign " .. i .. " Random applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -6639,7 +6806,7 @@ function applySignRandom(offset, label, emoji)
 
   table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x60, 0x68}) do
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
     table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
@@ -6702,7 +6869,7 @@ while true do
       local func = _G["tikel" .. i]
       if type(func) == "function" then
         func()
-        gg.toast("✅ Sticker (" .. i .. ") applied.\n👉 Please claim it in the game!")
+        gg.toast("✅ Sticker (" .. i .. ") applied.\n👉 Claim it in-freeze reward!")
 
         -- ⏸️ Wait until user taps GG icon to continue
         repeat
@@ -6843,7 +7010,7 @@ function nameStyle1()
 
   -- Step 2: Search target and paste copied values
   gg.clearResults()
-  gg.searchNumber("5;30;1599361808::233", gg.TYPE_DWORD)
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
   gg.refineNumber("30", gg.TYPE_DWORD)
   local tgt = gg.getResults(1)
   if #tgt == 0 then
@@ -6893,7 +7060,7 @@ function nameStyle2()
 
   -- Step 2: Cari target dan tempelkan Name Style
   gg.clearResults()
-  gg.searchNumber("5;30;1599361808::233", gg.TYPE_DWORD)
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
   gg.refineNumber("30", gg.TYPE_DWORD)
   local tgt = gg.getResults(1)
   if #tgt == 0 then
@@ -6984,7 +7151,7 @@ function avatar1()
         local func = _G["avatarYear" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Year " .. i .. " Avatar applied.\n👉 Claim it in-game now!")
+          gg.toast("✅ Year " .. i .. " Avatar applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -7077,7 +7244,7 @@ function avatar2()
         local func = _G["comAvatar" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Complete Avatar (" .. i .. ") applied.\n👉 Please claim it in the game!")
+          gg.toast("✅ Complete Avatar (" .. i .. ") applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait until user taps GG icon
           repeat
@@ -7474,6 +7641,56 @@ function comAvatar322() applyCompleteAvatar({1635148044, 3619123}, "📚", "Comp
 function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Complete Avatar 323") end
 
 function kums6()
+local indev = dev
+  local menu = gg.choice({
+ "🃏 Card Collection Pack Badge",
+"🎖️ Collection Badge",
+    "❌  [ << Go Back >> ]"
+  }, {},indev)
+
+  if menu == nil then
+    gg.toast("⚠️ No option selected!")
+    return
+  elseif menu == 1 then cardbadge()
+  elseif menu == 2 then packbadge()
+  elseif menu == 3 then gp2()
+  end
+end
+
+function cardbadgecol(label, emoji, values)
+  local base = getAddr()
+  if not base then return end
+
+  local addrList = {}
+  for _, item in ipairs(values) do
+    table.insert(addrList, {
+      address = base + item.offset,
+      flags = gg.TYPE_DWORD,
+      value = item.value
+    })
+  end
+
+  gg.setValues(addrList)
+  gg.toast(emoji .. " " .. label .. " applied")
+end
+
+function cardbadge()
+  cardbadgecol("Card Collection Pack Badge", "🃏", {
+    {offset = -0x48, value = 1918976790},
+    {offset = -0x44, value = 1348420452},
+    {offset = -0x40, value = 879453025},
+    {offset = -0x3C, value = 0},
+    {offset = -0x38, value = 0},
+    {offset = -0x34, value = 0},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 150},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function packbadge()
 while true do
   gg.setVisible(false)
   gg.clearResults()
@@ -7498,8 +7715,8 @@ if not choice then
 
     -- 🔙 Back option
     if choice[7] then
-      if type(gp3) == "function" then
-        gp3()
+      if type(kums6) == "function" then
+        kums6()
       else
         gg.toast("⚠️ Back function unavailable.")
       end
@@ -7512,7 +7729,7 @@ if not choice then
         local func = _G["badgecollect" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Badge " .. i .. " Collection applied.\n👉 Claim it in-game now!")
+          gg.toast("✅ Badge " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
