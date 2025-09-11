@@ -1059,15 +1059,22 @@ local expireDate50  = "2025-09-30"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
--- 📌 Fungsi utilitas
-local function getDeviceID()
+-- 🔢 Generate numeric User ID (utama, dipakai semua bagian)
+local function generateUserID()
   local info = gg.getTargetInfo() or {}
-  return (info.label or "") .. "-" ..
-         (info.versionCode or "") .. "-" ..
-         (os.getenv("HOSTNAME") or "") .. "-" ..
-         (gg.getDeviceId and gg.getDeviceId() or "")
+  local raw = (info.label or "") .. "-" ..
+              (info.versionCode or "") .. "-" ..
+              (os.getenv("HOSTNAME") or "")
+  local h = 0
+  for i = 1, #raw do
+    h = (h * 31 + raw:byte(i)) % 1000000000 -- max 10 digit
+  end
+  return tostring(h)
 end
 
+local userID = generateUserID()
+
+-- Hash helper
 local function hash(str)
   local h = 0
   for i = 1, #str do
@@ -1093,8 +1100,7 @@ if not permanentCode then
   os.exit()
 end
 
-local deviceID = getDeviceID()
-local expectedHash = hash(permanentCode .. deviceID)
+local expectedHash = hash(permanentCode .. userID)
 
 -- 🔍 Cek apakah sudah pernah disimpan (auto login permanent)
 local pf = io.open(passFile, "r")
@@ -1126,7 +1132,7 @@ local function showLoginInfo(mode)
 
   if mode == "Permanent Code" then
     header = "✅ Permanent Login Success"
-    usersInfo = "🆔 User ID: " .. hash(deviceID) .. "\n"
+    usersInfo = "🆔 User ID: " .. userID .. "\n"
     message = string.format(
       "%s\n\n%s📅 Login: %s\n🔑 Type: %s",
       header, usersInfo, now, mode
@@ -1135,7 +1141,7 @@ local function showLoginInfo(mode)
   elseif mode == "Expired Code" then
     header = "✅ Expired Login Success"
     usersInfo = "📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
-                "\n🆔 User ID: " .. hash(deviceID) .. "\n"
+                "\n🆔 User ID: " .. userID .. "\n"
     message = string.format(
       "%s\n\n%s📅 Login: %s\n⏳ Expire Date: %s\n🔑 Type: %s",
       header, usersInfo, now, expDate, mode
@@ -1155,7 +1161,7 @@ if savedHash == expectedHash then
 end
 
 -- ✅ Auto-login expired code
-if not loginOK and isExpiredDeviceRegistered(deviceID) then
+if not loginOK and isExpiredDeviceRegistered(userID) then
   if isExpiredDate50() then
     gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
   else
@@ -1181,13 +1187,13 @@ while not loginOK do
     if isExpiredDate50() then
       gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
-      if not isExpiredDeviceRegistered(deviceID) then
+      if not isExpiredDeviceRegistered(userID) then
         if #expiredDevices >= expiredLimit then
           gg.alert("⛔ Expired code already used on " .. expiredLimit .. " devices, access denied")
         else
           local efw = io.open(expiredDevicesFile, "a")
-          if efw then efw:write(deviceID .. "\n") efw:close() end
-          expiredDevices[#expiredDevices+1] = deviceID
+          if efw then efw:write(userID .. "\n") efw:close() end
+          expiredDevices[#expiredDevices+1] = userID
         end
       end
       gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
