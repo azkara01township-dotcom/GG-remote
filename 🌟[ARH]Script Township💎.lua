@@ -1049,8 +1049,8 @@ function Main()
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu.txt"
-local expiredDevicesFile = "/sdcard/.vutlenot.txt"
+local permCodeFile       = "/sdcard/.brush_viu"
+local expiredDevicesFile = "/sdcard/.vutlenot"
 local userIDFile         = "/sdcard/.weasitto"
 
 -- 🔑 Expired code
@@ -9102,12 +9102,15 @@ function adminMenu()
   }, {}, "⚙️ ARH Admin Reset Logs")
 
   if menu == 1 then
+	os.remove("/sdcard/.userlog")
+	os.remove("/sdcard/.lastlog")
     os.remove("/sdcard/.ulog_craft")
     os.remove("/sdcard/.brush_viu")
     os.remove("/sdcard/.plon_getin")
     os.remove("/sdcard/.jarnogipa")
     os.remove("/sdcard/.vutlenot")
     os.remove("/sdcard/.silturime")
+	os.remove("/sdcard/.weasitto")
     gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
 	resetMode()
     os.exit()
