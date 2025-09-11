@@ -1049,22 +1049,24 @@ function Main()
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu"
-local expiredDevicesFile = "/sdcard/.vutlenot"
+local permCodeFile       = "/sdcard/.brush_viu.txt"
+local expiredDevicesFile = "/sdcard/.vutlenot.txt"
+local userIDFile         = "/sdcard/.weasitto"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-30"
+local expireDate50  = "2025-09-15"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
--- 🔢 Generate numeric User ID (utama, dipakai semua bagian)
+-- 🔢 Generate numeric User ID (sekali saja, lalu disimpan)
 local function generateUserID()
   local info = gg.getTargetInfo() or {}
-  local raw = (info.label or "") .. "-" ..
+  local raw = (info.packageName or "") .. "-" ..
               (info.versionCode or "") .. "-" ..
-              (os.getenv("HOSTNAME") or "")
+              tostring(os.time()):sub(-6) .. "-" ..
+              tostring(math.random(1000, 9999))
   local h = 0
   for i = 1, #raw do
     h = (h * 31 + raw:byte(i)) % 1000000000 -- max 10 digit
@@ -1072,7 +1074,20 @@ local function generateUserID()
   return tostring(h)
 end
 
-local userID = generateUserID()
+-- 📌 Baca atau generate User ID
+local userID = nil
+do
+  local f = io.open(userIDFile, "r")
+  if f then
+    userID = f:read("*a")
+    f:close()
+  end
+  if not userID or userID == "" then
+    userID = generateUserID()
+    local fw = io.open(userIDFile, "w")
+    if fw then fw:write(userID) fw:close() end
+  end
+end
 
 -- Hash helper
 local function hash(str)
