@@ -1051,22 +1051,20 @@ function Main()
 local passFile           = "/sdcard/.ulog_craft"
 local permCodeFile       = "/sdcard/.brush_viu"
 local expiredDevicesFile = "/sdcard/.vutlenot"
-local userIDFile         = "/sdcard/.weasitto"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-15"
+local expireDate50  = "2025-09-30"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
--- 🔢 Generate numeric User ID (sekali saja, lalu disimpan)
+-- 🔢 Generate numeric User ID (utama, dipakai semua bagian)
 local function generateUserID()
   local info = gg.getTargetInfo() or {}
-  local raw = (info.packageName or "") .. "-" ..
+  local raw = (info.label or "") .. "-" ..
               (info.versionCode or "") .. "-" ..
-              tostring(os.time()):sub(-6) .. "-" ..
-              tostring(math.random(1000, 9999))
+              (os.getenv("HOSTNAME") or "")
   local h = 0
   for i = 1, #raw do
     h = (h * 31 + raw:byte(i)) % 1000000000 -- max 10 digit
@@ -1074,20 +1072,7 @@ local function generateUserID()
   return tostring(h)
 end
 
--- 📌 Baca atau generate User ID
-local userID = nil
-do
-  local f = io.open(userIDFile, "r")
-  if f then
-    userID = f:read("*a")
-    f:close()
-  end
-  if not userID or userID == "" then
-    userID = generateUserID()
-    local fw = io.open(userIDFile, "w")
-    if fw then fw:write(userID) fw:close() end
-  end
-end
+local userID = generateUserID()
 
 -- Hash helper
 local function hash(str)
@@ -1143,23 +1128,27 @@ end
 local function showLoginInfo(mode)
   local now = os.date("%Y-%m-%d %H:%M:%S")
   local expDate = expireDate50
-  local header, usersInfo, message
+  local header, message
 
   if mode == "Permanent Code" then
     header = "✅ Permanent Login Success"
-    usersInfo = "🆔 User ID: " .. userID .. "\n"
     message = string.format(
-      "%s\n\n%s📅 Login: %s\n🔑 Type: %s",
-      header, usersInfo, now, mode
+      "%s\n\n📅 Login: %s\n🔑 Type: %s\n👥 Users: 1/∞",
+      header, now, mode
     )
 
   elseif mode == "Expired Code" then
+    -- Hitung sisa hari
+    local y, m, d = expDate:match("(%d+)%-(%d+)%-(%d+)")
+    local expTime = os.time({year = y, month = m, day = d, hour = 23, min = 59, sec = 59})
+    local todayTime = os.time()
+    local remainingDays = math.floor((expTime - todayTime) / (24 * 3600))
+    if remainingDays < 0 then remainingDays = 0 end
+
     header = "✅ Expired Login Success"
-    usersInfo = "📊 Expired Users: " .. tostring(#expiredDevices) .. "/" .. expiredLimit ..
-                "\n🆔 User ID: " .. userID .. "\n"
     message = string.format(
-      "%s\n\n%s📅 Login: %s\n⏳ Expire Date: %s\n🔑 Type: %s",
-      header, usersInfo, now, expDate, mode
+      "%s\n\n📊 Expired Users: %d/%d\n📅 Login: %s\n⏳ %d day(s) left expired code\n🔑 Type: %s",
+      header, #expiredDevices, expiredLimit, now, remainingDays, mode
     )
   end
 
@@ -9110,7 +9099,6 @@ function adminMenu()
     os.remove("/sdcard/.jarnogipa")
     os.remove("/sdcard/.vutlenot")
     os.remove("/sdcard/.silturime")
-	os.remove("/sdcard/.weasitto")
     gg.alert("🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you.")
 	resetMode()
     os.exit()
