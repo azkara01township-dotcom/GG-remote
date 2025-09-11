@@ -1049,13 +1049,13 @@ function Main()
 -- 💎 ARH PERMANENT LOGIN HANDLER (AUTO-SAVE, LIMIT DEVICE UNTUK EXPIRED CODE, DATE EXPIRE, PERMANENT TANPA BATAS)
 
 local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu.txt"
-local expiredDevicesFile = "/sdcard/.vutlenot.txt"
+local permCodeFile       = "/sdcard/.brush_viu"
+local expiredDevicesFile = "/sdcard/.vutlenot"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-15"
+local expireDate50  = "2025-09-30"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
