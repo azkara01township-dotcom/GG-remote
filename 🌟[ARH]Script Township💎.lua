@@ -901,7 +901,7 @@ end
 loadLang()
 
 -- 📁 Cache Setup
-local folder = "/sdcard/.ggcache_arh/"
+local folder = "/sdcard/.ARH_Cache/"
 local fileItem = folder .. "itemcache.txt"
 local fileAddr = folder .. "addresscache.txt"
 
