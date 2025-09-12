@@ -19,9 +19,9 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
 local teks = {
-["cache_cleared"] = { id = "🗑️ Cache dibersihkan (game di-restart)", en = "🗑️ Cache cleared (game restarted)"},
+["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
   ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
-  ["addr_refreshed"] = {id = "✅ Alamat diperbarui. Klik ikon GG untuk lanjut...",en = "✅ Address refreshed. Click GG icon to continue..." },
+  ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
   ["addr_found"] = {id = "✅ Alamat ditemukan: 0x",en = "✅ Address found: 0x"},
   ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
   ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
@@ -327,7 +327,7 @@ local teks = {
 ["silver_ingot_batangtang"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
 ["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
 ["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
-["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
+["go_back_batangtang"]        = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
 ["no_option_batangtang"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
 ["invalid_option_batangtang"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
 
@@ -420,13 +420,13 @@ local teks = {
 
 ["no_option_keuntungan"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
 ["invalid_option_keuntungan"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
-["express_plane_keuntungan"] = { id = "✈️ Pengiriman Pesawat Ekspres", en = "✈️ Express Plane Delivery" },
-["instant_crop_keuntungan"]  = { id = "🌾 Panen Tanaman Instan", en = "🌾 Instant Crop Harvest" },
-["fast_farm_keuntungan"]     = { id = "🐄 Produksi Pertanian Cepat", en = "🐄 Fast Farm Production" },
-["instant_build_keuntungan"] = { id = "🏗️ Konstruksi Bangunan Instan", en = "🏗️ Instant Building Construction" },
-["unlimited_barn_keuntungan"] = { id = "🏡 Kapasitas Gudang Tak Terbatas", en = "🏡 Unlimited Barn Capacity" },
-["train_booster_keuntungan"] = { id = "⏱️ Booster Waktu Kereta", en = "⏱️ Train Time Booster" },
-["double_train_keuntungan"]  = { id = "🚃 Gerbong Kereta Ganda", en = "🚃 Double Train Carriages" },
+["express_plane_keuntungan"] = { id = "✈️  Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
+["instant_crop_keuntungan"]  = { id = "🌾  Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
+["fast_farm_keuntungan"]     = { id = "🐄  Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
+["instant_build_keuntungan"] = { id = "🏗️  Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
+["unlimited_barn_keuntungan"] = { id = "🏡  Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
+["train_booster_keuntungan"] = { id = "⏱️  Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
+["double_train_keuntungan"]  = { id = "🚃  Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
 ["go_back_keuntungan"]       = { id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]" },
 
   ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
@@ -520,7 +520,7 @@ local teks = {
   ["dataNotFound_bajak"] = {id = "❌ Harta Karun Bajak Laut tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en = "❌ Pirate Treasure not found!\n\nPlease restart the game and try again."},
   ["toastFreeze_bajak"] = {id = "🏴‍☠️ Freeze Harta Karun Bajak Laut diterapkan pada entri!",en = "🏴‍☠️ Pirate Treasure freeze applied to entries!"},
   
-  ----skip time----
+----skip time----
   
   ["faster_arrivals_skiptime"]  = {id="⚙️ Kedatangan Lebih Cepat", en="⚙️ Faster Arrivals"},
 ["no_feed_timer_skiptime"]    = {id="🥣 Pabrik Pakan Tanpa Waktu Tunggu", en="🥣 No Feed Timer"},
@@ -686,7 +686,7 @@ local teks = {
   ["not_found_brik"]    = {id = "❌ Pola tidak ditemukan", en = "❌ Pattern not found"},
   ["patched_brik"]      = {id = "✅ Pola berhasil diubah", en = "✅ Pattern successfully set"},
   
-----heli hack----
+    ----heli hack----
 
   ["input_oder1_suntikheli"] = {id = {"💰 Koin [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Tanpa Batas]"},en = {"💰 Coins [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Unlimited]"}},
   ["no_input_suntikheli"] = {id = "⚠️ Tidak ada input.\nOperasi dibatalkan.",en = "⚠️ No input provided.\nOperation cancelled."},
@@ -901,7 +901,7 @@ end
 loadLang()
 
 -- 📁 Cache Setup
-local folder = "/sdcard/.ARH_Cache/"
+local folder = "/sdcard/.ggcache_arh/"
 local fileItem = folder .. "itemcache.txt"
 local fileAddr = folder .. "addresscache.txt"
 
@@ -1142,7 +1142,7 @@ function menue3()
     gg.toast("⚠️ " .. _("invalid_option_changefree"))
   end
 end
-
+          
 function menue4()
   local title = banner
   local menu = gg.choice({
@@ -1198,7 +1198,7 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-12"
+local expireDate50  = "2025-09-16"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
@@ -1910,7 +1910,7 @@ function booster8() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372
 function booster9() apply30DayBooster("🎲 Rainbow Ball", -0x8) end
 function booster10() apply30DayBooster("💣 Bomb", -0x70) end
 function booster11() apply30DayBooster("🚀 Rocket", 0x60) end
-
+		
 function booster12()
   local addr = getAddr()
   if not addr then return end
@@ -2172,8 +2172,8 @@ function gp6(caller)
       end
     end
   end
-end
-
+end		
+		
 -- 🧱 Fungsi Modular Apply Kupon
 function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
   local addr = getAddr()
@@ -2245,8 +2245,8 @@ function kupon7(caller) applyCoupon("Island Upgrade Coupon", "🏝️", "island_
   [-0x3C]=1934189924, [-0x38]=1684955500, [-0x34]=0,
   [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
 }) end
-
--- ✅ Alias rw3() untuk akses dari menue3
+  
+  -- ✅ Alias rw3() untuk akses dari menue3
 function rw4()
   gp7("free")
 end
@@ -2479,8 +2479,8 @@ function batang4()
     0x616C502C, 0x756E6974, 0x6C75426D,
     0x6E6F696C, 0x6E756F43, 0x00726574
   })
-end
-
+end		
+		
 -- ✅ Alias rw2() untuk akses dari menue3
 function rw2()
   tools2("free")
@@ -2492,20 +2492,20 @@ function tools2(caller)
   local options, actions = {}, {}
 
   -- Tambahkan item normal
-  table.insert(options, "⛏️ " .. _("pickaxe_macul"))
+  table.insert(options, "⛏️  " .. _("pickaxe_macul"))
   table.insert(actions, altam1)
-  table.insert(options, "🧨 " .. _("tnt_macul"))
+  table.insert(options, "🧨  " .. _("tnt_macul"))
   table.insert(actions, altam2)
-  table.insert(options, "💣 " .. _("dynamite_macul"))
+  table.insert(options, "💣  " .. _("dynamite_macul"))
   table.insert(actions, altam3)
 
   -- Bonus hanya untuk premium
   if caller ~= "free" then
-    table.insert(options, "🔁 " .. _("x2_ore_bonus_macul"))
+    table.insert(options, "🔁  " .. _("x2_ore_bonus_macul"))
     table.insert(actions, altam4)
   end
 
-  table.insert(options, "❌ [ << " .. _("go_back_macul") .. " >> ]")
+  table.insert(options, "❌  [ << " .. _("go_back_macul") .. " >> ]")
 
   local subMenu = gg.choice(options, {}, indev)
 
@@ -2607,7 +2607,7 @@ function altam4(caller) applyMiningReward(_("ore_bonus_macul"), "🔁", 3237230,
 function rw6()
   tools3("free")
 end
-  
+
 -- ✅ tools3 digunakan di gp8
 function tools3(caller)
   local indev = dev
@@ -2852,7 +2852,7 @@ function tools5()
       end
     end
   end
-end
+end		
 
 function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     local base = getAddr()
@@ -3693,7 +3693,7 @@ function initValentineDecorationSearch()
   return true
 end
 
--- 💖 Apply Valentine Decoration
+-- ?? Apply Valentine Decoration
 function valentinedecor(offset, label, emoji)
   if not initValentineDecorationSearch() then return end
   local src = baseValentineAddr + offset
@@ -4014,7 +4014,7 @@ function spesialdekor47() specialdecor(0xE8C, "Spicy House", "🌶️") end
 function spesialdekor48() specialdecor(0xEDC, "Grand Harvest Square", "🏛️") end
 function spesialdekor49() specialdecor(0xF2C, "Poseidon Statue", "🌊") end
 function spesialdekor50() specialdecor(0xF7C, "Treasure Chest", "💰") end
-            
+
 function randecor2()
   while true do
     gg.setVisible(false)
