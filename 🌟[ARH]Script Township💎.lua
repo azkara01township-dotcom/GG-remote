@@ -19,9 +19,11 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
 local teks = {
-["cache_cleared"] = { id = "🗑️ Cache dibersihkan (game di-restart)", en = "🗑️ Cache cleared (game restarted)"},
+["cache_cleared"] = {
+  id = "┏━━━━━━━━⟬🔱⟭━━━━━━━━┓\nʚ 👑ᴀᴢᴋᴀ ʀᴀᴅɪᴛʏᴀ ʜᴇʀᴍᴀᴡᴀɴ👑 ɞ\n┗━━━━━━━━━━━━━━━━━━━┛",
+  en = "┏━━━━━━━━⟬🔱⟭━━━━━━━━┓\nʚ 👑ᴀᴢᴋᴀ ʀᴀᴅɪᴛʏᴀ ʜᴇʀᴍᴀᴡᴀɴ👑 ɞ\n┗━━━━━━━━━━━━━━━━━━━┛"},
   ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
-  ["addr_refreshed"] = {id = "✅ Alamat diperbarui. Klik ikon GG untuk lanjut...",en = "✅ Address refreshed. Click GG icon to continue..." },
+  ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
   ["addr_found"] = {id = "✅ Alamat ditemukan: 0x",en = "✅ Address found: 0x"},
   ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
   ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
