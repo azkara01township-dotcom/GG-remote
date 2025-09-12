@@ -769,7 +769,7 @@ local teks = {
 
 📜 *Informasi Script – Azka Project*
 
-🔹 Nama Script : 💎[ARH] Script Township💎.lua
+🔹 Nama Script :👑ARH-Script Township👑.lua
 🔹 Versi       : 1.0.0  
 🔹 Admin       : Azka Raditya Hermawan  
 🔹 Platform    : Game Guardian (Android)  
@@ -824,7 +824,7 @@ Township Script (ARH)
 
 📜 *Script Information – Azka Project*
 
-🔹 Script Name : 💎[ARH] Script Township💎.lua
+🔹 Script Name : 👑ARH-Script Township👑.lua
 🔹 Version     : 1.0.0  
 🔹 Admin      : Azka Raditya Hermawan  
 🔹 Platform    : Game Guardian (Android)  
