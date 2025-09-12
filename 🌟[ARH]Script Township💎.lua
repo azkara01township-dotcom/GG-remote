@@ -680,7 +680,7 @@ local teks = {
   
   ["alert_star_brik"]   = {id = "🌟 Pilih level bintang di industri", en = "🌟 Select the star level in the industry"},
   ["prompt_star_brik"]  = {id = "🔢 Masukkan nomor level bintang [2–53]:", en = "🔢 Enter star level number [2–53]:"},
-  ["prompt_value_brik"] = {id = "🕑 Masukkan nilai cooldown [99;100]:", en = "🕑 Cooldown value [99;100]:"},
+  ["prompt_value_brik"] = {id = "🕑 Masukkan nilai cooldown [99;100]:", en = "🕑 Cooldown value [99;100]"},
   ["err_star_brik"]     = {id = "❌ Level bintang tidak valid (harus 2–53).", en = "❌ Invalid star level (must be 2–53)."},
   ["err_value_brik"]    = {id = "❌ Nilai cooldown tidak valid (harus 99 atau 100).", en = "❌ Invalid star value (must be 99 or 100)."},
   ["not_found_brik"]    = {id = "❌ Pola tidak ditemukan", en = "❌ Pattern not found"},
@@ -9062,7 +9062,7 @@ function other1()
   -- 🔢 Combined prompt
   local p = gg.prompt(
     {_("prompt_star_brik"), _("prompt_value_brik")},
-    {2, 100},
+    {nil, nil},
     {"number", "number"}
   )
   if not p then return end
