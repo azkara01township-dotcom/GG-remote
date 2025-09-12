@@ -19,7 +19,7 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
 local teks = {
-["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
+["cache_cleared"] = { id = "🗑️ Cache dibersihkan (game di-restart)", en = "🗑️ Cache cleared (game restarted)"},
   ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
   ["addr_refreshed"] = {id = "✅ Alamat diperbarui. Klik ikon GG untuk lanjut...",en = "✅ Address refreshed. Click GG icon to continue..." },
   ["addr_found"] = {id = "✅ Alamat ditemukan: 0x",en = "✅ Address found: 0x"},
