@@ -327,7 +327,7 @@ local teks = {
 ["silver_ingot_batangtang"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
 ["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
 ["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
-["go_back_batangtang"]        = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
+["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
 ["no_option_batangtang"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
 ["invalid_option_batangtang"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
 
@@ -420,13 +420,13 @@ local teks = {
 
 ["no_option_keuntungan"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
 ["invalid_option_keuntungan"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
-["express_plane_keuntungan"] = { id = "✈️  Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
-["instant_crop_keuntungan"]  = { id = "🌾  Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
-["fast_farm_keuntungan"]     = { id = "🐄  Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
-["instant_build_keuntungan"] = { id = "🏗️  Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
-["unlimited_barn_keuntungan"] = { id = "🏡  Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
-["train_booster_keuntungan"] = { id = "⏱️  Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
-["double_train_keuntungan"]  = { id = "🚃  Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
+["express_plane_keuntungan"] = { id = "✈️ Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
+["instant_crop_keuntungan"]  = { id = "🌾 Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
+["fast_farm_keuntungan"]     = { id = "🐄 Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
+["instant_build_keuntungan"] = { id = "🏗️ Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
+["unlimited_barn_keuntungan"] = { id = "🏡 Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
+["train_booster_keuntungan"] = { id = "⏱️ Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
+["double_train_keuntungan"]  = { id = "🚃 Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
 ["go_back_keuntungan"]       = { id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]" },
 
   ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
@@ -2505,7 +2505,7 @@ function tools2(caller)
     table.insert(actions, altam4)
   end
 
-  table.insert(options, "❌  [ << " .. _("go_back1l_macul") .. " >> ]")
+  table.insert(options, "❌  [ << " .. _("go_back_macul") .. " >> ]")
 
   local subMenu = gg.choice(options, {}, indev)
 
