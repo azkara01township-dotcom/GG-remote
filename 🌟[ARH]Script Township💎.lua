@@ -902,8 +902,8 @@ loadLang()
 
 -- 📁 Cache Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem = folder .. "itemcache"
-local fileAddr = folder .. "addresscache"
+local fileItem = folder .. "itemcache.txt"
+local fileAddr = folder .. "addresscache.txt"
 
 -- 🧹 Delete File Safely
 local function deleteFile(path)
