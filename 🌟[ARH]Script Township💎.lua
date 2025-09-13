@@ -5045,6 +5045,24 @@ function classicdekor39() classicdecor(0x6E88, "Deep sea explorers", "🤿") end
 function classicdekor40() classicdecor(0x7188, "Spring holiday", "🌸") end
 function classicdekor41() classicdecor(0x7488, "Knife throwing", "🔪") end
 
+function pad2()  applyHelipadSkin(-0x5d0, "Docking Station", "🤖") end
+function pad3()  applyHelipadSkin(-0x590, "Sleigh Parking Lot", "🎄") end
+function pad4()  applyHelipadSkin(-0x550, "Private Helipad", "🎩") end
+function pad5()  applyHelipadSkin(-0x510, "Veggie Helipad", "🥗") end
+function pad6()  applyHelipadSkin(-0x4d0, "Sultan's Palace", "🕌") end
+function pad7()  applyHelipadSkin(-0x490, "Five-Star Helipad", "🏖️") end
+function pad8()  applyHelipadSkin(-0x450, "Wanderers' Harbor", "🧳") end
+function pad9()  applyHelipadSkin(-0x410, "Fitness Pad", "🏃‍♂️") end
+function pad10() applyHelipadSkin(-0x3d0, "Royal Palace", "🏰") end
+function pad11() applyHelipadSkin(-0x390, "Detective Agency", "🕵️") end
+function pad12() applyHelipadSkin(-0x350, "Haunted Tower", "🎃") end
+function pad13() applyHelipadSkin(-0x310, "Carnival Platform (🇧🇷)", "🎭") end
+function pad14() applyHelipadSkin(-0x2d0, "Easter Helipad", "🐰") end
+function pad15() applyHelipadSkin(-0x290, "Underwater Palace", "💧") end
+function pad16() applyHelipadSkin(-0x250, "Pirate Helipad", "🏴‍☠️") end
+function pad17() applyHelipadSkin(-0x210, "Festive Helipad", "🐉") end
+function pad18() applyHelipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
+
 function kums1()
 local indev = dev
   local menu = gg.choice({
@@ -5414,7 +5432,7 @@ function hel14() applyHelicopterSkin(0x270,  "Egg Chopper", "🐰") end
 function hel15() applyHelicopterSkin(0x2B0,  "Flying Bathyscaphe", "💧") end
 function hel16() applyHelicopterSkin(0x2F0,  "Pirate Helicopter", "🏴‍☠️") end
 function hel17() applyHelicopterSkin(0x330,  "Festive Helicopter", "🐉") end
-function hel18() applyHelicopterSkin(0x370,  "Ballroom Helicopter", "💃") end
+function hel18() applyHelicopterSkin(0x370,  "Ballroom Helicopter", "💃") end      
 
 function colek2()
 local indev = dev
@@ -5592,7 +5610,7 @@ function applyAirportSkin(input, emoji, label)
   gg.setValues(vals)
   gg.toast(emoji .. " " .. label .. " skin applied!")
 end
-  
+
 -- 🛫 Airport Skins List
 function das1()  applyAirportSkin(-0x190, "🛫", "Aeriel Portal") end
 function das2()  applyAirportSkin(-0x150, "🐲", "Festival Airport") end
@@ -6092,7 +6110,7 @@ function applyTrainSkin(offset, emoji, label)
 
   gg.setValues(patched)
   gg.toast(emoji .. " " .. label .. " skin applied!")
-end       
+end
 
 -- 🚂 Train Skin Options
 function ret1()  applyTrainSkin(-0x3CC, "Flower Train", "🌺") end
@@ -6948,7 +6966,7 @@ function signRandom18() applySignRandom(0xA98, "Big Apple Town Sign",           
 function signRandom19() applySignRandom(0xAE8, "Fairytale Town Sign",            "🧚") end
 function signRandom20() applySignRandom(0xB38, "Rock Town Sign",                 "🎸") end
 function signRandom21() applySignRandom(0xB88, "Anniversary Town Sign",          "🎉") end
-
+    
 function kums3()
 while true do
   local options = {}
@@ -7063,8 +7081,8 @@ for i, s in ipairs(stickers) do
   _G["tikel" .. i] = function()
     applySticker(s[1], s[2], s[3], i)
   end
-end 
-   
+end
+
 function kums4()
   gg.setVisible(false)
   gg.clearResults()
@@ -7319,7 +7337,7 @@ function avatarYear8()  applyAvatarAnniversary({1635148044, 3748658},  "🌟", "
 function avatarYear9()  applyAvatarAnniversary({1635148044, 3225650},  "🌟", "Year 9 Avatar") end
 function avatarYear10() applyAvatarAnniversary({1635148044, 3354931},  "🌟", "Year 10 Avatar") end
 function avatarYear11() applyAvatarAnniversary({1635148044, 3290675},  "🌟", "Year 11 Avatar (1)") end
-function avatarYear12() applyAvatarAnniversary({1635148044, 3225139},  "🌟", "Year 11 Avatar (2)") end
+function avatarYear12() applyAvatarAnniversary({1635148044, 3225139},  "🌟", "Year 11 Avatar (2)") end 
 
 function avatar2()
   while true do
@@ -7484,8 +7502,8 @@ function comAvatar76()  applyCompleteAvatar({0x6176610C, 0x00393731}, "🧃", "C
 function comAvatar77()  applyCompleteAvatar({0x6176610C, 0x00363831}, "📲", "Complete Avatar 77") end
 function comAvatar78()  applyCompleteAvatar({0x6176610A, 0x00003538}, "🍇", "Complete Avatar 78") end
 function comAvatar79()  applyCompleteAvatar({0x6176610A, 0x00003337}, "🔮", "Complete Avatar 79") end
-function comAvatar80()  applyCompleteAvatar({0x6176610C, 0x00323131}, "🐳", "Complete Avatar 80") end              
-        
+function comAvatar80()  applyCompleteAvatar({0x6176610C, 0x00323131}, "🐳", "Complete Avatar 80") end
+
 function comAvatar81()  applyCompleteAvatar({0x6176610C, 0x00303531}, "🍒", "Complete Avatar 81") end
 function comAvatar82()  applyCompleteAvatar({0x6176610C, 0x00313731}, "🪵", "Complete Avatar 82") end
 function comAvatar83()  applyCompleteAvatar({0x6176610C, 0x00343631}, "🍬", "Complete Avatar 83") end
