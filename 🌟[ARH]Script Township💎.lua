@@ -7757,7 +7757,7 @@ local indev = dev
   local menu = gg.choice({
  "🃏 • Card Collection Pack Badge",
 "🎖️ • Collection Badge",
-    "❌ [ << Go Back >> ]"
+    "❌ • [ << Go Back >> ]"
   }, nil,indev)
 
   if menu == nil then
