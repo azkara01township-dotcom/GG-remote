@@ -1078,7 +1078,7 @@ function freekey()
     local idxExit = #menuList + 1
     table.insert(menuList, _( "exit_script_freemenu" ))
 
-    local menu = gg.choice(menuList, {}, _( "free_menu_freemenu" ))
+    local menu = gg.choice(menuList, nil, _( "free_menu_freemenu" ))
     if not menu then gg.toast(_( "menu_closed_freemenu" )) break end
 
     if menu == 1 then menue1()
