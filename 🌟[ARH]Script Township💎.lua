@@ -67,55 +67,55 @@ local teks = {
   
   ----Change Reward Free----
   
-["smelt_ingots_changefree"]       = {id = "🪙 Batangan Logam", en = "🪙 Metal Ingots"},
-["mining_tools1_changefree"]      = {id = "⛏️ Alat Tambang", en = "⛏️ Mining Tools"},
-["redeem_coupons_changefree"]     = {id = "🎟️ Tukar Kupon", en = "🎟️ Redeem Coupons"},
-["add_gems_changefree"]           = {id = "💎 Tambah Permata", en = "💎 Add Gems"},
-["match3_boosters_changefree"]    = {id = "🧩 Booster Match-3", en = "🧩 Match-3 Boosters"},
-["community_materials_changefree"] = {id = "🏗️ Material Komunitas", en = "🏗️ Community Materials"},
-["claim_perks_changefree"]        = {id = "🎉 Klaim Bonus", en = "🎉 Claim Bonuses"},
-  ["go_back_changefree"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
+["smelt_ingots_changefree"]       = {id = "🪙 • Batangan Logam", en = "🪙 • Metal Ingots"},
+["mining_tools1_changefree"]      = {id = "⛏️ • Alat Tambang", en = "⛏️ • Mining Tools"},
+["redeem_coupons_changefree"]     = {id = "🎟️ • Tukar Kupon", en = "🎟️ • Redeem Coupons"},
+["add_gems_changefree"]           = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
+["match3_boosters_changefree"]    = {id = "🧩 • Booster Match-3", en = "🧩 • Match-3 Boosters"},
+["community_materials_changefree"] = {id = "🏗️ • Material Komunitas", en = "🏗️ • Community Materials"},
+["claim_perks_changefree"]        = {id = "🎉 • Klaim Bonus", en = "🎉 • Claim Bonuses"},
+  ["go_back_changefree"] = {id = "❌ • [ << Kembali >> ]",en = "❌ • [ << Go Back >> ]"},
   ["menu_closed_changefree"] = {id = "Menu ditutup.",en = "Menu closed."},
   ["invalid_option_changefree"] = {id = "Opsi tidak valid.",en = "Invalid option."},
   
   ----Aneka Ragam Hack----
   
-  ["menu4_opt1_hackfree"] = {id = "🚁 T-Cash dari Helikopter", en = "🚁 T-Cash from Helicopter"},
-["menu4_opt2_hackfree"] = {id = "🌾 EXP dari Panen Gandum", en = "🌾 EXP from Wheat Harvest"},
-["menu4_opt3_hackfree"] = {id = "🎁 Kotak Pabrik Gratis", en = "🎁 Free Factory Boxes"},
-["menu4_opt4_hackfree"] = {id = "🚧 Perluas Lahan (Tanpa Pop)", en = "🚧 Expand Land (No Pop)"},
-["menu4_opt5_hackfree"] = {id = "🏭 Peleburan Instan di Pabrik", en = "🏭 Instant Smelting"},
-["menu4_opt6_hackfree"] = {id = "🐮 Produksi Peternakan Cepat", en = "🐮 Fast Animal Production"},
-["menu4_opt7_hackfree"] = {id = "⚡ Isi Ulang Energi Petualangan", en = "⚡ Refill Adventure Energy"},
-  ["menu_back_hackfree"] = {id = "❌ [ << Kembali >> ]",en = "❌ [ << Go Back >> ]"},
+  ["menu4_opt1_hackfree"] = {id = "🚁 • T-Cash dari Helikopter", en = "🚁 • T-Cash from Helicopter"},
+["menu4_opt2_hackfree"] = {id = "🌾 • EXP dari Panen Gandum", en = "🌾 • EXP from Wheat Harvest"},
+["menu4_opt3_hackfree"] = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Boxes"},
+["menu4_opt4_hackfree"] = {id = "🚧 • Perluas Lahan (Tanpa Pop)", en = "🚧 • Expand Land (No Pop)"},
+["menu4_opt5_hackfree"] = {id = "🏭 • Peleburan Instan di Pabrik", en = "🏭 • Instant Smelting"},
+["menu4_opt6_hackfree"] = {id = "🐮 • Produksi Peternakan Cepat", en = "🐮 • Fast Animal Production"},
+["menu4_opt7_hackfree"] = {id = "⚡ • Isi Ulang Energi Petualangan", en = "⚡ • Refill Adventure Energy"},
+  ["menu_back_hackfree"] = {id = "❌ • [ << Kembali >> ]",en = "❌ • [ << Go Back >> ]"},
   ["menu_none_selected_hackfree"] = {id = "Tidak ada opsi yang dipilih.",en = "No option selected."},
   ["menu_invalid_hackfree"] = {id = "Opsi tidak valid dipilih.",en = "Invalid option selected."},
   
   ----Premium Menu----
   
 ["premium_menu_premenu"]     = {id = "📜 Menu Skrip Premium", en = "📜 Premium Script Menu"},
-["special_hack_premenu"]     = {id = "💠 Menu Spesial", en = "💠 Special Menu"},
-["unlock_season_premenu"]    = {id = "🌟 Buka Season Pass", en = "🌟 Unlock Season Pass"},
-["limited_events_premenu"]   = {id = "🎯 Event Terbatas", en = "🎯 Limited-Time Events"},
-["skip_time_premenu"]        = {id = "⏩ Lewati Waktu", en = "⏩ Skip Time"},
-["farming_products_premenu"] = {id = "🚜 Produk Pertanian", en = "🚜 Farming Products"},
-["misc_mods_premenu"]        = {id = "🛠️ Modifikasi Lainnya", en = "🛠️ Other Mods"},
-["script_info_premenu"]      = {id = "ℹ️ Informasi Skrip", en = "ℹ️ Script Information"},
-["exit_script_premenu"] = {id="❌ [ << Keluar Skrip >> ]", en="❌ [ << Exit Script >> ]"},
+["special_hack_premenu"]     = {id = "💠 • Menu Spesial", en = "💠 • Special Menu"},
+["unlock_season_premenu"]    = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["limited_events_premenu"]   = {id = "🎯 • Event Terbatas", en = "🎯 • Limited-Time Events"},
+["skip_time_premenu"]        = {id = "⏩ • Lewati Waktu", en = "⏩ • Skip Time"},
+["farming_products_premenu"] = {id = "🚜 • Produk Pertanian", en = "🚜 • Farming Products"},
+["misc_mods_premenu"]        = {id = "🛠️ • Modifikasi Lainnya", en = "🛠️ • Other Mods"},
+["script_info_premenu"]      = {id = "ℹ️ • Informasi Skrip", en = "ℹ️ • Script Information"},
+["exit_script_premenu"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
 ["invalid_selection_premenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
   
   ----Menu Hack RW Premium----
   
-  ["unlock_pass_rwpremium"]     = {id = "🌟 Buka Season Pass", en = "🌟 Unlock Season Pass"},
-["freeze_rewards_rwpremium"]  = {id = "❄️ Bekukan Hadiah", en = "❄️ Freeze Rewards"},
-["skins_decor_rwpremium"]     = {id = "🎭 Skin, Avatar & Dekorasi", en = "🎭 Skins, Avatars & Decorations"},
-["add_cash_rwpremium"]        = {id = "💵 Tambah T-Cash", en = "💵 Add T-Cash"},
-["boosters_rwpremium"]        = {id = "🚀 Booster & Power-Up", en = "🚀 Boosters & Power-Ups"},
-["redeem_coupon_rwpremium"]   = {id = "🎟️ Tukar Kupon", en = "🎟️ Redeem Coupons"},
-["add_gems_rwpremium"]        = {id = "💎 Tambah Permata", en = "💎 Add Gems"},
-["special_product_rwpremium"] = {id = "🛍️ Produk Spesial", en = "🛍️ Special Products"},
-["claim_bonus_rwpremium"]     = {id = "🎉 Klaim Bonus & Keuntungan", en = "🎉 Claim Perks & Bonuses"},
-  ["go_back_rwpremium"] = {id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]"},
+  ["unlock_pass_rwpremium"]     = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["freeze_rewards_rwpremium"]  = {id = "❄️ • Bekukan Hadiah", en = "❄️ • Freeze Rewards"},
+["skins_decor_rwpremium"]     = {id = "🎭 • Skin, Avatar & Dekorasi", en = "🎭 • Skins, Avatars & Decorations"},
+["add_cash_rwpremium"]        = {id = "💵 • Tambah T-Cash", en = "💵 • Add T-Cash"},
+["boosters_rwpremium"]        = {id = "🚀 • Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
+["redeem_coupon_rwpremium"]   = {id = "🎟️ • Tukar Kupon", en = "🎟️ • Redeem Coupons"},
+["add_gems_rwpremium"]        = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
+["special_product_rwpremium"] = {id = "🛍️ • Produk Spesial", en = "🛍️ • Special Products"},
+["claim_bonus_rwpremium"]     = {id = "🎉 • Klaim Bonus & Keuntungan", en = "🎉 • Claim Perks & Bonuses"},
+  ["go_back_rwpremium"] = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
   ["menu_closed_rwpremium"] = {id = "❌ Menu ditutup.", en = "❌ Menu closed."},
   ["invalid_option_rwpremium"] = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option selected."},
   
@@ -420,14 +420,14 @@ local teks = {
 
 ["no_option_keuntungan"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
 ["invalid_option_keuntungan"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
-["express_plane_keuntungan"] = { id = "✈️  Pengiriman Pesawat Ekspres", en = "✈️  Express Plane Delivery" },
-["instant_crop_keuntungan"]  = { id = "🌾  Panen Tanaman Instan", en = "🌾  Instant Crop Harvest" },
-["fast_farm_keuntungan"]     = { id = "🐄  Produksi Pertanian Cepat", en = "🐄  Fast Farm Production" },
-["instant_build_keuntungan"] = { id = "🏗️  Konstruksi Bangunan Instan", en = "🏗️  Instant Building Construction" },
-["unlimited_barn_keuntungan"] = { id = "🏡  Kapasitas Gudang Tak Terbatas", en = "🏡  Unlimited Barn Capacity" },
-["train_booster_keuntungan"] = { id = "⏱️  Booster Waktu Kereta", en = "⏱️  Train Time Booster" },
-["double_train_keuntungan"]  = { id = "🚃  Gerbong Kereta Ganda", en = "🚃  Double Train Carriages" },
-["go_back_keuntungan"]       = { id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]" },
+["express_plane_keuntungan"] = { id = "✈️ • Pengiriman Pesawat Ekspres", en = "✈️ • Express Plane Delivery" },
+["instant_crop_keuntungan"]  = { id = "🌾 • Panen Tanaman Instan", en = "🌾 • Instant Crop Harvest" },
+["fast_farm_keuntungan"]     = { id = "🐄 • Produksi Pertanian Cepat", en = "🐄 • Fast Farm Production" },
+["instant_build_keuntungan"] = { id = "🏗️ • Konstruksi Bangunan Instan", en = "🏗️ • Instant Building Construction" },
+["unlimited_barn_keuntungan"] = { id = "🏡 • Kapasitas Gudang Tak Terbatas", en = "🏡 • Unlimited Barn Capacity" },
+["train_booster_keuntungan"] = { id = "⏱️ • Booster Waktu Kereta", en = "⏱️ • Train Time Booster" },
+["double_train_keuntungan"]  = { id = "🚃 • Gerbong Kereta Ganda", en = "🚃 • Double Train Carriages" },
+["go_back_keuntungan"]       = { id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]" },
 
   ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
   ["perk_instant_crop_keuntungan"] = {id = "Panen Tanaman Instan", en = "Instant Crop Harvest"},
@@ -442,9 +442,9 @@ local teks = {
   
   ----spesial menu----
     
-    ["option1_spesial"] = {id = "🏁 Selesaikan Tugas Secara Otomatis", en = "🏁 Auto-Complete Tasks"},
-["option2_spesial"] = {id = "👍 Like Kota Tanpa Batas", en = "👍 Unlimited City Likes"},
-    ["back_spesial"] = {id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]"},
+    ["option1_spesial"] = {id = "🏁 • Selesaikan Tugas Secara Otomatis", en = "🏁 • Auto-Complete Tasks"},
+["option2_spesial"] = {id = "👍 • Like Kota Tanpa Batas", en = "👍 • Unlimited City Likes"},
+    ["back_spesial"] = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
     ["noSelection_spesial"] = {id = "❌ Tidak ada opsi dipilih", en = "❌ No options selected"},
     ["invalid_spesial"] = {id = "⚠️ Opsi tidak valid", en = "⚠️ Invalid option selected."},
     
@@ -477,11 +477,11 @@ local teks = {
   
   ----menu event----
   
-  ["menu2_add_points_menuipen"]      = {id="🏆 Tambah Poin Piala Ernie", en="🏆 Add Ernie Cup Points"},
-["menu2_refill_energy_menuipen"]   = {id="⚡ Isi Ulang Energi Petualangan", en="⚡ Refill Adventure Energy"},
-["menu2_free_ore_menuipen"]        = {id="👑 Penguasa Tambang (Poin Gratis)", en="👑 Ruler of the Mine (Free Points)"},
-["menu2_freeze_treasure_menuipen"] = {id="🏴 Hapus Kartu Hitam Bajak Laut", en="🏴 Remove Pirate Black Card"},
-  ["menu_back_menuipen"]             = {id="❌ [ << Kembali >> ]", en="❌ [ << Go Back >> ]"},
+  ["menu2_add_points_menuipen"]      = {id="🏆 • Tambah Poin Piala Ernie", en="🏆 • Add Ernie Cup Points"},
+["menu2_refill_energy_menuipen"]   = {id="⚡ • Isi Ulang Energi Petualangan", en="⚡ • Refill Adventure Energy"},
+["menu2_free_ore_menuipen"]        = {id="👑 • Penguasa Tambang (Poin Gratis)", en="👑 • Ruler of the Mine (Free Points)"},
+["menu2_freeze_treasure_menuipen"] = {id="🏴 • Hapus Kartu Hitam Bajak Laut", en="🏴 • Remove Pirate Black Card"},
+  ["menu_back_menuipen"]             = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
   ["toast_no_option_menuipen"]       = {id="❌ Tidak ada opsi dipilih", en="❌ No options selected"},
   ["toast_invalid_option_menuipen"]  = {id="⚠️ Opsi tidak valid.", en="⚠️ Invalid option selected."},
   
@@ -522,22 +522,22 @@ local teks = {
   
 ----skip time----
   
-  ["faster_arrivals_skiptime"]  = {id="⚙️ Kedatangan Lebih Cepat", en="⚙️ Faster Arrivals"},
-["no_feed_timer_skiptime"]    = {id="🥣 Pabrik Pakan Tanpa Waktu Tunggu", en="🥣 No Feed Timer"},
-["no_farm_timer_skiptime"]    = {id="⏳ Hewan Ternak Tanpa Waktu Tunggu", en="⏳ No Farm Timer"},
-["no_dealer_rest_skiptime"]   = {id="🛒 Dealer Tanpa Istirahat", en="🛒 No Dealer Rest"},
-["instant_foundry_skiptime"]  = {id="🏭 Peleburan Instan", en="🏭 Instant Foundry"},
-["no_request_delay_skiptime"] = {id="⏱️ Permintaan Tanpa Penundaan", en="⏱️ No Request Delay"},
-    ["go_back_skiptime"]          = {id="❌ [ << Kembali >> ]", en="❌ [ << Go Back >> ]"},
+  ["faster_arrivals_skiptime"]  = {id="⚙️ • Kedatangan Lebih Cepat", en="⚙️ • Faster Arrivals"},
+["no_feed_timer_skiptime"]    = {id="🥣 • Pabrik Pakan Tanpa Waktu Tunggu", en="🥣 • No Feed Timer"},
+["no_farm_timer_skiptime"]    = {id="⏳ • Hewan Ternak Tanpa Waktu Tunggu", en="⏳ • No Farm Timer"},
+["no_dealer_rest_skiptime"]   = {id="🛒 • Dealer Tanpa Istirahat", en="🛒 • No Dealer Rest"},
+["instant_foundry_skiptime"]  = {id="🏭 • Peleburan Instan", en="🏭 • Instant Foundry"},
+["no_request_delay_skiptime"] = {id="⏱️ • Permintaan Tanpa Penundaan", en="⏱️ • No Request Delay"},
+    ["go_back_skiptime"]          = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
     ["no_option_selected_skiptime"] = {id="❌ Tidak ada opsi dipilih", en="❌ No options selected"},
     ["invalid_option_skiptime"]     = {id="⚠️ Opsi tidak valid", en="⚠️ Invalid option selected"},
     
       ----skip time arrival----
     
-  ["shipBoost_aripal"]     = {id="🚢 Percepatan Kedatangan Kapal", en="🚢 Ship Arrival Boost"},
-["cargoAuto1_aripal"]    = {id="✈️ Muat Pesawat Otomatis", en="✈️ Cargo Plane Auto-Load"},
-["heliAuto_aripal"]      = {id="🚁 Helikopter Siap Otomatis", en="🚁 Helicopter Auto-Ready"},
-["trainBoost11_aripal"]  = {id="🚂 Percepatan Kedatangan Kereta", en="🚂 Train Arrival Boost"},
+  ["shipBoost_aripal"]     = {id="🚢 • Percepatan Kedatangan Kapal", en="🚢 • Ship Arrival Boost"},
+["cargoAuto1_aripal"]    = {id="✈️ • Muat Pesawat Otomatis", en="✈️ • Cargo Plane Auto-Load"},
+["heliAuto_aripal"]      = {id="🚁 • Helikopter Siap Otomatis", en="🚁 • Helicopter Auto-Ready"},
+["trainBoost11_aripal"]  = {id="🚂 • Percepatan Kedatangan Kereta", en="🚂 • Train Arrival Boost"},
   ["goBack_aripal"]           = {id="❌ [ << Kembali >> ]", en="❌ [ << Go Back >> ]"},
   ["noSelect_aripal"]         = {id="❌ Tidak ada pilihan dipilih", en="❌ No options selected"},
   ["invalidOption_aripal"]    = {id="⚠️ Pilihan tidak valid", en="⚠️ Invalid option selected"},
@@ -600,12 +600,12 @@ local teks = {
 
 ----menu farm----
 
-["wheat_exp_menupenambah"]     = {id = "🌾 Boost EXP Gandum", en = "🌾 Wheat EXP Boost"},
-["animal_count_menupenambah"]  = {id = "🐾 Edit Jumlah Hewan", en = "🐾 Edit Animal Count"},
-["extra_ship_menupenambah"]    = {id = "📦 Tambahan Barang Kapal", en = "📦 Extra Ship Items"},
-["more_requests_menupenambah"] = {id = "📬 Permintaan Lebih Banyak", en = "📬 More Requests"},
-["market_unlim_menupenambah"]  = {id = "🛒 Pasar Tanpa Batas", en = "🛒 Unlimited Market"},
-["back_menupenambah"]          = {id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]"},
+["wheat_exp_menupenambah"]     = {id = "🌾 • Boost EXP Gandum", en = "🌾 • Wheat EXP Boost"},
+["animal_count_menupenambah"]  = {id = "🐾 • Edit Jumlah Hewan", en = "🐾 • Edit Animal Count"},
+["extra_ship_menupenambah"]    = {id = "📦 • Tambahan Barang Kapal", en = "📦 • Extra Ship Items"},
+["more_requests_menupenambah"] = {id = "📬 • Permintaan Lebih Banyak", en = "📬 • More Requests"},
+["market_unlim_menupenambah"]  = {id = "🛒 • Pasar Tanpa Batas", en = "🛒 • Unlimited Market"},
+["back_menupenambah"]          = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
 ["menu_closed_menupenambah"]   = {id = "⚠️  Menu ditutup.", en = "⚠️  Menu closed."},
 ["invalid_sel_menupenambah"]   = {id = "⚠️  Pilihan tidak valid!", en = "⚠️  Invalid selection!"},
 
@@ -667,14 +667,14 @@ local teks = {
 
 ----menu ragam----
 
-  ["industry_boost_gamragam"]   = {id = "🏭 Pengurangan Waktu Industri", en = "🏭 Industry Time Reduction"},
-["heli_tcash_gamragam"]       = {id = "🚁 Hadiah T-Cash Helikopter", en = "🚁 Helicopter T-Cash Reward"},
-["free_boxes_gamragam"]       = {id = "🎁 Kotak Pabrik Gratis", en = "🎁 Free Factory Box"},
-["build_no_tools_gamragam"]   = {id = "👷‍♀️ Komunitas Tanpa Alat", en = "👷‍♀️ Community Without Tools"},
-["freeze_expansion_gamragam"] = {id = "🚧 Bekukan Ekspansi Kota", en = "🚧 Freeze City Expansion"},
-["barn_expand_gamragam"]      = {id = "🏡 Perluas Gudang Tanpa Alat", en = "🏡 Expand Barn Without Tools"},
-["dealer_rent_gamragam"]      = {id = "📦 Sewa Dealer 30 Hari", en = "📦 30-Day Dealer Rental"},
-  ["back_gamragam"]             = {id = "❌ [ << Kembali >> ]", en = "❌ [ << Go Back >> ]"},
+  ["industry_boost_gamragam"]   = {id = "🏭 • Pengurangan Waktu Industri", en = "🏭 • Industry Time Reduction"},
+["heli_tcash_gamragam"]       = {id = "🚁 • Hadiah T-Cash Helikopter", en = "🚁 • Helicopter T-Cash Reward"},
+["free_boxes_gamragam"]       = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Box"},
+["build_no_tools_gamragam"]   = {id = "👷‍♀️ • Komunitas Tanpa Alat", en = "👷‍♀️ • Community Without Tools"},
+["freeze_expansion_gamragam"] = {id = "🚧 • Bekukan Ekspansi Kota", en = "🚧 • Freeze City Expansion"},
+["barn_expand_gamragam"]      = {id = "🏡 • Perluas Gudang Tanpa Alat", en = "🏡 • Expand Barn Without Tools"},
+["dealer_rent_gamragam"]      = {id = "📦 • Sewa Dealer 30 Hari", en = "📦 • 30-Day Dealer Rental"},
+  ["back_gamragam"]             = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
   ["no_option_gamragam"]        = {id = "❌ Tidak ada opsi dipilih", en = "❌ No option selected"},
   ["invalid_option_gamragam"]   = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option"},
   
@@ -731,16 +731,16 @@ local teks = {
   ["invalid"]   = {id = "❌ Username atau Password Salah!", en = "❌ Invalid Username or Password!"},
   ["welcome"]   = {id = "✅ Selamat datang, Admin ", en = "✅ Welcome, Admin "},
   ["adminMenuTitle"] = {id = "⚙️ Admin ARH Reset Logs", en = "⚙️ ARH Admin Reset Logs"},
-  ["resetLogs"] = {id = "🔁 Reset Log Pengguna", en = "🔁 Reset User Logs"},
-  ["exitMenu"]  = {id = "❌ [ << Keluar Skrip >> ]", en="❌ [ << Exit Script >> ]"},
+  ["resetLogs"] = {id = "🔁 • Reset Log Pengguna", en = "🔁 • Reset User Logs"},
+  ["exitMenu"]  = {id = "❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
   ["logsReset"] = {id = "🔁 Log berhasil direset.\n\nScript akan ditutup. Silakan masukkan username baru (mudah diingat), kemudian hubungi admin dan berikan username Anda. Terima kasih.", en = "🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you."},
   ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
 
-["about_script"] = {id="📖 Tentang Skrip", en="📖 About Script"},
-["contact_dev"]  = {id="📞 Kontak Admin", en="📞 Contact Admin"},
-["reset_default"] = {id="♻️ Setelan Awal", en="♻️ Reset to Default"},
-["change_lang"]  = {id="🌐 Ganti Bahasa", en="🌐 Change Language"},
-  ["go_back"] = {id="❌ [ << Kembali >> ]", en="❌ [ << Go Back >> ]"},
+["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
+["contact_dev"]  = {id="📞 • Kontak Admin", en="📞 • Contact Admin"},
+["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
+["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
+  ["go_back"] = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
 
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
   ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
@@ -1128,7 +1128,7 @@ function menue3()
     _("community_materials_changefree"), -- 🏗️ Community Materials
     _("claim_perks_changefree"),         -- 🎉 Claim Perks
     _("go_back_changefree")              -- ❌ [ << Go Back >> ]
-  }, {}, title)
+  }, nil, title)
 
   if not menu then
     gg.toast("❌ " .. _("menu_closed_changefree"))
@@ -1154,7 +1154,7 @@ function menue4()
     _( "menu4_opt6_hackfree" ), -- 🐮 Produksi Peternakan Cepat
     _( "menu4_opt7_hackfree" ), -- ⚡ Isi Ulang Energi Adventure
     _( "menu_back_hackfree" )   -- ❌ Kembali
-  }, {}, title)
+  }, nil, title)
 
   if not menu then
     return gg.toast("❌ " .. _("menu_none_selected_hackfree"))
@@ -1367,7 +1367,7 @@ _( "special_hack_premenu" ),  -- 🔹 Menu baru di atas limited_events
   _( "misc_mods_premenu" ),
   _( "script_info_premenu" ),
   _( "exit_script_premenu" )
-}, {}, _( "premium_menu_premenu" ))
+}, nil, _( "premium_menu_premenu" ))
 
 if menu == nil then break end
 if menu == 2 then
@@ -1416,7 +1416,7 @@ function menu1()
 
   table.insert(menuList, _("go_back_rwpremium")) -- 10 (atau 3 jika rewardVisible = false)
 
-  local menu = gg.choice(menuList, {}, title)
+  local menu = gg.choice(menuList, nil, title)
 
   if not menu then
     gg.toast(_("menu_closed_rwpremium"))
@@ -1607,13 +1607,13 @@ end
 function gp4() -- 💰 Currency Menu
   local indev = dev
   local menu = gg.choice({
-    "💵 " .. _("add_tcash_tambahduit"),
-    "💰 " .. _("add_coins_tambahduit"),
-    "🪙 " .. _("add_regatta_tambahduit"),
-    "🍀 " .. _("add_clover_tambahduit"),
-    "🗽 " .. _("add_statuecoins_tambahduit"),
-    "❌ [ << " .. _("go_back_tambahduit") .. " >> ]"
-  }, {}, indev)
+    "💵 • " .. _("add_tcash_tambahduit"),
+    "💰 • " .. _("add_coins_tambahduit"),
+    "🪙 • " .. _("add_regatta_tambahduit"),
+    "🍀 • " .. _("add_clover_tambahduit"),
+    "🗽 • " .. _("add_statuecoins_tambahduit"),
+    "❌ • [ << " .. _("go_back_tambahduit") .. " >> ]"
+  }, nil, indev)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_selected_tambahduit"))
@@ -1703,10 +1703,10 @@ function cash5() applyCurrencyReward("statue_tambahduit", {
 function gp5()
   local title = banner
   local menu = gg.choice({
-    "🧩 " .. _("match3_boosters_menuboost"),
-    "🧪 " .. _("lab_boosters_menuboost"),
-    "❌ " .. _("go_back_menuboost")
-  }, {}, title)
+    "🧩 • " .. _("match3_boosters_menuboost"),
+    "🧪 • " .. _("lab_boosters_menuboost"),
+    "❌ • " .. _("go_back_menuboost")
+  }, nil, title)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_selected_menuboost"))
@@ -1737,27 +1737,27 @@ function boost1(caller)
   local menu, actions = {}, {}
 
   -- Booster Umum (Free & Premium)
-  table.insert(menu, "🎲  " .. _("rainbow_ball_eventboost"))     table.insert(actions, booster1)
-  table.insert(menu, "💣  " .. _("bomb_eventboost"))             table.insert(actions, booster2)
-  table.insert(menu, "🚀  " .. _("rocket_eventboost"))           table.insert(actions, booster3)
+  table.insert(menu, "🎲 • " .. _("rainbow_ball_eventboost"))     table.insert(actions, booster1)
+  table.insert(menu, "💣 • " .. _("bomb_eventboost"))             table.insert(actions, booster2)
+  table.insert(menu, "🚀 • " .. _("rocket_eventboost"))           table.insert(actions, booster3)
 
   -- Booster Tambahan (Premium Only)
   if caller ~= "free" then
-    table.insert(menu, "🔨  " .. _("jackhammer_eventboost"))             table.insert(actions, booster4)
-    table.insert(menu, "🚿  " .. _("hydrant_eventboost"))                table.insert(actions, booster5)
-    table.insert(menu, "🧤  " .. _("gloves_eventboost"))                 table.insert(actions, booster6)
-    table.insert(menu, "❤️  " .. _("infinite_lives_30_eventboost"))     table.insert(actions, booster7)
-    table.insert(menu, "✨  " .. _("double_points_30_eventboost"))       table.insert(actions, booster8)
-    table.insert(menu, "🎲  " .. _("rainbow_ball_30_eventboost"))        table.insert(actions, booster9)
-    table.insert(menu, "💣  " .. _("bomb_30_eventboost"))                table.insert(actions, booster10)
-    table.insert(menu, "🚀  " .. _("rocket_30_eventboost"))              table.insert(actions, booster11)
-    table.insert(menu, "⚡  " .. _("energy_adventure_eventboost"))       table.insert(actions, booster12)
-    table.insert(menu, "💥  " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
+    table.insert(menu, "🔨 • " .. _("jackhammer_eventboost"))             table.insert(actions, booster4)
+    table.insert(menu, "🚿 • " .. _("hydrant_eventboost"))                table.insert(actions, booster5)
+    table.insert(menu, "🧤 • " .. _("gloves_eventboost"))                 table.insert(actions, booster6)
+    table.insert(menu, "❤️ • " .. _("infinite_lives_30_eventboost"))     table.insert(actions, booster7)
+    table.insert(menu, "✨ • " .. _("double_points_30_eventboost"))       table.insert(actions, booster8)
+    table.insert(menu, "🎲 • " .. _("rainbow_ball_30_eventboost"))        table.insert(actions, booster9)
+    table.insert(menu, "💣 • " .. _("bomb_30_eventboost"))                table.insert(actions, booster10)
+    table.insert(menu, "🚀 • " .. _("rocket_30_eventboost"))              table.insert(actions, booster11)
+    table.insert(menu, "⚡ • " .. _("energy_adventure_eventboost"))       table.insert(actions, booster12)
+    table.insert(menu, "💥 • " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
   end
 
-  table.insert(menu, "❌  [ << " .. _("go_back_eventboost") .. " >> ]")
+  table.insert(menu, "❌ • [ << " .. _("go_back_eventboost") .. " >> ]")
 
-  local choice = gg.choice(menu, {}, indev)
+  local choice = gg.choice(menu, nil, indev)
   if not choice then
     gg.toast("❌ " .. _("no_option_selected_eventboost"))
     return
@@ -1956,26 +1956,26 @@ end
 function boost2()
   local indev = dev
   local menu = gg.choice({
-    "✈️ " .. _("profitable_flight_labboost"),
-    "🌾 " .. _("rich_fields_labboost"),
-    "📈 " .. _("record_demand_labboost"),
-    "🚚 " .. _("busy_trade_labboost"),
-    "🧭 " .. _("smart_navigation_labboost"),
-    "🤝 " .. _("active_cooperation_labboost"),
-    "🔥 " .. _("efficient_smelting_labboost"),
-    "🛒 " .. _("vibrant_market_labboost"),
-    "⚙️ " .. _("high_speed_production_labboost"),
-    "🌽 " .. _("super_harvest_labboost"),
-    "🌾 " .. _("advanced_farming_labboost"),
-    "💰 " .. _("generous_customers_labboost"),
-    "💡 " .. _("see_the_light_labboost"),
-    "🚀 " .. _("shortcut_labboost"),
-    "🙌 " .. _("extra_hands_labboost"),
-    "🏡 " .. _("spacious_barn_labboost"),
-    "📦 " .. _("large_request_labboost"),
-    "⛵ " .. _("favorable_voyage_labboost"),
-    "❌ " .. _("go_back_labboost")
-  }, {}, indev)
+    "✈️ • " .. _("profitable_flight_labboost"),
+    "🌾 • " .. _("rich_fields_labboost"),
+    "📈 • " .. _("record_demand_labboost"),
+    "🚚 • " .. _("busy_trade_labboost"),
+    "🧭 • " .. _("smart_navigation_labboost"),
+    "🤝 • " .. _("active_cooperation_labboost"),
+    "🔥 • " .. _("efficient_smelting_labboost"),
+    "🛒 • " .. _("vibrant_market_labboost"),
+    "⚙️ • " .. _("high_speed_production_labboost"),
+    "🌽 • " .. _("super_harvest_labboost"),
+    "🌾 • " .. _("advanced_farming_labboost"),
+    "💰 • " .. _("generous_customers_labboost"),
+    "💡 • " .. _("see_the_light_labboost"),
+    "🚀 • " .. _("shortcut_labboost"),
+    "🙌 • " .. _("extra_hands_labboost"),
+    "🏡 • " .. _("spacious_barn_labboost"),
+    "📦 • " .. _("large_request_labboost"),
+    "⛵ • " .. _("favorable_voyage_labboost"),
+    "❌ • " .. _("go_back_labboost")
+  }, nil, indev)
 
   if not menu then
     gg.toast("❌ " .. _("no_option_selected_labboost"))
@@ -2128,15 +2128,15 @@ end
 function gp6(caller)
   local indev = dev
   local menu = gg.choice({
-    "🚚 " .. _("coupon_loader_kuponpon"),
-    "🧑‍💼 " .. _("coupon_dealer_kuponpon"),
-    "🏡 " .. _("coupon_barn_kuponpon"),
-    "🌆 " .. _("coupon_city_kuponpon"),
-    "🏭 " .. _("coupon_factory_kuponpon"),
-    "🚆 " .. _("coupon_train_kuponpon"),
-    "🏝️ " .. _("coupon_island_kuponpon"),
-    "❌ " .. _("back_kuponpon")
-  }, {}, indev)
+    "🚚 • " .. _("coupon_loader_kuponpon"),
+    "🧑‍💼 • " .. _("coupon_dealer_kuponpon"),
+    "🏡 • " .. _("coupon_barn_kuponpon"),
+    "🌆 • " .. _("coupon_city_kuponpon"),
+    "🏭 • " .. _("coupon_factory_kuponpon"),
+    "🚆 • " .. _("coupon_train_kuponpon"),
+    "🏝️ • " .. _("coupon_island_kuponpon"),
+    "❌ • " .. _("back_kuponpon")
+  }, nil, indev)
 
   if not menu then
     gg.toast(_("no_option_kuponpon"))
@@ -2254,11 +2254,11 @@ end
 function gp7(caller)
   local indev = dev
   local menu = gg.choice({
-    "🟧 " .. _("orange_gem_gemgem"),
-    "🟩 " .. _("green_gem_gemgem"),
-    "🟥 " .. _("red_gem_gemgem"),
-    "❌ [ << " .. _("go_back_gemgem") .. " >> ]"
-  }, {}, indev)
+    "🟧 • " .. _("orange_gem_gemgem"),
+    "🟩 • " .. _("green_gem_gemgem"),
+    "🟥 • " .. _("red_gem_gemgem"),
+    "❌ • [ << " .. _("go_back_gemgem") .. " >> ]"
+  }, nil, indev)
 
   if not menu then
     gg.toast("❌ " .. _("no_option_selected_gemgem"))
@@ -2339,13 +2339,13 @@ function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller)
   function gp8()
   local title = banner
   local menu = gg.choice({
-    "🏅 " .. _("metal_ingots_materialyal"),
-    "⛏️ " .. _("mining_tools_materialyal"),
-    "🧰 " .. _("community_tools_materialyal"),
-    "🏡 " .. _("barn_tools_materialyal"),
-    "🚧 " .. _("expansion_tools_materialyal"),
-    "❌ [ << " .. _("go_back_materialyal") .. " >> ]"
-  }, {}, title)
+    "🏅 • " .. _("metal_ingots_materialyal"),
+    "⛏️ • " .. _("mining_tools_materialyal"),
+    "🧰 • " .. _("community_tools_materialyal"),
+    "🏡 • " .. _("barn_tools_materialyal"),
+    "🚧 • " .. _("expansion_tools_materialyal"),
+    "❌ • [ << " .. _("go_back_materialyal") .. " >> ]"
+  }, nil, title)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_materialyal"))
@@ -2370,12 +2370,12 @@ function tools1(caller)
   _G.ingotCaller = caller -- Simpan caller secara global
 
   local menu = gg.choice({
-    "🥉 " .. _("bronze_ingot_batangtang"),
-    "🥈 " .. _("silver_ingot_batangtang"),
+    "🥉 • " .. _("bronze_ingot_batangtang"),
+    "🥈 • " .. _("silver_ingot_batangtang"),
     "🥇 " .. _("gold_ingot_batangtang"),
-    "🏅 " .. _("platinum_ingot_batangtang"),
-    "❌ [ << " .. _("go_back_batangtang") .. " >> ]"
-  }, {}, indev)
+    "🏅 • " .. _("platinum_ingot_batangtang"),
+    "❌ • [ << " .. _("go_back_batangtang") .. " >> ]"
+  }, nil, indev)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_batangtang"))
@@ -2492,22 +2492,22 @@ function tools2(caller)
   local options, actions = {}, {}
 
   -- Tambahkan item normal
-  table.insert(options, "⛏️  " .. _("pickaxe_macul"))
+  table.insert(options, "⛏️ • " .. _("pickaxe_macul"))
   table.insert(actions, altam1)
-  table.insert(options, "🧨  " .. _("tnt_macul"))
+  table.insert(options, "🧨 • " .. _("tnt_macul"))
   table.insert(actions, altam2)
-  table.insert(options, "💣  " .. _("dynamite_macul"))
+  table.insert(options, "💣 • " .. _("dynamite_macul"))
   table.insert(actions, altam3)
 
   -- Bonus hanya untuk premium
   if caller ~= "free" then
-    table.insert(options, "🔁  " .. _("x2_ore_bonus_macul"))
+    table.insert(options, "🔁 • " .. _("x2_ore_bonus_macul"))
     table.insert(actions, altam4)
   end
 
-  table.insert(options, "❌  [ << " .. _("go_back_macul") .. " >> ]")
+  table.insert(options, "❌ • [ << " .. _("go_back_macul") .. " >> ]")
 
-  local subMenu = gg.choice(options, {}, indev)
+  local subMenu = gg.choice(options, nil, indev)
 
   if subMenu == nil then
     gg.toast("❌ " .. _("no_option_selected_macul"))
@@ -2612,14 +2612,14 @@ end
 function tools3(caller)
   local indev = dev
   local menu = gg.choice({
-    "🪟 " .. _("glass_matdung"),
-    "🧱 " .. _("bricks_matdung"),
-    "🪵 " .. _("slab_matdung"),
-    "🔨 " .. _("jackhammer_matdung"),
-    "⚙️ " .. _("electric_saw_matdung"),
-    "🪛 " .. _("drill_matdung"),
-    "❌ [ << " .. _("back_matdung") .. " >> ]"
-  }, {}, indev)
+    "🪟 • " .. _("glass_matdung"),
+    "🧱 • " .. _("bricks_matdung"),
+    "🪵 • " .. _("slab_matdung"),
+    "🔨 • " .. _("jackhammer_matdung"),
+    "⚙️ • " .. _("electric_saw_matdung"),
+    "🪛 • " .. _("drill_matdung"),
+    "❌ • [ << " .. _("back_matdung") .. " >> ]"
+  }, nil, indev)
 
   if not menu then
     gg.toast("❌ " .. _("no_option_selected_matdung"))
@@ -2814,11 +2814,11 @@ end
 function tools5()
   local indev = dev
   local menu = gg.choice({
-    "🪚 " .. _("saw_waswas" ),
-    "🪓 " .. _("axe_waswas" ),
-    "⛏️ " .. _("shovel_waswas" ),
-    "❌ " .. _("go_back_waswas" )
-  }, {}, indev)
+    "🪚 • " .. _("saw_waswas" ),
+    "🪓 • " .. _("axe_waswas" ),
+    "⛏️ • " .. _("shovel_waswas" ),
+    "❌ • " .. _("go_back_waswas" )
+  }, nil, indev)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_waswas"))
@@ -2921,7 +2921,7 @@ function gp9(caller)
   table.insert(menuLabels, _("double_train_keuntungan"))
   table.insert(menuLabels, _("go_back_keuntungan"))
 
-  local menu = gg.choice(menuLabels, {}, indev)
+  local menu = gg.choice(menuLabels, nil, indev)
   if not menu then
     gg.toast(_("no_option_keuntungan"))
     return
@@ -3178,15 +3178,15 @@ end
 function minidekor()
 local indev = dev
   local menu = gg.choice({
-"🎄 Christmas Decoration",
-"🏮 Lantern Decoration",
-"🐰 Easter Decoration",
-"💘 Valentine Decoration",
-"🎃 Halloween Decoration",
-"🏺 Egypt Decoration",
-"🌟 Exclusive Decoration",
+"🎄 • Christmas Decoration",
+"🏮 • Lantern Decoration",
+"🐰 • Easter Decoration",
+"💘 • Valentine Decoration",
+"🎃 • Halloween Decoration",
+"🏺 • Egypt Decoration",
+"🌟 • Exclusive Decoration",
     "❌ [ << Go Back >> ]"
-  }, {}, indev)
+  }, nil, indev)
 
     if menu == nil then
     gg.toast("⚠️ No options selected")
@@ -3226,21 +3226,21 @@ function coldekor2()
     gg.clearResults()
 
     local skins = {
-"🏮 Paper Lanterns",
-"🏯 Chinese House",
-"🌳 Lantern Tree",
-"🐠 Goldfish",
-"🐒 Monkey Statue",
-"🐉 Red Dragon",
-"🐕 Yellow Dog",
-"🦁 Chinese Lion",
-"🐱 Maneki-neko",
-"🌉 Red Bridge",
-"🐸 Money Toad",
-"🥣 Bowl of Wealth",
-"🎉 New Year Symbol",
-"🐲 Dragon Dance",
-      "❌ [ << Go Back >> ]"
+"🏮 • Paper Lanterns",
+"🏯 • Chinese House",
+"🌳 • Lantern Tree",
+"🐠 • Goldfish",
+"🐒 • Monkey Statue",
+"🐉 • Red Dragon",
+"🐕 • Yellow Dog",
+"🦁 • Chinese Lion",
+"🐱 • Maneki-neko",
+"🌉 • Red Bridge",
+"🐸 • Money Toad",
+"🥣 • Bowl of Wealth",
+"🎉 • New Year Symbol",
+"🐲 • Dragon Dance",
+      "❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -3385,30 +3385,30 @@ function coldekor3()
     gg.clearResults()
 
     local skins = {
-"🥚 Faberge Egg (Red)",
-"🍫 Chocolate Fountain",
-"🐇 Easter Bunny's House",
-"🎨 Throes of Art",
-"🌸 Spring",
-"⛲ Easter Fountain",
-"🚧 Easter Fence",
-"🧸 Stuffed Bunny",
-"🌳 Easter Topiary",
-"🎁 Cart Full of Gifts",
-"🌲 Easter Tree",
-"🥚 Egg Topiary",
-"🥚 Faberge Egg (Blue)",
-"🐇 Talented Bunny Statue",
-"🏭 Easter Workshop",
-"⛵ Boat Ride Attraction",
-"🚂 Easter Railway",
-"🛏️ Easter Hammock",
-"🍇 Vineyard",
-"🏠 Rabbit's House",
-"🍄 Mushroom Stump",
-"💡 Flower Lamppost",
-"💎 Rabbit Treasure",
-      "❌ [ << Go Back >> ]"
+"🥚 • Faberge Egg (Red)",
+"🍫 • Chocolate Fountain",
+"🐇 • Easter Bunny's House",
+"🎨 • Throes of Art",
+"🌸 • Spring",
+"⛲ • Easter Fountain",
+"🚧 • Easter Fence",
+"🧸 • Stuffed Bunny",
+"🌳 • Easter Topiary",
+"🎁 • Cart Full of Gifts",
+"🌲 • Easter Tree",
+"🥚 • Egg Topiary",
+"🥚 • Faberge Egg (Blue)",
+"🐇 • Talented Bunny Statue",
+"🏭 • Easter Workshop",
+"⛵ • Boat Ride Attraction",
+"🚂 • Easter Railway",
+"🛏️ • Easter Hammock",
+"🍇 • Vineyard",
+"🏠 • Rabbit's House",
+"🍄 • Mushroom Stump",
+"💡 • Flower Lamppost",
+"💎 • Rabbit Treasure",
+      "❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -3562,43 +3562,43 @@ function coldekor4()
     gg.clearResults()
 
     local skins = {
-"🌸 Heart Flowerbed",
-"🏞️ Small Romantic Park",
-"🕊️ Doves in Love",
-"❤️ Ruby Heart",
-"🚃 Carriage",
-"📦 Love Delivery Statue",
-"🍷 Romantic Date",
-"🌳 Heartfelt Topiary",
-"🏹 Cupid",
-"🐻 Bear in Love",
-"🦄 Stuffed Unicorn",
-"🗿 Affection Statue",
-"⛲ Heart to Heart Fountain",
-"🗿 Statue of Lovers",
-"🦚 Peacocks in Love",
-"🎁 Unexpected Gift",
-"📸 Perfect Pair Photo Zone",
-"🌳 Topiary",
-"🏡 Romantic Gazebo",
-"🦢 Pond with Swans",
-"🛒 Flower Cart",
-"🧸 Teddy Bear",
-"👼 Flowerbed with Angels",
-"🎠 Carousel",
-"🤴 Prince on a White Horse",
-"🪑 Lovers Bench",
-"🔒 Love Padlocks",
-"🌉 Love Tunnel",
-"💘 Flying Hearts",
-"🏹 Cupid Arrow",
-"🐰 Stuffed Bunny",
-"🐱 Cuddly Kitty",
-"👁️ Eagle Eye Cupid",
-"🌹 Love Arch",
-"💞 Eternal Love Sculpture",
-"🗝️ Key to the Heart",
-      "❌ [ << Go Back >> ]"
+"🌸 • Heart Flowerbed",
+"🏞️ • Small Romantic Park",
+"🕊️ • Doves in Love",
+"❤️ • Ruby Heart",
+"🚃 • Carriage",
+"📦 • Love Delivery Statue",
+"🍷 • Romantic Date",
+"🌳 • Heartfelt Topiary",
+"🏹 • Cupid",
+"🐻 • Bear in Love",
+"🦄 • Stuffed Unicorn",
+"🗿 • Affection Statue",
+"⛲ • Heart to Heart Fountain",
+"🗿 • Statue of Lovers",
+"🦚 • Peacocks in Love",
+"🎁 • Unexpected Gift",
+"📸 • Perfect Pair Photo Zone",
+"🌳 • Topiary",
+"🏡 • Romantic Gazebo",
+"🦢 • Pond with Swans",
+"🛒 • Flower Cart",
+"🧸 • Teddy Bear",
+"👼 • Flowerbed with Angels",
+"🎠 • Carousel",
+"🤴 • Prince on a White Horse",
+"🪑 • Lovers Bench",
+"🔒 • Love Padlocks",
+"🌉 • Love Tunnel",
+"💘 • Flying Hearts",
+"🏹 • Cupid Arrow",
+"🐰 • Stuffed Bunny",
+"🐱 • Cuddly Kitty",
+"👁️ • Eagle Eye Cupid",
+"🌹 • Love Arch",
+"💞 • Eternal Love Sculpture",
+"🗝️ • Key to the Heart",
+      "❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -3762,14 +3762,14 @@ function valdek36() valentinedecor(0x6588, "Key to the Heart", "🗝️") end
 function coldekor7()
 local indev = dev
   local menu = gg.choice({
-"✨ Special Decoration",
-"💎 Rare Decoration",
-"🌸 Unique Decoration",
-"🏵️ Limited Decoration",
-"🎀 Premium Decoration",
-"🏰 Classic Decoration",
-    "❌ [ << Go Back >> ]"
-  }, {}, indev)
+"✨ • Special Decoration",
+"💎 • Rare Decoration",
+"🌸 • Unique Decoration",
+"🏵️ • Limited Decoration",
+"🎀 • Premium Decoration",
+"🏰 • Classic Decoration",
+    "❌ • [ << Go Back >> ]"
+  }, nil, indev)
 
     if menu == nil then
     gg.toast("⚠️ No options selected")
@@ -3790,57 +3790,57 @@ function randecor1()
     gg.clearResults()
 
     local skins = {
-"👨‍🍳 Chef",
-"🍽️ Romantic Dinner",
-"🫖 Tea Party Fountain",
-"🍹 Pear Tiki Bar",
-"🌉 Fruit Bridge",
-"☕ Coffee Bike",
-"🌳 Broccoli Tree",
-"🚚 Hot Pizza Truck",
-"🍦 Ice Cream Cafe",
-"🎈 Hot Air Balloon",
-"🎨 Cooking Masterpiece Banner",
-"🎉 5 Year Together Banner",
-"🏪 Hot Cup Coffee Shop",
-"🍫 Chocolate Mill",
-"🌭 Hot Dog Swings",
-"🏬 Bargain District",
-"🚡 Ski Lift",
-"🔥 Eternal Torch",
-"✈️ Biomass-powered Airplane",
-"🕷️ Mechanical Spider",
-"🤖 Humanoid Robot",
-"🌸 Flower Arch",
-"⛵ Boat with Flowers",
-"🚗 Car Flower Bed",
-"🦚 Peacock Flower Bed",
-"🎈 Balloon Arch",
-"🌲 Inflatable Tree",
-"🐶 Inflatable Dog",
-"🏠 Flying House",
-"🕺 Air Dancer",
-"3️⃣ Inflatable Number 3",
-"🏰 Moving Castle",
-"⛺ Camping",
-"🎂 Township Turned 2!",
-"🕍 Chamber of Horrors",
-"👻 Ghost Huntress",
-"⚰️ Spooky Crypt",
-"🎻 Supernatural Orchestra",
-"🐷 Inflatable Pig",
-"🐔 Inflatable Chicken",
-"🐑 Inflatable Sheep",
-"🐄 Inflatable Cow",
-"🌾 Goddess of Harvest",
-"🍉 Giant Watermelon",
-"🥕 Carrot Tree",
-"🌽 Harvest a Giant",
-"🌶️ Spicy House",
-"🏛️ Grand Harvest Square",
-"🌊 Poseidon Statue",
-"💰 Treasure Chest",
-      "❌ [ << Go Back >> ]"
+"👨‍🍳 • Chef",
+"🍽️ • Romantic Dinner",
+"🫖 • Tea Party Fountain",
+"🍹 • Pear Tiki Bar",
+"🌉 • Fruit Bridge",
+"☕ • Coffee Bike",
+"🌳 • Broccoli Tree",
+"🚚 • Hot Pizza Truck",
+"🍦 • Ice Cream Cafe",
+"🎈 • Hot Air Balloon",
+"🎨 • Cooking Masterpiece Banner",
+"🎉 • 5 Year Together Banner",
+"🏪 • Hot Cup Coffee Shop",
+"🍫 • Chocolate Mill",
+"🌭 • Hot Dog Swings",
+"🏬 • Bargain District",
+"🚡 • Ski Lift",
+"🔥 • Eternal Torch",
+"✈️ • Biomass-powered Airplane",
+"🕷️ • Mechanical Spider",
+"🤖 • Humanoid Robot",
+"🌸 • Flower Arch",
+"⛵ • Boat with Flowers",
+"🚗 • Car Flower Bed",
+"🦚 • Peacock Flower Bed",
+"🎈 • Balloon Arch",
+"🌲 • Inflatable Tree",
+"🐶 • Inflatable Dog",
+"🏠 • Flying House",
+"🕺 • Air Dancer",
+"3️⃣ • Inflatable Number 3",
+"🏰 • Moving Castle",
+"⛺ • Camping",
+"🎂 • Township Turned 2!",
+"🕍 • Chamber of Horrors",
+"👻 • Ghost Huntress",
+"⚰️ • Spooky Crypt",
+"🎻 • Supernatural Orchestra",
+"🐷 • Inflatable Pig",
+"🐔 • Inflatable Chicken",
+"🐑 • Inflatable Sheep",
+"🐄 • Inflatable Cow",
+"🌾 • Goddess of Harvest",
+"🍉 • Giant Watermelon",
+"🥕 • Carrot Tree",
+"🌽 • Harvest a Giant",
+"🌶️ • Spicy House",
+"🏛️ • Grand Harvest Square",
+"🌊 • Poseidon Statue",
+"💰 • Treasure Chest",
+      "❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -4021,33 +4021,33 @@ function randecor2()
     gg.clearResults()
 
     local skins = {
-"🏛️ Ruins of Atlantis",
-"🚢 Pirate Ship Bow",
-"🚤 Submarine",
-"🍭 Mountain of Candy",
-"🌉 Candy Bridge",
-"🌳 Candy Tree",
-"🏠 Candy House",
-"🐄 Confectioner Cow",
-"🎠 Candy Carousel",
-"🍬 Sweet Tooth Street",
-"🏪 Souvenir Shop",
-"🏋️ Training Ground",
-"🤿 Diving Board",
-"⛲ New Record Fountain",
-"🏆 Champions Plaza",
-"🔥 Torchbearer Statue",
-"🌊 Snow Wave Statue",
-"🎖️ Triumphal Victory Statue",
-"🏒 Hockey Rink",
-"🛷 Bobsled Track",
-"⛷️ Never-ending Slope",
-"🏊 Triathlon",
-"🛹 Skateboarders",
-"🥅 Seasoned Goalkeeper",
-"🌍 World Champion",
-"⛸️ Forest Skating Rink",
-"❌ [ << Go Back >> ]"
+"🏛️ • Ruins of Atlantis",
+"🚢 • Pirate Ship Bow",
+"🚤 • Submarine",
+"🍭 • Mountain of Candy",
+"🌉 • Candy Bridge",
+"🌳 • Candy Tree",
+"🏠 • Candy House",
+"🐄 • Confectioner Cow",
+"🎠 • Candy Carousel",
+"🍬 • Sweet Tooth Street",
+"🏪 • Souvenir Shop",
+"🏋️ • Training Ground",
+"🤿 • Diving Board",
+"⛲ • New Record Fountain",
+"🏆 • Champions Plaza",
+"🔥 • Torchbearer Statue",
+"🌊 • Snow Wave Statue",
+"🎖️ • Triumphal Victory Statue",
+"🏒 • Hockey Rink",
+"🛷 • Bobsled Track",
+"⛷️ • Never-ending Slope",
+"🏊 • Triathlon",
+"🛹 • Skateboarders",
+"🥅 • Seasoned Goalkeeper",
+"🌍 • World Champion",
+"⛸️ • Forest Skating Rink",
+"❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -4204,57 +4204,57 @@ function randecor3()
     gg.clearResults()
 
     local skins = {
-"🌊 Sea Fence",
-"⚓ Admiralty Anchor",
-"🐚 Pearl Shell",
-"🐴 Sea Horse",
-"🎣 Lucky Fisherman",
-"🐟 Dancing Koi",
-"🧜‍♀️ The Mermaid",
-"🏰 Water Tower",
-"🐙 Fishing Octopus",
-"🛥️ Stranded Yacht",
-"🏯 Flooded Tower",
-"🏡 Fisherman's House",
-"⚙️ Watermill",
-"🐠 Carp Pond",
-"🎠 Underwater World Carousel",
-"🐝 Bee Pilot",
-"🛩️ Amphibious Aircraft",
-"🎈 Inflatable Plane",
-"🚁 Helicopter Trampoline",
-"🕊️ Dovecote",
-"🪁 Fly-seasoned Friends",
-"🎏 Kite Master",
-"🎢 Takeoff Ride",
-"🎒 Jet Pack Attraction",
-"🏆 Winged Winner",
-"🗽 Happy Town Day Statue",
-"📸 Festival Selfie Banner",
-"🏰 Inflatable Castle",
-"🚂 Kids Train Ride",
-"🚗 Bumper Car Ride",
-"🗿 Titans",
-"🌳 Tree of Life Fountain",
-"🎨 Jolly Painters",
-"🏙️ Art District",
-"🧊 Thingamacube",
-"🤹 Juggler",
-"🖌️ Graffiti Championship",
-"⛄ Winter Fun",
-"🏚️ Lake House",
-"🌀 Endless Stairs",
-"🦣 Frozen Mammoth",
-"🦀 Hermit Crab",
-"🤿 Divers",
-"💦 Happy Splashes",
-"🏪 Fishing-wharf Market",
-"🎣 Lure Makers Hut",
-"🏊 Polar Water Park",
-"⛩️ Underwater Temple",
-"👨‍🚀 Diver",
-"🔭 Bathyscaphe Model",
-"❌ [ << Go Back >> ]"
+"🌊 • Sea Fence",
+"⚓ • Admiralty Anchor",
+"🐚 • Pearl Shell",
+"🐴 • Sea Horse",
+"🎣 • Lucky Fisherman",
+"🐟 • Dancing Koi",
+"🧜‍♀️ • The Mermaid",
+"🏰 • Water Tower",
+"🐙 • Fishing Octopus",
+"🛥️ • Stranded Yacht",
+"🏯 • Flooded Tower",
+"🏡 • Fisherman's House",
+"⚙️ • Watermill",
+"🐠 • Carp Pond",
+"🎠 • Underwater World Carousel",
+"🐝 • Bee Pilot",
+"🛩️ • Amphibious Aircraft",
+"🎈 • Inflatable Plane",
+"🚁 • Helicopter Trampoline",
+"🕊️ • Dovecote",
+"🪁 • Fly-seasoned Friends",
+"🎏 • Kite Master",
+"🎢 • Takeoff Ride",
+"🎒 • Jet Pack Attraction",
+"🏆 • Winged Winner",
+"🗽 • Happy Town Day Statue",
+"📸 • Festival Selfie Banner",
+"🏰 • Inflatable Castle",
+"🚂 • Kids Train Ride",
+"🚗 • Bumper Car Ride",
+"🗿 • Titans",
+"🌳 • Tree of Life Fountain",
+"🎨 • Jolly Painters",
+"🏙️ • Art District",
+"🧊 • Thingamacube",
+"🤹 • Juggler",
+"🖌️ • Graffiti Championship",
+"⛄ • Winter Fun",
+"🏚️ • Lake House",
+"🌀 • Endless Stairs",
+"🦣 • Frozen Mammoth",
+"🦀 • Hermit Crab",
+"🤿 • Divers",
+"💦 • Happy Splashes",
+"🏪 • Fishing-wharf Market",
+"🎣 • Lure Makers Hut",
+"🏊 • Polar Water Park",
+"⛩️ • Underwater Temple",
+"👨‍🚀 • Diver",
+"🔭 • Bathyscaphe Model",
+"❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -4435,42 +4435,42 @@ function randecor4()
     gg.clearResults()
 
     local skins = {
-"🐠 City Aquarium",
-"🎐 Inflatable Jellyfish",
-"🛩️ Biplane",
-"⛵ Air Galleon",
-"🎮 Flight Simulator",
-"✈️ Experimental Plane",
-"🛰️ System Plane",
-"🎯 Regatta Carnival Game",
-"🪑 Friendship Bench",
-"🎈 Duck Balloon",
-"📸 Superfriends Photo Cutout",
-"🏝️ Summer-fun Island",
-"🐑 Stuffed Sheep",
-"🌉 Glass Bridge",
-"📎 Clothespin Art Object",
-"👑 His Majesty's Throne",
-"🏖️ Vacation",
-"🌴 Cozy Tropics",
-"🐬 Visiting the Dolphins",
-"🍕 Open Air Pizzeria",
-"👨‍🍳 Jolly Chefs",
-"⛵ Golden Sail",
-"🌳 Wild Park",
-"🚤 Pleasure Boat",
-"🔔 Gong",
-"🎆 Fireworks Stand",
-"🎈 Balloon Bouquet",
-"🏡 Florist House",
-"🐑 Sheep Flowerbed",
-"🌸 Vase of Flowers",
-"💦 Jet Ski",
-"💎 The Biggest Diamond",
-"🚪 Gates of Glory",
-"🌺 Flower Gate",
-"🥕 Veggie Cart",
-"❌ [ << Go Back >> ]"
+"🐠 • City Aquarium",
+"🎐 • Inflatable Jellyfish",
+"🛩️ • Biplane",
+"⛵ • Air Galleon",
+"🎮 • Flight Simulator",
+"✈️ • Experimental Plane",
+"🛰️ • System Plane",
+"🎯 • Regatta Carnival Game",
+"🪑 • Friendship Bench",
+"🎈 • Duck Balloon",
+"📸 • Superfriends Photo Cutout",
+"🏝️ • Summer-fun Island",
+"🐑 • Stuffed Sheep",
+"🌉 • Glass Bridge",
+"📎 • Clothespin Art Object",
+"👑 • His Majesty's Throne",
+"🏖️ • Vacation",
+"🌴 • Cozy Tropics",
+"🐬 • Visiting the Dolphins",
+"🍕 • Open Air Pizzeria",
+"👨‍🍳 • Jolly Chefs",
+"⛵ • Golden Sail",
+"🌳 • Wild Park",
+"🚤 • Pleasure Boat",
+"🔔 • Gong",
+"🎆 • Fireworks Stand",
+"🎈 • Balloon Bouquet",
+"🏡 • Florist House",
+"🐑 • Sheep Flowerbed",
+"🌸 • Vase of Flowers",
+"💦 • Jet Ski",
+"💎 • The Biggest Diamond",
+"🚪 • Gates of Glory",
+"🌺 • Flower Gate",
+"🥕 • Veggie Cart",
+"❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -4635,43 +4635,43 @@ function randecor5()
     gg.setVisible(false)
     gg.clearResults()
     local skins = {
-"🏠 Egyptian House",
-"🌄 Pyramid of Cheops",
-"🗿 Pharaoh Statue",
-"⛵ Papyrus Boat",
-"🏬 Papyrus Shop",
-"🐴 Trojan Horse",
-"🏟️ Amphitheater",
-"🚙 Chariot",
-"🤾 Discobolus",
-"🚢 Odysseus Ship",
-"🐂 Minotaur",
-"⚒️ Sculptor's Workshop",
-"🏜️ Oasis",
-"🏰 Sheikh's Palace",
-"🔮 Magic Lamp",
-"🐎 Arabian Horse",
-"🦅 Falconry",
-"♟️ Chess Match",
-"🌳 Hanging Gardens",
-"🌴 Beach Swing",
-"🏡 Bungalow",
-"🥥 Coconut Paradise Juice Bar",
-"🌊 Catch the Wave Ride",
-"🎨 Primeval Painter",
-"🪨 Stonehenge",
-"🏇 The First Rider",
-"🦕 Diplodocus",
-"🏠 Stone Age House",
-"🚢 Haunted Ship",
-"🐉 Nessie",
-"🛸 First Contact",
-"❄️ Yeti",
-"☕ Shuttle Cafe",
-"🔭 Astronomical Tower",
-"🌌 Open-air Planetarium",
-"👩‍🚀 Betsy the Astronaut",
-"❌ [ << Go Back >> ]"
+"🏠 • Egyptian House",
+"🌄 • Pyramid of Cheops",
+"🗿 • Pharaoh Statue",
+"⛵ • Papyrus Boat",
+"🏬 • Papyrus Shop",
+"🐴 • Trojan Horse",
+"🏟️ • Amphitheater",
+"🚙 • Chariot",
+"🤾 • Discobolus",
+"🚢 • Odysseus Ship",
+"🐂 • Minotaur",
+"⚒️ • Sculptor's Workshop",
+"🏜️ • Oasis",
+"🏰 • Sheikh's Palace",
+"🔮 • Magic Lamp",
+"🐎 • Arabian Horse",
+"🦅 • Falconry",
+"♟️ • Chess Match",
+"🌳 • Hanging Gardens",
+"🌴 • Beach Swing",
+"🏡 • Bungalow",
+"🥥 • Coconut Paradise Juice Bar",
+"🌊 • Catch the Wave Ride",
+"🎨 • Primeval Painter",
+"🪨 • Stonehenge",
+"🏇 • The First Rider",
+"🦕 • Diplodocus",
+"🏠 • Stone Age House",
+"🚢 • Haunted Ship",
+"🐉 • Nessie",
+"🛸 • First Contact",
+"❄️ • Yeti",
+"☕ • Shuttle Cafe",
+"🔭 • Astronomical Tower",
+"🌌 • Open-air Planetarium",
+"👩‍🚀 • Betsy the Astronaut",
+"❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -4838,48 +4838,48 @@ function randecor6()
     gg.clearResults()
 
     local skins = {
-"🚀 Mars rover",
-"🏙️ Lost city",
-"🗿 Ancient statue",
-"🦓 Wildlife reserve",
-"🍌 Banana breaks",
-"🏝️ Jungle village",
-"❄️ Polar station",
-"🐕 Dogsled",
-"🐧 Penguin skating rink",
-"🦌 Ice sculpture reindeer",
-"🚢 Icebreaker",
-"🔱 Atlantean trident",
-"🏨 Atlantis hotel",
-"🪸 Coral fence",
-"🐠 Atlantean aquarium",
-"🛏️ Atlantean rest",
-"💰 Sea riches statue",
-"🏴‍☠️ Pirate camp",
-"🎠 Pirate playground",
-"🤠 Saloon",
-"🎬 Western movie set",
-"🐞 Scarab statue",
-"⛺ Paradise tent",
-"🌐 Plasma globe",
-"🧪 Experimental monument",
-"📽️ 3D projector",
-"🏢 Research facility",
-"📚 Knowledge tower",
-"🍊 Orange juice fountain",
-"💃 Flower dancerfloor",
-"🌴 Palm tree juice bar",
-"🟡 Yellow submarine club",
-"🥭 Mixed fruit",
-"🐘 Happy elephants",
-"🏡 Elf house",
-"🏰 Ice castle",
-"🏮 Chinatown",
-"🌺 Coral garden",
-"🤿 Deep sea explorers",
-"🌸 Spring holiday",
-"🔪 Knife throwing",
-"❌ [ << Go Back >> ]"
+"🚀 • Mars rover",
+"🏙️ • Lost city",
+"🗿 • Ancient statue",
+"🦓 • Wildlife reserve",
+"🍌 • Banana breaks",
+"🏝️ • Jungle village",
+"❄️ • Polar station",
+"🐕 • Dogsled",
+"🐧 • Penguin skating rink",
+"🦌 • Ice sculpture reindeer",
+"🚢 • Icebreaker",
+"🔱 • Atlantean trident",
+"🏨 • Atlantis hotel",
+"🪸 • Coral fence",
+"🐠 • Atlantean aquarium",
+"🛏️ • Atlantean rest",
+"💰 • Sea riches statue",
+"🏴‍☠️ • Pirate camp",
+"🎠 • Pirate playground",
+"🤠 • Saloon",
+"🎬 • Western movie set",
+"🐞 • Scarab statue",
+"⛺ • Paradise tent",
+"🌐 • Plasma globe",
+"🧪 • Experimental monument",
+"📽️ • 3D projector",
+"🏢 • Research facility",
+"📚 • Knowledge tower",
+"🍊 • Orange juice fountain",
+"💃 • Flower dancerfloor",
+"🌴 • Palm tree juice bar",
+"🟡 • Yellow submarine club",
+"🥭 • Mixed fruit",
+"🐘 • Happy elephants",
+"🏡 • Elf house",
+"🏰 • Ice castle",
+"🏮 • Chinatown",
+"🌺 • Coral garden",
+"🤿 • Deep sea explorers",
+"🌸 • Spring holiday",
+"🔪 • Knife throwing",
+"❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -5066,13 +5066,13 @@ function pad18() applyHelipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
 function kums1()
 local indev = dev
   local menu = gg.choice({
-"🚁 Helicopter Skins",
-"✈️ Airplane Skins",
-"🚄 Train Skins",
-"🛳️ Ship Skins",
-"🏯 Fortress Skins",
+"🚁 • Helicopter Skins",
+"✈️ • Airplane Skins",
+"🚄 • Train Skins",
+"🛳️ • Ship Skins",
+"🏯 • Fortress Skins",
     "❌ [ << Go Back >> ]"
-  }, {}, indev)
+  }, nil, indev)
 
     if menu == nil then
     gg.toast("⚠️ No options selected")
@@ -5089,10 +5089,10 @@ end
 function colek1()
 local indev = dev
   local menu = gg.choice({
-    "🚁 Helipad Skins",
-    "🚁 Helicopter Skins",
-    "❌  [ << Go Back >> ]"
-  }, {},indev)
+    "🚁 • Helipad Skins",
+    "🚁 • Helicopter Skins",
+    "❌ • [ << Go Back >> ]"
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -5109,25 +5109,25 @@ function skinhel1()
     gg.clearResults()
 
   local skins = {
-"🛸 Flying Saucer Hangar",
-"🤖 Docking Station",
-"🎄 Sleigh Parking Lot",
-"🎩 Private Helipad",
-"🥗 Veggie Helipad",
-"🕌 Sultan's Palace",
-"🏖️ Five-Star Helipad",
-"🧳 Wanderers' Harbor",
-"🏃‍♂️ Fitness Pad",
-"🏰 Royal Palace",
-"🕵️ Detective Agency",
-"🎃 Haunted Tower",
-"🎭 Carnival Platform (🇧🇷)",
-"🐰 Easter Helipad",
-"💧 Underwater Palace",
-"🏴‍☠️ Pirate Helipad",
-"🐉 Festive Helipad",
-"💃 Ballroom Helipad",
-"❌ [ << Go Back >> ]"
+"🛸 • Flying Saucer Hangar",
+"🤖 • Docking Station",
+"🎄 • Sleigh Parking Lot",
+"🎩 • Private Helipad",
+"🥗 • Veggie Helipad",
+"🕌 • Sultan's Palace",
+"🏖️ • Five-Star Helipad",
+"🧳 • Wanderers' Harbor",
+"🏃‍♂️ • Fitness Pad",
+"🏰 • Royal Palace",
+"🕵️ • Detective Agency",
+"🎃 • Haunted Tower",
+"🎭 • Carnival Platform (🇧🇷)",
+"🐰 • Easter Helipad",
+"💧 • Underwater Palace",
+"🏴‍☠️ • Pirate Helipad",
+"🐉 • Festive Helipad",
+"💃 • Ballroom Helipad",
+"❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🚁 Select an Helipad Skins:")
@@ -5273,25 +5273,25 @@ function skinhel2()
     gg.clearResults()
 
   local skins = {
-"🛸 Turbo Saucer",
-"🤖 Robot Courier",
-"🎄 Santa's Sleigh",
-"🎩 Private Helicopter",
-"🥗 Eggplant Helicopter",
-"🕌 Flying Carpet",
-"🏖️ Chise Lounge Drone",
-"🧳 Flying Ship",
-"🏃‍♂️ Helicycle",
-"🏰 Pumpkin Helicopter",
-"🕵️ Surveillance Airship",
-"🎃 Flying Cauldron",
-"🎭 Feathery Helicopter",
-"🐰 Egg Chopper",
-"💧 Flying Bathyscaphe",
-"🏴‍☠️ Pirate Helicopter",
-"🐉 Festive Helicopter",
-"💃 Ballroom Helicopter",
-"❌ [ << Go Back >> ]"
+"🛸 • Turbo Saucer",
+"🤖 • Robot Courier",
+"🎄 • Santa's Sleigh",
+"🎩 • Private Helicopter",
+"🥗 • Eggplant Helicopter",
+"🕌 • Flying Carpet",
+"🏖️ • Chise Lounge Drone",
+"🧳 • Flying Ship",
+"🏃‍♂️ • Helicycle",
+"🏰 • Pumpkin Helicopter",
+"🕵️ • Surveillance Airship",
+"🎃 • Flying Cauldron",
+"🎭 • Feathery Helicopter",
+"🐰 • Egg Chopper",
+"💧 • Flying Bathyscaphe",
+"🏴‍☠️ • Pirate Helicopter",
+"🐉 • Festive Helicopter",
+"💃 • Ballroom Helicopter",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
@@ -5437,10 +5437,10 @@ function hel18() applyHelicopterSkin(0x370,  "Ballroom Helicopter", "💃") end
 function colek2()
 local indev = dev
   local menu = gg.choice({
-    "🛩️ Airport Skins",
-    "🛩️ Airplane Skins",
-    "❌ [ << Go Back >> ]"
-  }, {},indev)
+    "🛩️ • Airport Skins",
+    "🛩️ • Airplane Skins",
+    "❌ • [ << Go Back >> ]"
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -5457,24 +5457,24 @@ function bandara1()
     gg.clearResults()
 
   local skins = {
-"🛫 Aeriel Portal",
-"🐲 Festival Airport",
-"🌴 Tropical Airport",
-"👻 Ghost Airport",
-"🪐 Space Airport",
-"🎸 Rock Airport",
-"🎬 Cinema Airport",
-"🎅 Santa's Residence",
-"🐣 Easter Airport",
-"🍭 Sugary Airport",
-"🎿 Ski Station",
-"🌈 Rainbow's end Airport",
-"🕵️ Secret Base",
-"🌟 Five-Star Airport",
-"🎼 Symphony Airport",
-"👗 Fashion Airport",
-"🕌 Arabian Airport",
-"❌ [ << Go Back >> ]"
+"🛫 • Aeriel Portal",
+"🐲 • Festival Airport",
+"🌴 • Tropical Airport",
+"👻 • Ghost Airport",
+"🪐 • Space Airport",
+"🎸 • Rock Airport",
+"🎬 • Cinema Airport",
+"🎅 • Santa's Residence",
+"🐣 • Easter Airport",
+"🍭 • Sugary Airport",
+"🎿 • Ski Station",
+"🌈 • Rainbow's end Airport",
+"🕵️ • Secret Base",
+"🌟 • Five-Star Airport",
+"🎼 • Symphony Airport",
+"👗 • Fashion Airport",
+"🕌 • Arabian Airport",
+"❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airport Skin:")
@@ -5636,24 +5636,24 @@ function bandara2()
     gg.clearResults()
 
   local skins = {
-"🛫 Ultra Plane",
-"🐲 Sky Dragon",
-"🌴 Tropical Biplane",
-"👻 Ghost Plane",
-"🪐 Launch Vehicle",
-"🎸 Rock Plane",
-"🎬 A-Lister Jet",
-"🎅 Holiday Plane",
-"🐣 Bird Plane",
-"🍭 Éclair Plane",
-"🎿 Aero Sleigh",
-"🌈 Lucky Jet",
-"🕵️ Stealth Aircraft",
-"🌟 Seaplane",
-"🎼 Symphony Plane",
-"👗 Fashion Airport",
-"🕌 Arabian Airport",
-"❌ [ << Go Back >> ]"
+"🛫 • Ultra Plane",
+"🐲 • Sky Dragon",
+"🌴 • Tropical Biplane",
+"👻 • Ghost Plane",
+"🪐 • Launch Vehicle",
+"🎸 • Rock Plane",
+"🎬 • A-Lister Jet",
+"🎅 • Holiday Plane",
+"🐣 • Bird Plane",
+"🍭 • Éclair Plane",
+"🎿 • Aero Sleigh",
+"🌈 • Lucky Jet",
+"🕵️ • Stealth Aircraft",
+"🌟 • Seaplane",
+"🎼 • Symphony Plane",
+"👗 • Fashion Airport",
+"🕌 • Arabian Airport",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
@@ -5790,10 +5790,10 @@ function wat17() applyAirplaneSkin(-0x790, "🕌", "Arabian Plane") end
 function colek3()
 local indev = dev
   local menu = gg.choice({
-    "🚅 Station Skins",
-    "🚅 Train Skins",
-    "❌  [ << Go Back >> ]"
-  }, {},indev)
+    "🚅 • Station Skins",
+    "🚅 • Train Skins",
+    "❌ • [ << Go Back >> ]"
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -5810,25 +5810,25 @@ function kret1()
     gg.clearResults()
 
   local skins = {
-"🌺 Flower Station",
-"🎄 Christmas Station (2)",
-"🎃 Halloween Station",
-"🏛️ Roman Station",
-"🏰 Castle Station",
-"🎶 Record Station",
-"🏕️ Training Camp",
-"🪐 Space Station",
-"🐲 Chinese Station",
-"🎭 Theater Set Station",
-"🦴 Ancient Settlement",
-"🐣 Easter Station",
-"🎁 Christmas Station (1)",
-"🤠 Cowboys Station",
-"💃 Disco Station",
-"👻 Ghost Station",
-"🌀 Express Portal",
-"🏛️ Mythic Station",
-"❌ [ << Go Back >> ]"
+"🌺 • Flower Station",
+"🎄 • Christmas Station (2)",
+"🎃 • Halloween Station",
+"🏛️ • Roman Station",
+"🏰 • Castle Station",
+"🎶 • Record Station",
+"🏕️ • Training Camp",
+"🪐 • Space Station",
+"🐲 • Chinese Station",
+"🎭 • Theater Set Station",
+"🦴 • Ancient Settlement",
+"🐣 • Easter Station",
+"🎁 • Christmas Station (1)",
+"🤠 • Cowboys Station",
+"💃 • Disco Station",
+"👻 • Ghost Station",
+"🌀 • Express Portal",
+"🏛️ • Mythic Station",
+"❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🚆 Select an Station Skin:")
@@ -5972,25 +5972,25 @@ function kret2()
     gg.clearResults()
 
   local skins = {
-    "🌺 Flower Train",
-"🎄 Christmas Train (2)",
-"🎃 Halloween Train",
-"🏛️ Express Tram",
-"🏰 Knight Train",
-"🎶 Music Express",
-"🏕️ Wooden Wagon",
-"🪐 Mars Rover",
-"🐲 Dragon Train",
-"🎭 Theater Express",
-"🦴 Primeval Express",
-"🐣 Easter Express",
-"🎁 Christmas Train (1)",
-"🤠 Cowboys Train",
-"💃 Disco Train",
-"👻 Ghost Train",
-"🌀 Future Express",
-"🏛️ Mythic Train",
-"❌ [ << Go Back >> ]"
+    "🌺 • Flower Train",
+"🎄 • Christmas Train (2)",
+"🎃 • Halloween Train",
+"🏛️ • Express Tram",
+"🏰 • Knight Train",
+"🎶 • Music Express",
+"🏕️ • Wooden Wagon",
+"🪐 • Mars Rover",
+"🐲 • Dragon Train",
+"🎭 • Theater Express",
+"🦴 • Primeval Express",
+"🐣 • Easter Express",
+"🎁 • Christmas Train (1)",
+"🤠 • Cowboys Train",
+"💃 • Disco Train",
+"👻 • Ghost Train",
+"🌀 • Future Express",
+"🏛️ • Mythic Train",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
@@ -6137,10 +6137,10 @@ function ret18() applyTrainSkin( -0x30C, "Mythic Train", "🏛️") end
 function colek4()
 local indev = dev
   local menu = gg.choice({
-    "⛵Port Skins",
-    "⛵Ship Skins",
+    "⛵ • Port Skins",
+    "⛵ • Ship Skins",
     "❌ [ << Go Back >> ]"
-  }, {},indev)
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -6157,22 +6157,22 @@ function laut1()
     gg.clearResults()
 
   local skins = {
-"🏴‍☠️ Pirate Harbor",
-"🌴 Equatorial Port",
-"🍭 Sweet Port",
-"🦁 Doge's Pier",
-"💀 Port Of Horrors",
-"💘 Romantic Harbor",
-"🛡️ Viking Harbor",
-"🌳 Jungle Port",
-"🎄 Christmas Port",
-"🏮 Lantern Harbor",
-"🏺 Ancient Port",
-"🤠 Saloon on the water",
-"🍬 Candy Port",
-"🕌 Egyptian-Themed Port",
-"❄️ Artic Port",
-"❌ [ << Go Back >> ]"
+"🏴‍☠️ • Pirate Harbor",
+"🌴 • Equatorial Port",
+"🍭 • Sweet Port",
+"🦁 • Doge's Pier",
+"💀 • Port Of Horrors",
+"💘 • Romantic Harbor",
+"🛡️ • Viking Harbor",
+"🌳 • Jungle Port",
+"🎄 • Christmas Port",
+"🏮 • Lantern Harbor",
+"🏺 • Ancient Port",
+"🤠 • Saloon on the water",
+"🍬 • Candy Port",
+"🕌 • Egyptian-Themed Port",
+"❄️ • Artic Port",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
@@ -6321,22 +6321,22 @@ function laut2()
     gg.clearResults()
 
   local skins = {
-"🏴‍☠️ Pirate Galleon",
-"🌴 Cruise Liner",
-"🍭 Croissant Ferry",
-"🦁 Gondola",
-"💀 Ghost Ship",
-"💘 Love Boat",
-"🛡️ Sturdy Drakkar",
-"🌳 Cruise Ship",
-"🎄 Gift Boat",
-"🏮 Dragon Boat",
-"🏺 Greek Bireme",
-"🤠 River Steamboat",
-"🍬 Sweet Boat",
-"🕌 Egyptian-Themed Ship",
-"❄️ Arctic Ship",
-"❌ [ << Go Back >> ]"
+"🏴‍☠️ • Pirate Galleon",
+"🌴 • Cruise Liner",
+"🍭 • Croissant Ferry",
+"🦁 • Gondola",
+"💀 • Ghost Ship",
+"💘 • Love Boat",
+"🛡️ • Sturdy Drakkar",
+"🌳 • Cruise Ship",
+"🎄 • Gift Boat",
+"🏮 • Dragon Boat",
+"🏺 • Greek Bireme",
+"🤠 • River Steamboat",
+"🍬 • Sweet Boat",
+"🕌 • Egyptian-Themed Ship",
+"❄️ • Arctic Ship",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
@@ -6473,21 +6473,21 @@ function colek5()
     gg.clearResults()
 
   local skins = {
-"🏴‍☠️ Pirate Shack",
-"⚓️ Pirate Hub",
-"🏰 Pirate Fort",
-"🏝️ Island House",
-"🏯 Island Manor",
-"🏡 Island Residance",
-"🧙‍♀️ Witct's House",
-"🏚️ Witct's Manor",
-"🏰 Witct's Castle",
-"❄️ Ice Castle",
-"🗼 Little Paris",
-"🐣 Easter Village",
-"🦕 Neanderthal Island",
-"🪵 Aztec Island",
-"❌ [ << Go Back >> ]"
+"🏴‍☠️ • Pirate Shack",
+"⚓️ • Pirate Hub",
+"🏰 • Pirate Fort",
+"🏝️ • Island House",
+"🏯 • Island Manor",
+"🏡 • Island Residance",
+"🧙‍♀️ • Witct's House",
+"🏚️ • Witct's Manor",
+"🏰 • Witct's Castle",
+"❄️ • Ice Castle",
+"🗼 • Little Paris",
+"🐣 • Easter Village",
+"🦕 • Neanderthal Island",
+"🪵 • Aztec Island",
+"❌ • [ << Go Back >> ]"
   }
 
 local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
@@ -6621,10 +6621,10 @@ function pulo14() applyFortressSkin(0x270, "Aztec Island", "🪵") end
 function kums2()
 local indev = dev
   local menu = gg.choice({
-"🪧 Event Townsign",
-"🪧 Random Townsign",
+"🪧 • Event Townsign",
+"🪧 • Random Townsign",
     "❌  [ << Go Back >> ]"
-  }, {},indev)
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -6641,23 +6641,23 @@ while true do
   gg.clearResults()
 
   local skins = {
-"🏴‍☠️ Pirate Town Sign",
-"❄️ Winter Town Sign",
-"🎉 Festive Town Sign",
-"🔮 Mystical Town Sign",
-"👻 Supernatural Town Sign",
-"🐙 Cthutun Town Sign",
-"🎁 Holiday Town Sign",
-"🛸 Extraterrestrial Town Sign",
-"💀 Ghostly Town Sign",
-"🍰 Dessert Town Sign",
-"🤠 Cowboy Town Sign",
-"🪶 Power of Ancestors Town Sign",
-"🏛️ Atlantis Town Sign",
-"🌿 Smart Garden Town Sign",
-"🍭 Sweet Treat Town Sign",
-"🐧 Penguin Resort Town Sign",
-"❌ [ << Go Back >> ]"
+"🏴‍☠️ • Pirate Town Sign",
+"❄️ • Winter Town Sign",
+"🎉 • Festive Town Sign",
+"🔮 • Mystical Town Sign",
+"👻 • Supernatural Town Sign",
+"🐙 • Cthutun Town Sign",
+"🎁 • Holiday Town Sign",
+"🛸 • Extraterrestrial Town Sign",
+"💀 • Ghostly Town Sign",
+"🍰 • Dessert Town Sign",
+"🤠 • Cowboy Town Sign",
+"🪶 • Power of Ancestors Town Sign",
+"🏛️ • Atlantis Town Sign",
+"🌿 • Smart Garden Town Sign",
+"🍭 • Sweet Treat Town Sign",
+"🐧 • Penguin Resort Town Sign",
+"❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
@@ -6802,28 +6802,28 @@ while true do
   gg.clearResults()
 
   local skins = {
-"🐣 Easter Town Sign",
-"🏘️ Town Day Town Sign",
-"🎃 Big Halloween Sign",
-"🎄 Christmas Town Sign",
-"🤠 Good Old Rancho Sign",
-"🎬 Big Screen Town Sign",
-"🛩️ Aviator Town Sign",
-"🌺 Aloha Town Sign",
-"🧟 Paranormal Town Sign",
-"👾 Inflatable Monster Sign",
-"🏂 Snowboarding Town Sign",
-"🍬 Bubble Gum For All Sign",
-"🥤 Smoothie Stand Sign",
-"🏡 Cozy Home Sign",
-"🔮 Christmas Ball Town Sign",
-"🎤 Coming To You Live Sign",
-"🌃 The Town Never Sleeps Sign",
-"🍎 Big Apple Town Sign",
-"🧚 Fairytale Town Sign",
-"🎸 Rock Town Sign",
-"🎉 Anniversary Town Sign",
-"❌ [ << Go Back >> ]"
+"🐣 • Easter Town Sign",
+"🏘️ • Town Day Town Sign",
+"🎃 • Big Halloween Sign",
+"🎄 • Christmas Town Sign",
+"🤠 • Good Old Rancho Sign",
+"🎬 • Big Screen Town Sign",
+"🛩️ • Aviator Town Sign",
+"🌺 • Aloha Town Sign",
+"🧟 • Paranormal Town Sign",
+"👾 • Inflatable Monster Sign",
+"🏂 • Snowboarding Town Sign",
+"🍬 • Bubble Gum For All Sign",
+"🥤 • Smoothie Stand Sign",
+"🏡 • Cozy Home Sign",
+"🔮 • Christmas Ball Town Sign",
+"🎤 • Coming To You Live Sign",
+"🌃 • The Town Never Sleeps Sign",
+"🍎 • Big Apple Town Sign",
+"🧚 • Fairytale Town Sign",
+"🎸 • Rock Town Sign",
+"🎉 • Anniversary Town Sign",
+"❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
@@ -6971,9 +6971,9 @@ function kums3()
 while true do
   local options = {}
   for i = 1, 63 do
-    table.insert(options, "🧩 Sticker (" .. i .. ")")
+    table.insert(options, "🧩 • Sticker (" .. i .. ")")
   end
-  table.insert(options, "❌ [ << Go Back >> ]")
+  table.insert(options, "❌ • [ << Go Back >> ]")
 
   -- 📋 Multi select
   local choice = gg.multiChoice(options, nil, "🎨 Select sticker(s) to apply:")
@@ -7088,12 +7088,12 @@ function kums4()
   gg.clearResults()
 
   local skins = {
-"🌸 Frame Festival",
-"🌸 Name Festival",
-    "❌ [ << Go Back >> ]"
+"🌸 • Frame Festival",
+"🌸 • Name Festival",
+    "❌ • [ << Go Back >> ]"
   }
 
-  local choice = gg.choice(skins, {}, "🖼️  Frame Style")
+  local choice = gg.choice(skins, nil, "🖼️  Frame Style")
   if not choice then return end
 
   if choice == 3 then
@@ -7219,10 +7219,10 @@ end
 function kums5()
 local indev = dev
   local menu = gg.choice({
-"🎉 Exclusive Avatars List",
-"🎊 Complete Avatar List",
-    "❌ [ << Go Back >> ]"
-  }, {},indev)
+"🎉 • Exclusive Avatars List",
+"🎊 • Complete Avatar List",
+    "❌ • [ << Go Back >> ]"
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -7239,19 +7239,19 @@ function avatar1()
     gg.clearResults()
 
     local skins = {
-      "🌟 Year 1 Avatar",
-      "🌟 Year 2 Avatar",
-      "🌟 Year 3 Avatar",
-      "🌟 Year 4 Avatar",
-      "🌟 Year 5 Avatar",
-      "🌟 Year 6 Avatar",
-      "🌟 Year 7 Avatar",
-      "🌟 Year 8 Avatar",
-      "🌟 Year 9 Avatar",
-      "🌟 Year 10 Avatar",
-      "🌟 Year 11 Avatar (1)",
-      "🌟 Year 11 Avatar (2)",
-      "❌ [ << Go Back >> ]"
+      "🌟 • Year 1 Avatar",
+      "🌟 • Year 2 Avatar",
+      "🌟 • Year 3 Avatar",
+      "🌟 • Year 4 Avatar",
+      "🌟 • Year 5 Avatar",
+      "🌟 • Year 6 Avatar",
+      "🌟 • Year 7 Avatar",
+      "🌟 • Year 8 Avatar",
+      "🌟 • Year 9 Avatar",
+      "🌟 • Year 10 Avatar",
+      "🌟 • Year 11 Avatar (1)",
+      "🌟 • Year 11 Avatar (2)",
+      "❌ • [ << Go Back >> ]"
     }
 
     local choice = gg.multiChoice(
@@ -7346,9 +7346,9 @@ function avatar2()
 
     -- ✨ Generate avatar list
     for i = 1, 323 do
-      table.insert(options, "✨ Complete Avatar (" .. i .. ")")
+      table.insert(options, "✨ • Complete Avatar (" .. i .. ")")
     end
-    table.insert(options, "❌ [ << Go Back >> ]")
+    table.insert(options, "❌ • [ << Go Back >> ]")
 
     -- 📋 Multi select menu
     local choice = gg.multiChoice(options, nil, "🎊 Complete Avatar List")
@@ -7773,10 +7773,10 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 function kums6()
 local indev = dev
   local menu = gg.choice({
- "🃏 Card Collection Pack Badge",
-"🎖️ Collection Badge",
+ "🃏 • Card Collection Pack Badge",
+"🎖️ • Collection Badge",
     "❌ [ << Go Back >> ]"
-  }, {},indev)
+  }, nil,indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -7826,13 +7826,13 @@ while true do
   gg.clearResults()
 
   local skins = {
-"🏙️ Town Badge",
-"🏆 Legendary Town Badge",
-"🃏 Badge Title",
-"🎖️ Grand Bage Title",
-"⛄ Winter Badge",
-"❄️ Legendary Winter Badge",
-    "❌  [ << Go Back >> ]"
+"🏙️ • Town Badge",
+"🏆 • Legendary Town Badge",
+"🃏 • Badge Title",
+"🎖️ • Grand Bage Title",
+"⛄ • Winter Badge",
+"❄️ • Legendary Winter Badge",
+    "❌ • [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
@@ -7955,7 +7955,7 @@ local title = banner
     _( "option1_spesial" ),
     _( "option2_spesial" ),
     _( "back_spesial" )
-  }, {}, title)
+  }, nil, title)
 
   if menu == nil then
     gg.toast(_( "noSelection_spesial" ))
@@ -8154,7 +8154,7 @@ function menu2()
     _("menu2_free_ore_menuipen"),          -- "👑  Rule of the Mine (Free Ore)" / "👑 Aturan Tambang (Bijih Gratis)"
     _("menu2_freeze_treasure_menuipen"),   -- "🏴  Freeze Pirate Treasure" / "🏴 Bekukan Harta Bajak Laut"
     _("menu_back_menuipen")                -- "❌  [ << Go Back >> ]" / "❌  [ << Kembali >> ]"
-  }, {}, title)
+  }, nil, title)
 
   if menu == nil then
     gg.toast(_("toast_no_option_menuipen"))  -- "❌ No options selected" / "❌ Tidak ada opsi dipilih"
@@ -8361,7 +8361,7 @@ function menu7()
         _("instant_foundry_skiptime"),   
         _("no_request_delay_skiptime"),  
         _("go_back_skiptime")
-    }, {}, title)
+    }, nil, title)
 
     if menu == nil then
         gg.toast(_("no_option_selected_skiptime"))  -- ❌ No options selected / Tidak ada opsi dipilih
@@ -8399,7 +8399,7 @@ function stime1()
     _("heliAuto_aripal"),
     _("trainBoost11_aripal"),
     _("goBack_aripal")
-  }, {}, indev)
+  }, nil, indev)
 
   if menu == nil then
     gg.toast(_("noSelect_aripal"))
@@ -8739,7 +8739,7 @@ function menu3()
     _("more_requests_menupenambah"),
     _("market_unlim_menupenambah"),
     _("back_menupenambah")
-  }, {}, title)
+  }, nil, title)
 
   if menu == nil then
     gg.toast(_("menu_closed_menupenambah"))
@@ -9022,7 +9022,7 @@ function menu4()
     _( "barn_expand_gamragam"),
     _( "dealer_rent_gamragam"),
     _( "back_gamragam")
-  }, {}, title)
+  }, nil, title)
 
   if menu == nil then
     gg.toast(_( "no_option_gamragam"))
@@ -9375,13 +9375,13 @@ end
 function menu6()
   local title = banner
   local menu = gg.choice({
-	"⚙️ Admin Login",
+	"⚙️ • Admin Login",
     _( "about_script" ),
     _( "contact_dev" ),
     _( "reset_default" ),
     _( "change_lang" ),
     _( "go_back" )
-  }, {}, title)
+  }, nil, title)
 
   if not menu then gg.toast("⚠️ No option selected!") return end
 
@@ -9443,7 +9443,7 @@ function adminMenu()
   local menu = gg.choice({
     _("resetLogs"),
     _("exitMenu")
-  }, {}, _("adminMenuTitle"))
+  }, nil, _("adminMenuTitle"))
 
   if menu == 1 then
     os.remove("/sdcard/.ulog_craft.text")
@@ -9477,11 +9477,11 @@ function showContactMenu()
   gg.setVisible(false)
 
   local menu = gg.choice({
-    "📞 " .. _("contact_whatsapp"),
-    "✈️ " .. _("contact_telegram"),
-    "📘 " .. _("contact_facebook"),
-    "❌ " .. _("exit_script1")
-  }, {}, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
+    "📞 • " .. _("contact_whatsapp"),
+    "✈️ • " .. _("contact_telegram"),
+    "📘 • " .. _("contact_facebook"),
+    "❌ • " .. _("exit_script1")
+  }, nil, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
 
   if not menu then
     gg.toast("❌ " .. _("menu_closed"))
