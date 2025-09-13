@@ -35,14 +35,14 @@ local teks = {
   ----Menu Free----
   
   ["free_menu_freemenu"]      = {id="📜 Menu Skrip Gratis", en="📜 Free Script Menu"},
-["unlock_season_freemenu"]  = {id="🌟 Buka Season Pass", en="🌟 Unlock Season Pass"},
-["freeze_rewards_freemenu"] = {id="❄️ Bekukan Hadiah", en="❄️ Freeze Rewards"},
-["change_reward_freemenu"]  = {id="🎁 Ubah Hadiah", en="🎁 Change Rewards"},
-["misc_mods_freemenu"]      = {id="🛠️ Modifikasi Lainnya", en="🛠️ Other Mods"},
-["script_info_freemenu"]    = {id="ℹ️ Informasi Skrip", en="ℹ️ Script Information"},
+["unlock_season_freemenu"]  = {id="🌟 • Buka Season Pass", en="🌟 • Unlock Season Pass"},
+["freeze_rewards_freemenu"] = {id="❄️ • Bekukan Hadiah", en="❄️ • Freeze Rewards"},
+["change_reward_freemenu"]  = {id="🎁 • Ubah Hadiah", en="🎁 • Change Rewards"},
+["misc_mods_freemenu"]      = {id="🛠️ • Modifikasi Lainnya", en="🛠️ • Other Mods"},
+["script_info_freemenu"]    = {id="ℹ️ • Informasi Skrip", en="ℹ️ • Script Information"},
   ["invalid_selection_freemenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
   ["menu_closed_freemenu"] = {id="❌ Menu ditutup.", en="❌ Menu closed."},
-  ["exit_script_freemenu"] = {id="❌ [ << Keluar Skrip >> ]", en="❌ [ << Exit Script >> ]"},
+  ["exit_script_freemenu"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
   
   ----GP Free----
   
