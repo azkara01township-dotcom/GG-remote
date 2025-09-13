@@ -27,10 +27,10 @@ local teks = {
   ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
 	
   ["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
-  ["free_script"] = {id="🔓 Skrip Gratis", en="🔓 Free Script"},
-  ["premium_script"] = {id="💎 Skrip Premium", en="💎 Premium Script"},
-  ["buy_key"] = {id="🔑 Beli Kunci Premium", en="🔑 Buy Premium Key"},
-  ["exit_script"] = {id="❌ [ << Keluar Skrip >> ]", en="❌ [ << Exit Script >> ]"},
+  ["free_script"] = {id="🔓 • Skrip Gratis", en="🔓 • Free Script"},
+  ["premium_script"] = {id="💎 • Skrip Premium", en="💎 • Premium Script"},
+  ["buy_key"] = {id="🔑 • Beli Kunci Premium", en="🔑 • Buy Premium Key"},
+  ["exit_script"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
   
   ----Menu Free----
   
@@ -1015,7 +1015,7 @@ function mainMenu()
     _( "premium_script" ),
     _( "buy_key" ),
     _( "exit_script" )
-  }, {}, _( "main_menu" ))
+  }, nil, _( "main_menu" ))
 
   if menu == 1 then
     menuMode = "free" saveMode(menuMode) freekey()
