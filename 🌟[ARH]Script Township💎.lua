@@ -1189,16 +1189,17 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- 💎 ARH PERMANENT & EXPIRED LOGIN HANDLER (AUTO-SAVE, COUNT USERS)
+-- 💎 ARH PERMANENT & EXPIRED LOGIN HANDLER (AUTO-SAVE, COUNT USERS, ALERT ONCE PER RESTART)
 
-local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu"
-local permanentDevicesFile = "/sdcard/.permuser"
-local expiredDevicesFile = "/sdcard/.vutlenot"
+local passFile            = "/sdcard/.ulog_craft"
+local permCodeFile        = "/sdcard/.brush_viu"
+local permanentDevicesFile = "/sdcard/.permusers"
+local expiredDevicesFile   = "/sdcard/.vutlenot"
+local loginAlertFlag       = "/sdcard/.msto"  -- Flag agar alert muncul sekali
 
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
-local expireDate50  = "2025-09-20"
+local expireDate50  = "2025-09-16"
 local expiredLimit  = 50
 
 -- 🔢 Generate numeric User ID
@@ -1335,8 +1336,11 @@ while not loginOK do
     end
 end
 
--- 📌 Alert login info
-local function showLoginInfo(mode)
+-- 📌 Alert login info hanya sekali per restart
+local function showLoginInfoOnce(mode)
+    local f = io.open(loginAlertFlag, "r")
+    if f then f:close() return end  -- Sudah ditampilkan, skip
+
     local now = os.date("%Y-%m-%d %H:%M:%S")
     if mode == "Permanent Code" then
         gg.toast("✅ Access granted (Permanent)")
@@ -1354,9 +1358,13 @@ local function showLoginInfo(mode)
             now, expireDate50, leftText, mode
         ))
     end
+
+    -- Tandai alert sudah ditampilkan
+    local f2 = io.open(loginAlertFlag, "w")
+    if f2 then f2:write("shown") f2:close() end
 end
 
-showLoginInfo(loginMode)
+showLoginInfoOnce(loginMode)
 		
 local menu = gg.choice({
 _( "special_hack_premenu" ),  -- 🔹 Menu baru di atas limited_events
@@ -9440,6 +9448,7 @@ function adminMenu()
 	os.remove("/sdcard/.silturime")
 	os.remove("/sdcard/.permuser")
 	os.remove("/sdcard/.vutlenot")
+	os.remove("/sdcard/.msto")
     gg.alert(_("logsReset"))
 	resetMode()
     os.exit()
