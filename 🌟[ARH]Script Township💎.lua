@@ -327,7 +327,7 @@ local teks = {
 ["silver_ingot_batangtang"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
 ["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
 ["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
-["go_back_batangtang"]        = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
+["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
 ["no_option_batangtang"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
 ["invalid_option_batangtang"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
 
@@ -538,7 +538,7 @@ local teks = {
 ["cargoAuto1_aripal"]    = {id="✈️ • Muat Pesawat Otomatis", en="✈️ • Cargo Plane Auto-Load"},
 ["heliAuto_aripal"]      = {id="🚁 • Helikopter Siap Otomatis", en="🚁 • Helicopter Auto-Ready"},
 ["trainBoost11_aripal"]  = {id="🚂 • Percepatan Kedatangan Kereta", en="🚂 • Train Arrival Boost"},
-  ["goBack_aripal"]           = {id="❌ [ << Kembali >> ]", en="❌ [ << Go Back >> ]"},
+  ["goBack_aripal"]           = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
   ["noSelect_aripal"]         = {id="❌ Tidak ada pilihan dipilih", en="❌ No options selected"},
   ["invalidOption_aripal"]    = {id="⚠️ Pilihan tidak valid", en="⚠️ Invalid option selected"},
   
@@ -2730,11 +2730,11 @@ function gekom6(caller) applyConstructReward(_("drill_matdung"), "🪛", {
 function tools4()
   local indev = dev
   local menu = gg.choice({
-    "🔨 " .. _("hammer_gudangdang"),
-    "📍 " .. _("nail_gudangdang"),
-    "🪣 " .. _("red_paint_gudangdang"),
-    "❌ [ << " .. _("go_back_gudangdang") .. " >> ]"
-  }, {}, indev)
+    "🔨 • " .. _("hammer_gudangdang"),
+    "📍 • " .. _("nail_gudangdang"),
+    "🪣 • " .. _("red_paint_gudangdang"),
+    "❌ • [ << " .. _("go_back_gudangdang") .. " >> ]"
+  }, nil, indev)
 
   if menu == nil then
     gg.toast("❌ " .. _("no_option_gudangdang"))
@@ -3151,15 +3151,15 @@ end
 function gp3()
   local title = banner
   local menu = gg.choice({
-  "🎍 Decoration Collection",
-  "🚛 Transport Skins",
-  "🪧 City Town Sign",
-  "🧩 Stickers",
-  "🖼️ Frame Style",
-  "👤 Avatar List",
-  "🎖️ Bagde Collection",
-  "❌ [ << Go Back >> ]"
-}, {}, title)
+  "🎍 • Decoration Collection",
+  "🚛 • Transport Skins",
+  "🪧 • City Town Sign",
+  "🧩 • Stickers",
+  "🖼️ • Frame Style",
+  "👤 • Avatar List",
+  "🎖️ • Bagde Collection",
+  "❌ • [ << Go Back >> ]"
+}, nil, title)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -3185,7 +3185,7 @@ local indev = dev
 "🎃 • Halloween Decoration",
 "🏺 • Egypt Decoration",
 "🌟 • Exclusive Decoration",
-    "❌ [ << Go Back >> ]"
+    "❌ • [ << Go Back >> ]"
   }, nil, indev)
 
     if menu == nil then
@@ -5045,24 +5045,6 @@ function classicdekor39() classicdecor(0x6E88, "Deep sea explorers", "🤿") end
 function classicdekor40() classicdecor(0x7188, "Spring holiday", "🌸") end
 function classicdekor41() classicdecor(0x7488, "Knife throwing", "🔪") end
 
-function pad2()  applyHelipadSkin(-0x5d0, "Docking Station", "🤖") end
-function pad3()  applyHelipadSkin(-0x590, "Sleigh Parking Lot", "🎄") end
-function pad4()  applyHelipadSkin(-0x550, "Private Helipad", "🎩") end
-function pad5()  applyHelipadSkin(-0x510, "Veggie Helipad", "🥗") end
-function pad6()  applyHelipadSkin(-0x4d0, "Sultan's Palace", "🕌") end
-function pad7()  applyHelipadSkin(-0x490, "Five-Star Helipad", "🏖️") end
-function pad8()  applyHelipadSkin(-0x450, "Wanderers' Harbor", "🧳") end
-function pad9()  applyHelipadSkin(-0x410, "Fitness Pad", "🏃‍♂️") end
-function pad10() applyHelipadSkin(-0x3d0, "Royal Palace", "🏰") end
-function pad11() applyHelipadSkin(-0x390, "Detective Agency", "🕵️") end
-function pad12() applyHelipadSkin(-0x350, "Haunted Tower", "🎃") end
-function pad13() applyHelipadSkin(-0x310, "Carnival Platform (🇧🇷)", "🎭") end
-function pad14() applyHelipadSkin(-0x2d0, "Easter Helipad", "🐰") end
-function pad15() applyHelipadSkin(-0x290, "Underwater Palace", "💧") end
-function pad16() applyHelipadSkin(-0x250, "Pirate Helipad", "🏴‍☠️") end
-function pad17() applyHelipadSkin(-0x210, "Festive Helipad", "🐉") end
-function pad18() applyHelipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
-
 function kums1()
 local indev = dev
   local menu = gg.choice({
@@ -5071,7 +5053,7 @@ local indev = dev
 "🚄 • Train Skins",
 "🛳️ • Ship Skins",
 "🏯 • Fortress Skins",
-    "❌ [ << Go Back >> ]"
+    "❌ • [ << Go Back >> ]"
   }, nil, indev)
 
     if menu == nil then
@@ -6139,7 +6121,7 @@ local indev = dev
   local menu = gg.choice({
     "⛵ • Port Skins",
     "⛵ • Ship Skins",
-    "❌ [ << Go Back >> ]"
+    "❌ • [ << Go Back >> ]"
   }, nil,indev)
 
   if menu == nil then
@@ -6623,7 +6605,7 @@ local indev = dev
   local menu = gg.choice({
 "🪧 • Event Townsign",
 "🪧 • Random Townsign",
-    "❌  [ << Go Back >> ]"
+    "❌ • [ << Go Back >> ]"
   }, nil,indev)
 
   if menu == nil then
