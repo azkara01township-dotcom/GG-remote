@@ -6548,8 +6548,8 @@ function getAddr()
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
-  gg.refineNumber("1651733601", gg.TYPE_DWORD)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
   if #r == 0 then gg.alert("❌ Address not found.\nOpen fortress skin first.") return nil end
 
@@ -6559,14 +6559,14 @@ function getAddr()
   return newAddr
 end
 
--- 🏆 Fortress Skin Source Base
+-- 🏰 Fortress Skin Source Base
 local baseFortressAddr = nil
 function initFortressSkinSearch()
   if baseFortressAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
-  gg.refineNumber("1651733601", gg.TYPE_DWORD)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
   if #r == 0 then gg.alert("❌ Fortress skin structure not found.") return false end
   baseFortressAddr = r[1].address
