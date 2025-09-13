@@ -1336,17 +1336,21 @@ while not loginOK do
     end
 end
 
--- 📌 Alert login info hanya sekali per restart
+-- 📌 Alert login info hanya sekali per restart & jumlah user selalu akurat
 local function showLoginInfoOnce(mode)
     local f = io.open(loginAlertFlag, "r")
     if f then f:close() return end  -- Sudah ditampilkan, skip
+
+    -- Reload devices dari file untuk update jumlah user
+    local permanentDevicesUpdated = loadDevices(permanentDevicesFile)
+    local expiredDevicesUpdated   = loadDevices(expiredDevicesFile)
 
     local now = os.date("%Y-%m-%d %H:%M:%S")
     if mode == "Permanent Code" then
         gg.toast("✅ Access granted (Permanent)")
         gg.alert(string.format(
             "✅ Permanent Login Success\n\n📊 Permanent Users: %s/∞\n📅 Login: %s\n🔑 Type: %s",
-            tostring(#permanentDevices), now, mode
+            tostring(#permanentDevicesUpdated), now, mode
         ))
     elseif mode == "Expired Code" then
         local daysLeft = getDaysLeft(expireDate50)
@@ -1354,7 +1358,7 @@ local function showLoginInfoOnce(mode)
         gg.toast("✅ Access granted (Expired)")
         gg.alert(string.format(
             "✅ Expired Login Success\n\n📊 Expired Users: %s/%s\n📅 Login: %s\n⏳ Expire Date: %s\n⏳ %s\n🔑 Type: %s",
-            tostring(#expiredDevices), tostring(expiredLimit),
+            tostring(#expiredDevicesUpdated), tostring(expiredLimit),
             now, expireDate50, leftText, mode
         ))
     end
