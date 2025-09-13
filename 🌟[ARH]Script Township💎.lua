@@ -442,7 +442,7 @@ local teks = {
   
   ----spesial menu----
     
-    ["option1_spesial"] = {id = "🏁 • Selesaikan Tugas Secara Otomatis", en = "🏁 • Auto-Complete Tasks"},
+    ["option1_spesial"] = {id = "🌊 • Selesaikan Tugas Secara Otomatis", en = "🌊 • Auto-Complete Tasks"},
 ["option2_spesial"] = {id = "👍 • Like Kota Tanpa Batas", en = "👍 • Unlimited City Likes"},
     ["back_spesial"] = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
     ["noSelection_spesial"] = {id = "❌ Tidak ada opsi dipilih", en = "❌ No options selected"},
