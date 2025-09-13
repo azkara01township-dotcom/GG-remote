@@ -7770,10 +7770,10 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 function kums6()
 local indev = dev
   local menu = gg.choice({
- "🃏 • Card Pack Badge",
-"🎖️ • Collection Badge",
-    "❌ • [ << Go Back >> ]"
-  }, nil,indev)
+ "🃏 Card Collection Pack Badge",
+"🎖️ Collection Badge",
+    "❌ [ << Go Back >> ]"
+  }, {},indev)
 
   if menu == nil then
     gg.toast("⚠️ No option selected!")
@@ -7823,13 +7823,13 @@ while true do
   gg.clearResults()
 
   local skins = {
-"🏙️ • Town Badge",
-"🏆 • Legendary Town Badge",
-"🃏 • Badge Title",
-"🎖️ • Grand Bage Title",
-"⛄ • Winter Badge",
-"❄️ • Legendary Winter Badge",
-    "❌ • [ << Go Back >> ]"
+"🏙️ Town Badge",
+"🏆 Legendary Town Badge",
+"🃏 Badge Title",
+"🎖️ Grand Bage Title",
+"⛄ Winter Badge",
+"❄️ Legendary Winter Badge",
+    "❌  [ << Go Back >> ]"
   }
 
   local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
