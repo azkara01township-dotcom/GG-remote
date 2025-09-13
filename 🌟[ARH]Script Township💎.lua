@@ -2372,7 +2372,7 @@ function tools1(caller)
   local menu = gg.choice({
     "🥉 • " .. _("bronze_ingot_batangtang"),
     "🥈 • " .. _("silver_ingot_batangtang"),
-    "🥇 " .. _("gold_ingot_batangtang"),
+    "🥇 • " .. _("gold_ingot_batangtang"),
     "🏅 • " .. _("platinum_ingot_batangtang"),
     "❌ • [ << " .. _("go_back_batangtang") .. " >> ]"
   }, nil, indev)
@@ -7755,7 +7755,7 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 function kums6()
 local indev = dev
   local menu = gg.choice({
- "🃏 • Card Collection Pack Badge",
+ "🃏 • Card Pack Badge",
 "🎖️ • Collection Badge",
     "❌ • [ << Go Back >> ]"
   }, nil,indev)
