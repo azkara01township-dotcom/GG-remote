@@ -5176,7 +5176,7 @@ local fileAddr = folder .. "addresscache.txt"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 📍 Get Helipad Address
+-- 📍 Get Helipad Skin Address
 function getAddr()
   local f = io.open(fileAddr, "r")
   local addr = f and tonumber(f:read("*l")) or nil
@@ -5194,7 +5194,7 @@ function getAddr()
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen helipad/ship first.") return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen helipad skin first.") return nil end
 
   local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
@@ -5202,24 +5202,24 @@ function getAddr()
   return newAddr
 end
 
--- 📦 Helipad Skin Source Base
-local baseSkinAddr = nil
-function initHelipadSearch()
-  if baseSkinAddr then return true end
+-- 🛬 Helipad Skin Source Base
+local baseHelipadAddr = nil
+function initHelipadSkinSearch()
+  if baseHelipadAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Helipad structure not found.") return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Helipad skin structure not found.") return false end
+  baseHelipadAddr = r[1].address
   return true
 end
 
--- 🚁 Apply Helipad Skin
-function applyHelipadSkin(offset, label, emoji)
-  if not initHelipadSearch() then return end
-  local src = baseSkinAddr + offset
+-- 🏆 Apply Helipad Skin
+function helipadSkin(offset, label, emoji)
+  if not initHelipadSkinSearch() then return end
+  local src = baseHelipadAddr + offset
   local vals = {}
   for i = 0, 5 do
     table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
@@ -5242,27 +5242,27 @@ function applyHelipadSkin(offset, label, emoji)
   end
 
   gg.setValues(newVals)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  gg.toast(emoji .. " " .. label .. " helipad skin applied!")
 end
 
-function pad1()  applyHelipadSkin(-0x610, "Flying Saucer Hangar", "🛸") end
-function pad2()  applyHelipadSkin(-0x5d0, "Docking Station", "🤖") end
-function pad3()  applyHelipadSkin(-0x590, "Sleigh Parking Lot", "🎄") end
-function pad4()  applyHelipadSkin(-0x550, "Private Helipad", "🎩") end
-function pad5()  applyHelipadSkin(-0x510, "Veggie Helipad", "🥗") end
-function pad6()  applyHelipadSkin(-0x4d0, "Sultan's Palace", "🕌") end
-function pad7()  applyHelipadSkin(-0x490, "Five-Star Helipad", "🏖️") end
-function pad8()  applyHelipadSkin(-0x450, "Wanderers' Harbor", "🧳") end
-function pad9()  applyHelipadSkin(-0x410, "Fitness Pad", "🏃‍♂️") end
-function pad10() applyHelipadSkin(-0x3d0, "Royal Palace", "🏰") end
-function pad11() applyHelipadSkin(-0x390, "Detective Agency", "🕵️") end
-function pad12() applyHelipadSkin(-0x350, "Haunted Tower", "🎃") end
-function pad13() applyHelipadSkin(-0x310, "Carnival Platform (🇧🇷)", "🎭") end
-function pad14() applyHelipadSkin(-0x2d0, "Easter Helipad", "🐰") end
-function pad15() applyHelipadSkin(-0x290, "Underwater Palace", "💧") end
-function pad16() applyHelipadSkin(-0x250, "Pirate Helipad", "🏴‍☠️") end
-function pad17() applyHelipadSkin(-0x210, "Festive Helipad", "🐉") end
-function pad18() applyHelipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
+function pad1()  helipadSkin(-0x610, "Flying Saucer Hangar", "🛸") end
+function pad2()  helipadSkin(-0x5d0, "Docking Station", "🤖") end
+function pad3()  helipadSkin(-0x590, "Sleigh Parking Lot", "🎄") end
+function pad4()  helipadSkin(-0x550, "Private Helipad", "🎩") end
+function pad5()  helipadSkin(-0x510, "Veggie Helipad", "🥗") end
+function pad6()  helipadSkin(-0x4d0, "Sultan's Palace", "🕌") end
+function pad7()  helipadSkin(-0x490, "Five-Star Helipad", "🏖️") end
+function pad8()  helipadSkin(-0x450, "Wanderers' Harbor", "🧳") end
+function pad9()  helipadSkin(-0x410, "Fitness Pad", "🏃‍♂️") end
+function pad10() helipadSkin(-0x3d0, "Royal Palace", "🏰") end
+function pad11() helipadSkin(-0x390, "Detective Agency", "🕵️") end
+function pad12() helipadSkin(-0x350, "Haunted Tower", "🎃") end
+function pad13() helipadSkin(-0x310, "Carnival Platform (🇧🇷)", "🎭") end
+function pad14() helipadSkin(-0x2d0, "Easter Helipad", "🐰") end
+function pad15() helipadSkin(-0x290, "Underwater Palace", "💧") end
+function pad16() helipadSkin(-0x250, "Pirate Helipad", "🏴‍☠️") end
+function pad17() helipadSkin(-0x210, "Festive Helipad", "🐉") end
+function pad18() helipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
 
 function skinhel2()
   while true do
@@ -5334,24 +5334,22 @@ if not choice then
   end
 end
 
--- 📁 Cache & Folder Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem, fileAddr = folder .. "itemcache.txt", folder .. "addresscache.txt"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 Safe Delete
-local function deleteFile(path) pcall(function() os.remove(path) end) end
-
--- 📍 Get or Search Helicopter Address
+-- 📍 Get Helicopter Skin Address
 function getAddr()
-  local file = io.open(fileAddr, "r")
-  local addr = file and tonumber(file:read("*l") or "") or nil
-  if file then file:close() end
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
 
   if addr then
-    local check = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 30 then return addr end
-    deleteFile(fileAddr); deleteFile(fileItem)
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
@@ -5360,76 +5358,75 @@ function getAddr()
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nMake sure the helicopter is open.") return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen helicopter skin first.") return nil end
 
-  addr = r[1].address
+  local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
-  if save then save:write(addr) save:close() end
-  return addr
+  if save then save:write(newAddr) save:close() end
+  return newAddr
 end
 
--- 🔍 Search Helicopter Base Skin Address
-local baseSkinAddr = nil
-function initHelicopterSearch()
-  if baseSkinAddr then return true end
+-- 🚁 Helicopter Skin Source Base
+local baseHelicopterAddr = nil
+function initHelicopterSkinSearch()
+  if baseHelicopterAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Failed to find helicopter structure.") return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Helicopter skin structure not found.") return false end
+  baseHelicopterAddr = r[1].address
   return true
 end
 
--- 🚁 Apply Helicopter Skin
-function applyHelicopterSkin(offset, label, emoji)
-  if not initHelicopterSearch() then return end
-
-  local src = baseSkinAddr + offset
-  local source = {}
+-- 🏆 Apply Helicopter Skin
+function helicopterSkin(offset, label, emoji)
+  if not initHelicopterSkinSearch() then return end
+  local src = baseHelicopterAddr + offset
+  local vals = {}
   for i = 0, 5 do
-    source[i+1] = {address = src + i * 4, flags = gg.TYPE_DWORD}
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
   end
-  source = gg.getValues(source)
+  vals = gg.getValues(vals)
 
   local target = getAddr()
   if not target then return end
   target = target - 0x48
 
-  local values = {}
-  for i, v in ipairs(source) do
-    values[i] = {address = target + (i-1)*4, value = v.value, flags = gg.TYPE_DWORD}
-  end
-  table.insert(values, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(values, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-
-  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(values, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  gg.setValues(values)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " helicopter skin applied!")
 end
 
-function hel1()  applyHelicopterSkin(-0x50,  "Turbo Saucer", "🛸") end
-function hel2()  applyHelicopterSkin(-0xD0, "Robot Courier", "🤖") end
-function hel3()  applyHelicopterSkin(-0x150, "Santa's Sleigh", "🎅") end
-function hel4()  applyHelicopterSkin(-0x10,  "Private Helicopter", "🎩") end
-function hel5()  applyHelicopterSkin(0x30,   "Eggplant Helicopter", "🥗") end
-function hel6()  applyHelicopterSkin(0x70,   "Flying Carpet", "🕌") end
-function hel7()  applyHelicopterSkin(0xB0,   "Chic Lounge Drone", "🏖️") end -- typo diperbaiki
-function hel8()  applyHelicopterSkin(0xF0,   "Flying Ship", "🧳") end
-function hel9()  applyHelicopterSkin(0x130,  "Helicycle", "🏃‍♂️") end
-function hel10() applyHelicopterSkin(0x170,  "Pumpkin Helicopter", "🎃") end
-function hel11() applyHelicopterSkin(0x1B0,  "Surveillance Airship", "🕵️") end
-function hel12() applyHelicopterSkin(0x1F0,  "Flying Cauldron", "🎃") end
-function hel13() applyHelicopterSkin(0x230,  "Feathery Helicopter", "🎭") end
-function hel14() applyHelicopterSkin(0x270,  "Egg Chopper", "🐰") end
-function hel15() applyHelicopterSkin(0x2B0,  "Flying Bathyscaphe", "💧") end
-function hel16() applyHelicopterSkin(0x2F0,  "Pirate Helicopter", "🏴‍☠️") end
-function hel17() applyHelicopterSkin(0x330,  "Festive Helicopter", "🐉") end
-function hel18() applyHelicopterSkin(0x370,  "Ballroom Helicopter", "💃") end      
+function hel1()  helicopterSkin(-0x50,  "Turbo Saucer", "🛸") end
+function hel2()  helicopterSkin(-0xD0, "Robot Courier", "🤖") end
+function hel3()  helicopterSkin(-0x150, "Santa's Sleigh", "🎅") end
+function hel4()  helicopterSkin(-0x10,  "Private Helicopter", "🎩") end
+function hel5()  helicopterSkin(0x30,   "Eggplant Helicopter", "🥗") end
+function hel6()  helicopterSkin(0x70,   "Flying Carpet", "🕌") end
+function hel7()  helicopterSkin(0xB0,   "Chic Lounge Drone", "🏖️") end -- typo diperbaiki
+function hel8()  helicopterSkin(0xF0,   "Flying Ship", "🧳") end
+function hel9()  helicopterSkin(0x130,  "Helicycle", "🏃‍♂️") end
+function hel10() helicopterSkin(0x170,  "Pumpkin Helicopter", "🎃") end
+function hel11() helicopterSkin(0x1B0,  "Surveillance Airship", "🕵️") end
+function hel12() helicopterSkin(0x1F0,  "Flying Cauldron", "🎃") end
+function hel13() helicopterSkin(0x230,  "Feathery Helicopter", "🎭") end
+function hel14() helicopterSkin(0x270,  "Egg Chopper", "🐰") end
+function hel15() helicopterSkin(0x2B0,  "Flying Bathyscaphe", "💧") end
+function hel16() helicopterSkin(0x2F0,  "Pirate Helicopter", "🏴‍☠️") end
+function hel17() helicopterSkin(0x330,  "Festive Helicopter", "🐉") end
+function hel18() helicopterSkin(0x370,  "Ballroom Helicopter", "💃") end      
 
 function colek2()
 local indev = dev
@@ -5517,26 +5514,22 @@ if not choice then
   end
 end
 
--- 📁 Setup Cache
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem, fileAddr = folder.."itemcache.txt", folder.."addresscache.txt"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 Hapus File Aman
-local function deleteFile(path)
-  pcall(function() os.remove(path) end)
-end
-
--- 📍 Ambil Alamat Bandara (Cache / Cari Baru)
+-- 📍 Get Airport Skin Address
 function getAddr()
-  local file = io.open(fileAddr, "r")
-  local addr = file and tonumber(file:read("*l") or "") or nil
-  if file then file:close() end
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
 
   if addr then
-    local val = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if val[1] and val[1].value == 30 then return addr end
-    deleteFile(fileAddr); deleteFile(fileItem)
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
@@ -5544,88 +5537,76 @@ function getAddr()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
   gg.refineNumber("6646134", gg.TYPE_DWORD)
-  local result = gg.getResults(1)
-  if #result == 0 then gg.alert("❌ Address not found.\nMake sure the airport is open.") return nil end
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen airport skin first.") return nil end
 
-  local newAddr = result[1].address
-  local f = io.open(fileAddr, "w")
-  if f then f:write(newAddr) f:close() end
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
   return newAddr
 end
 
--- 🔍 Cari Struktur Bandara Sekali
-local baseSkinAddr = nil
-function initAirportSearch()
-  if baseSkinAddr then return true end
-  gg.setVisible(false)
+-- 🛬 Airport Skin Source Base
+local baseAirportAddr = nil
+function initAirportSkinSearch()
+  if baseAirportAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
   gg.refineNumber("6646134", gg.TYPE_DWORD)
-  local res = gg.getResults(1)
-  if #res == 0 then gg.alert("❌ Airport structure not found.") return false end
-  baseSkinAddr = res[1].address
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Airport skin structure not found.") return false end
+  baseAirportAddr = r[1].address
   return true
 end
 
--- 🎨 Terapkan Skin Bandara
-function applyAirportSkin(input, emoji, label)
-  local addr = getAddr()
-  if not addr then return end
-  addr = addr - 0x48
+-- 🏆 Apply Airport Skin
+function airportSkin(offset, label, emoji)
+  if not initAirportSkinSearch() then return end
+  local src = baseAirportAddr + offset
   local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
 
-  if type(input) == "number" then
-    if not initAirportSearch() then return end
-    local src = baseSkinAddr + input
-    local temp = {}
-    for i = 0, 5 do
-      table.insert(temp, {address = src + i * 4, flags = gg.TYPE_DWORD})
-    end
-    temp = gg.getValues(temp)
-    for i, v in ipairs(temp) do
-      table.insert(vals, {address = addr + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
-    end
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
 
-  elseif type(input) == "table" then
-    for i, v in ipairs(input) do
-      table.insert(vals, {address = addr + (i - 1) * 4, value = v, flags = gg.TYPE_DWORD})
-    end
-  else
-    gg.alert("❌ Invalid input format.") return
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  -- ➕ Tambahan nilai tetap
-  table.insert(vals, {address = addr + 24, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(vals, {address = addr + 28, value = 1, flags = gg.TYPE_DWORD})
-
-  -- 🧹 Kosongkan offset sampah
-  for _, o in ipairs{0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C} do
-    table.insert(vals, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
-  gg.setValues(vals)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " airport skin applied!")
 end
 
 -- 🛫 Airport Skins List
-function das1()  applyAirportSkin(-0x190, "🛫", "Aeriel Portal") end
-function das2()  applyAirportSkin(-0x150, "🐲", "Festival Airport") end
-function das3()  applyAirportSkin(-0x110, "🌴", "Tropical Airport") end
-function das4()  applyAirportSkin(-0xD0,  "👻", "Ghost Airport") end
-function das5()  applyAirportSkin(-0x90,  "🪐", "Space Airport") end
-function das6()  applyAirportSkin(-0x50,  "🎸", "Rock Airport") end
-function das7()  applyAirportSkin(-0x10,  "🎬", "Cinema Airport") end
-function das8()  applyAirportSkin(0x30,   "🎅", "Santa's Residence") end
-function das9()  applyAirportSkin(0x70,   "🐣", "Easter Airport") end
-function das10() applyAirportSkin(0xB0,   "🍭", "Sugary Airport") end
-function das11() applyAirportSkin(0xF0,   "🎿", "Ski Station") end
-function das12() applyAirportSkin(0x130,  "🌈", "Rainbow's End Airport") end
-function das13() applyAirportSkin(0x170,  "🕵️", "Secret Base") end
-function das14() applyAirportSkin(0x1B0,  "🌟", "Five-Star Airport") end
-function das15() applyAirportSkin(0x1F0,  "🎼", "Symphony Airport") end
-function das16() applyAirportSkin({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0x6F696873,0x0000006E}, "👗", "Fashion Airport") end
-function das17() applyAirportSkin({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "🕌", "Arabian Airport") end
+function das1()  airportSkin(-0x190, "🛫", "Aeriel Portal") end
+function das2()  airportSkin(-0x150, "🐲", "Festival Airport") end
+function das3()  airportSkin(-0x110, "🌴", "Tropical Airport") end
+function das4()  airportSkin(-0xD0,  "👻", "Ghost Airport") end
+function das5()  airportSkin(-0x90,  "🪐", "Space Airport") end
+function das6()  airportSkin(-0x50,  "🎸", "Rock Airport") end
+function das7()  airportSkin(-0x10,  "🎬", "Cinema Airport") end
+function das8()  airportSkin(0x30,   "🎅", "Santa's Residence") end
+function das9()  airportSkin(0x70,   "🐣", "Easter Airport") end
+function das10() airportSkin(0xB0,   "🍭", "Sugary Airport") end
+function das11() airportSkin(0xF0,   "🎿", "Ski Station") end
+function das12() airportSkin(0x130,  "🌈", "Rainbow's End Airport") end
+function das13() airportSkin(0x170,  "🕵️", "Secret Base") end
+function das14() airportSkin(0x1B0,  "🌟", "Five-Star Airport") end
+function das15() airportSkin(0x1F0,  "🎼", "Symphony Airport") end
+function das16() airportSkin({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0x6F696873,0x0000006E}, "👗", "Fashion Airport") end
+function das17() airportSkin({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "🕌", "Arabian Airport") end
 
 function bandara2()
   while true do
@@ -5696,91 +5677,99 @@ if not choice then
   end
 end
 
--- 📁 Cache Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem = folder .. "itemcache.txt"
 local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 File Deletion
-local function deleteFile(p) pcall(function() os.remove(p) end) end
-
--- 📍 Get or Search Airplane Address
+-- 📍 Get Airplane Skin Address
 function getAddr()
   local f = io.open(fileAddr, "r")
-  local addr = f and tonumber(f:read("*l") or "") f = f and f:close()
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
   if addr then
-    local v = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if v[1] and v[1].value == 30 then return addr
-    else deleteFile(fileAddr) deleteFile(fileItem) gg.toast("🗑️ Cache cleared (game restarted)") end
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("🗑️ Cache cleared (game restarted)")
   end
-  gg.clearResults(); gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
   gg.refineNumber("7037807", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nMake sure the airplane is open.") return end
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen airplane skin first.") return nil end
+
   local newAddr = r[1].address
-  local f = io.open(fileAddr, "w") if f then f:write(newAddr) f:close() end
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
   return newAddr
 end
 
--- 🔍 Init Airplane Structure
-local baseSkinAddr
-function initAirplaneSearch()
-  if baseSkinAddr then return true end
-  gg.setVisible(false); gg.clearResults(); gg.setRanges(gg.REGION_C_ALLOC)
+-- 🛫 Airplane Skin Source Base
+local baseAirplaneAddr = nil
+function initAirplaneSkinSearch()
+  if baseAirplaneAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
   gg.refineNumber("7037807", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Failed to find airplane structure.") return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Airplane skin structure not found.") return false end
+  baseAirplaneAddr = r[1].address
   return true
 end
 
--- ✈️ Apply Skin
-function applyAirplaneSkin(offset, emoji, label)
-  if not initAirplaneSearch() then return end
-  local src = baseSkinAddr + offset
+-- 🏆 Apply Airplane Skin
+function airplaneSkin(offset, label, emoji)
+  if not initAirplaneSkinSearch() then return end
+  local src = baseAirplaneAddr + offset
   local vals = {}
-  for i = 0, 5 do table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD}) end
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
   vals = gg.getValues(vals)
 
-  local addr = getAddr() if not addr then return end
-  addr = addr - 0x48
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
   local newVals = {}
   for i, v in ipairs(vals) do
-    newVals[#newVals+1] = {address = addr + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD}
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  -- Tambah nilai tetap & reset offset tak terpakai
-  table.insert(newVals, {address = addr + 6*4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = addr + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs{0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C} do
-    table.insert(newVals, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
   gg.setValues(newVals)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  gg.toast(emoji .. " " .. label .. " airplane skin applied!")
 end
 
 -- 🛫 Airplane Skins
-function wat1()  applyAirplaneSkin(0x3B0, "🛫", "Ultra Plane") end
-function wat2()  applyAirplaneSkin(0x2F0, "🐲", "Sky Dragon") end
-function wat3()  applyAirplaneSkin(0x230, "🌴", "Tropical Biplane") end
-function wat4()  applyAirplaneSkin(0x170, "👻", "Ghost Plane") end
-function wat5()  applyAirplaneSkin(0xB0,  "🪐", "Launch Vehicle") end
-function wat6()  applyAirplaneSkin(-0x10,  "🎸", "Rock Plane") end
-function wat7()  applyAirplaneSkin(-0xD0,  "🎬", "A-Lister Jet") end
-function wat8()  applyAirplaneSkin(-0x190, "🎅", "Holiday Plane") end
-function wat9()  applyAirplaneSkin(-0x250, "🐣", "Bird Plane") end
-function wat10() applyAirplaneSkin(-0x310, "🍭", "Éclair Plane") end
-function wat11() applyAirplaneSkin(-0x3D0, "🎿", "Aero Sleigh") end
-function wat12() applyAirplaneSkin(-0x490, "🌈", "Lucky Jet") end
-function wat13() applyAirplaneSkin(-0x550, "🕵️", "Stealth Aircraft") end
-function wat14() applyAirplaneSkin(-0x610, "🌟", "Seaplane") end
-function wat15() applyAirplaneSkin(-0x6D0, "🎼", "Symphony Plane") end
-function wat16() applyAirplaneSkin(-0x850, "👗", "Fashion Plane") end
-function wat17() applyAirplaneSkin(-0x790, "🕌", "Arabian Plane") end
+function wat1()  airplaneSkin(0x3B0, "🛫", "Ultra Plane") end
+function wat2()  airplaneSkin(0x2F0, "🐲", "Sky Dragon") end
+function wat3()  airplaneSkin(0x230, "🌴", "Tropical Biplane") end
+function wat4()  airplaneSkin(0x170, "👻", "Ghost Plane") end
+function wat5()  airplaneSkin(0xB0,  "🪐", "Launch Vehicle") end
+function wat6()  airplaneSkin(-0x10,  "🎸", "Rock Plane") end
+function wat7()  airplaneSkin(-0xD0,  "🎬", "A-Lister Jet") end
+function wat8()  airplaneSkin(-0x190, "🎅", "Holiday Plane") end
+function wat9()  airplaneSkin(-0x250, "🐣", "Bird Plane") end
+function wat10() airplaneSkin(-0x310, "🍭", "Éclair Plane") end
+function wat11() airplaneSkin(-0x3D0, "🎿", "Aero Sleigh") end
+function wat12() airplaneSkin(-0x490, "🌈", "Lucky Jet") end
+function wat13() airplaneSkin(-0x550, "🕵️", "Stealth Aircraft") end
+function wat14() airplaneSkin(-0x610, "🌟", "Seaplane") end
+function wat15() airplaneSkin(-0x6D0, "🎼", "Symphony Plane") end
+function wat16() airplaneSkin(-0x850, "👗", "Fashion Plane") end
+function wat17() airplaneSkin(-0x790, "🕌", "Arabian Plane") end
 
 -------------------------------------------------
 
@@ -5871,22 +5860,22 @@ if not choice then
   end
 end
 
--- 📁 Cache Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem, fileAddr = folder.."itemcache.txt", folder.."addresscache.txt"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 Delete File Safely
-local function deleteFile(path) pcall(function() os.remove(path) end) end
-
--- 📍 Get Cached or Search Station Address
+-- 📍 Get Station Skin Address
 function getAddr()
   local f = io.open(fileAddr, "r")
-  local addr = f and tonumber(f:read("*l") or "") f:close()
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
   if addr then
-    local v = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if v and v[1] and v[1].value == 30 then return addr end
-    deleteFile(fileAddr) deleteFile(fileItem)
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
@@ -5895,71 +5884,76 @@ function getAddr()
   gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
   gg.refineNumber("1768844127", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen the station first.") return end
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen station skin first.") return nil end
+
   local newAddr = r[1].address
-  local f = io.open(fileAddr, "w") if f then f:write(newAddr) f:close() end
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
   return newAddr
 end
 
--- 📦 Base Station Structure
-local baseSkinAddr = nil
-
--- 🔍 Init Station Search Once
-function initStationSearch()
-  if baseSkinAddr then return true end
-  gg.setVisible(false) gg.clearResults()
+-- 🏆 Station Skin Source Base
+local baseStationAddr = nil
+function initStationSkinSearch()
+  if baseStationAddr then return true end
+  gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
   gg.refineNumber("1768844127", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Station structure not found.\nEnter the correct game state.") return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Station skin structure not found.") return false end
+  baseStationAddr = r[1].address
   return true
 end
 
--- 🎨 Apply Station Skin
-function applyStationSkin(offset, label)
-  if not initStationSearch() then return end
-  local src = baseSkinAddr + offset
-  local val = {} for i = 0, 5 do table.insert(val, {address = src + i*4, flags = gg.TYPE_DWORD}) end
-  val = gg.getValues(val)
+-- 🏆 Apply Station Skin
+function stationSkin(offset, label, emoji)
+  if not initStationSkinSearch() then return end
+  local src = baseStationAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
 
-  local target = getAddr() if not target then return end
+  local target = getAddr()
+  if not target then return end
   target = target - 0x48
 
-  local write = {}
-  for i, v in ipairs(val) do
-    table.insert(write, {address = target + (i-1)*4, value = v.value, flags = gg.TYPE_DWORD})
-  end
-  table.insert(write, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(write, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(write, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  gg.setValues(write)
-  gg.toast("🎨 " .. label .. " skin applied!")
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " station skin applied!")
 end
 
 -- 🎨 Station Skin Functions
-function sta1() applyStationSkin(-0x400, "🌺 Flower Station") end
-function sta2() applyStationSkin(-0x298, "🎄 Christmas Station (2)") end
-function sta3() applyStationSkin(-0x1D8, "🎃 Halloween Station") end
-function sta4() applyStationSkin(-0x118, "🏛️ Roman Station") end
-function sta5() applyStationSkin(-0x58, "🏰 Castle Station") end
-function sta6() applyStationSkin(0x68, "🎶 Record Station") end
-function sta7() applyStationSkin(0x128, "🏕️ Training Camp") end
-function sta8() applyStationSkin(0x1E8, "🪐 Space Station") end
-function sta9() applyStationSkin(0x2A8, "🐲 Chinese Station") end
-function sta10() applyStationSkin(0x368, "🎭 Theater Set Station") end
-function sta11() applyStationSkin(0x428, "🦴 Ancient Settlement") end
-function sta12() applyStationSkin(0x4E8, "🐣 Easter Station") end
-function sta13() applyStationSkin(0x5A8, "🎁 Christmas Station (1)") end
-function sta14() applyStationSkin(0x668, "🤠 Cowboys Station") end
-function sta15() applyStationSkin(0x728, "💃 Disco Station") end
-function sta16() applyStationSkin(0x7E8, "👻 Ghost Station") end
-function sta17() applyStationSkin(0x8A8, "🌀 Express Portal") end
-function sta18() applyStationSkin(-0x358, "🏛️ Mythic Station") end
+function sta1() stationSkin(-0x400, "🌺 Flower Station") end
+function sta2() stationSkin(-0x298, "🎄 Christmas Station (2)") end
+function sta3() stationSkin(-0x1D8, "🎃 Halloween Station") end
+function sta4() stationSkin(-0x118, "🏛️ Roman Station") end
+function sta5() stationSkin(-0x58, "🏰 Castle Station") end
+function sta6() stationSkin(0x68, "🎶 Record Station") end
+function sta7() stationSkin(0x128, "🏕️ Training Camp") end
+function sta8() stationSkin(0x1E8, "🪐 Space Station") end
+function sta9() stationSkin(0x2A8, "🐲 Chinese Station") end
+function sta10() stationSkin(0x368, "🎭 Theater Set Station") end
+function sta11() stationSkin(0x428, "🦴 Ancient Settlement") end
+function sta12() stationSkin(0x4E8, "🐣 Easter Station") end
+function sta13() stationSkin(0x5A8, "🎁 Christmas Station (1)") end
+function sta14() stationSkin(0x668, "🤠 Cowboys Station") end
+function sta15() stationSkin(0x728, "💃 Disco Station") end
+function sta16() stationSkin(0x7E8, "👻 Ghost Station") end
+function sta17() stationSkin(0x8A8, "🌀 Express Portal") end
+function sta18() stationSkin(-0x358, "🏛️ Mythic Station") end
 
 -------------------------------------------------
 
@@ -6033,25 +6027,23 @@ if not choice then
   end
 end
 
--- 📁 Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
 local fileAddr = folder .. "addresscache.txt"
-local baseSkinAddr = nil
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 File Deletion
-local function deleteFile(path) pcall(function() os.remove(path) end) end
-
--- 📍 Get Train Address
+-- 📍 Get Train Skin Address
 function getAddr()
   local f = io.open(fileAddr, "r")
   local addr = f and tonumber(f:read("*l")) or nil
   if f then f:close() end
 
   if addr then
-    local val = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if val[1] and val[1].value == 30 then return addr end
-    deleteFile(fileAddr) gg.toast("🗑️ Cache cleared (game restarted)")
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
   gg.clearResults()
@@ -6059,75 +6051,76 @@ function getAddr()
   gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
   gg.refineNumber("1734962795", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen the train first."); return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen train skin first.") return nil end
 
   local newAddr = r[1].address
-  local f = io.open(fileAddr, "w") if f then f:write(newAddr) f:close() end
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
   return newAddr
 end
 
--- 🔍 Init Skin Structure
-function initTrainSearch()
-  if baseSkinAddr then return true end
-  gg.setVisible(false)
+-- 🏆 Train Skin Source Base
+local baseTrainAddr = nil
+function initTrainSkinSearch()
+  if baseTrainAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
   gg.refineNumber("1734962795", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Train structure not found."); return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Train skin structure not found.") return false end
+  baseTrainAddr = r[1].address
   return true
 end
 
--- 🚂 Apply Train Skin
-function applyTrainSkin(offset, emoji, label)
-  if not initTrainSearch() then return end
-  local source = baseSkinAddr + offset
-  local copied = {}
+-- 🏆 Apply Train Skin
+function trainSkin(offset, label, emoji)
+  if not initTrainSkinSearch() then return end
+  local src = baseTrainAddr + offset
+  local vals = {}
   for i = 0, 5 do
-    copied[i+1] = {address = source + (i * 4), flags = gg.TYPE_DWORD}
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
   end
-  copied = gg.getValues(copied)
+  vals = gg.getValues(vals)
 
-  local target = getAddr() if not target then return end
+  local target = getAddr()
+  if not target then return end
   target = target - 0x48
 
-  local patched = {}
-  for i, v in ipairs(copied) do
-    patched[i] = {address = target + ((i - 1) * 4), value = v.value, flags = gg.TYPE_DWORD}
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  table.insert(patched, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patched, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-
-  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(patched, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
-  gg.setValues(patched)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " train skin applied!")
 end
 
 -- 🚂 Train Skin Options
-function ret1()  applyTrainSkin(-0x3CC, "Flower Train", "🌺") end
-function ret2()  applyTrainSkin(-0x24C, "Christmas Train (2)", "🎄") end
-function ret3()  applyTrainSkin(-0x18C, "Halloween Train", "🎃") end
-function ret4()  applyTrainSkin(-0xCC, "Express Tram", "🏛️") end
-function ret5()  applyTrainSkin(-0xC, "Knight Train", "🏰") end
-function ret6()  applyTrainSkin( 0xB4, "Music Express", "🎶") end
-function ret7()  applyTrainSkin( 0x174, "Wooden Wagon", "🏕️") end
-function ret8()  applyTrainSkin( 0x234, "Mars Rover", "🪐") end
-function ret9()  applyTrainSkin( 0x2F4, "Dragon Train", "🐲") end
-function ret10() applyTrainSkin( 0x3B4, "Theater Express", "🎭") end
-function ret11() applyTrainSkin( 0x474, "Primeval Express", "🦴") end
-function ret12() applyTrainSkin( 0x534, "Easter Express", "🐣") end
-function ret13() applyTrainSkin( 0x5F4, "Christmas Train (1)", "🎁") end
-function ret14() applyTrainSkin( 0x6B4, "Cowboys Train", "🤠") end
-function ret15() applyTrainSkin( 0x774, "Disco Train", "💃") end
-function ret16() applyTrainSkin( 0x834, "Ghost Train", "👻") end
-function ret17() applyTrainSkin( 0x8F4, "Future Express", "🌀") end
-function ret18() applyTrainSkin( -0x30C, "Mythic Train", "🏛️") end
+function ret1()  trainSkin(-0x3CC, "Flower Train", "🌺") end
+function ret2()  trainSkin(-0x24C, "Christmas Train (2)", "🎄") end
+function ret3()  trainSkin(-0x18C, "Halloween Train", "🎃") end
+function ret4()  trainSkin(-0xCC, "Express Tram", "🏛️") end
+function ret5()  trainSkin(-0xC, "Knight Train", "🏰") end
+function ret6()  trainSkin( 0xB4, "Music Express", "🎶") end
+function ret7()  trainSkin( 0x174, "Wooden Wagon", "🏕️") end
+function ret8()  trainSkin( 0x234, "Mars Rover", "🪐") end
+function ret9()  trainSkin( 0x2F4, "Dragon Train", "🐲") end
+function ret10() trainSkin( 0x3B4, "Theater Express", "🎭") end
+function ret11() trainSkin( 0x474, "Primeval Express", "🦴") end
+function ret12() trainSkin( 0x534, "Easter Express", "🐣") end
+function ret13() trainSkin( 0x5F4, "Christmas Train (1)", "🎁") end
+function ret14() trainSkin( 0x6B4, "Cowboys Train", "🤠") end
+function ret15() trainSkin( 0x774, "Disco Train", "💃") end
+function ret16() trainSkin( 0x834, "Ghost Train", "👻") end
+function ret17() trainSkin( 0x8F4, "Future Express", "🌀") end
+function ret18() trainSkin( -0x30C, "Mythic Train", "🏛️") end
 
 -------------------------------------------------
 
@@ -6215,100 +6208,96 @@ if not choice then
   end
 end
 
--- 📁 Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
-local fileItem, fileAddr = folder .. "itemcache.txt", folder .. "addresscache.txt"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
--- 🧹 Safe Delete
-local function deleteFile(path) pcall(os.remove, path) end
-
--- 📍 Get Port Address
+-- 📍 Get Port Skin Address
 function getAddr()
-  local file = io.open(fileAddr, "r")
-  local cached = file and tonumber(file:read("*l")) or nil
-  if file then file:close() end
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
 
-  if cached then
-    local check = gg.getValues({{address = cached, flags = gg.TYPE_DWORD}})
-    if check[1] and check[1].value == 30 then return cached end
-    deleteFile(fileAddr) deleteFile(fileItem)
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
-  -- 🔍 Search if not cached
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
-  gg.refineNumber("1717912671", gg.TYPE_DWORD)
-  local result = gg.getResults(1)
-  if #result == 0 then gg.alert("❌ Address not found.\nMake sure the port is open.") return nil end
-
-  local addr = result[1].address
-  local save = io.open(fileAddr, "w")
-  if save then save:write(addr) save:close() end
-  return addr
-end
-
--- 🔍 Init Base Port Address
-local baseSkinAddr
-function initPortSearch()
-  if baseSkinAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
   gg.refineNumber("1717912671", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Port structure not found.\nCheck game state.") return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen port skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏆 Port Skin Source Base
+local basePortAddr = nil
+function initPortSkinSearch()
+  if basePortAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
+  gg.refineNumber("1717912671", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Port skin structure not found.") return false end
+  basePortAddr = r[1].address
   return true
 end
 
--- 🚢 Apply Port Skin
-function applyPortSkin(offset, emoji, label)
-  if not initPortSearch() then return end
-  local src = baseSkinAddr + offset
-  local copied = {}
+-- 🏆 Apply Port Skin
+function portSkin(offset, label, emoji)
+  if not initPortSkinSearch() then return end
+  local src = basePortAddr + offset
+  local vals = {}
   for i = 0, 5 do
-    copied[i+1] = {address = src + i*4, flags = gg.TYPE_DWORD}
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
   end
-  copied = gg.getValues(copied)
+  vals = gg.getValues(vals)
 
   local target = getAddr()
   if not target then return end
   target = target - 0x48
 
-  local patch = {}
-  for i, v in ipairs(copied) do
-    patch[i] = {address = target + (i-1)*4, value = v.value, flags = gg.TYPE_DWORD}
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  -- ➕ Fixed + 🧹 Clear
-  table.insert(patch, {address = target + 6*4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patch, {address = target + 7*4, value = 1, flags = gg.TYPE_DWORD})
-  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(patch, {address = target + o, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
 
-  gg.setValues(patch)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " port skin applied!")
 end
 
-function buhan1()  applyPortSkin(0x74,   "Pirate Harbor",         "🏴‍☠️") end
-function buhan2()  applyPortSkin(0x34,   "Equatorial Port",       "🌴")   end
-function buhan3()  applyPortSkin(0xB4,   "Sweet Port",            "🍭")   end
-function buhan4()  applyPortSkin(0xF4,   "Doge's Pier",           "🦁")   end
-function buhan5()  applyPortSkin(0x134,  "Port Of Horrors",       "💀")   end
-function buhan6()  applyPortSkin(0x174,  "Romantic Harbor",       "💘")   end
-function buhan7()  applyPortSkin(0x1b4,  "Viking Harbor",         "🛡️")   end
-function buhan8()  applyPortSkin(0x1f4,  "Jungle Port",           "🌳")   end
-function buhan9()  applyPortSkin(0x234,  "Christmas Port",        "🎄")   end
-function buhan10() applyPortSkin(0x274,  "Lantern Harbor",        "🏮")   end
-function buhan11() applyPortSkin(0x2b4,  "Ancient Port",          "🏺")   end
-function buhan12() applyPortSkin(0x2f4,  "Saloon on the Water",   "🤠")   end
-function buhan13() applyPortSkin(0x334,  "Candy Port",            "🍬")   end
-function buhan14() applyPortSkin(0x374,  "Egyptian-Themed Port",  "🕌")   end
-function buhan15() applyPortSkin(0x3b4,  "Arctic Port",           "❄️")   end
+function buhan1()  portSkin(0x74,   "Pirate Harbor",         "🏴‍☠️") end
+function buhan2()  portSkin(0x34,   "Equatorial Port",       "🌴")   end
+function buhan3()  portSkin(0xB4,   "Sweet Port",            "🍭")   end
+function buhan4()  portSkin(0xF4,   "Doge's Pier",           "🦁")   end
+function buhan5()  portSkin(0x134,  "Port Of Horrors",       "💀")   end
+function buhan6()  portSkin(0x174,  "Romantic Harbor",       "💘")   end
+function buhan7()  portSkin(0x1b4,  "Viking Harbor",         "🛡️")   end
+function buhan8()  portSkin(0x1f4,  "Jungle Port",           "🌳")   end
+function buhan9()  portSkin(0x234,  "Christmas Port",        "🎄")   end
+function buhan10() portSkin(0x274,  "Lantern Harbor",        "🏮")   end
+function buhan11() portSkin(0x2b4,  "Ancient Port",          "🏺")   end
+function buhan12() portSkin(0x2f4,  "Saloon on the Water",   "🤠")   end
+function buhan13() portSkin(0x334,  "Candy Port",            "🍬")   end
+function buhan14() portSkin(0x374,  "Egyptian-Themed Port",  "🕌")   end
+function buhan15() portSkin(0x3b4,  "Arctic Port",           "❄️")   end
 
 -------------------------------------------------
 
@@ -6379,88 +6368,96 @@ if not choice then
   end
 end
 
--- 📁 Cache Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
 local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
 
--- 🧹 Delete File
-local function deleteFile(path) pcall(function() os.remove(path) end) end
+-- 📍 Get Boat Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
 
--- 📍 Get Cached or Search Ship Address
-function getShipAddr()
-  local addr, file = tonumber(io.open(fileAddr, "r") and io.open(fileAddr, "r"):read("*l")), io.open(fileAddr, "r")
-  if file then file:close() end
   if addr then
-    local val = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1]
-    if val and val.value == 30 then return addr end
-    deleteFile(fileAddr); deleteFile(folder .. "itemcache.txt")
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
+
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
   gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen the ship first."); return nil end
-  io.open(fileAddr, "w"):write(r[1].address):close()
-  return r[1].address
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen boat skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
 end
 
--- 📦 Global Ship Base Address
-local baseSkinAddr = nil
-
--- 🔍 Init Ship Structure
-function initShip()
-  if baseSkinAddr then return true end
+-- 🏆 Boat Skin Source Base
+local baseBoatAddr = nil
+function initBoatSkinSearch()
+  if baseBoatAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
   gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Ship structure not found."); return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Boat skin structure not found.") return false end
+  baseBoatAddr = r[1].address
   return true
 end
 
--- 🚢 Apply Ship Skin
-function applyShipSkin(offset, emoji, label)
-  if not initShip() then return end
-  local source = baseSkinAddr + offset
-  local src = {}
-  for i = 0, 5 do table.insert(src, {address = source + i * 4, flags = gg.TYPE_DWORD}) end
-  local copied = gg.getValues(src)
-  local target = getShipAddr()
+-- 🏆 Apply Boat Skin
+function boatSkin(offset, label, emoji)
+  if not initBoatSkinSearch() then return end
+  local src = baseBoatAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
   if not target then return end
   target = target - 0x48
-  local patch = {}
-  for i, v in ipairs(copied) do
-    table.insert(patch, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
-  -- ➕ Fixed + Clear
-  table.insert(patch, {address = target + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patch, {address = target + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
   for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(patch, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
-  gg.setValues(patch)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " boat skin applied!")
 end
 
-function kap1()  applyShipSkin(0x1F8,  "Pirate Galleon",        "🏴‍☠️") end
-function kap2()  applyShipSkin(-0x188, "Cruise Liner",          "🌴")   end
-function kap3()  applyShipSkin(-0x148, "Croissant Ferry",       "🍭")   end
-function kap4()  applyShipSkin(-0x108, "Gondola",               "🦁")   end
-function kap5()  applyShipSkin(-0xC8,  "Ghost Ship",            "💀")   end
-function kap6()  applyShipSkin(-0x88,  "Love Boat",             "💘")   end
-function kap7()  applyShipSkin(-0x48,  "Sturdy Drakkar",        "🛡️")   end
-function kap8()  applyShipSkin(-0x8,   "Cruise Ship",           "🌳")   end
-function kap9()  applyShipSkin(0x38,   "Gift Boat",             "🎄")   end
-function kap10() applyShipSkin(0x78,   "Dragon Boat",           "🏮")   end
-function kap11() applyShipSkin(0xb8,   "Greek Bireme",          "🏺")   end
-function kap12() applyShipSkin(0xf8,   "River Steamboat",       "🤠")   end
-function kap13() applyShipSkin(0x138,  "Sweet Boat",            "🍬")   end
-function kap14() applyShipSkin(0x178,  "Egyptian-Themed Ship",  "🕌")   end
-function kap15() applyShipSkin(0x1b8,  "Arctic Ship",           "❄️")   end
+function kap1()  boatSkin(0x1F8,  "Pirate Galleon",        "🏴‍☠️") end
+function kap2()  boatSkin(-0x188, "Cruise Liner",          "🌴")   end
+function kap3()  boatSkin(-0x148, "Croissant Ferry",       "🍭")   end
+function kap4()  boatSkin(-0x108, "Gondola",               "🦁")   end
+function kap5()  boatSkin(-0xC8,  "Ghost Ship",            "💀")   end
+function kap6()  boatSkin(-0x88,  "Love Boat",             "💘")   end
+function kap7()  boatSkin(-0x48,  "Sturdy Drakkar",        "🛡️")   end
+function kap8()  boatSkin(-0x8,   "Cruise Ship",           "🌳")   end
+function kap9()  boatSkin(0x38,   "Gift Boat",             "🎄")   end
+function kap10() boatSkin(0x78,   "Dragon Boat",           "🏮")   end
+function kap11() boatSkin(0xb8,   "Greek Bireme",          "🏺")   end
+function kap12() boatSkin(0xf8,   "River Steamboat",       "🤠")   end
+function kap13() boatSkin(0x138,  "Sweet Boat",            "🍬")   end
+function kap14() boatSkin(0x178,  "Egyptian-Themed Ship",  "🕌")   end
+function kap15() boatSkin(0x1b8,  "Arctic Ship",           "❄️")   end
 
 -------------------------------------------------
 
@@ -6530,88 +6527,96 @@ if not choice then
   end
 end
 
--- 📁 Cache Setup
+-- 📁 Cache & File Setup
 local folder = "/sdcard/.ggcache_arh/"
 local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
 
--- 🧹 Delete File
-local function deleteFile(path) pcall(function() os.remove(path) end) end
+-- 📍 Get Fortress Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
 
--- 📍 Get Cached or Search Fortress Address
-function getFortressAddr()
-  local addr, file = tonumber(io.open(fileAddr, "r") and io.open(fileAddr, "r"):read("*l")), io.open(fileAddr, "r")
-  if file then file:close() end
   if addr then
-    local val = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1]
-    if val and val.value == 30 then return addr end
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
     gg.toast("🗑️ Cache cleared (game restarted)")
   end
+
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
   gg.refineNumber("1651733601", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen fortress first."); return nil end
-  io.open(fileAddr, "w"):write(r[1].address):close()
-  return r[1].address
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen fortress skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
 end
 
--- 🏰 Global Fortress Base Address
-local baseSkinAddr = nil
-
--- 🔍 Init Fortress Structure
-function initFortress()
-  if baseSkinAddr then return true end
+-- 🏆 Fortress Skin Source Base
+local baseFortressAddr = nil
+function initFortressSkinSearch()
+  if baseFortressAddr then return true end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
   gg.refineNumber("1651733601", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Fortress structure not found."); return false end
-  baseSkinAddr = r[1].address
+  if #r == 0 then gg.alert("❌ Fortress skin structure not found.") return false end
+  baseFortressAddr = r[1].address
   return true
 end
 
--- 🏰 Apply Fortress Skin
-function applyFortressSkin(offset, emoji, label)
-  if not initFortress() then return end
-  local source = baseSkinAddr + offset
-  local src = {}
-  for i = 0, 5 do table.insert(src, {address = source + i * 4, flags = gg.TYPE_DWORD}) end
-  local copied = gg.getValues(src)
-  local target = getFortressAddr()
+-- 🏆 Apply Fortress Skin
+function fortressSkin(offset, label, emoji)
+  if not initFortressSkinSearch() then return end
+  local src = baseFortressAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
   if not target then return end
   target = target - 0x48
-  local patch = {}
-  for i, v in ipairs(copied) do
-    table.insert(patch, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
-  -- ➕ Fixed + Cleanup
-  table.insert(patch, {address = target + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patch, {address = target + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
   for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(patch, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
   end
-  gg.setValues(patch)
-  gg.toast(emoji .. " " .. label .. " skin applied!")
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " fortress skin applied!")
 end
 
 -- 🌴 Ship Skins Functions
-function pulo1()  applyFortressSkin(-0xd0, "Pirate Shack",         "🏴‍☠️") end
-function pulo2()  applyFortressSkin(-0x90, "Pirate Hub",           "⚓️") end
-function pulo3()  applyFortressSkin(-0x50, "Pirate Fort",          "🏰") end
-function pulo4()  applyFortressSkin(-0x10, "Island House",         "🏝️") end
-function pulo5()  applyFortressSkin(0x30,  "Island Manor",         "🏯") end
-function pulo6()  applyFortressSkin(0x70,  "Island Residence",     "🏡") end -- ✅ Fixed typo
-function pulo7()  applyFortressSkin(0xb0,  "Witch's House",        "🧙‍♀️") end
-function pulo8()  applyFortressSkin(0xf0,  "Witch's Manor",        "🏚️") end
-function pulo9()  applyFortressSkin(0x130, "Witch's Castle",       "🏰") end
-function pulo10() applyFortressSkin(0x170, "Ice Castle",           "❄️") end
-function pulo11() applyFortressSkin(0x1b0, "Little Paris",         "🗼") end
-function pulo12() applyFortressSkin(0x1f0, "Easter Village",       "🐣") end
-function pulo13() applyFortressSkin(0x230, "Neanderthal Island",   "🦕") end
-function pulo14() applyFortressSkin(0x270, "Aztec Island", "🪵") end
+function pulo1()  fortressSkin(-0xd0, "Pirate Shack",         "🏴‍☠️") end
+function pulo2()  fortressSkin(-0x90, "Pirate Hub",           "⚓️") end
+function pulo3()  fortressSkin(-0x50, "Pirate Fort",          "🏰") end
+function pulo4()  fortressSkin(-0x10, "Island House",         "🏝️") end
+function pulo5()  fortressSkin(0x30,  "Island Manor",         "🏯") end
+function pulo6()  fortressSkin(0x70,  "Island Residence",     "🏡") end -- ✅ Fixed typo
+function pulo7()  fortressSkin(0xb0,  "Witch's House",        "🧙‍♀️") end
+function pulo8()  fortressSkin(0xf0,  "Witch's Manor",        "🏚️") end
+function pulo9()  fortressSkin(0x130, "Witch's Castle",       "🏰") end
+function pulo10() fortressSkin(0x170, "Ice Castle",           "❄️") end
+function pulo11() fortressSkin(0x1b0, "Little Paris",         "🗼") end
+function pulo12() fortressSkin(0x1f0, "Easter Village",       "🐣") end
+function pulo13() fortressSkin(0x230, "Neanderthal Island",   "🦕") end
+function pulo14() fortressSkin(0x270, "Aztec Island", "🪵") end
 
 -------------------------------------------------
 
