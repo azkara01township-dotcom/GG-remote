@@ -944,7 +944,6 @@ end
 if type(getAddr) == "function" then
   local addr = getAddr()
   if addr then
-    gg.toast(_("addr_found") .. string.format("%X", addr))
     -- 🔧 Tambahkan patching memori di sini jika diperlukan
   else
     gg.toast(_("addr_not_found"))
@@ -999,7 +998,6 @@ function getFreezeFlag()
   return v[1].value == 1
 end
 
-function freekey()
 function freekey()
   menuRunning = true
   while menuRunning and menuMode == "free" do
@@ -1125,7 +1123,7 @@ function menue4()
     gg.setVisible(false)
     menue4()
   end
-	end
+end
 
 -- 💎 Premium Script Menu
 function Main()
@@ -1495,7 +1493,7 @@ function gp1() -- 🎫 Unlock Season Pass Variants
   elseif pilihan == 3 then
     copyPass(640, "Japanese Pass", {620, 630})
   end
-	end
+end
 
 -- ❄️ Freeze Rewards
 function menue2()
@@ -1597,7 +1595,7 @@ function gp4() -- 💰 Currency Menu
       end
     end
   end
-	end
+end
 
 -- 🔄 Apply Reward Using Cached Address
 function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
@@ -1857,7 +1855,7 @@ function booster8() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372
 function booster9() apply30DayBooster("🎲 Rainbow Ball", -0x8) end
 function booster10() apply30DayBooster("💣 Bomb", -0x70) end
 function booster11() apply30DayBooster("🚀 Rocket", 0x60) end
-		
+
 function booster12()
   local addr = getAddr()
   if not addr then return end
@@ -2115,9 +2113,8 @@ function gp6(caller)
       end
     end
   end
-	end
+end
 
-		
 -- 🧱 Fungsi Modular Apply Kupon
 function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
   local addr = getAddr()
@@ -2231,13 +2228,12 @@ function gp7(caller)
       end
     end
   end
-	end
+end
 
 -- 💎 Modular Gem Reward Function (dengan batasan free max 100)
 function applyGemReward(label, emoji, gemId, caller)
   local base = getAddr()
   if not base then
-    gg.alert("❌ " .. label .. " " .. _("gem_not_found_gemgem"))
     return
   end
 
@@ -2278,7 +2274,7 @@ function gem1(caller) applyGemReward(_("orange_gem_gemgem"), "🟧", 49, caller)
 function gem2(caller) applyGemReward(_("green_gem_gemgem"),  "🟩", 50, caller) end
 function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller) end
   
-function gp8()
+  function gp8()
   local title = banner
   local menu = gg.choice({
     "🏅 • " .. _("metal_ingots_materialyal"),
@@ -2348,7 +2344,7 @@ function tools1(caller)
       break
     end
   end
-	end
+end
 
 -- ✅ Fungsi utama untuk memberi reward Ingot
 function applyIngotReward(labelKey, emoji, hexes)
@@ -2418,8 +2414,8 @@ function batang4()
     0x616C502C, 0x756E6974, 0x6C75426D,
     0x6E6F696C, 0x6E756F43, 0x00726574
   })
-end		
-		
+end
+
 -- ✅ Alias rw2() untuk akses dari menue3
 function rw2()
   tools2("free")
@@ -2473,13 +2469,12 @@ function tools2(caller)
       break
     end
   end
-	end
+end
 
 -- 🎯 Modular Mining Tools Reward
 function applyMiningReward(label, emoji, itemId, caller, duration)
   local base = getAddr()
   if not base then
-    gg.alert("❌ " .. label .. " - " .. _("not_found_macul"))
     return
   end
 
@@ -2589,7 +2584,7 @@ function tools3(caller)
       end
     end
   end
-	end
+end
 
 -- ✅ Fungsi modular hadiah konstruksi
 function applyConstructReward(label, emoji, hexList, caller)
@@ -2699,7 +2694,7 @@ function tools4()
       end
     end
   end
-	end
+end
 
 -- 🛠 Fungsi apply barn reward
 function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
@@ -2783,7 +2778,7 @@ function tools5()
       end
     end
   end
-	end
+end
 
 function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     local base = getAddr()
@@ -2893,7 +2888,7 @@ function gp9(caller)
       end
     end
   end
-	end
+end
 
 -- 📌 Fungsi umum apply perk
 function applyPerk(labelKey, emoji, values)
@@ -3230,7 +3225,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
