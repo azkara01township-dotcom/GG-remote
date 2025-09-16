@@ -682,10 +682,10 @@ local teks = {
   ["logsReset"] = {id = "🔁 Log berhasil direset.\n\nScript akan ditutup. Silakan masukkan username baru (mudah diingat), kemudian hubungi admin dan berikan username Anda. Terima kasih.", en = "🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you."},
   ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
 
-["about_script"] = {id="📖 Tentang Skrip", en="📖 About Script"},
-["contact_dev"]  = {id="📞 Kontak Admin", en="📞 Contact Admin"},
-["reset_default"] = {id="♻️ Setelan Awal", en="♻️ Reset to Default"},
-["change_lang"]  = {id="🌐 Ganti Bahasa", en="🌐 Change Language"},
+["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
+["contact_dev"]  = {id="📞 • Kontak Admin", en="📞 • Contact Admin"},
+["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
+["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
   ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
 
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
@@ -3684,7 +3684,7 @@ local indev = dev
 "🏵️ • Limited Decoration",
 "🎀 • Premium Decoration",
 "🏰 • Classic Decoration",
-    "❌ • [ << Go Back >> ]"
+    "❌ • Go Back"
   }, nil, indev)
 
     if menu == nil then
