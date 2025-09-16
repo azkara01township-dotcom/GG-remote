@@ -22,15 +22,14 @@ local teks = {
 ["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
   ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
   ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
-  ["addr_found"] = {id = "✅ Alamat ditemukan: 0x",en = "✅ Address found: 0x"},
   ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
   ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
 	
   ["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
-  ["free_script"] = {id="🔓 • Skrip Gratis", en="🔓 • Free Script"},
+  ["free_script"] = {id="🔓 • Skrip Gratis", en="🔓• Free Script"},
   ["premium_script"] = {id="💎 • Skrip Premium", en="💎 • Premium Script"},
   ["buy_key"] = {id="🔑 • Beli Kunci Premium", en="🔑 • Buy Premium Key"},
-  ["exit_script"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
+  ["exit_script"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
   
   ----Menu Free----
   
@@ -40,9 +39,7 @@ local teks = {
 ["change_reward_freemenu"]  = {id="🎁 • Ubah Hadiah", en="🎁 • Change Rewards"},
 ["misc_mods_freemenu"]      = {id="🛠️ • Modifikasi Lainnya", en="🛠️ • Other Mods"},
 ["script_info_freemenu"]    = {id="ℹ️ • Informasi Skrip", en="ℹ️ • Script Information"},
-  ["invalid_selection_freemenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
-  ["menu_closed_freemenu"] = {id="❌ Menu ditutup.", en="❌ Menu closed."},
-  ["exit_script_freemenu"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
+  ["exit_script_freemenu"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
   
   ----GP Free----
   
@@ -58,9 +55,7 @@ local teks = {
 ["cancel_info_freezeinfo"]      = {id = "Batalkan jika ragu atau ingin kembali.", en = "Cancel if you're unsure or want to go back."},
 ["proceed_freezeinfo"]          = {id = "Lanjutkan", en = "Proceed"},
 ["cancel_freezeinfo"]           = {id = "Batal", en = "Cancel"},
-["cancelled_freezeinfo"]        = {id = "Operasi dibatalkan.", en = "Operation cancelled."},
 
-  ["freeze_active_freezeinfo"]    = {id = "Pembekuan Hadiah berhasil diaktifkan.", en = "Freeze Rewards successfully activated."},
 ["freeze_failed_freezeinfo"]    = {id = "Gagal membekukan hadiah.", en = "Failed to freeze rewards."},
 ["freeze_not_found_freezeinfo"] = {id = "Tidak ada nilai yang cocok ditemukan.\nSilakan coba lagi atau mulai ulang game.", en = "No matching values found.\nPlease try again or restart the game."},
 ["freeze_done_freezeinfo"]      = {id = "Pembekuan Hadiah aktif.", en = "Freeze Rewards are now active."},
@@ -69,27 +64,23 @@ local teks = {
   
 ["smelt_ingots_changefree"]       = {id = "🪙 • Batangan Logam", en = "🪙 • Metal Ingots"},
 ["mining_tools1_changefree"]      = {id = "⛏️ • Alat Tambang", en = "⛏️ • Mining Tools"},
-["redeem_coupons_changefree"]     = {id = "🎟️ • Tukar Kupon", en = "🎟️ • Redeem Coupons"},
+["redeem_coupons_changefree"]     = {id = "🎟️ • Klaim Kupon", en = "🎟️ • Claim Coupons"},
 ["add_gems_changefree"]           = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
 ["match3_boosters_changefree"]    = {id = "🧩 • Booster Match-3", en = "🧩 • Match-3 Boosters"},
 ["community_materials_changefree"] = {id = "🏗️ • Material Komunitas", en = "🏗️ • Community Materials"},
-["claim_perks_changefree"]        = {id = "🎉 • Klaim Bonus", en = "🎉 • Claim Bonuses"},
-  ["go_back_changefree"] = {id = "❌ • [ << Kembali >> ]",en = "❌ • [ << Go Back >> ]"},
-  ["menu_closed_changefree"] = {id = "Menu ditutup.",en = "Menu closed."},
-  ["invalid_option_changefree"] = {id = "Opsi tidak valid.",en = "Invalid option."},
+["claim_perks_changefree"]        = {id = "🎉 • Klaim Keuntungan", en = "🎉 • Claim Perks"},
+  ["go_back_changefree"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
   
-  ----Aneka Ragam Hack----
+  ----Aneka Ragam Hack---
   
   ["menu4_opt1_hackfree"] = {id = "🚁 • T-Cash dari Helikopter", en = "🚁 • T-Cash from Helicopter"},
 ["menu4_opt2_hackfree"] = {id = "🌾 • EXP dari Panen Gandum", en = "🌾 • EXP from Wheat Harvest"},
 ["menu4_opt3_hackfree"] = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Boxes"},
-["menu4_opt4_hackfree"] = {id = "🚧 • Perluas Lahan (Tanpa Pop)", en = "🚧 • Expand Land (No Pop)"},
+["menu4_opt4_hackfree"] = {id = "🚧 • Bekukan Ekspansi Kota", en = "🚧 • Freeze City Expansion"},
 ["menu4_opt5_hackfree"] = {id = "🏭 • Peleburan Instan di Pabrik", en = "🏭 • Instant Smelting"},
 ["menu4_opt6_hackfree"] = {id = "🐮 • Produksi Peternakan Cepat", en = "🐮 • Fast Animal Production"},
 ["menu4_opt7_hackfree"] = {id = "⚡ • Isi Ulang Energi Petualangan", en = "⚡ • Refill Adventure Energy"},
-  ["menu_back_hackfree"] = {id = "❌ • [ << Kembali >> ]",en = "❌ • [ << Go Back >> ]"},
-  ["menu_none_selected_hackfree"] = {id = "Tidak ada opsi yang dipilih.",en = "No option selected."},
-  ["menu_invalid_hackfree"] = {id = "Opsi tidak valid dipilih.",en = "Invalid option selected."},
+  ["menu_back_hackfree"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
   
   ----Premium Menu----
   
@@ -101,23 +92,20 @@ local teks = {
 ["farming_products_premenu"] = {id = "🚜 • Produk Pertanian", en = "🚜 • Farming Products"},
 ["misc_mods_premenu"]        = {id = "🛠️ • Modifikasi Lainnya", en = "🛠️ • Other Mods"},
 ["script_info_premenu"]      = {id = "ℹ️ • Informasi Skrip", en = "ℹ️ • Script Information"},
-["exit_script_premenu"] = {id="❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
-["invalid_selection_premenu"] = {id="⚠️ Pilihan tidak valid.", en="⚠️ Invalid option selected."},
+["exit_script_premenu"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
   
   ----Menu Hack RW Premium----
   
   ["unlock_pass_rwpremium"]     = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
 ["freeze_rewards_rwpremium"]  = {id = "❄️ • Bekukan Hadiah", en = "❄️ • Freeze Rewards"},
-["skins_decor_rwpremium"]     = {id = "🎭 • Skin, Avatar & Dekorasi", en = "🎭 • Skins, Avatars & Decorations"},
+["skins_decor_rwpremium"] = {id = "🎭 • Kostum, Avatar & Dekorasi",en = "🎭 • Skins, Avatars & Decorations"},
 ["add_cash_rwpremium"]        = {id = "💵 • Tambah T-Cash", en = "💵 • Add T-Cash"},
-["boosters_rwpremium"]        = {id = "🚀 • Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
-["redeem_coupon_rwpremium"]   = {id = "🎟️ • Tukar Kupon", en = "🎟️ • Redeem Coupons"},
+["boosters_rwpremium"]        = {id = "🚀•  Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
+["redeem_coupon_rwpremium"]   = {id = "🎟️ • Klaim Kupon", en = "🎟️ • Claim Coupons"},
 ["add_gems_rwpremium"]        = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
-["special_product_rwpremium"] = {id = "🛍️ • Produk Spesial", en = "🛍️ • Special Products"},
-["claim_bonus_rwpremium"]     = {id = "🎉 • Klaim Bonus & Keuntungan", en = "🎉 • Claim Perks & Bonuses"},
-  ["go_back_rwpremium"] = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
-  ["menu_closed_rwpremium"] = {id = "❌ Menu ditutup.", en = "❌ Menu closed."},
-  ["invalid_option_rwpremium"] = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option selected."},
+["special_product_rwpremium"] = {id = "🛍️ • Produk Alat-Alat",en = "🛍️ • Tool Products"},
+["claim_bonus_rwpremium"]     = {id = "🎉 • Klaim Keuntungan", en = "🎉 • Claim Perks"},
+  ["go_back_rwpremium"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
   
   ----GP 3 jenis----
   
@@ -126,7 +114,6 @@ local teks = {
 ["sp_japan_spegp"]     = {id = "🦇 Buka Season Pass Berikutnya: Halloween", en = "🦇 Unlock Next Season Pass: Halloween"},
 
 ["sp_unlock_title_spegp"]  = {id = "🎫 Pilih Season Pass yang Akan Dibuka", en = "🎫 Choose Season Pass to Unlock"},
-["sp_cancelled_spegp"]     = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
 ["sp_no_found_spegp"]      = {id = "❌ Tidak ada nilai yang cocok ditemukan.\n", en = "❌ No matching values found.\n"},
 ["sp_cancelled_spegp2"]    = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
 ["sp_copied_spegp"]        = {id = "📋 Data %s berhasil disalin.", en = "📋 %s data copied."},
@@ -143,8 +130,6 @@ local teks = {
 ["add_clover_tambahduit"]      = {id = "Tambah Semanggi", en = "Add Clover"},
 ["add_statuecoins_tambahduit"] = {id = "Tambah Koin Patung", en = "Add Statue Coin"},
 ["go_back_tambahduit"]         = {id = "Kembali", en = "Go Back"},
-["no_option_selected_tambahduit"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option_tambahduit"]  = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
 
 ["tcash_tambahduit"]   = {id = "💵 T-Cash", en = "💵 T-Cash"},
 ["coin_tambahduit"]    = {id = "💰 Koin", en = "💰 Coins"},
@@ -159,9 +144,7 @@ local teks = {
   
   ["match3_boosters_menuboost"]    = {id = "Booster Match-3", en = "Match-3 Boosters"},
 ["lab_boosters_menuboost"]       = {id = "Booster Lab", en = "Lab Boosters"},
-["go_back_menuboost"]            = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
-["no_option_selected_menuboost"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option_menuboost"]     = {id = "Opsi tidak valid.", en = "Invalid option."},
+["go_back_menuboost"]            = {id = "Kembali", en = "Go Back"},
 
 ----event boost----
 
@@ -182,12 +165,10 @@ local teks = {
 ["exploder_adventure_eventboost"] = {id = "Peledak Petualangan", en = "Exploder Adventure"},
 
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
-["no_option_selected_eventboost"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_selection_eventboost"]  = {id = "Opsi tidak valid.", en = "Invalid selection."},
 
 ["booster_amount_eventboost"]     = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
 ["no_input_eventboost"]           = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_range_eventboost"]      = {id = "🚫 Jumlah tidak valid.\nMasukkan angka antara 1 dan", en = "🚫 Invalid input.\nEnter a number between 1 and"},
+["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara", en = "🚫 Invalid input.\nEnter a number between 1 and"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
 ["booster_applied_eventboost"]    = {id = "Booster diterapkan:", en = "Booster applied:"},
@@ -203,8 +184,8 @@ local teks = {
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
 ["exploder_adventure_prompt_eventboost"]= {id = "💥 Masukkan jumlah Peledak Petualangan [1–5000]:", en = "💥 Enter Exploder Adventure amount [1–5000]:"},
 
-["invalid_value_energy_eventboost"]   = {id = "🚫 Nilai tidak valid. Masukkan angka antara 1 hingga 100000.", en = "🚫 Invalid value. Must be between 1 and 100000."},
-["invalid_value_exploder_eventboost"] = {id = "🚫 Nilai tidak valid.\nMasukkan angka antara 1 hingga 5000.", en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 100000.", en = "🚫 Invalid input.\nEnter a number between 1 and 100000."},
+["invalid_value_exploder_eventboost"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 5000.", en = "🚫 Invalid input.\nEnter a number between 1 and 5000."},
 
 ["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan disetel ke: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
 ["toast_exploder_applied_eventboost"] = {id = "💥 Peledak Petualangan disetel ke: %d ✅", en = "💥 Exploder Adventure set to: %d ✅"},
@@ -229,16 +210,13 @@ local teks = {
 ["spacious_barn_labboost"]         = {id = "Lumbung Luas", en = "Spacious Barn"},
 ["large_request_labboost"]         = {id = "Permintaan Besar", en = "Large Request"},
 ["favorable_voyage_labboost"]      = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
-
-["go_back_labboost"]               = {id = "[ << Kembali >> ]", en = "[ << Go Back >> ]"},
-["no_option_selected_labboost"]    = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option_labboost"]        = {id = "Opsi tidak valid.", en = "Invalid option."},
+["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
 
 ["no_match_labboost"]              = {id = "❌ Nilai tidak ditemukan. Tidak dapat menerapkan ", en = "❌ No matching value found. Cannot apply "},
 ["enter_amount_labboost"]          = {id = "Masukkan jumlah booster [1–500]:", en = "Enter booster amount [1–500]:"},
-["no_amount_labboost"]             = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_labboost"]         = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 hingga 500.", en = "🚫 Invalid input.\nPlease enter a number between 1 and 500."},
-["invalid_amount_labboost"]        = {id = "❗ Jumlah tidak valid. Masukkan antara 1 dan 500.", en = "❗ Invalid amount. Please enter between 1 and 500."},
+["no_amount_labboost"]             = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
+["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
 ["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
 ["unnamed_booster_labboost"]       = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 
@@ -270,9 +248,7 @@ local teks = {
 ["coupon_factory_kuponpon"] = {id = "Kupon Upgrade Pabrik",     en = "Factory Upgrade Coupon"},
 ["coupon_train_kuponpon"]   = {id = "Kupon Upgrade Kereta",     en = "Train Upgrade Coupon"},
 ["coupon_island_kuponpon"]  = {id = "Kupon Upgrade Pulau",      en = "Island Upgrade Coupon"},
-["back_kuponpon"]           = {id = "[ << Kembali >> ]",        en = "[ << Go Back >> ]"},
-["no_option_kuponpon"]      = {id = "❌ Tidak ada opsi yang dipilih.", en = "❌ No option selected."},
-["invalid_option_kuponpon"] = {id = "⚠️ Opsi tidak valid.",     en = "⚠️ Invalid option."},
+["back_kuponpon"]           = {id = "Kembali",        en = "Go Back"},
 
 ["loader_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Pengisian Barang", en = "Enter Loader Coupon amount"},
 ["dealer_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Sewa Pedagang",    en = "Enter Hire Dealer Coupon amount"},
@@ -298,12 +274,9 @@ local teks = {
   ["green_gem_gemgem"]         = {id ="Permata Hijau",en =  "Green Gem"},
   ["red_gem_gemgem"]           = {id ="Permata Merah",en =  "Red Gem"},
   ["go_back_gemgem"]           = {id ="Kembali", en = "Go Back"},
-  ["no_option_selected_gemgem"]= {id ="Tidak ada opsi yang dipilih.", en = "No option selected."},
-  ["invalid_option_gemgem"]    = {id ="Opsi tidak valid.", en = "Invalid option selected."},
 
-  ["gem_not_found_gemgem"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game.",en = "❌ Address not found.\nTry restarting the game."},
-  ["no_input_gemgem"] = {id = "⚠️ Jumlah tidak dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-  ["invalid_input_gemgem"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara 1 dan ",en = "🚫 Invalid input.\nPlease enter a number between 1 and "},
+  ["no_input_gemgem"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara ",en = "🚫 Invalid input.\nEnter a number between 1 and "},
   ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
   ["reward_set_gemgem"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
   ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
@@ -318,8 +291,6 @@ local teks = {
 ["barn_tools_materialyal"]      = {id = "Alat Upgrade Lumbung", en = "Barn Upgrade Tools"},
 ["expansion_tools_materialyal"] = {id = "Alat Perluasan Kota", en = "City Expansion Tools"},
 ["go_back_materialyal"]         = {id = "Kembali", en = "Go Back"},
-["no_option_materialyal"]       = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option_materialyal"]  = {id = "Opsi tidak valid.", en = "Invalid option."},
 
 ----batangan----
 
@@ -328,13 +299,11 @@ local teks = {
 ["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
 ["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
 ["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
-["no_option_batangtang"]      = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option_batangtang"] = {id = "Opsi tidak valid dipilih.",    en = "Invalid option selected."},
 
- ["enter_amount_batangtang"] = {id = "Masukkan jumlah", en = "Enter amount"},
-  ["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.", en = "🚫 Invalid input."},
+ ["enter_amount_batangtang"] = {id = "Masukkan jumlah batangan", en = "Enter amount ingots"},
+  ["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara", en = "🚫 Invalid input.\nEnter a number between"},
   ["invalid_range_batangtang"] = {id = "Masukkan angka antara", en = "Please enter a number between"},
-  ["no_input_batangtang"] = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["no_input_batangtang"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
   ["set_to_batangtang"] = {id = "diset ke", en = "set to"},
   ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
   ["silver_batangtang"] = {id = "Batang Perak",    en = "Silver Ingots"},
@@ -348,10 +317,8 @@ local teks = {
   ["dynamite_macul"] = {id = "Dinamit", en = "Dynamite"},
   ["x2_ore_bonus_macul"] = {id = "Bonus Bijih ×2 (30 Hari)", en = "×2 Ore Bonus (30 Days)"},
   ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
-  ["no_option_selected_macul"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-  ["invalid_option_macul"] = {id = "Opsi tidak valid.", en = "Invalid option selected."},
 
-  ["mining_prompt_macul"] = {id = "Masukkan jumlah",en = "Enter amount"},
+  ["mining_prompt_macul"] = {id = "Masukkan jumlah alat tambang",en = "Enter amount mining tools"},
   ["cancel_input_macul"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
   ["invalid_input_macul"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara",en = "🚫 Invalid input.\nPlease enter a number between"},
   ["not_found_macul"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
@@ -370,12 +337,10 @@ local teks = {
 ["electric_saw_matdung"]  = {id = "Gergaji Listrik", en = "Electric Saw"},
 ["drill_matdung"]         = {id = "Bor", en = "Drill"},
 ["back_matdung"]          = {id = "Kembali", en = "Go Back"},
-["no_option_selected_matdung"] = {id = "Tidak ada opsi yang dipilih.", en = "No option selected."},
-["invalid_option_matdung"]     = {id = "Opsi tidak valid.", en = "Invalid option selected."},
 
 ["input_construct_matdung"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
 ["no_amount_matdung"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
+["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan angka 1 antara {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
 ["reward_set_matdung"] = {id = "{emoji} {label} diatur ke: {amount} ✅",en = "{emoji} {label} reward set to: {amount} ✅"},
 ["glass_matdung"] = {id = "Kaca", en = "Glass"},
 ["bricks_matdung"] = {id = "Batu Bata", en = "Bricks"},
@@ -390,8 +355,6 @@ local teks = {
 ["nail_gudangdang"] = {id = "Paku", en = "Nail"},
 ["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
 ["go_back_gudangdang"] = {id = "Kembali", en = "Go Back"},
-["no_option_gudangdang"] = {id = "Tidak ada pilihan yang dipilih.", en = "No option selected."},
-["invalid_option_gudangdang"] = {id = "Pilihan tidak valid.", en = "Invalid option selected."},
 
   ["hammers_gudangdang"] = {id = "Palu", en = "Hammers"},
   ["nails_gudangdang"] = {id = "Paku", en = "Nails"},
@@ -405,12 +368,10 @@ local teks = {
   ["saw_waswas"]         = { id = "Gergaji", en = "Saw" },
   ["axe_waswas"]         = { id = "Kapak", en = "Axe" },
   ["shovel_waswas"]      = { id = "Sekop", en = "Shovel" },
-  ["go_back_waswas"]     = { id = "[ << Kembali >> ]", en = "[ << Go Back >> ]" },
-  ["no_option_waswas"]   = { id = "Tidak ada opsi yang dipilih.", en = "No option selected." },
-  ["invalid_option_waswas"] = { id = "Opsi tidak valid.", en = "Invalid option selected." },
+  ["go_back_waswas"]     = { id = "Kembali", en = "Go Back" },
   
-    ["enter_amount_waswas"] = {id = "Masukkan jumlah:",en = "Enter amount:"},
-    ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 hingga 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+    ["enter_amount_waswas"] = {id = "Masukkan jumlah alat perluasan",en = "Enter amount expansion tools"},
+    ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
     ["reward_set_waswas"] = {id = "Hadiah diset ke",en = "Reward set to"},
     ["saw_waswas"] = {id = "Gergaji", en = "Saw"},
     ["axe_waswas"] = {id = "Kapak", en = "Axe"},
@@ -418,8 +379,6 @@ local teks = {
 
 ----tunjangan----
 
-["no_option_keuntungan"] = {id = "❌ Tidak ada opsi yang dipilih.",en = "❌ No option selected."},
-["invalid_option_keuntungan"] = {id = "⚠️ Opsi tidak valid.",en = "⚠️ Invalid option selected."},
 ["express_plane_keuntungan"] = { id = "✈️ • Pengiriman Pesawat Ekspres", en = "✈️ • Express Plane Delivery" },
 ["instant_crop_keuntungan"]  = { id = "🌾 • Panen Tanaman Instan", en = "🌾 • Instant Crop Harvest" },
 ["fast_farm_keuntungan"]     = { id = "🐄 • Produksi Pertanian Cepat", en = "🐄 • Fast Farm Production" },
@@ -427,7 +386,7 @@ local teks = {
 ["unlimited_barn_keuntungan"] = { id = "🏡 • Kapasitas Gudang Tak Terbatas", en = "🏡 • Unlimited Barn Capacity" },
 ["train_booster_keuntungan"] = { id = "⏱️ • Booster Waktu Kereta", en = "⏱️ • Train Time Booster" },
 ["double_train_keuntungan"]  = { id = "🚃 • Gerbong Kereta Ganda", en = "🚃 • Double Train Carriages" },
-["go_back_keuntungan"]       = { id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]" },
+["go_back_keuntungan"]       = { id = "❌ • Kembali", en = "❌ • Go Back" },
 
   ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
   ["perk_instant_crop_keuntungan"] = {id = "Panen Tanaman Instan", en = "Instant Crop Harvest"},
@@ -444,9 +403,7 @@ local teks = {
     
     ["option1_spesial"] = {id = "🌊 • Selesaikan Tugas Secara Otomatis", en = "🌊 • Auto-Complete Tasks"},
 ["option2_spesial"] = {id = "👍 • Like Kota Tanpa Batas", en = "👍 • Unlimited City Likes"},
-    ["back_spesial"] = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
-    ["noSelection_spesial"] = {id = "❌ Tidak ada opsi dipilih", en = "❌ No options selected"},
-    ["invalid_spesial"] = {id = "⚠️ Opsi tidak valid", en = "⚠️ Invalid option selected."},
+    ["back_spesial"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
     
     ----regata menu----
     
@@ -480,10 +437,8 @@ local teks = {
   ["menu2_add_points_menuipen"]      = {id="🏆 • Tambah Poin Piala Ernie", en="🏆 • Add Ernie Cup Points"},
 ["menu2_refill_energy_menuipen"]   = {id="⚡ • Isi Ulang Energi Petualangan", en="⚡ • Refill Adventure Energy"},
 ["menu2_free_ore_menuipen"]        = {id="👑 • Penguasa Tambang (Poin Gratis)", en="👑 • Ruler of the Mine (Free Points)"},
-["menu2_freeze_treasure_menuipen"] = {id="🏴 • Hapus Kartu Hitam Bajak Laut", en="🏴 • Remove Pirate Black Card"},
-  ["menu_back_menuipen"]             = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
-  ["toast_no_option_menuipen"]       = {id="❌ Tidak ada opsi dipilih", en="❌ No options selected"},
-  ["toast_invalid_option_menuipen"]  = {id="⚠️ Opsi tidak valid.", en="⚠️ Invalid option selected."},
+["menu2_freeze_treasure_menuipen"] = {id="🏴‍☠️ • Hapus Kartu Hitam Bajak Laut", en="🏴‍☠️•  Remove Pirate Black Card"},
+  ["menu_back_menuipen"]             = {id="❌ • Kembali", en="❌ • Go Back"},
   
   ----cup ernot----
   
@@ -520,7 +475,7 @@ local teks = {
   ["dataNotFound_bajak"] = {id = "❌ Harta Karun Bajak Laut tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en = "❌ Pirate Treasure not found!\n\nPlease restart the game and try again."},
   ["toastFreeze_bajak"] = {id = "🏴‍☠️ Freeze Harta Karun Bajak Laut diterapkan pada entri!",en = "🏴‍☠️ Pirate Treasure freeze applied to entries!"},
   
-----skip time----
+  ----skip time----
   
   ["faster_arrivals_skiptime"]  = {id="⚙️ • Kedatangan Lebih Cepat", en="⚙️ • Faster Arrivals"},
 ["no_feed_timer_skiptime"]    = {id="🥣 • Pabrik Pakan Tanpa Waktu Tunggu", en="🥣 • No Feed Timer"},
@@ -528,19 +483,15 @@ local teks = {
 ["no_dealer_rest_skiptime"]   = {id="🛒 • Dealer Tanpa Istirahat", en="🛒 • No Dealer Rest"},
 ["instant_foundry_skiptime"]  = {id="🏭 • Peleburan Instan", en="🏭 • Instant Foundry"},
 ["no_request_delay_skiptime"] = {id="⏱️ • Permintaan Tanpa Penundaan", en="⏱️ • No Request Delay"},
-    ["go_back_skiptime"]          = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
-    ["no_option_selected_skiptime"] = {id="❌ Tidak ada opsi dipilih", en="❌ No options selected"},
-    ["invalid_option_skiptime"]     = {id="⚠️ Opsi tidak valid", en="⚠️ Invalid option selected"},
-    
-      ----skip time arrival----
+    ["go_back_skiptime"]          = {id="❌ • Kembali", en="❌ • Go Back"},
+
+----skip time arrival----
     
   ["shipBoost_aripal"]     = {id="🚢 • Percepatan Kedatangan Kapal", en="🚢 • Ship Arrival Boost"},
 ["cargoAuto1_aripal"]    = {id="✈️ • Muat Pesawat Otomatis", en="✈️ • Cargo Plane Auto-Load"},
 ["heliAuto_aripal"]      = {id="🚁 • Helikopter Siap Otomatis", en="🚁 • Helicopter Auto-Ready"},
 ["trainBoost11_aripal"]  = {id="🚂 • Percepatan Kedatangan Kereta", en="🚂 • Train Arrival Boost"},
-  ["goBack_aripal"]           = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
-  ["noSelect_aripal"]         = {id="❌ Tidak ada pilihan dipilih", en="❌ No options selected"},
-  ["invalidOption_aripal"]    = {id="⚠️ Pilihan tidak valid", en="⚠️ Invalid option selected"},
+  ["goBack_aripal"]           = {id="❌ • Kembali", en="❌ • Go Back"},
   
     ----skip time kapal----
   
@@ -605,9 +556,7 @@ local teks = {
 ["extra_ship_menupenambah"]    = {id = "📦 • Tambahan Barang Kapal", en = "📦 • Extra Ship Items"},
 ["more_requests_menupenambah"] = {id = "📬 • Permintaan Lebih Banyak", en = "📬 • More Requests"},
 ["market_unlim_menupenambah"]  = {id = "🛒 • Pasar Tanpa Batas", en = "🛒 • Unlimited Market"},
-["back_menupenambah"]          = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
-["menu_closed_menupenambah"]   = {id = "⚠️  Menu ditutup.", en = "⚠️  Menu closed."},
-["invalid_sel_menupenambah"]   = {id = "⚠️  Pilihan tidak valid!", en = "⚠️  Invalid selection!"},
+["back_menupenambah"]          = {id = "❌ • Kembali", en = "❌ • Go Back"},
 
 ----exp gandum----
 
@@ -668,19 +617,17 @@ local teks = {
 ----menu ragam----
 
   ["industry_boost_gamragam"]   = {id = "🏭 • Pengurangan Waktu Industri", en = "🏭 • Industry Time Reduction"},
-["heli_tcash_gamragam"]       = {id = "🚁 • Hadiah T-Cash Helikopter", en = "🚁 • Helicopter T-Cash Reward"},
+["heli_tcash_gamragam"]       = {id = "🚁 • T-Cash dari Helikopter", en = "🚁 • T-Cash from Helicopter"},
 ["free_boxes_gamragam"]       = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Box"},
 ["build_no_tools_gamragam"]   = {id = "👷‍♀️ • Komunitas Tanpa Alat", en = "👷‍♀️ • Community Without Tools"},
 ["freeze_expansion_gamragam"] = {id = "🚧 • Bekukan Ekspansi Kota", en = "🚧 • Freeze City Expansion"},
 ["barn_expand_gamragam"]      = {id = "🏡 • Perluas Gudang Tanpa Alat", en = "🏡 • Expand Barn Without Tools"},
 ["dealer_rent_gamragam"]      = {id = "📦 • Sewa Dealer 30 Hari", en = "📦 • 30-Day Dealer Rental"},
-  ["back_gamragam"]             = {id = "❌ • [ << Kembali >> ]", en = "❌ • [ << Go Back >> ]"},
-  ["no_option_gamragam"]        = {id = "❌ Tidak ada opsi dipilih", en = "❌ No option selected"},
-  ["invalid_option_gamragam"]   = {id = "⚠️ Opsi tidak valid.", en = "⚠️ Invalid option"},
+  ["back_gamragam"]             = {id = "❌ • Kembali", en = "❌ • Go Back"},
   
   ["alert_star_brik"]   = {id = "🌟 Pilih level bintang di industri", en = "🌟 Select the star level in the industry"},
   ["prompt_star_brik"]  = {id = "🔢 Masukkan nomor level bintang [2–53]:", en = "🔢 Enter star level number [2–53]:"},
-  ["prompt_value_brik"] = {id = "🕑 Masukkan nilai cooldown [99;100]:", en = "🕑 Cooldown value [99;100]"},
+  ["prompt_value_brik"] = {id = "🕑 Masukkan nilai cooldown [99;100]", en = "🕑 Cooldown value [99;100]"},
   ["err_star_brik"]     = {id = "❌ Level bintang tidak valid (harus 2–53).", en = "❌ Invalid star level (must be 2–53)."},
   ["err_value_brik"]    = {id = "❌ Nilai cooldown tidak valid (harus 99 atau 100).", en = "❌ Invalid star value (must be 99 or 100)."},
   ["not_found_brik"]    = {id = "❌ Pola tidak ditemukan", en = "❌ Pattern not found"},
@@ -729,18 +676,17 @@ local teks = {
 
   ["cancelled"] = {id = "❌ Dibatalkan", en = "❌ Cancelled"},
   ["invalid"]   = {id = "❌ Username atau Password Salah!", en = "❌ Invalid Username or Password!"},
-  ["welcome"]   = {id = "✅ Selamat datang, Admin ", en = "✅ Welcome, Admin "},
   ["adminMenuTitle"] = {id = "⚙️ Admin ARH Reset Logs", en = "⚙️ ARH Admin Reset Logs"},
   ["resetLogs"] = {id = "🔁 • Reset Log Pengguna", en = "🔁 • Reset User Logs"},
-  ["exitMenu"]  = {id = "❌ • [ << Keluar Skrip >> ]", en="❌ • [ << Exit Script >> ]"},
+  ["exitMenu"]  = {id = "❌ • Keluar Skrip", en="❌ • Exit Script"},
   ["logsReset"] = {id = "🔁 Log berhasil direset.\n\nScript akan ditutup. Silakan masukkan username baru (mudah diingat), kemudian hubungi admin dan berikan username Anda. Terima kasih.", en = "🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you."},
   ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
 
-["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
-["contact_dev"]  = {id="📞 • Kontak Admin", en="📞 • Contact Admin"},
-["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
-["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
-  ["go_back"] = {id="❌ • [ << Kembali >> ]", en="❌ • [ << Go Back >> ]"},
+["about_script"] = {id="📖 Tentang Skrip", en="📖 About Script"},
+["contact_dev"]  = {id="📞 Kontak Admin", en="📞 Contact Admin"},
+["reset_default"] = {id="♻️ Setelan Awal", en="♻️ Reset to Default"},
+["change_lang"]  = {id="🌐 Ganti Bahasa", en="🌐 Change Language"},
+  ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
 
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
   ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
@@ -750,15 +696,13 @@ local teks = {
 ["contact_facebook"] = {id = "Hubungi via Facebook", en = "Contact via Facebook"},
 ["contact_menu_title"] = {id = "Menu Kontak Admin", en = "Admin Contact Menu"},
 ["contact_menu_desc"] = {id = "Pilih platform untuk menghubungi:", en = "Choose a platform to reach out:"},
-["menu_closed"] = {id = "Menu kontak ditutup.", en = "Contact menu closed."},
-["exit_script1"] = {id = "[ << Keluar Script >> ]", en = "[ << Exit Script >> ]"},
+["exit_script1"] = {id = "Keluar Script", en = "Exit Script"},
 ["exit1"] = {id = "Keluar", en = "Exit"},
 ["copy_link1"] = {id = "Salin Tautan", en = "Copy Link"},
 ["link_copied"] = {id = "Tautan disalin ke clipboard 📋", en = "Link copied to clipboard 📋"},
 ["contact_cancelled"] = {id = "Kontak dibatalkan.", en = "Contact cancelled."},
 ["exit_contact_menu"] = {id = "Keluar dari menu kontak Admin.", en = "Exiting Admin contact menu."},
-["invalid_selection"] = {id = "Pilihan tidak valid.", en = "Invalid selection."},
-
+	
 ["thank_you_exit"] = {id = "Terima kasih telah menggunakan script ini!\nSemoga harimu menyenangkan!",en = "Thanks for using this script!\nHave a great day!"},
 
 ["about_msg"] = {id =[[
@@ -811,7 +755,7 @@ Terima kasih sudah menggunakan script ini!
 
 📢 *Gabung Channel WhatsApp Resmi:*  
 Update dan info terbaru:  
-Township Script (ARH)  
+ARH-Script Township
 🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
 
 ────────────
@@ -866,7 +810,7 @@ Thank you for using this script. Your feedback helps improve future updates.
 
 📢 *Join Our Official WhatsApp Channel:*  
 Stay updated with the latest script news and announcements:  
-Township Script (ARH)  
+ARH-Script Township
 🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
 
 ────────────
@@ -907,57 +851,57 @@ local fileAddr = folder .. "addresscache.txt"
 
 -- 🧹 Delete File Safely
 local function deleteFile(path)
-  pcall(function() os.remove(path) end)
+pcall(function() os.remove(path) end)
 end
 
 -- 📍 Get Cached or New Address
 function getAddr()
-  local cacheInvalid = false
-  local cachedAddr
-  local file = io.open(fileAddr, "r")
+local cacheInvalid = false
+local cachedAddr
+local file = io.open(fileAddr, "r")
 
-  if file then
-    cachedAddr = tonumber(file:read("*l") or "")
-    file:close()
-  end
+if file then
+cachedAddr = tonumber(file:read("*l") or "")
+file:close()
+end
 
-  if cachedAddr then
-    local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 30 then
-      return cachedAddr
-    else
-      deleteFile(fileAddr)
-      deleteFile(fileItem)
-      gg.toast(_("cache_cleared"))
-      cacheInvalid = true
-    end
-  end
+if cachedAddr then
+local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
+if check and check[1] and check[1].value == 30 then
+return cachedAddr
+else
+deleteFile(fileAddr)
+deleteFile(fileItem)
+gg.toast(_("cache_cleared"))
+cacheInvalid = true
+end
+end
 
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
-  gg.refineNumber("30", gg.TYPE_DWORD)
-  local results = gg.getResults(1)
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+gg.refineNumber("30", gg.TYPE_DWORD)
+local results = gg.getResults(1)
 
-  if #results == 0 then
-    gg.alert(_("addr_not_found"))
-    return nil
-  end
+if #results == 0 then
+gg.alert(_("addr_not_found"))
+return nil
+end
 
-  local newAddr = results[1].address
-  local fileSave = io.open(fileAddr, "w")
-  if fileSave then
-    fileSave:write(newAddr)
-    fileSave:close()
-  end
+local newAddr = results[1].address
+local fileSave = io.open(fileAddr, "w")
+if fileSave then
+fileSave:write(newAddr)
+fileSave:close()
+end
 
-  if cacheInvalid then
-    gg.toast(_("addr_refreshed"))
-    while not gg.isVisible(true) do gg.sleep(200) end
-    gg.setVisible(false)
-  end
+if cacheInvalid then
+gg.toast(_("addr_refreshed"))
+while not gg.isVisible(true) do gg.sleep(200) end
+gg.setVisible(false)
+end
 
-  return newAddr
+return newAddr
 end
 
 -- 📁 Global config
@@ -1056,6 +1000,7 @@ function getFreezeFlag()
 end
 
 function freekey()
+function freekey()
   menuRunning = true
   while menuRunning and menuMode == "free" do
     local menuList = {
@@ -1079,7 +1024,7 @@ function freekey()
     table.insert(menuList, _( "exit_script_freemenu" ))
 
     local menu = gg.choice(menuList, nil, _( "free_menu_freemenu" ))
-    if not menu then gg.toast(_( "menu_closed_freemenu" )) break end
+    if not menu then break end
 
     if menu == 1 then menue1()
     elseif menu == 2 then menue2()
@@ -1087,7 +1032,7 @@ function freekey()
     elseif menu == idxMisc then menue4()
     elseif menu == idxInfo then menu6()
     elseif menu == idxExit then exit() menuRunning = false break
-    else gg.toast(_( "invalid_selection_freemenu" ))
+    else
     end
   end
   menuRunning = false
@@ -1127,11 +1072,10 @@ function menue3()
     _("match3_boosters_changefree"),     -- 🧩 Match-3 Boosters
     _("community_materials_changefree"), -- 🏗️ Community Materials
     _("claim_perks_changefree"),         -- 🎉 Claim Perks
-    _("go_back_changefree")              -- ❌ [ << Go Back >> ]
+    _("go_back_changefree")              -- ❌ • Go Back
   }, nil, title)
 
   if not menu then
-    gg.toast("❌ " .. _("menu_closed_changefree"))
     return
   end
 
@@ -1139,10 +1083,9 @@ function menue3()
   if actions[menu] then
     actions[menu]()
   else
-    gg.toast("⚠️ " .. _("invalid_option_changefree"))
   end
 end
-          
+
 function menue4()
   local title = banner
   local menu = gg.choice({
@@ -1157,7 +1100,7 @@ function menue4()
   }, nil, title)
 
   if not menu then
-    return gg.toast("❌ " .. _("menu_none_selected_hackfree"))
+    return
   end
 
   local actions = {
@@ -1174,7 +1117,7 @@ function menue4()
   if actions[menu] then
     actions[menu]()
   else
-    return gg.toast("⚠️ " .. _("menu_invalid_hackfree"))
+    return
   end
 
   if menu ~= 8 then
@@ -1182,7 +1125,7 @@ function menue4()
     gg.setVisible(false)
     menue4()
   end
-end
+	end
 
 -- 💎 Premium Script Menu
 function Main()
@@ -1198,7 +1141,7 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-16"
+local expireDate50  = "2025-09-30"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
@@ -1403,7 +1346,6 @@ elseif menu == 8 then
   exit()
   menuRunning = false
 else
-  gg.toast(_( "invalid_selection_premenu" ))
 end
 break
 end
@@ -1434,7 +1376,6 @@ function menu1()
   local menu = gg.choice(menuList, nil, title)
 
   if not menu then
-    gg.toast(_("menu_closed_rwpremium"))
     return  -- ⛔ Stop di sini, jangan lanjut ke loop
   end
 
@@ -1460,7 +1401,6 @@ function menu1()
     Main()
     return
   else
-    gg.toast(_("invalid_option_rwpremium"))
     return
   end
 
@@ -1481,7 +1421,7 @@ function gp1() -- 🎫 Unlock Season Pass Variants
     _( "sp_mythic_spegp" ),
     _( "sp_japan_spegp" ),
   }, nil, _( "sp_unlock_title_spegp" ))
-  if not pilihan then return gg.alert(_( "sp_cancelled_spegp" )) end
+  if not pilihan then return end
 
   -- 🔓 Unlock specific pass
   local function unlockPass(id, label)
@@ -1555,7 +1495,7 @@ function gp1() -- 🎫 Unlock Season Pass Variants
   elseif pilihan == 3 then
     copyPass(640, "Japanese Pass", {620, 630})
   end
-end
+	end
 
 -- ❄️ Freeze Rewards
 function menue2()
@@ -1574,14 +1514,12 @@ function gp2(caller)
     )
 
     if confirm ~= 1 then
-      gg.toast("🔕 " .. _("cancelled_freezeinfo"))
       return
     end
 
     -- Aktifkan fitur tanpa alert kedua
     cstatus_featureX = on
     rewardVisible = true
-    gg.toast("✅ " .. _("freeze_active_freezeinfo"))
   end
 
   -- 🔍 Memory Freeze
@@ -1627,11 +1565,10 @@ function gp4() -- 💰 Currency Menu
     "🪙 • " .. _("add_regatta_tambahduit"),
     "🍀 • " .. _("add_clover_tambahduit"),
     "🗽 • " .. _("add_statuecoins_tambahduit"),
-    "❌ • [ << " .. _("go_back_tambahduit") .. " >> ]"
+    "❌ • " .. _("go_back_tambahduit")
   }, nil, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_selected_tambahduit"))
     return
   end
 
@@ -1647,7 +1584,6 @@ function gp4() -- 💰 Currency Menu
   if actions[menu] then
     actions[menu]()
   else
-    gg.toast("⚠️ " .. _("invalid_option_tambahduit"))
     return
   end
 
@@ -1661,7 +1597,7 @@ function gp4() -- 💰 Currency Menu
       end
     end
   end
-end
+	end
 
 -- 🔄 Apply Reward Using Cached Address
 function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
@@ -1724,7 +1660,6 @@ function gp5()
   }, nil, title)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_selected_menuboost"))
     return
   end
 
@@ -1738,7 +1673,6 @@ function gp5()
   if selectedAction then
     selectedAction()
   else
-    gg.toast("⚠️ " .. _("invalid_option_menuboost"))
   end
 end
 
@@ -1770,11 +1704,10 @@ function boost1(caller)
     table.insert(menu, "💥 • " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
   end
 
-  table.insert(menu, "❌ • [ << " .. _("go_back_eventboost") .. " >> ]")
+  table.insert(menu, "❌ • " .. _("go_back_eventboost"))
 
   local choice = gg.choice(menu, nil, indev)
   if not choice then
-    gg.toast("❌ " .. _("no_option_selected_eventboost"))
     return
   end
 
@@ -1791,7 +1724,6 @@ function boost1(caller)
   if selected then
     selected(caller)
   else
-    gg.toast("⚠️ " .. _("invalid_selection_eventboost"))
   end
 
   while true do
@@ -1993,7 +1925,6 @@ function boost2()
   }, nil, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected_labboost"))
     return
   end
 
@@ -2009,7 +1940,6 @@ function boost2()
       -- opsional: efek visual atau suara bisa ditambahkan di sini
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option_labboost"))
   end
 
 -- Re-show the menu unless user chose "Back"
@@ -2154,7 +2084,6 @@ function gp6(caller)
   }, nil, indev)
 
   if not menu then
-    gg.toast(_("no_option_kuponpon"))
     return
   end
 
@@ -2173,7 +2102,6 @@ function gp6(caller)
     end
     return
   else
-    gg.toast(_("invalid_option_kuponpon"))
     return
   end
 
@@ -2187,7 +2115,8 @@ function gp6(caller)
       end
     end
   end
-end		
+	end
+
 		
 -- 🧱 Fungsi Modular Apply Kupon
 function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
@@ -2272,11 +2201,10 @@ function gp7(caller)
     "🟧 • " .. _("orange_gem_gemgem"),
     "🟩 • " .. _("green_gem_gemgem"),
     "🟥 • " .. _("red_gem_gemgem"),
-    "❌ • [ << " .. _("go_back_gemgem") .. " >> ]"
+    "❌ • " .. _("go_back_gemgem")
   }, nil, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected_gemgem"))
     return
   end
 
@@ -2291,7 +2219,6 @@ function gp7(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option_gemgem"))
     return
   end
 
@@ -2304,7 +2231,7 @@ function gp7(caller)
       end
     end
   end
-end
+	end
 
 -- 💎 Modular Gem Reward Function (dengan batasan free max 100)
 function applyGemReward(label, emoji, gemId, caller)
@@ -2351,7 +2278,7 @@ function gem1(caller) applyGemReward(_("orange_gem_gemgem"), "🟧", 49, caller)
 function gem2(caller) applyGemReward(_("green_gem_gemgem"),  "🟩", 50, caller) end
 function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller) end
   
-  function gp8()
+function gp8()
   local title = banner
   local menu = gg.choice({
     "🏅 • " .. _("metal_ingots_materialyal"),
@@ -2359,11 +2286,10 @@ function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller)
     "🧰 • " .. _("community_tools_materialyal"),
     "🏡 • " .. _("barn_tools_materialyal"),
     "🚧 • " .. _("expansion_tools_materialyal"),
-    "❌ • [ << " .. _("go_back_materialyal") .. " >> ]"
+    "❌ • " .. _("go_back_materialyal")
   }, nil, title)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_materialyal"))
     return
   elseif menu == 1 then tools1()
   elseif menu == 2 then tools2()
@@ -2371,7 +2297,7 @@ function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller)
   elseif menu == 4 then tools4()
   elseif menu == 5 then tools5()
   elseif menu == 6 then menu1()
-  else gg.toast("⚠️ " .. _("invalid_option_materialyal"))
+  else
   end
 end
 
@@ -2389,11 +2315,10 @@ function tools1(caller)
     "🥈 • " .. _("silver_ingot_batangtang"),
     "🥇 • " .. _("gold_ingot_batangtang"),
     "🏅 • " .. _("platinum_ingot_batangtang"),
-    "❌ • [ << " .. _("go_back_batangtang") .. " >> ]"
+    "❌ • " .. _("go_back_batangtang")
   }, nil, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_batangtang"))
     return
   end
 
@@ -2412,7 +2337,6 @@ function tools1(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option_batangtang"))
     return
   end
 
@@ -2424,7 +2348,7 @@ function tools1(caller)
       break
     end
   end
-end
+	end
 
 -- ✅ Fungsi utama untuk memberi reward Ingot
 function applyIngotReward(labelKey, emoji, hexes)
@@ -2520,12 +2444,11 @@ function tools2(caller)
     table.insert(actions, altam4)
   end
 
-  table.insert(options, "❌ • [ << " .. _("go_back_macul") .. " >> ]")
+  table.insert(options, "❌ • " .. _("go_back_macul"))
 
   local subMenu = gg.choice(options, nil, indev)
 
   if subMenu == nil then
-    gg.toast("❌ " .. _("no_option_selected_macul"))
     return
   end
 
@@ -2539,7 +2462,6 @@ function tools2(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option_macul"))
     return
   end
 
@@ -2551,7 +2473,7 @@ function tools2(caller)
       break
     end
   end
-end
+	end
 
 -- 🎯 Modular Mining Tools Reward
 function applyMiningReward(label, emoji, itemId, caller, duration)
@@ -2633,11 +2555,10 @@ function tools3(caller)
     "🔨 • " .. _("jackhammer_matdung"),
     "⚙️ • " .. _("electric_saw_matdung"),
     "🪛 • " .. _("drill_matdung"),
-    "❌ • [ << " .. _("back_matdung") .. " >> ]"
+    "❌ • " .. _("back_matdung")
   }, nil, indev)
 
   if not menu then
-    gg.toast("❌ " .. _("no_option_selected_matdung"))
     return
   end
 
@@ -2655,7 +2576,6 @@ function tools3(caller)
     end
     return
   else
-    gg.toast("⚠️ " .. _("invalid_option_matdung"))
     return
   end
 
@@ -2669,7 +2589,7 @@ function tools3(caller)
       end
     end
   end
-end
+	end
 
 -- ✅ Fungsi modular hadiah konstruksi
 function applyConstructReward(label, emoji, hexList, caller)
@@ -2748,11 +2668,10 @@ function tools4()
     "🔨 • " .. _("hammer_gudangdang"),
     "📍 • " .. _("nail_gudangdang"),
     "🪣 • " .. _("red_paint_gudangdang"),
-    "❌ • [ << " .. _("go_back_gudangdang") .. " >> ]"
+    "❌ • " .. _("go_back_gudangdang")
   }, nil, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_gudangdang"))
     return
   end
 
@@ -2768,7 +2687,6 @@ function tools4()
     if menu >= 1 and menu <= 3 then
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option_gudangdang"))
     return
   end
 
@@ -2781,7 +2699,7 @@ function tools4()
       end
     end
   end
-end
+	end
 
 -- 🛠 Fungsi apply barn reward
 function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
@@ -2836,7 +2754,6 @@ function tools5()
   }, nil, indev)
 
   if menu == nil then
-    gg.toast("❌ " .. _("no_option_waswas"))
     return
   end
 
@@ -2853,7 +2770,6 @@ function tools5()
       -- bisa tambahkan aksi lain di sini kalau perlu
     end
   else
-    gg.toast("⚠️ " .. _("invalid_option_waswas"))
     return
   end
 
@@ -2867,7 +2783,7 @@ function tools5()
       end
     end
   end
-end		
+	end
 
 function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     local base = getAddr()
@@ -2908,7 +2824,7 @@ end
 -- 🔧 Tool Reward Functions
 function luas1() applyExpansionReward("saw_waswas", "🪚", 1414419462) end
 function luas2() applyExpansionReward("axe_waswas", "🪓", 1702387974) end
-function luas3() applyExpansionReward("shovel_waswas", "🪏", 1667854344, 107) end
+function luas3() applyExpansionReward("shovel_waswas", "⛏️", 1667854344, 107) end
 
 -- 🔹 Fungsi menu rw7
 function rw7()
@@ -2938,7 +2854,6 @@ function gp9(caller)
 
   local menu = gg.choice(menuLabels, nil, indev)
   if not menu then
-    gg.toast(_("no_option_keuntungan"))
     return
   end
 
@@ -2966,7 +2881,6 @@ function gp9(caller)
     end
     return
   else
-    gg.toast(_("invalid_option_keuntungan"))
     return
   end
 
@@ -2979,7 +2893,7 @@ function gp9(caller)
       end
     end
   end
-end
+	end
 
 -- 📌 Fungsi umum apply perk
 function applyPerk(labelKey, emoji, values)
@@ -3173,11 +3087,10 @@ function gp3()
   "🖼️ • Frame Style",
   "👤 • Avatar List",
   "🎖️ • Bagde Collection",
-  "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
 }, nil, title)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
     elseif menu == 1 then minidekor()
   elseif menu == 2 then kums1()
@@ -3200,11 +3113,10 @@ local indev = dev
 "🎃 • Halloween Decoration",
 "🏺 • Egypt Decoration",
 "🌟 • Exclusive Decoration",
-    "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }, nil, indev)
 
     if menu == nil then
-    gg.toast("⚠️ No options selected")
     return
   elseif menu == 1 then coldekor1()
   elseif menu == 2 then coldekor2()
@@ -3255,7 +3167,7 @@ function coldekor2()
 "🥣 • Bowl of Wealth",
 "🎉 • New Year Symbol",
 "🐲 • Dragon Dance",
-      "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -3264,8 +3176,7 @@ function coldekor2()
       "🏮 Lantern Decoration"
     )
 
-    if not choice then 
-      gg.toast("❌ Menu closed.")
+    if not choice then
       return
     end
 
@@ -3274,7 +3185,6 @@ function coldekor2()
       if type(minidekor) == "function" then
         minidekor()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -3423,7 +3333,7 @@ function coldekor3()
 "🍄 • Mushroom Stump",
 "💡 • Flower Lamppost",
 "💎 • Rabbit Treasure",
-      "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -3433,7 +3343,6 @@ function coldekor3()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -3442,7 +3351,6 @@ function coldekor3()
       if type(minidekor) == "function" then
         minidekor()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -3488,7 +3396,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -3613,7 +3521,7 @@ function coldekor4()
 "🌹 • Love Arch",
 "💞 • Eternal Love Sculpture",
 "🗝️ • Key to the Heart",
-      "❌ • [ << Go Back >> ]"
+        "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -3623,7 +3531,6 @@ function coldekor4()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -3632,7 +3539,6 @@ function coldekor4()
       if type(minidekor) == "function" then
         minidekor()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -3678,7 +3584,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -3787,7 +3693,6 @@ local indev = dev
   }, nil, indev)
 
     if menu == nil then
-    gg.toast("⚠️ No options selected")
     return
   elseif menu == 1 then randecor1()
   elseif menu == 2 then randecor2()
@@ -3855,7 +3760,7 @@ function randecor1()
 "🏛️ • Grand Harvest Square",
 "🌊 • Poseidon Statue",
 "💰 • Treasure Chest",
-      "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -3865,7 +3770,6 @@ function randecor1()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -3874,7 +3778,6 @@ function randecor1()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -3920,7 +3823,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -4062,7 +3965,7 @@ function randecor2()
 "🥅 • Seasoned Goalkeeper",
 "🌍 • World Champion",
 "⛸️ • Forest Skating Rink",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -4072,7 +3975,6 @@ function randecor2()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -4081,7 +3983,6 @@ function randecor2()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -4127,7 +4028,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -4269,7 +4170,7 @@ function randecor3()
 "⛩️ • Underwater Temple",
 "👨‍🚀 • Diver",
 "🔭 • Bathyscaphe Model",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -4279,7 +4180,6 @@ function randecor3()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -4288,7 +4188,6 @@ function randecor3()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -4334,7 +4233,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -4485,7 +4384,7 @@ function randecor4()
 "🚪 • Gates of Glory",
 "🌺 • Flower Gate",
 "🥕 • Veggie Cart",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -4495,7 +4394,6 @@ function randecor4()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -4504,7 +4402,6 @@ function randecor4()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -4550,7 +4447,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -4686,7 +4583,7 @@ function randecor5()
 "🔭 • Astronomical Tower",
 "🌌 • Open-air Planetarium",
 "👩‍🚀 • Betsy the Astronaut",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -4696,7 +4593,6 @@ function randecor5()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -4705,7 +4601,6 @@ function randecor5()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -4751,7 +4646,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -4894,7 +4789,7 @@ function randecor6()
 "🤿 • Deep sea explorers",
 "🌸 • Spring holiday",
 "🔪 • Knife throwing",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -4903,8 +4798,7 @@ function randecor6()
       "🏰 Classic Decoration"
     )
 
-    if not choice then 
-      gg.toast("❌ Menu closed.")
+    if not choice then
       return
     end
 
@@ -4913,7 +4807,6 @@ function randecor6()
       if type(coldekor7) == "function" then
         coldekor7()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -4959,7 +4852,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -5068,11 +4961,10 @@ local indev = dev
 "🚄 • Train Skins",
 "🛳️ • Ship Skins",
 "🏯 • Fortress Skins",
-    "❌ • [ << Go Back >> ]"
+      "❌ • Go Back"
   }, nil, indev)
 
     if menu == nil then
-    gg.toast("⚠️ No options selected")
     return
   elseif menu == 1 then colek1()
   elseif menu == 2 then colek2()
@@ -5088,11 +4980,10 @@ local indev = dev
   local menu = gg.choice({
     "🚁 • Helipad Skins",
     "🚁 • Helicopter Skins",
-    "❌ • [ << Go Back >> ]"
+      "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then skinhel1()
   elseif menu == 2 then skinhel2()
@@ -5124,14 +5015,13 @@ function skinhel1()
 "🏴‍☠️ • Pirate Helipad",
 "🐉 • Festive Helipad",
 "💃 • Ballroom Helipad",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🚁 Select an Helipad Skins:")
   if not choice then return end
 
-if not choice then 
-      gg.toast("❌ Menu closed.")
+if not choice then
       return
     end
 
@@ -5140,7 +5030,6 @@ if not choice then
       if type(colek1) == "function" then
         colek1()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -5186,7 +5075,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -5288,14 +5177,13 @@ function skinhel2()
 "🏴‍☠️ • Pirate Helicopter",
 "🐉 • Festive Helicopter",
 "💃 • Ballroom Helicopter",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
   if not choice then return end
 
-if not choice then 
-      gg.toast("❌ Menu closed.")
+if not choice then
       return
     end
 
@@ -5304,7 +5192,6 @@ if not choice then
       if type(colek1) == "function" then
         colek1()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -5350,7 +5237,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -5433,11 +5320,10 @@ local indev = dev
   local menu = gg.choice({
     "🛩️ • Airport Skins",
     "🛩️ • Airplane Skins",
-    "❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then bandara1()
   elseif menu == 2 then bandara2()
@@ -5468,14 +5354,13 @@ function bandara1()
 "🎼 • Symphony Airport",
 "👗 • Fashion Airport",
 "🕌 • Arabian Airport",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airport Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -5484,7 +5369,6 @@ if not choice then
       if type(colek2) == "function" then
         colek2()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -5530,7 +5414,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -5631,14 +5515,13 @@ function bandara2()
 "🎼 • Symphony Plane",
 "👗 • Fashion Airport",
 "🕌 • Arabian Airport",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -5647,7 +5530,6 @@ if not choice then
       if type(colek2) == "function" then
         colek2()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -5693,7 +5575,6 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
   end
 
   gg.clearResults()
@@ -5778,11 +5659,10 @@ local indev = dev
   local menu = gg.choice({
     "🚅 • Station Skins",
     "🚅 • Train Skins",
-    "❌ • [ << Go Back >> ]"
+      "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then kret1()
   elseif menu == 2 then kret2()
@@ -5814,14 +5694,13 @@ function kret1()
 "👻 • Ghost Station",
 "🌀 • Express Portal",
 "🏛️ • Mythic Station",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🚆 Select an Station Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -5830,7 +5709,6 @@ if not choice then
       if type(colek3) == "function" then
         colek3()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -5876,7 +5754,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -5981,14 +5859,13 @@ function kret2()
 "👻 • Ghost Train",
 "🌀 • Future Express",
 "🏛️ • Mythic Train",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -5997,7 +5874,6 @@ if not choice then
       if type(colek3) == "function" then
         colek3()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6043,7 +5919,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6129,11 +6005,10 @@ local indev = dev
   local menu = gg.choice({
     "⛵ • Port Skins",
     "⛵ • Ship Skins",
-    "❌ • [ << Go Back >> ]"
+      "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then laut1()
   elseif menu == 2 then laut2()
@@ -6162,14 +6037,13 @@ function laut1()
 "🍬 • Candy Port",
 "🕌 • Egyptian-Themed Port",
 "❄️ • Artic Port",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6178,7 +6052,6 @@ if not choice then
       if type(colek4) == "function" then
         colek4()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6224,7 +6097,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6322,14 +6195,13 @@ function laut2()
 "🍬 • Sweet Boat",
 "🕌 • Egyptian-Themed Ship",
 "❄️ • Arctic Ship",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6338,7 +6210,6 @@ if not choice then
       if type(colek4) == "function" then
         colek4()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6384,7 +6255,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6481,14 +6352,13 @@ function colek5()
 "🐣 • Easter Village",
 "🦕 • Neanderthal Island",
 "🪵 • Aztec Island",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
 local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6497,7 +6367,6 @@ if not choice then
       if type(kums1) == "function" then
         kums1()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6543,7 +6412,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6625,11 +6494,10 @@ local indev = dev
   local menu = gg.choice({
 "🪧 • Event Townsign",
 "🪧 • Random Townsign",
-    "❌ • [ << Go Back >> ]"
+ "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then townsign1()
   elseif menu == 2 then townsign2()
@@ -6659,14 +6527,13 @@ while true do
 "🌿 • Smart Garden Town Sign",
 "🍭 • Sweet Treat Town Sign",
 "🐧 • Penguin Resort Town Sign",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
   if not choice then return end
 
   if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6675,7 +6542,6 @@ while true do
       if type(kums2) == "function" then
         kums2()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6721,7 +6587,7 @@ function getSignEventAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6825,14 +6691,13 @@ while true do
 "🧚 • Fairytale Town Sign",
 "🎸 • Rock Town Sign",
 "🎉 • Anniversary Town Sign",
-"❌ • [ << Go Back >> ]"
+  "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6841,7 +6706,6 @@ if not choice then
       if type(kums2) == "function" then
         kums2()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -6887,7 +6751,7 @@ function getSignRandomAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("🗑️ Cache cleared (game restarted)")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
@@ -6975,13 +6839,12 @@ while true do
   for i = 1, 63 do
     table.insert(options, "🧩 • Sticker (" .. i .. ")")
   end
-  table.insert(options, "❌ • [ << Go Back >> ]")
+  table.insert(options, "❌ • Go Back")
 
   -- 📋 Multi select
   local choice = gg.multiChoice(options, nil, "🎨 Select sticker(s) to apply:")
 
   if not choice then 
-    gg.toast("❌ Menu closed.")
     return 
   end
 
@@ -6990,7 +6853,6 @@ while true do
     if type(gp3) == "function" then
       gp3()
     else
-      gg.toast("⚠️ Back function unavailable.")
     end
     return
   end
@@ -7092,7 +6954,7 @@ function kums4()
   local skins = {
 "🌸 • Frame Festival",
 "🌸 • Name Festival",
-    "❌ • [ << Go Back >> ]"
+    "❌ • Go Back"
   }
 
   local choice = gg.choice(skins, nil, "🖼️  Frame Style")
@@ -7107,7 +6969,6 @@ function kums4()
   if type(func) == "function" then
     func()
   else
-    gg.alert("⚠️ Function pad" .. choice .. "() not found.")
   end
 
   while true do
@@ -7223,11 +7084,10 @@ local indev = dev
   local menu = gg.choice({
 "🎉 • Exclusive Avatars List",
 "🎊 • Complete Avatar List",
-    "❌ • [ << Go Back >> ]"
+    "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then avatar1()
   elseif menu == 2 then avatar2()
@@ -7253,7 +7113,7 @@ function avatar1()
       "🌟 • Year 10 Avatar",
       "🌟 • Year 11 Avatar (1)",
       "🌟 • Year 11 Avatar (2)",
-      "❌ • [ << Go Back >> ]"
+      "❌ • Go Back"
     }
 
     local choice = gg.multiChoice(
@@ -7263,7 +7123,6 @@ function avatar1()
     )
 
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -7272,7 +7131,6 @@ function avatar1()
       if type(kums5) == "function" then
         kums5()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -7350,13 +7208,12 @@ function avatar2()
     for i = 1, 323 do
       table.insert(options, "✨ • Complete Avatar (" .. i .. ")")
     end
-    table.insert(options, "❌ • [ << Go Back >> ]")
+    table.insert(options, "❌ • Go Back")
 
     -- 📋 Multi select menu
     local choice = gg.multiChoice(options, nil, "🎊 Complete Avatar List")
 
     if not choice then
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -7365,7 +7222,6 @@ function avatar2()
       if type(kums5) == "function" then
         kums5()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return -- keluar total dari avatar2()
     end
@@ -7775,13 +7631,12 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 function kums6()
 local indev = dev
   local menu = gg.choice({
- "🃏 • Card Collection Pack Badge",
+ "🃏 • Card Pack Badge",
 "🎖️ • Collection Badge",
-    "❌ • [ << Go Back >> ]"
+    "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
-    gg.toast("⚠️ No option selected!")
     return
   elseif menu == 1 then cardbadge()
   elseif menu == 2 then packbadge()
@@ -7834,14 +7689,13 @@ while true do
 "🎖️ • Grand Bage Title",
 "⛄ • Winter Badge",
 "❄️ • Legendary Winter Badge",
-    "❌ • [ << Go Back >> ]"
+    "❌ • Go Back"
   }
 
   local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
   if not choice then return end
 
 if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -7850,7 +7704,6 @@ if not choice then
       if type(kums6) == "function" then
         kums6()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -7960,7 +7813,6 @@ local title = banner
   }, nil, title)
 
   if menu == nil then
-    gg.toast(_( "noSelection_spesial" ))
     return
 
   elseif menu == 1 then
@@ -7971,7 +7823,6 @@ local title = banner
     Main()
     return
   else
-    gg.toast(_( "invalid_spesial" ))
     return
   end
 
@@ -8159,7 +8010,6 @@ function menu2()
   }, nil, title)
 
   if menu == nil then
-    gg.toast(_("toast_no_option_menuipen"))  -- "❌ No options selected" / "❌ Tidak ada opsi dipilih"
     return
 
   elseif menu == 1 then ipen1()
@@ -8170,7 +8020,6 @@ function menu2()
     Main()
     return -- stop loop kalau balik ke menu utama
   else
-    gg.toast(_("toast_invalid_option_menuipen"))  -- "⚠️ Invalid option selected." / "⚠️ Opsi tidak valid."
     return
   end
 
@@ -8366,7 +8215,6 @@ function menu7()
     }, nil, title)
 
     if menu == nil then
-        gg.toast(_("no_option_selected_skiptime"))  -- ❌ No options selected / Tidak ada opsi dipilih
         return
     elseif menu == 1 then stime1()
     elseif menu == 2 then stime2()
@@ -8376,7 +8224,6 @@ function menu7()
     elseif menu == 6 then stime6()
     elseif menu == 7 then Main()
     else
-        gg.toast(_("invalid_option_skiptime"))  -- ⚠️ Invalid option selected / Opsi tidak valid
         return
     end
 
@@ -8404,7 +8251,6 @@ function stime1()
   }, nil, indev)
 
   if menu == nil then
-    gg.toast(_("noSelect_aripal"))
     return
   elseif menu == 1 then auto1()
   elseif menu == 2 then auto2()
@@ -8413,7 +8259,6 @@ function stime1()
   elseif menu == 5 then menu7()
     return
   else
-    gg.toast(_("invalidOption_aripal"))
     return
   end
 
@@ -8744,7 +8589,6 @@ function menu3()
   }, nil, title)
 
   if menu == nil then
-    gg.toast(_("menu_closed_menupenambah"))
     return
   elseif menu == 1 then
     parming1()
@@ -8760,7 +8604,6 @@ function menu3()
     Main() -- Kembali ke menu utama
     return
   else
-    gg.toast(_("invalid_sel_menupenambah"))
     return
   end
 
@@ -9027,7 +8870,6 @@ function menu4()
   }, nil, title)
 
   if menu == nil then
-    gg.toast(_( "no_option_gamragam"))
     return
 
   elseif menu == 1 then other1()
@@ -9039,7 +8881,6 @@ function menu4()
   elseif menu == 7 then other7()
   elseif menu == 8 then Main()
   else
-    gg.toast(_( "invalid_option_gamragam"))
     return
   end
 
@@ -9385,7 +9226,7 @@ function menu6()
     _( "go_back" )
   }, nil, title)
 
-  if not menu then gg.toast("⚠️ No option selected!") return end
+  if not menu then return end
 
 	if menu == 1 then
     adminLogin()
@@ -9493,7 +9334,6 @@ function showContactMenu()
   }, nil, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
 
   if not menu then
-    gg.toast("❌ " .. _("menu_closed"))
     return
   end
 
@@ -9523,7 +9363,6 @@ function showContactMenu()
     gg.toast("👋 " .. _("exit_contact_menu"))
     exit()
   else
-    gg.toast("⚠️ " .. _("invalid_selection"))
   end
 end
 
