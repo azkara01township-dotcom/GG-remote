@@ -1374,11 +1374,11 @@ function menu1()
 end
 
 -- 🌟 Unlock Season Pass
-function gp1()
-  menue1("free")
+function menue1()
+  gp11("free")
 end
 
-function menue1(caller)
+function gp1(caller)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("70616A0Ah;6E726516h;6E617061h:213", gg.TYPE_DWORD)
