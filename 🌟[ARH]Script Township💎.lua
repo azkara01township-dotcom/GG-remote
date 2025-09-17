@@ -5859,11 +5859,6 @@ function kret2()
 
 local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[19] then
       if type(colek3) == "function" then
@@ -5879,7 +5874,7 @@ if not choice then
         local func = _G["ret" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Train " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ Train " .. skins[i] .. " Collection applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
