@@ -5728,7 +5728,7 @@ function kret1()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
+local folder = "/sdcard/.ggcache_arh/"
 local fileAddr = folder .. "addresscache.txt"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
@@ -5743,7 +5743,7 @@ function getAddr()
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
     if chk and chk[1] and chk[1].value == 30 then return addr end
     deleteFile(fileAddr)
-    gg.toast("👑 ARH-Cache cleared")
+    gg.toast("👑 ARH-Cache cleared 👑")
   end
 
   gg.clearResults()
@@ -5801,7 +5801,6 @@ function stationSkin(offset, label, emoji)
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " station skin applied!")
 end
-
 -- 🎨 Station Skin Functions
 function sta1() stationSkin(-0x400, "🌺 Flower Station") end
 function sta2() stationSkin(-0x298, "🎄 Christmas Station (2)") end
