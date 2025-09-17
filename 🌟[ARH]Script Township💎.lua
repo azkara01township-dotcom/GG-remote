@@ -5485,8 +5485,37 @@ function das12() airportSkin(0x130,  "Rainbow's End Airport", "🌈") end
 function das13() airportSkin(0x170,  "Secret Base", "🕵️") end
 function das14() airportSkin(0x1B0,  "Five-Star Airport", "🌟") end
 function das15() airportSkin(0x1F0,  "Symphony Airport", "🎼") end
-function das16() airportSkinManual({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0x6F696873,0x0000006E}, "Fashion Airport", "👗") end
-function das17() airportSkinManual({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "Arabian Airport", "🕌") end
+function das16()
+  airportSkinManual("Fashion Airport", "👗", {
+    {offset = -0x48, value = 696B5328},
+    {offset = -0x44, value = 69415F6E},
+    {offset = -0x40, value = 726F7072},
+    {offset = -0x3C, value = 61665F74},
+    {offset = -0x38, value = 6F696873},
+    {offset = -0x34, value = 0000006E},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 1},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function das17()
+  airportSkinManual("Arabian Airport", "🕌", {
+    {offset = -0x48, value = 696B5322},
+    {offset = -0x44, value = 69415F6E},
+    {offset = -0x40, value = 726F7072},
+    {offset = -0x3C, value = 72615F74},
+    {offset = -0x38, value = 00006261},
+    {offset = -0x34, value = 00000000},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 1},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
 
 function bandara2()
   while true do
