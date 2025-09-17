@@ -107,21 +107,6 @@ local teks = {
 ["claim_bonus_rwpremium"]     = {id = "🎉 • Klaim Keuntungan", en = "🎉 • Claim Perks"},
   ["go_back_rwpremium"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
   
-  ----GP 3 jenis----
-  
-  ["sp_astro_spegp"]     = {id = "🎎 Buka Season Pass Saat Ini: Jepang", en = "🎎 Unlock Current Season Pass: Japan"},
-["sp_mythic_spegp"]    = {id = "🎸 Buka Season Pass Selanjutnya: Rock N Roll", en = "🎸 Unlock Next Season Pass: Rock N Roll"},
-["sp_japan_spegp"]     = {id = "🦇 Buka Season Pass Berikutnya: Halloween", en = "🦇 Unlock Next Season Pass: Halloween"},
-
-["sp_unlock_title_spegp"]  = {id = "🎫 Pilih Season Pass yang Akan Dibuka", en = "🎫 Choose Season Pass to Unlock"},
-["sp_no_found_spegp"]      = {id = "❌ Tidak ada nilai yang cocok ditemukan.\n", en = "❌ No matching values found.\n"},
-["sp_cancelled_spegp2"]    = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
-["sp_copied_spegp"]        = {id = "📋 Data %s berhasil disalin.", en = "📋 %s data copied."},
-["sp_target_nf_spegp"]     = {id = "⚠️ ID target %s tidak ditemukan!", en = "⚠️ Target ID %s not found!"},
-["sp_applied_spegp"]       = {id = "✅ Konten %s berhasil diterapkan ke ID %s", en = "✅ %s content applied to ID %s"},
-["sp_done_spegp"]          = {id = "🎉 Season Pass berhasil diperbarui.\nSilakan restart atau masuk ulang game.", en = "🎉 Season Pass updated.\nPlease restart or re-enter the game."},
-["sp_astro_ok_spegp"]      = {id = "✅ Season Pass berhasil dibuka!", en = "✅ Season Pass Unlocked!"},
-
 ----Tambah Cash----
 
 ["add_tcash_tambahduit"]       = {id = "Tambah T-Cash", en = "Add T-Cash"},
@@ -1036,30 +1021,6 @@ function freekey()
   menuRunning = false
 end
 
--- 🌟 Unlock Season Pass
-function menue1()
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("1937011470;620:25", gg.TYPE_DWORD)
-  gg.refineNumber("1937011470", gg.TYPE_DWORD)
-
-  local results = gg.getResults(10)
-  if #results < 1 then
-    gg.alert("❌ " .. _("astro_fail_title_gpfree") .. "\n\n🔍 " .. _("astro_fail_body_gpfree"))
-    return
-  end
-
-  local edits = {}
-  for _, v in ipairs(results) do
-    table.insert(edits, {address = v.address + 0xF8, flags = gg.TYPE_DWORD, value = 1})     -- Activate
-    table.insert(edits, {address = v.address + 0xE8, flags = gg.TYPE_DWORD, value = 0})     -- Reset
-    table.insert(edits, {address = v.address + 0xEC, flags = gg.TYPE_DWORD, value = 651})   -- Arabia ID
-  end
-
-  gg.setValues(edits)
-  gg.toast("✅ " .. _("astro_success_gpfree"))
-end
-
 function menue3()
   local title = banner
   local menu = gg.choice({
@@ -1412,88 +1373,34 @@ function menu1()
   end
 end
 
-function gp1() -- 🎫 Unlock Season Pass Variants
-  gg.clearResults()
-  local pilihan = gg.choice({
-    _( "sp_astro_spegp" ),
-    _( "sp_mythic_spegp" ),
-    _( "sp_japan_spegp" ),
-  }, nil, _( "sp_unlock_title_spegp" ))
-  if not pilihan then return end
-
-  -- 🔓 Unlock specific pass
-  local function unlockPass(id, label)
-    gg.clearResults()
-    gg.setRanges(gg.REGION_C_ALLOC)
-    gg.searchNumber("1937011470;" .. id .. ":25", gg.TYPE_DWORD)
-    gg.refineNumber("1937011470", gg.TYPE_DWORD)
-    local res = gg.getResults(10)
-    if #res == 0 then
-      return nil, _( "sp_no_found_spegp" ) .. label .. " " .. _( "sp_cancelled_spegp2" )
-    end
-
-    for _, v in ipairs(res) do
-      local patch = {
-        {address = v.address + 0xF8, flags = gg.TYPE_DWORD, value = 1},
-        {address = v.address + 0xE8, flags = gg.TYPE_DWORD, value = 0},
-        {address = v.address + 0xEC, flags = gg.TYPE_DWORD, value = 651},
-      }
-      gg.setValues(patch)
-    end
-    return res, nil
-  end
-
-  -- 📋 Copy pass content from sourceID to targetIDs
-  local function copyPass(sourceID, sourceLabel, targetIDs)
-    local srcRes, err = unlockPass(sourceID, sourceLabel)
-    if err then return gg.alert(err) end
-
-    local baseSrc = srcRes[1].address + 0x18
-    local data = {}
-    for i = 0, 67 do
-      table.insert(data, {address = baseSrc + i * 4, flags = gg.TYPE_DWORD})
-    end
-    data = gg.getValues(data)
-    gg.toast(string.format(_( "sp_copied_spegp" ), sourceLabel))
-
-    for _, targetID in ipairs(targetIDs) do
-      gg.clearResults()
-      gg.searchNumber("1937011470;" .. targetID .. ":25", gg.TYPE_DWORD)
-      gg.refineNumber("1937011470", gg.TYPE_DWORD)
-      local tgt = gg.getResults(10)
-      if #tgt == 0 then
-        gg.toast(string.format(_( "sp_target_nf_spegp" ), targetID))
-      else
-        for _, v in ipairs(tgt) do
-          local base = v.address + 0x18
-          local paste = {}
-          for i = 0, 67 do
-            table.insert(paste, {
-              address = base + i * 4,
-              flags = gg.TYPE_DWORD,
-              value = data[i + 1].value
-            })
-          end
-          gg.setValues(paste)
-        end
-        gg.toast(string.format(_( "sp_applied_spegp" ), sourceLabel, targetID))
-      end
-    end
-    gg.alert(_( "sp_done_spegp" ))
-  end
-
-  -- 📌 Handle options
-  if pilihan == 1 then
-    local res, err = unlockPass(620, "Astro Pass")
-    if err then return gg.alert(err) end
-    a2()
-    gg.toast(_( "sp_astro_ok_spegp" ))
-  elseif pilihan == 2 then
-    copyPass(630, "Mythic Pass", {620})
-  elseif pilihan == 3 then
-    copyPass(640, "Japanese Pass", {620, 630})
-  end
+-- 🌟 Unlock Season Pass
+function gp1()
+  menue1("free")
 end
+
+function menue1(caller)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("70616A0Ah;6E726516h;6E617061h:213", gg.TYPE_DWORD)
+  gg.refineNumber("6E617061h", gg.TYPE_DWORD)
+
+  local results = gg.getResults(10)
+  if #results < 1 then
+    gg.alert("❌ " .. _("astro_fail_title_gpfree") .. "\n\n🔍 " .. _("astro_fail_body_gpfree"))
+    return
+  end
+
+  local edits = {}
+  for _, v in ipairs(results) do
+    table.insert(edits, {address = v.address - 0x8, flags = gg.TYPE_DWORD, value = 1})     -- Activate
+    table.insert(edits, {address = v.address - 0x14, flags = gg.TYPE_DWORD, value = 0})     -- Reset
+    table.insert(edits, {address = v.address - 0x18, flags = gg.TYPE_DWORD, value = 651})   -- Arabia ID
+  end
+
+  gg.setValues(edits)
+  gg.toast("✅ " .. _("astro_success_gpfree"))
+	end
+	
 
 -- ❄️ Freeze Rewards
 function menue2()
