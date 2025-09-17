@@ -5676,8 +5676,8 @@ function wat12() airplaneSkin(-0x490, "Lucky Jet", "🌈") end
 function wat13() airplaneSkin(-0x550, "Stealth Aircraft", "🕵️") end
 function wat14() airplaneSkin(-0x610, "Seaplane", "🌟") end
 function wat15() airplaneSkin(-0x6D0, "Symphony Plane", "🎼") end
-function wat16() airplaneSkin(-0x850, "Fashion Plane", "👗") end
-function wat17() airplaneSkin(-0x790, "Arabian Plane", "🕌") end
+function wat16() airplaneSkin(-0x910, "Fashion Plane", "👗") end
+function wat17() airplaneSkin(-0x850, "Arabian Plane", "🕌") end
 
 -------------------------------------------------
 
