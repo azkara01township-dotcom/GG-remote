@@ -5609,23 +5609,24 @@ function airplaneSkin(offset, label, emoji)
 end
 
 -- 🛫 Airplane Skins
-function wat1()  airplaneSkin(0x3B0, "🛫", "Ultra Plane") end
-function wat2()  airplaneSkin(0x2F0, "🐲", "Sky Dragon") end
-function wat3()  airplaneSkin(0x230, "🌴", "Tropical Biplane") end
-function wat4()  airplaneSkin(0x170, "👻", "Ghost Plane") end
-function wat5()  airplaneSkin(0xB0,  "🪐", "Launch Vehicle") end
-function wat6()  airplaneSkin(-0x10,  "🎸", "Rock Plane") end
-function wat7()  airplaneSkin(-0xD0,  "🎬", "A-Lister Jet") end
-function wat8()  airplaneSkin(-0x190, "🎅", "Holiday Plane") end
-function wat9()  airplaneSkin(-0x250, "🐣", "Bird Plane") end
-function wat10() airplaneSkin(-0x310, "🍭", "Éclair Plane") end
-function wat11() airplaneSkin(-0x3D0, "🎿", "Aero Sleigh") end
-function wat12() airplaneSkin(-0x490, "🌈", "Lucky Jet") end
-function wat13() airplaneSkin(-0x550, "🕵️", "Stealth Aircraft") end
-function wat14() airplaneSkin(-0x610, "🌟", "Seaplane") end
-function wat15() airplaneSkin(-0x6D0, "🎼", "Symphony Plane") end
-function wat16() airplaneSkin(-0x850, "👗", "Fashion Plane") end
-function wat17() airplaneSkin(-0x790, "🕌", "Arabian Plane") end
+-- 🛫 Airplane Skins
+function wat1()  airplaneSkin(0x3B0, "Ultra Plane", "🛫") end
+function wat2()  airplaneSkin(0x2F0, "Sky Dragon", "🐲") end
+function wat3()  airplaneSkin(0x230, "Tropical Biplane", "🌴") end
+function wat4()  airplaneSkin(0x170, "Ghost Plane", "👻") end
+function wat5()  airplaneSkin(0xB0,  "Launch Vehicle", "🪐") end
+function wat6()  airplaneSkin(-0x10,  "Rock Plane", "🎸") end
+function wat7()  airplaneSkin(-0xD0,  "A-Lister Jet", "🎬") end
+function wat8()  airplaneSkin(-0x190, "Holiday Plane", "🎅") end
+function wat9()  airplaneSkin(-0x250, "Bird Plane", "🐣") end
+function wat10() airplaneSkin(-0x310, "Éclair Plane", "🍭") end
+function wat11() airplaneSkin(-0x3D0, "Aero Sleigh", "🎿") end
+function wat12() airplaneSkin(-0x490, "Lucky Jet", "🌈") end
+function wat13() airplaneSkin(-0x550, "Stealth Aircraft", "🕵️") end
+function wat14() airplaneSkin(-0x610, "Seaplane", "🌟") end
+function wat15() airplaneSkin(-0x6D0, "Symphony Plane", "🎼") end
+function wat16() airplaneSkin(-0x850, "Fashion Plane", "👗") end
+function wat17() airplaneSkin(-0x790, "Arabian Plane", "🕌") end
 
 -------------------------------------------------
 
