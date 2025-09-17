@@ -1393,8 +1393,8 @@ function gp1(caller)
   local edits = {}
   for _, v in ipairs(results) do
     table.insert(edits, {address = v.address - 0x8, flags = gg.TYPE_DWORD, value = 1})     -- Activate
-    table.insert(edits, {address = v.address - 0x14, flags = gg.TYPE_DWORD, value = 0})     -- Reset
-    table.insert(edits, {address = v.address - 0x18, flags = gg.TYPE_DWORD, value = 651})   -- Arabia ID
+    table.insert(edits, {address = v.address - 0x14, flags = gg.TYPE_DWORD, value = 651})     -- Reset
+    table.insert(edits, {address = v.address - 0x18, flags = gg.TYPE_DWORD, value = 0})   -- Arabia ID
   end
 
   gg.setValues(edits)
