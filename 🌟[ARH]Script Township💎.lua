@@ -5453,24 +5453,23 @@ function airportSkin(offset, label, emoji)
   gg.toast(emoji .. " " .. label .. " airport skin applied!")
 end
 
--- 🛫 Airport Skins List
-function das1()  airportSkin(-0x190, "🛫", "Aeriel Portal") end
-function das2()  airportSkin(-0x150, "🐲", "Festival Airport") end
-function das3()  airportSkin(-0x110, "🌴", "Tropical Airport") end
-function das4()  airportSkin(-0xD0,  "👻", "Ghost Airport") end
-function das5()  airportSkin(-0x90,  "🪐", "Space Airport") end
-function das6()  airportSkin(-0x50,  "🎸", "Rock Airport") end
-function das7()  airportSkin(-0x10,  "🎬", "Cinema Airport") end
-function das8()  airportSkin(0x30,   "🎅", "Santa's Residence") end
-function das9()  airportSkin(0x70,   "🐣", "Easter Airport") end
-function das10() airportSkin(0xB0,   "🍭", "Sugary Airport") end
-function das11() airportSkin(0xF0,   "🎿", "Ski Station") end
-function das12() airportSkin(0x130,  "🌈", "Rainbow's End Airport") end
-function das13() airportSkin(0x170,  "🕵️", "Secret Base") end
-function das14() airportSkin(0x1B0,  "🌟", "Five-Star Airport") end
-function das15() airportSkin(0x1F0,  "🎼", "Symphony Airport") end
-function das16() airportSkin({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0x6F696873,0x0000006E}, "👗", "Fashion Airport") end
-function das17() airportSkin({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "🕌", "Arabian Airport") end
+function das1()  airportSkin(-0x190, "Aeriel Portal", "🛫") end
+function das2()  airportSkin(-0x150, "Festival Airport", "🐲") end
+function das3()  airportSkin(-0x110, "Tropical Airport", "🌴") end
+function das4()  airportSkin(-0xD0,  "Ghost Airport", "👻") end
+function das5()  airportSkin(-0x90,  "Space Airport", "🪐") end
+function das6()  airportSkin(-0x50,  "Rock Airport", "🎸") end
+function das7()  airportSkin(-0x10,  "Cinema Airport", "🎬") end
+function das8()  airportSkin(0x30,   "Santa's Residence", "🎅") end
+function das9()  airportSkin(0x70,   "Easter Airport", "🐣") end
+function das10() airportSkin(0xB0,   "Sugary Airport", "🍭") end
+function das11() airportSkin(0xF0,   "Ski Station", "🎿") end
+function das12() airportSkin(0x130,  "Rainbow's End Airport", "🌈") end
+function das13() airportSkin(0x170,  "Secret Base", "🕵️") end
+function das14() airportSkin(0x1B0,  "Five-Star Airport", "🌟") end
+function das15() airportSkin(0x1F0,  "Symphony Airport", "🎼") end
+function das16() airportSkin({0x696B5328,0x69415F6E,0x726F7072,0x61665F74,0x6F696873,0x0000006E}, "Fashion Airport", "👗") end
+function das17() airportSkin({0x696B5322,0x69415F6E,0x726F7072,0x72615F74,0x00006261,0x00000000}, "Arabian Airport", "🕌") end
 
 function bandara2()
   while true do
@@ -5608,7 +5607,6 @@ function airplaneSkin(offset, label, emoji)
   gg.toast(emoji .. " " .. label .. " airplane skin applied!")
 end
 
--- 🛫 Airplane Skins
 -- 🛫 Airplane Skins
 function wat1()  airplaneSkin(0x3B0, "Ultra Plane", "🛫") end
 function wat2()  airplaneSkin(0x2F0, "Sky Dragon", "🐲") end
