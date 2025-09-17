@@ -1021,6 +1021,30 @@ function freekey()
   menuRunning = false
 end
 
+-- 🌟 Unlock Season Pass
+function menue1()
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("70616A0Ah;6E726516h;6E617061h:213", gg.TYPE_DWORD)
+  gg.refineNumber("6E617061h", gg.TYPE_DWORD)
+
+  local results = gg.getResults(10)
+  if #results < 1 then
+    gg.alert("❌ " .. _("astro_fail_title_gpfree") .. "\n\n🔍 " .. _("astro_fail_body_gpfree"))
+    return
+  end
+
+  local edits = {}
+  for _, v in ipairs(results) do
+    table.insert(edits, {address = v.address - 0x8, flags = gg.TYPE_DWORD, value = 1})     -- Activate
+    table.insert(edits, {address = v.address - 0x14, flags = gg.TYPE_DWORD, value = 0})     -- Reset
+    table.insert(edits, {address = v.address - 0x18, flags = gg.TYPE_DWORD, value = 651})   -- Arabia ID
+  end
+
+  gg.setValues(edits)
+  gg.toast("✅ " .. _("astro_success_gpfree"))
+end
+
 function menue3()
   local title = banner
   local menu = gg.choice({
@@ -1374,11 +1398,7 @@ function menu1()
 end
 
 -- 🌟 Unlock Season Pass
-function menue1()
-  gp1("free")
-end
-
-function gp1(caller)
+function gp1
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("70616A0Ah;6E726516h;6E617061h:213", gg.TYPE_DWORD)
