@@ -5694,11 +5694,6 @@ function kret1()
 
   local choice = gg.multiChoice(skins, nil, "🚆 Select an Station Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[19] then
       if type(colek3) == "function" then
@@ -5714,8 +5709,7 @@ if not choice then
         local func = _G["sta" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Station " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -5874,8 +5868,7 @@ local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
         local func = _G["ret" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Train " .. skins[i] .. " Collection applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6032,11 +6025,6 @@ function laut1()
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[16] then
       if type(colek4) == "function" then
@@ -6052,8 +6040,7 @@ if not choice then
         local func = _G["buhan" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Port " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6190,11 +6177,6 @@ function laut2()
 
 local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[16] then
       if type(colek4) == "function" then
@@ -6210,8 +6192,7 @@ if not choice then
         local func = _G["kap" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Ship " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6347,11 +6328,6 @@ function colek5()
 
 local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[15] then
       if type(kums1) == "function" then
@@ -6367,8 +6343,7 @@ if not choice then
         local func = _G["pulo" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Fortress " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6522,11 +6497,6 @@ while true do
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
   if not choice then return end
-
-  if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[17] then
       if type(kums2) == "function" then
@@ -6542,8 +6512,7 @@ while true do
         local func = _G["signEvent" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ City Townsign " .. i .. " Event applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6686,11 +6655,6 @@ while true do
 
   local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[22] then
       if type(kums2) == "function" then
@@ -6706,8 +6670,7 @@ if not choice then
         local func = _G["signRandom" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ City Townsign " .. i .. " Random applied.\n👉 Claim it in-freeze reward!")
-
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6853,7 +6816,7 @@ while true do
       local func = _G["tikel" .. i]
       if type(func) == "function" then
         func()
-        gg.toast("✅ Sticker (" .. i .. ") applied.\n👉 Claim it in-freeze reward!")
+        gg.alert("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
         -- ⏸️ Wait until user taps GG icon to continue
         repeat
@@ -7106,39 +7069,29 @@ function avatar1()
       "❌ • Go Back"
     }
 
-    local choice = gg.multiChoice(
-      skins,
-      nil,
-      "🎉 Exclusive Avatars"
-    )
-
+    local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Avatars")
     if not choice then 
+      gg.toast("❌ Menu closed.")
       return
     end
 
     -- 🔙 Back option
-    if choice[13] then
+    if choice[#skins] then
       if type(kums5) == "function" then
-        kums5()
+        return kums5()
       else
+        gg.toast("⚠️ Back function unavailable.")
+        return
       end
-      return
     end
 
-    -- 🔁 Process selected avatars one by one
-    for i = 1, 12 do
-      if choice[i] then
+    -- 🔁 Process selected avatars
+    for i, _ in ipairs(skins) do
+      if choice[i] and i < #skins then
         local func = _G["avatarYear" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Year " .. i .. " Avatar applied.\n👉 Claim it in-freeze reward!")
-
-          -- ⏸️ Wait for user to press GG icon before continuing
-          repeat
-            gg.sleep(500)
-          until gg.isVisible(true)
-
-          gg.setVisible(false)
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
         else
           gg.alert("❌ Function avatarYear" .. i .. "() not found!")
         end
@@ -7146,7 +7099,6 @@ function avatar1()
     end
 
     gg.toast("🎉 All selected avatars have been processed!")
-    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
@@ -7204,14 +7156,16 @@ function avatar2()
     local choice = gg.multiChoice(options, nil, "🎊 Complete Avatar List")
 
     if not choice then
+      gg.toast("❌ Menu closed.")
       return
     end
 
-    -- ?? If Back selected
-    if choice[324] then
+    -- 🔙 If Back selected
+    if choice[#options] then
       if type(kums5) == "function" then
         kums5()
       else
+        gg.toast("⚠️ Back function unavailable.")
       end
       return -- keluar total dari avatar2()
     end
@@ -7222,7 +7176,7 @@ function avatar2()
         local func = _G["comAvatar" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Complete Avatar (" .. i .. ") applied.\n👉 Claim it in-freeze reward!")
+          gg.alert("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait until user taps GG icon
           repeat
@@ -7231,12 +7185,13 @@ function avatar2()
 
           gg.setVisible(false) -- hide again
         else
-          gg.alert("❌ Complete Avatar " .. i .. " function not found!")
+          gg.alert("❌ " .. options[i] .. " function not found!")
         end
       end
     end
+
     gg.toast("🎉 All selected Complete Avatars have been processed!")
-    end
+  end
 end
 
 function applyCompleteAvatar(hex, emoji, name)
@@ -7668,58 +7623,62 @@ function cardbadge()
 end
 
 function packbadge()
-while true do
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
-  local skins = {
-"🏙️ • Town Badge",
-"🏆 • Legendary Town Badge",
-"🃏 • Badge Title",
-"🎖️ • Grand Bage Title",
-"⛄ • Winter Badge",
-"❄️ • Legendary Winter Badge",
-    "❌ • Go Back"
-  }
+    local skins = {
+      "🏙️ Town Badge",
+      "🏆 • Legendary Town Badge",
+      "🃏 • Badge Title",
+      "🎖️ • Grand Badge Title",
+      "⛄ • Winter Badge",
+      "❄️ • Legendary Winter Badge",
+      "❌ • Go Back"
+    }
 
-  local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
-  if not choice then return end
-
-if not choice then 
+    local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
+    if not choice then
+      gg.toast("❌ Menu closed.")
       return
     end
 
-    -- 🔙 Back option
-    if choice[7] then
+    -- 🔙 Back option (selalu terakhir)
+    if choice[#skins] then
       if type(kums6) == "function" then
         kums6()
       else
+        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
 
-    -- 🔁 Process selected avatars one by one
-    for i = 1, 6 do
+    local processed = false
+    -- 🔁 Jalankan fungsi badge berdasarkan pilihan
+    for i = 1, #skins - 1 do
       if choice[i] then
         local func = _G["badgecollect" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Badge " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
-          -- ⏸️ Wait for user to press GG icon before continuing
+          -- ⏸️ Tunggu user tekan ikon GG sebelum lanjut
           repeat
             gg.sleep(500)
           until gg.isVisible(true)
-
           gg.setVisible(false)
+
+          processed = true
         else
           gg.alert("❌ Function badgecollect" .. i .. "() not found!")
         end
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Badge have been processed!")
-    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+    if processed then
+      gg.toast("🎉 Selected Exclusive Badge processed successfully!")
+    end
+    -- 🔄 Setelah selesai → balik ke menu lagi
   end
 end
 
