@@ -5722,7 +5722,7 @@ function kret1()
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Station have been processed!")
+    gg.toast("🎉 All selected Station skin have been processed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
