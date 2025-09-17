@@ -1375,7 +1375,7 @@ end
 
 -- 🌟 Unlock Season Pass
 function menue1()
-  gp11("free")
+  gp1("free")
 end
 
 function gp1(caller)
