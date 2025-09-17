@@ -5015,11 +5015,6 @@ function skinhel1()
 
   local choice = gg.multiChoice(skins, nil, "🚁 Select an Helipad Skins:")
   if not choice then return end
-
-if not choice then
-      return
-    end
-
     -- 🔙 Back option
     if choice[19] then
       if type(colek1) == "function" then
@@ -5035,7 +5030,7 @@ if not choice then
         local func = _G["pad" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Helipad " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -5177,11 +5172,6 @@ function skinhel2()
 
 local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
   if not choice then return end
-
-if not choice then
-      return
-    end
-
     -- 🔙 Back option
     if choice[19] then
       if type(colek1) == "function" then
@@ -5197,7 +5187,7 @@ if not choice then
         local func = _G["hel" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Helicopter " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -5354,11 +5344,6 @@ function bandara1()
 
   local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airport Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[18] then
       if type(colek2) == "function" then
@@ -5374,7 +5359,7 @@ if not choice then
         local func = _G["das" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Airport " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -5515,11 +5500,6 @@ function bandara2()
 
 local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
   if not choice then return end
-
-if not choice then 
-      return
-    end
-
     -- 🔙 Back option
     if choice[18] then
       if type(colek2) == "function" then
@@ -5535,7 +5515,7 @@ if not choice then
         local func = _G["wat" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Airplane " .. i .. " Collection applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
@@ -5709,7 +5689,7 @@ function kret1()
         local func = _G["sta" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -5802,24 +5782,24 @@ function stationSkin(offset, label, emoji)
   gg.toast(emoji .. " " .. label .. " station skin applied!")
 end
 -- 🎨 Station Skin Functions
-function sta1() stationSkin(-0x400, "🌺 Flower Station") end
-function sta2() stationSkin(-0x298, "🎄 Christmas Station (2)") end
-function sta3() stationSkin(-0x1D8, "🎃 Halloween Station") end
-function sta4() stationSkin(-0x118, "🏛️ Roman Station") end
-function sta5() stationSkin(-0x58, "🏰 Castle Station") end
-function sta6() stationSkin(0x68, "🎶 Record Station") end
-function sta7() stationSkin(0x128, "🏕️ Training Camp") end
-function sta8() stationSkin(0x1E8, "🪐 Space Station") end
-function sta9() stationSkin(0x2A8, "🐲 Chinese Station") end
-function sta10() stationSkin(0x368, "🎭 Theater Set Station") end
-function sta11() stationSkin(0x428, "🦴 Ancient Settlement") end
-function sta12() stationSkin(0x4E8, "🐣 Easter Station") end
-function sta13() stationSkin(0x5A8, "🎁 Christmas Station (1)") end
-function sta14() stationSkin(0x668, "🤠 Cowboys Station") end
-function sta15() stationSkin(0x728, "💃 Disco Station") end
-function sta16() stationSkin(0x7E8, "👻 Ghost Station") end
-function sta17() stationSkin(0x8A8, "🌀 Express Portal") end
-function sta18() stationSkin(-0x358, "🏛️ Mythic Station") end
+function sta1() stationSkin(-0x400, "🌺", "Flower Station") end
+function sta2() stationSkin(-0x298, "🎄", "Christmas Station (2)") end
+function sta3() stationSkin(-0x1D8, "🎃", "Halloween Station") end
+function sta4() stationSkin(-0x118, "🏛️", "Roman Station") end
+function sta5() stationSkin(-0x58, "🏰", "Castle Station") end
+function sta6() stationSkin(0x68, "🎶", "Record Station") end
+function sta7() stationSkin(0x128, "🏕️", "Training Camp") end
+function sta8() stationSkin(0x1E8, "🪐", "Space Station") end
+function sta9() stationSkin(0x2A8, "🐲", "Chinese Station") end
+function sta10() stationSkin(0x368, "🎭", "Theater Set Station") end
+function sta11() stationSkin(0x428, "🦴", "Ancient Settlement") end
+function sta12() stationSkin(0x4E8, "🐣", "Easter Station") end
+function sta13() stationSkin(0x5A8, "🎁", "Christmas Station (1)") end
+function sta14() stationSkin(0x668, "🤠", "Cowboys Station") end
+function sta15() stationSkin(0x728, "💃", "Disco Station") end
+function sta16() stationSkin(0x7E8, "👻", "Ghost Station") end
+function sta17() stationSkin(0x8A8, "🌀", "Express Portal") end
+function sta18() stationSkin(-0x358, "🏛️", "Mythic Station") end
 
 -------------------------------------------------
 
@@ -5867,7 +5847,7 @@ local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
         local func = _G["ret" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6039,7 +6019,7 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
         local func = _G["buhan" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6191,7 +6171,7 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
         local func = _G["kap" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6342,7 +6322,7 @@ local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
         local func = _G["pulo" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6511,7 +6491,7 @@ while true do
         local func = _G["signEvent" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6669,7 +6649,7 @@ while true do
         local func = _G["signRandom" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
           -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
@@ -6815,7 +6795,7 @@ while true do
       local func = _G["tikel" .. i]
       if type(func) == "function" then
         func()
-        gg.alert("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
+        gg.toast("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
         -- ⏸️ Wait until user taps GG icon to continue
         repeat
@@ -7090,7 +7070,7 @@ function avatar1()
         local func = _G["avatarYear" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
         else
           gg.alert("❌ Function avatarYear" .. i .. "() not found!")
         end
@@ -7175,7 +7155,7 @@ function avatar2()
         local func = _G["comAvatar" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Wait until user taps GG icon
           repeat
@@ -7659,7 +7639,7 @@ function packbadge()
         local func = _G["badgecollect" .. i]
         if type(func) == "function" then
           func()
-          gg.alert("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
 
           -- ⏸️ Tunggu user tekan ikon GG sebelum lanjut
           repeat
