@@ -1089,7 +1089,6 @@ function Main()
   while menuRunning and menuMode == "premium" do
 
 -- 💎 ARH PERMANENT & EXPIRED LOGIN HANDLER
-
 local passFile           = "/sdcard/.ulog_craft"
 local permCodeFile       = "/sdcard/.brush_viu"
 local expiredDevicesFile = "/sdcard/.vutlenot"
@@ -1154,31 +1153,41 @@ end
 
 local expectedHash = hash(permanentCode .. userID)
 
--- 🔍 Load daftar device permanent
-local permanentDevices = {}
-local pf = io.open(passFile, "r")
-if pf then
-    for line in pf:lines() do
-        permanentDevices[#permanentDevices + 1] = line
+-- 📂 Reload daftar permanentDevices
+local function reloadPermanentDevices()
+    local list = {}
+    local f = io.open(passFile, "r")
+    if f then
+        for line in f:lines() do
+            list[#list+1] = line
+        end
+        f:close()
     end
-    pf:close()
+    return list
 end
+
+-- 📂 Reload daftar expiredDevices
+local function reloadExpiredDevices()
+    local list = {}
+    local f = io.open(expiredDevicesFile, "r")
+    if f then
+        for line in f:lines() do
+            list[#list+1] = line
+        end
+        f:close()
+    end
+    return list
+end
+
+-- Load awal
+local permanentDevices = reloadPermanentDevices()
+local expiredDevices   = reloadExpiredDevices()
 
 local function isPermanentDeviceRegistered(idHash)
     for _, h in ipairs(permanentDevices) do
         if h == idHash then return true end
     end
     return false
-end
-
--- 📂 Load daftar device expiredCode
-local expiredDevices = {}
-local ef = io.open(expiredDevicesFile, "r")
-if ef then
-    for line in ef:lines() do
-        expiredDevices[#expiredDevices+1] = line
-    end
-    ef:close()
 end
 
 local function isExpiredDeviceRegistered(id)
@@ -1244,7 +1253,7 @@ while not loginOK do
         if not isPermanentDeviceRegistered(expectedHash) then
             local pfw = io.open(passFile, "a")
             if pfw then pfw:write(expectedHash .. "\n") pfw:close() end
-            permanentDevices[#permanentDevices + 1] = expectedHash
+            permanentDevices = reloadPermanentDevices() -- refresh jumlah user
         end
         gg.toast("✅ Access granted with Permanent Code")
         showLoginInfo("Permanent Code")
@@ -1260,7 +1269,7 @@ while not loginOK do
                 else
                     local efw = io.open(expiredDevicesFile, "a")
                     if efw then efw:write(userID .. "\n") efw:close() end
-                    expiredDevices[#expiredDevices+1] = userID
+                    expiredDevices = reloadExpiredDevices() -- refresh jumlah user
                 end
             end
             gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
