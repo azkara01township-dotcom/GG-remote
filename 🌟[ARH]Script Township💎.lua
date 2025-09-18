@@ -1096,7 +1096,7 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-17"
+local expireDate50  = "2025-09-18"
 
 -- Hash helper
 local function hash(str)
