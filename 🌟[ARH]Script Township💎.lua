@@ -1097,23 +1097,6 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
 local expireDate50  = "2025-09-25"
--- 🔢 Limit maksimum device untuk expiredCode
-local expiredLimit  = 50
-
--- 🔢 Generate numeric User ID (utama, dipakai semua bagian)
-local function generateUserID()
-    local info = gg.getTargetInfo() or {}
-    local raw = (info.label or "") .. "-" ..
-                (info.versionCode or "") .. "-" ..
-                (os.getenv("HOSTNAME") or "")
-    local h = 0
-    for i = 1, #raw do
-        h = (h * 31 + raw:byte(i)) % 1000000000 -- max 10 digit
-    end
-    return tostring(h)
-end
-
-local userID = generateUserID()
 
 -- Hash helper
 local function hash(str)
@@ -1151,43 +1134,33 @@ if not permanentCode then
     os.exit()
 end
 
-local expectedHash = hash(permanentCode .. userID)
+local expectedHash = hash(permanentCode)
 
--- 📂 Reload daftar permanentDevices
-local function reloadPermanentDevices()
-    local list = {}
-    local f = io.open(passFile, "r")
-    if f then
-        for line in f:lines() do
-            list[#list+1] = line
-        end
-        f:close()
+-- 🔍 Load daftar device permanent
+local permanentDevices = {}
+local pf = io.open(passFile, "r")
+if pf then
+    for line in pf:lines() do
+        permanentDevices[#permanentDevices + 1] = line
     end
-    return list
+    pf:close()
 end
-
--- 📂 Reload daftar expiredDevices
-local function reloadExpiredDevices()
-    local list = {}
-    local f = io.open(expiredDevicesFile, "r")
-    if f then
-        for line in f:lines() do
-            list[#list+1] = line
-        end
-        f:close()
-    end
-    return list
-end
-
--- Load awal
-local permanentDevices = reloadPermanentDevices()
-local expiredDevices   = reloadExpiredDevices()
 
 local function isPermanentDeviceRegistered(idHash)
     for _, h in ipairs(permanentDevices) do
         if h == idHash then return true end
     end
     return false
+end
+
+-- 🔍 Load daftar device expired
+local expiredDevices = {}
+local ef = io.open(expiredDevicesFile, "r")
+if ef then
+    for line in ef:lines() do
+        expiredDevices[#expiredDevices+1] = line
+    end
+    ef:close()
 end
 
 local function isExpiredDeviceRegistered(id)
@@ -1197,29 +1170,24 @@ local function isExpiredDeviceRegistered(id)
     return false
 end
 
--- 📌 Alert login info (hanya sekali)
+-- 📌 Alert login info
 local function showLoginInfo(mode)
     local now = os.date("%Y-%m-%d %H:%M:%S")
     local expDate = expireDate50
     local header, message
 
-    if mode == "Permanent Code" then
-        header = "✅ Permanent Login Success"
-        message = string.format(
-            "%s\n\n📊 Users: %s/∞\n📅 Login: %s\n🔑 Type: %s",
-            header, tostring(#permanentDevices), now, mode
-        )
+    if mode == "Permanent Code" then  
+        header = "✅ Permanent Login Success"  
+        message = string.format("%s\n\n📅 Login: %s\n🔑 Type: %s",
+            header, now, mode)  
 
-    elseif mode == "Expired Code" then
-        local daysLeft = getDaysLeft(expDate)
-        local leftText = (daysLeft == 1) and "1 day left" or (daysLeft .. " days left")
-        header = "✅ Expired Login Success"
-        message = string.format(
-            "%s\n\n📊 Expired Users: %s/%s\n📅 Login: %s\n⏳ Expire Date: %s\n⏳ %s\n🔑 Type: %s",
-            header, tostring(#expiredDevices), tostring(expiredLimit),
-            now, expDate, leftText, mode
-        )
-    end
+    elseif mode == "Expired Code" then  
+        local daysLeft = getDaysLeft(expDate)  
+        local leftText = (daysLeft == 1) and "1 day left" or (daysLeft .. " days left")  
+        header = "✅ Expired Login Success"  
+        message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n⏳ %s\n🔑 Type: %s",
+            header, now, expDate, leftText, mode)  
+    end  
 
     gg.alert(message)
 end
@@ -1234,7 +1202,7 @@ if isPermanentDeviceRegistered(expectedHash) then
 end
 
 -- ✅ Auto-login expired code
-if not loginOK and isExpiredDeviceRegistered(userID) then
+if not loginOK and isExpiredDeviceRegistered(expiredCode) then
     if isExpiredDate50() then
         gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
@@ -1249,36 +1217,32 @@ while not loginOK do
     if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
     local code = input[1]
 
-    if code == permanentCode then
-        if not isPermanentDeviceRegistered(expectedHash) then
-            local pfw = io.open(passFile, "a")
-            if pfw then pfw:write(expectedHash .. "\n") pfw:close() end
-            permanentDevices = reloadPermanentDevices() -- refresh jumlah user
-        end
-        gg.toast("✅ Access granted with Permanent Code")
-        showLoginInfo("Permanent Code")
-        loginOK = true
+    if code == permanentCode then  
+        if not isPermanentDeviceRegistered(expectedHash) then  
+            local pfw = io.open(passFile, "a")  
+            if pfw then pfw:write(expectedHash .. "\n") pfw:close() end  
+            permanentDevices[#permanentDevices + 1] = expectedHash  
+        end  
+        gg.toast("✅ Access granted with Permanent Code")  
+        showLoginInfo("Permanent Code")  
+        loginOK = true  
 
-    elseif code == expiredCode then
-        if isExpiredDate50() then
-            gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
-        else
-            if not isExpiredDeviceRegistered(userID) then
-                if #expiredDevices >= expiredLimit then
-                    gg.alert("⛔ Expired code already used on " .. expiredLimit .. " devices, access denied")
-                else
-                    local efw = io.open(expiredDevicesFile, "a")
-                    if efw then efw:write(userID .. "\n") efw:close() end
-                    expiredDevices = reloadExpiredDevices() -- refresh jumlah user
-                end
-            end
-            gg.toast("✅ Access granted with Expired Code (Max " .. expiredLimit .. " Users)")
-            showLoginInfo("Expired Code")
-            loginOK = true
-        end
-    else
-        gg.alert("❌ Invalid code, please try again")
-    end
+    elseif code == expiredCode then  
+        if isExpiredDate50() then  
+            gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")  
+        else  
+            if not isExpiredDeviceRegistered(expiredCode) then  
+                local efw = io.open(expiredDevicesFile, "a")  
+                if efw then efw:write(expiredCode .. "\n") efw:close() end  
+                expiredDevices[#expiredDevices+1] = expiredCode  
+            end  
+            gg.toast("✅ Access granted with Expired Code")  
+            showLoginInfo("Expired Code")  
+            loginOK = true  
+        end  
+    else  
+        gg.alert("❌ Invalid code, please try again")  
+    end  
 		end
 		
 local menu = gg.choice({
