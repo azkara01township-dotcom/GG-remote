@@ -20,7 +20,7 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 lang = "en" -- Default bahasa
 local teks = {
 ["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
-  ["addr_not_found"] = { id = "❌ Alamat tidak ditemukan",en = "❌ Address not found"},
+  ["addr_not_found"] = {id = "❌ Alamat tidak ditemukan, segera restart game, jika dilanjutkan tidak bisa tukar hadiah",en = "❌ Address not found, please restart the game immediately, if continued you will not be able to exchange rewards"},
   ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
   ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
   ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
@@ -697,16 +697,15 @@ local teks = {
 
 📜 *Informasi Script – Azka Project*
 
-🔹 Nama Script :👑ARH-Script Township👑.lua
-🔹 Versi       : 1.0.0  
-🔹 Admin       : Azka Raditya Hermawan  
-🔹 Platform    : Game Guardian (Android)  
+🔹 Nama Script: 👑ARH-Script Township👑.lua  
+🔹 Versi: 1.0.0  
+🔹 Admin: Azka Raditya Hermawan  
+🔹 Platform: Game Guardian (Android)  
 🔹 Fitur Premium:
-        • 🎫 Season Pass: mengetahui 2 tiket emas lebih awal
-        • 🏁 Selesaikan Regatta & Boost Poin
+        • 🎭 Buka skin lama
+        • 🏞️ 200+ dekorasi
         • 🚀 Booster Match-3 Lengkap
         • 🏡 Booster Gudang Tak Terbatas
-        • 🐄 Dekorasi & Skin Eksklusif 
         • 🔐 Fitur Premium Lainnya
         • ✨ ...dan masih banyak lagi!
 
@@ -718,28 +717,28 @@ Gunakan script ini **dengan bijak** agar tidak terkena banned.
       • Jika ingin lebih, tunggu **6 bulan** sejak upgrade terakhir  
       • Melebihi batas ini bisa menyebabkan **banned permanen**
 
-2. 🏡 *Upgrade Gudang*  
+2. 🏡 *Upgrade Lumbung*  
       • Ikuti batas upgrade dari game  
       • Selalu lihat **tabel upgrade resmi Playrix**  
       • Mengabaikan bisa menyebabkan **auto-banned**
 
 3. 🤝 *Global Co-op*  
       • Anda **tidak perlu bergabung** dengan global co-op top  
-      • Bergabung bisa menyebabkan **banned dalam 1–3 hari**
+      • Bergabung bisa menyebabkan **banned dalam 3–7 hari**
 
-💡 Jika hack gagal:
+💡 Jika hack gagal:  
       • Restart game 2–3 kali  
       • Masih gagal? Hubungi Admin lewat menu kontak
 
-🔐 Upgrade Premium:
+🔐 Upgrade Premium:  
 Buka semua fitur + dukungan prioritas dari Admin!
 
-🙏 Terima kasih:
+🙏 Terima kasih:  
 Terima kasih sudah menggunakan script ini!
 
 📢 *Gabung Channel WhatsApp Resmi:*  
 Update dan info terbaru:  
-ARH-Script Township
+Township Script (ARH)  
 🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
 
 ────────────
@@ -752,49 +751,48 @@ ARH-Script Township
 
 📜 *Script Information – Azka Project*
 
-🔹 Script Name : 👑ARH-Script Township👑.lua
-🔹 Version     : 1.0.0  
-🔹 Admin      : Azka Raditya Hermawan  
-🔹 Platform    : Game Guardian (Android)  
+🔹 Script Name: 👑ARH-Script Township👑.lua  
+🔹 Version: 1.0.0  
+🔹 Admin: Azka Raditya Hermawan  
+🔹 Platform: Game Guardian (Android)  
 🔹 Premium Features:
-        • 🎫 Season Pass: Get 2 Gold Tickets early
-        • 🏁 Instant Regatta & Point Boost
+        • 🎭 Unlock old skins
+        • 🏞️ 200+ decorations
         • 🚀 Full Match-3 Boosters
         • 🏡 Unlimited Barn Boosters
-        • 🐄 Exclusive Decorations & Skins
         • 🔐 Other Premium Features
         • ✨ ...and much more!
 
-⚠️ *Important Usage Warnings:*  
-Please use this script **responsibly** to avoid detection or bans.
+⚠️ *Important Warning:*  
+Use this script **wisely** to avoid being banned.
 
 1. 💸 *T-Cash Hack*  
-      • Safe limit: **up to 25,000 T-Cash**  
-      • For further increases, wait at least **6 months** after the last upgrade  
-      • Exceeding this limit may result in a **permanent ban**
+      • Safe limit: **maximum 25,000 T-Cash**  
+      • If you want more, wait at least **6 months** after the last upgrade  
+      • Exceeding this limit may cause a **permanent ban**
 
 2. 🏡 *Barn Upgrade*  
-      • Follow the upgrade limits set by the game  
-      • Always refer to the **official Playrix upgrade tables**  
+      • Follow the upgrade limits from the game  
+      • Always check the **official Playrix upgrade tables**  
       • Ignoring this may trigger an **auto-ban**
 
-3. 🤝 *Global Co-op Warning*  
+3. 🤝 *Global Co-op*  
       • You **do NOT need to join** top global co-ops  
-      • Participating in global co-ops may result in a **ban within 1–3 days**
+      • Joining them may cause a **ban within 3–7 days**
 
-💡 If the hack doesn’t work:
-      • Try restarting the game 2–3 times  
-      • If it still fails, contact the Admin through the contact menu
+💡 If the hack fails:  
+      • Restart the game 2–3 times  
+      • Still not working? Contact the Admin via the contact menu
 
-🔐 Upgrade to Premium:
-Unlock full features and get priority support from the Admin!
+🔐 Premium Upgrade:  
+Unlock all features + get priority support from the Admin!
 
-🙏 Thank You:
-Thank you for using this script. Your feedback helps improve future updates.
+🙏 Thank You:  
+Thank you for using this script!
 
-📢 *Join Our Official WhatsApp Channel:*  
-Stay updated with the latest script news and announcements:  
-ARH-Script Township
+📢 *Join the Official WhatsApp Channel:*  
+Stay updated with the latest news and updates:  
+Township Script (ARH)  
 🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
 
 ────────────
@@ -1099,7 +1097,7 @@ local expiredDevicesFile = "/sdcard/.vutlenot"
 -- 🔑 Expired code
 local expiredCode   = "ARHTrialcode-2k25"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-30"
+local expireDate50  = "2025-09-25"
 -- 🔢 Limit maksimum device untuk expiredCode
 local expiredLimit  = 50
 
