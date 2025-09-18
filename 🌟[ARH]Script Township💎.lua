@@ -9210,10 +9210,10 @@ function showContactMenu()
   gg.setVisible(false)
 
   local menu = gg.choice({
-    "✈️ " .. _("contact_telegram"),
-    "📘 " .. _("contact_facebook"),
-    "❌ " .. _("exit_script1")
-  }, {}, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
+    "✈️ • " .. _("contact_telegram"),
+    "📘 • " .. _("contact_facebook"),
+    "❌ • " .. _("exit_script1")
+  }, nil, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
 
   if not menu then
     return
