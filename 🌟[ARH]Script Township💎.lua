@@ -676,7 +676,6 @@ local teks = {
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
   ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
 
-["contact_whatsapp"] = {id = "Hubungi via WhatsApp", en = "Contact via WhatsApp"},
 ["contact_telegram"] = {id = "Hubungi via Telegram", en = "Contact via Telegram"},
 ["contact_facebook"] = {id = "Hubungi via Facebook", en = "Contact via Facebook"},
 ["contact_menu_title"] = {id = "Menu Kontak Admin", en = "Admin Contact Menu"},
@@ -9197,11 +9196,11 @@ function adminMenu()
 end
 
 function about1()
-  local msg = _( "about_msg" )
+  local msg = _("about_msg")
   local result = gg.alert(msg, _( "exit" ), _( "copy_link" ))
 
   if result == 2 then
-    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q")
+    gg.copyText("https://t.me/@azka_arh")
     gg.toast(_"copied")
   end
 
@@ -9213,20 +9212,18 @@ function showContactMenu()
   gg.setVisible(false)
 
   local menu = gg.choice({
-    "📞 • " .. _("contact_whatsapp"),
-    "✈️ • " .. _("contact_telegram"),
-    "📘 • " .. _("contact_facebook"),
-    "❌ • " .. _("exit_script1")
-  }, nil, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
+    "✈️ " .. _("contact_telegram"),
+    "📘 " .. _("contact_facebook"),
+    "❌ " .. _("exit_script1")
+  }, {}, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
 
   if not menu then
     return
   end
 
   local contacts = {
-    [1] = { link = "https://wa.me/62895610507233", label = "📞 WhatsApp" },
-    [2] = { link = "https://t.me/@azka_arh", label = "✈️ Telegram" },
-    [3] = { link = "https://m.me/azka.arhh", label = "📘 Facebook" }
+    [1] = { link = "https://t.me/@azka_arh", label = "✈️ Telegram" },
+    [2] = { link = "https://m.me/azka.arhh", label = "📘 Facebook" }
   }
 
   if contacts[menu] then
@@ -9245,10 +9242,9 @@ function showContactMenu()
     end
     exit()
 
-  elseif menu == 4 then
+  elseif menu == 3 then
     gg.toast("👋 " .. _("exit_contact_menu"))
     exit()
-  else
   end
 end
 
