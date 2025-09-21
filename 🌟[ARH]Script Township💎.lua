@@ -1094,9 +1094,9 @@ local permCodeFile       = "/sdcard/.brush_viu"
 local expiredDevicesFile = "/sdcard/.vutlenot"
 
 -- 🔑 Expired code
-local expiredCode   = "ARHTrialcode-2k25"
+local expiredCode   = "ARHPremiumTS-2025"
 -- 📅 Expire date untuk expiredCode
-local expireDate50  = "2025-09-18"
+local expireDate50  = "2025-09-24"
 
 -- Hash helper
 local function hash(str)
