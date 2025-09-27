@@ -7752,7 +7752,7 @@ function ms1()
     table.insert(edits, { address = r.address + 0xCC, flags = gg.TYPE_DWORD, value = 1500 }) -- Task Value
 
     if enable then
-      local pointBase = gg.getValues({ { address = r.address + 0x1B0, flags = gg.TYPE_QWORD } })[1].value
+      local pointBase = gg.getValues({ { address = r.address + 0x208, flags = gg.TYPE_QWORD } })[1].value
       if pointBase and pointBase > 0x100000 then
         table.insert(edits, { address = pointBase + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- Clear Points
         table.insert(edits, { address = pointBase + 0x4, flags = gg.TYPE_DWORD, value = points }) -- Set Points
