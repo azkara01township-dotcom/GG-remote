@@ -7722,7 +7722,7 @@ function ms1()
     [1] = "1952533772;3369059;17::405", -- Golden
     [2] = "1952533772;3369059;15::405", -- Silver
     [3] = "1952533772;3369059;13::405", -- Steel
-    [4] = "1952533772;3369059;11::405",  -- Bronze
+    [4] = "65540;1;11::493",  -- Bronze
     [5] = "1952533772;3369059;9::405"   -- Wooden
   }
 
@@ -7748,8 +7748,8 @@ function ms1()
 
   local edits = {}
   for _, r in ipairs(results) do
-    table.insert(edits, { address = r.address + 0x70, flags = gg.TYPE_DWORD, value = 0 }) -- Status
-    table.insert(edits, { address = r.address + 0x74, flags = gg.TYPE_DWORD, value = 1500 }) -- Task Value
+    table.insert(edits, { address = r.address + 0xC8, flags = gg.TYPE_DWORD, value = 0 }) -- Status
+    table.insert(edits, { address = r.address + 0xCC, flags = gg.TYPE_DWORD, value = 1500 }) -- Task Value
 
     if enable then
       local pointBase = gg.getValues({ { address = r.address + 0x1B0, flags = gg.TYPE_QWORD } })[1].value
