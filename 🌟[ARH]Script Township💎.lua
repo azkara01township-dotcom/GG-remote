@@ -7719,11 +7719,11 @@ function ms1()
 
   -- 🏆 League setup
   local patterns = {
-    [1] = "1952533772;3369059;17::405", -- Golden
-    [2] = "1952533772;3369059;15::405", -- Silver
-    [3] = "1952533772;3369059;13::405", -- Steel
+    [1] = "65540;1;17::493", -- Golden
+    [2] = "65540;1;15::493", -- Silver
+    [3] = "65540;1;13::493", -- Steel
     [4] = "65540;1;11::493",  -- Bronze
-    [5] = "1952533772;3369059;9::405"   -- Wooden
+    [5] = "65540;1;9::493"   -- Wooden
   }
 
   local label = {
@@ -7739,7 +7739,7 @@ function ms1()
 
   gg.clearResults()
   gg.searchNumber(pattern, gg.TYPE_DWORD)
-  gg.refineNumber("1952533772", gg.TYPE_DWORD)
+  gg.refineNumber("65540", gg.TYPE_DWORD)
 
   local results = gg.getResults(10000)
   if #results == 0 then
