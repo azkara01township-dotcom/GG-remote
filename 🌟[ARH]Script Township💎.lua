@@ -7705,7 +7705,9 @@ function ms1()
     _("promptEnable_regata")
   }, nil, { "number", "number", "checkbox" })
 
-  if not input then return gg.alert(_("cancel_regata")) end
+  if not input then 
+    return gg.alert(_("cancel_regata")) 
+  end
 
   local league, points, enable = tonumber(input[1]), tonumber(input[2]), input[3]
 
@@ -7737,6 +7739,7 @@ function ms1()
   local pattern = patterns[league]
   local name = label[league]
 
+  -- 🔍 Pencarian League
   gg.clearResults()
   gg.searchNumber(pattern, gg.TYPE_DWORD)
   gg.refineNumber("65540", gg.TYPE_DWORD)
@@ -7746,29 +7749,53 @@ function ms1()
     return gg.alert(string.format("%s: %s", name, _("noResults_regata")))
   end
 
-  local edits = {}
-  for _, r in ipairs(results) do
-    table.insert(edits, { address = r.address + 0xC8, flags = gg.TYPE_DWORD, value = 0 }) -- Status
-    table.insert(edits, { address = r.address + 0xCC, flags = gg.TYPE_DWORD, value = 1500 }) -- Task Value
+  local finalEdits = {}
 
-    if enable then
-      local pointBase = gg.getValues({ { address = r.address + 0x208, flags = gg.TYPE_QWORD } })[1].value
-      if pointBase and pointBase > 0x100000 then
-        table.insert(edits, { address = pointBase + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- Clear Points
-        table.insert(edits, { address = pointBase + 0x4, flags = gg.TYPE_DWORD, value = points }) -- Set Points
+  -- 🔁 Ambil value terbaru untuk setiap hasil
+  for i, r in ipairs(results) do
+    -- Ambil ulang data terbaru di setiap loop
+    local latest = gg.getValues({{address = r.address, flags = gg.TYPE_DWORD}})[1]
+
+    if latest and latest.value == 65540 then
+      -- Set status & task value baru
+      table.insert(finalEdits, { address = r.address + 0xC8, flags = gg.TYPE_DWORD, value = 0 })     -- Status Reset
+      table.insert(finalEdits, { address = r.address + 0xCC, flags = gg.TYPE_DWORD, value = 11000 }) -- Task Value Default
+
+      if enable then
+        -- 🔁 Refresh alamat poin
+        local pointAddr = gg.getValues({{address = r.address + 0x208, flags = gg.TYPE_QWORD}})[1]
+        local pointBase = pointAddr and pointAddr.value or 0
+
+        -- Validasi alamat poin sebelum edit
+        if pointBase > 0x100000 then
+          -- Ambil ulang nilai terkini sebelum ubah
+          local oldVals = gg.getValues({
+            {address = pointBase + 0x0, flags = gg.TYPE_DWORD},
+            {address = pointBase + 0x4, flags = gg.TYPE_DWORD}
+          })
+
+          -- Reset dan ubah poin
+          table.insert(finalEdits, { address = pointBase + 0x0, flags = gg.TYPE_DWORD, value = 0 })
+          table.insert(finalEdits, { address = pointBase + 0x4, flags = gg.TYPE_DWORD, value = points })
+        end
       end
     end
   end
 
-  gg.setValues(edits)
+  if #finalEdits == 0 then
+    return gg.alert(_("noValidAddr_regata"))
+  end
 
+  -- 💾 Terapkan patch
+  gg.setValues(finalEdits)
+  gg.toast(_("toastDone_regata"))
+
+  -- 📢 Notifikasi hasil
   if enable then
     gg.alert(string.format("%s: %s\n⭐ Points: %d", name, _("updated_regata"), points))
   else
     gg.alert(string.format("%s: %s", name, _("updated_regata")))
   end
-
-  gg.toast(_("toastDone_regata"))
 end
 
 -- ✅ Fungsi utama ms2
