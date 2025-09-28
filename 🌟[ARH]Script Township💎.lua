@@ -396,7 +396,7 @@ local teks = {
   ["invalidLeague_regata"] = {id="🚫 Liga tidak valid.", en="🚫 Invalid League."},
   ["invalidPoints_regata"] = {id="🚫 Poin tidak valid.", en="🚫 Invalid Points."},
 	["taskNotFound_regata"] = {id = "Tugas Regata belum diambil!",en = "Regata task not yet taken!"},
-["taskHint_regata"] = {id = "Silakan ambil task Regata terlebih dahulu di dalam game, lalu jalankan ulang fitur ini.",en = "Please take a Regata task in-game first, then run this feature again."}
+["taskHint_regata"] = {id = "Silakan ambil task Regata terlebih dahulu di dalam game, lalu jalankan ulang fitur ini.",en = "Please take a Regata task in-game first, then run this feature again."},
   ["noResults_regata"]     = {id="❌ Tidak ada hasil.", en="❌ No results found."},
   ["updated_regata"]       = {id="✅ Diperbarui!", en="✅ Updated!"},
   ["toastDone_regata"]     = {id="🏁 Pembaruan selesai!", en="🏁 Regatta update complete!"},
