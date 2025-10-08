@@ -423,7 +423,7 @@ local teks = {
       "🥈 Silver League",
       "🛡️ Steel League",
       "🥉 Bronze League",
-      "🪵 Wooden League"},
+      "🪵 Wooden League"}},
 
   ----boom like----
   
