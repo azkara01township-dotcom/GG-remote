@@ -7672,7 +7672,7 @@ end
 function menuSpecial()
 local title = banner
   local menu = gg.choice({
-	"💎 VIP Regata Task",        -- 🔹 Opsi baru di paling atas
+	"💎 • VIP Regata Task",        -- 🔹 Opsi baru di paling atas
     _( "option1_spesial" ),
     _( "option2_spesial" ),
     _( "back_spesial" )
