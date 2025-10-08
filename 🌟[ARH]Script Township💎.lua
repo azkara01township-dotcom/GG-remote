@@ -391,6 +391,15 @@ local teks = {
     ["back_spesial"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
     
     ----regata menu----
+
+	  ["pilihPoin"] = {id = "🎯 Pilih Jumlah Poin Regata",en = "🎯 Choose Regatta Points Amount"},
+  ["opsi150"] = { id = "⭐ 150 Poin", en = "⭐ 150 Points" },
+  ["opsi200"] = { id = "⭐ 200 Poin", en = "⭐ 200 Points" },
+  ["opsi300"] = { id = "⭐ 300 Poin", en = "⭐ 300 Points" },
+  ["harusPilih"] = {id = "❌ Harus memilih jumlah poin!",en = "❌ You must choose a points amount!"},
+  ["tidakDitemukan"] = {id = "❌ Tidak ditemukan hasil pencarian.\nPastikan buka menu Regata dan coba lagi.",en = "❌ No results found.\nMake sure the Regatta menu is open, then try again."},
+  ["sukses"] = {id = "✅ Poin Regata berhasil ditambahkan!\n⭐ Jumlah Poin: ",en = "✅ Regatta points added successfully!\n⭐ Points: "},
+  ["toastSukses"] = {id = "✅ Poin instan berhasil ditambahkan!",en = "✅ Instant points successfully added!"},
     
     ["cancel_regata"]        = {id="⚠️ Dibatalkan.", en="⚠️ Cancelled."},
   ["invalidLeague_regata"] = {id="🚫 Liga tidak valid.", en="🚫 Invalid League."},
@@ -7663,6 +7672,7 @@ end
 function menuSpecial()
 local title = banner
   local menu = gg.choice({
+	"💎 VIP Regata Task",        -- 🔹 Opsi baru di paling atas
     _( "option1_spesial" ),
     _( "option2_spesial" ),
     _( "back_spesial" )
@@ -7672,10 +7682,12 @@ local title = banner
     return
 
   elseif menu == 1 then
-    ms1()
+    vipRegata() -- 🔹 Fungsi untuk menu baru
   elseif menu == 2 then
-    ms2()
+    ms1()
   elseif menu == 3 then
+    ms2()
+  elseif menu == 4 then
     Main()
     return
   else
@@ -7690,6 +7702,73 @@ local title = banner
       break
     end
   end
+end
+
+function vipRegata()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 📥 Pilih jumlah poin
+  local poinChoice = gg.choice({
+    _( "opsi150" ),
+    _( "opsi200" ),
+    _( "opsi300" )
+  }, nil, _( "pilihPoin" ))
+
+  if poinChoice == nil then
+    return gg.alert(_( "harusPilih" ))
+  end
+
+  local points
+  if poinChoice == 1 then
+    points = 150
+  elseif poinChoice == 2 then
+    points = 200
+  elseif poinChoice == 3 then
+    points = 300
+  end
+
+  -- 🔍 Cari blok regata
+  gg.clearResults()
+  gg.searchNumber("65538;7200", gg.TYPE_DWORD)
+  gg.refineNumber("65538", gg.TYPE_DWORD)
+
+  local results = gg.getResults(1000)
+  if #results == 0 then
+    return gg.alert(_( "tidakDitemukan" ))
+  end
+
+  -- 🔍 Deteksi value kembar (blok target)
+  local target = nil
+  for i = 1, #results - 1 do
+    if results[i].value == results[i + 1].value then
+      target = results[i]
+      break
+    end
+  end
+
+  if not target then
+    return
+  end
+
+  local edits = {}
+
+  -- ✏️ Reset status & nilai tugas
+  table.insert(edits, { address = target.address + 0xC0, flags = gg.TYPE_DWORD, value = 0 })
+  table.insert(edits, { address = target.address + 0xC4, flags = gg.TYPE_DWORD, value = 0 })
+
+  -- 🔧 Tambahkan poin instan
+  local base = gg.getValues({ { address = target.address + 0x148, flags = gg.TYPE_QWORD } })[1].value  
+  if base and base > 0x100000 then  
+    table.insert(edits, { address = base + 0x0, flags = gg.TYPE_DWORD, value = 0 })
+    table.insert(edits, { address = base + 0x4, flags = gg.TYPE_DWORD, value = points })
+  end  
+
+  gg.setValues(edits)
+
+  gg.alert(_( "sukses" ) .. points)
+  gg.toast(_( "toastSukses" ))
 end
 
 function ms1()
