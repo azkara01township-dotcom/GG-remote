@@ -398,17 +398,33 @@ local teks = {
   ["alert_sukses"] = {id = " tugas regata berhasil diperbarui!",en = " regatta tasks have been updated!"},
   ["toast_sukses"] = {id = "✅ Semua tugas berhasil diperbarui!",en = "✅ All tasks have been updated!"},
   ["label_jumlah_poin"] = {id = "Jumlah Poin",en = "Points"},
-	
-    ["cancel_regata"]        = {id="⚠️ Dibatalkan.", en="⚠️ Cancelled."},
-  ["invalidLeague_regata"] = {id="🚫 Liga tidak valid.", en="🚫 Invalid League."},
-  ["invalidPoints_regata"] = {id="🚫 Poin tidak valid.", en="🚫 Invalid Points."},
-  ["noResults_regata"]     = {id="❌ Tidak ada hasil.", en="❌ No results found."},
-  ["updated_regata"]       = {id="✅ Diperbarui!", en="✅ Updated!"},
-  ["toastDone_regata"]     = {id="🏁 Pembaruan selesai!", en="🏁 Regatta update complete!"},
-  ["promptLeague_regata"]  = {id="🏆 Liga (1=Emas, 2=Perak, 3=Baja, 4=Tembaga, 5=Kayu)", en="🏆 League (1=Golden, 2=Silver, 3=Steel, 4=Bronze, 5=Wooden)"},
-  ["promptPoints_regata"]  = {id="⭐ Poin Regatta [150;300]", en="⭐ Regatta Points [150;300]"},
-  ["promptEnable_regata"]  = {id="✅ Aktifkan edit poin?", en="✅ Enable Point Edit?"},
-  
+
+  ["pilihLeague"] = { id = "🏆 Pilih League Regata", en = "🏆 Select Regatta League" },
+  ["harusPilih"] = { id = "❌ Harus memilih league terlebih dahulu!", en = "❌ You must select a league first!" },
+  ["leagueDipilih"] = { id = "✅ League dipilih: ", en = "✅ League selected: " },
+  ["alertInfo"] = {id = "ℹ️ Kamu bisa lewati edit poin dengan langsung klik OK.\n\nJika kamu ingin edit poin, tentukan jumlah poinnya dan jangan lupa klik centang 'Aktifkan Edit Poin'.\n\nJika kamu ingin mereset poin, kamu harus restart script terlebih dahulu.",en = "ℹ️ You can skip editing points by clicking OK.\n\nIf you want to edit points, set the value and check 'Enable Edit Points'.\n\nTo reset points, please restart the script."},
+  ["promptPoints"] = { id = "⭐ Masukkan Jumlah Poin (150 - 300)", en = "⭐ Enter Point Amount (150 - 300)" },
+  ["promptEnable"] = { id = "✅ Aktifkan Edit Poin?", en = "✅ Enable Edit Points?" },
+  ["batal"] = { id = "❌ Dibatalkan oleh pengguna.", en = "❌ Cancelled by user." },
+  ["poinTidakValid"] = { id = "❌ Jumlah poin tidak valid! Harus antara 150 - 300.", en = "❌ Invalid point amount! Must be between 150 - 300." },
+  ["pengaturanSimpan"] = { id = "✅ Pengaturan regata disimpan.", en = "✅ Regatta settings saved." },
+  ["tidakAdaHasil"] = { id = ": Tidak ada hasil ditemukan!", en = ": No results found!" },
+  ["alertPoinBerhasil"] = { id = ": Poin regata berhasil ditambahkan\n⭐ Jumlah poin: ", en = ": Regatta points added successfully\n⭐ Points: " },
+  ["alertUpdate"] = { id = ": Data regata berhasil diperbarui.", en = ": Regatta data updated successfully." },
+  ["toastBerhasil"] = { id = "✅ Regata berhasil diperbarui!", en = "✅ Regatta updated successfully!" },
+  ["leagues"] = {id = {
+      "👑 Liga Emas",
+      "🥈 Liga Perak",
+      "🛡️ Liga Baja",
+      "🥉 Liga perunggu",
+      "🪵 Liga Kayu"
+    },en = {
+      "👑 Golden League",
+      "🥈 Silver League",
+      "🛡️ Steel League",
+      "🥉 Bronze League",
+      "🪵 Wooden League"},
+
   ----boom like----
   
   ["cancel_boomlike"]             = {id="❌ Dibatalkan.", en="❌ Cancelled."},
@@ -7763,82 +7779,102 @@ function vipRegata()
 end
 
 function ms1()
-gg.setVisible(false)
-gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
 
--- 📥 Prompt gabungan
-local input = gg.prompt({
-_("promptLeague_regata"),
-_("promptPoints_regata"),
-_("promptEnable_regata")
-}, nil, { "number", "number", "checkbox" })
+  -- 🌍 Pilih league (sekali saja)
+  if _selectedLeague == nil then
+    local choice = gg.choice(teks.leagues[_LANG or "id"], nil, _( "pilihLeague" ))
 
-if not input then return gg.alert(_("cancel_regata")) end
+    if not choice then
+      return gg.alert(_( "harusPilih" ))
+    end
 
-local league, points, enable = tonumber(input[1]), tonumber(input[2]), input[3]
+    _selectedLeague = choice
+    gg.toast(_( "leagueDipilih" ) .. teks.leagues[_LANG or "id"][_selectedLeague])
+  end
 
--- 🔍 Validasi input
-if not league or league < 1 or league > 5 then
-return gg.alert(("invalidLeague_regata"))
-end
-if enable and (not points or points < 150 or points > 300) then
-return gg.alert(("invalidPoints_regata"))
-end
+  local league = _selectedLeague
 
--- 🏆 League setup
-local patterns = {
-[1] = "1952533772;3369059;17::405", -- Golden
-[2] = "1952533772;3369059;15::405", -- Silver
-[3] = "1952533772;3369059;13::405", -- Steel
-[4] = "1952533772;3369059;11::405",  -- Bronze
-[5] = "1952533772;3369059;9::405"   -- Wooden
-}
+  -- 📥 Prompt gabungan hanya SEKALI (disimpan di session)
+  if _regataSettings == nil then
 
-local label = {
-[1] = "👑 Golden League",
-[2] = "🥈 Silver League",
-[3] = "🛡️ Steel League",
-[4] = "🥉 Bronze League",
-[5] = "🪵 Wooden League"
-}
+    gg.alert(_( "alertInfo" ))
 
-local pattern = patterns[league]
-local name = label[league]
+    local input = gg.prompt({
+      _( "promptPoints" ),
+      _( "promptEnable" )
+    }, nil, { "number", "checkbox" })
 
-gg.clearResults()
-gg.searchNumber(pattern, gg.TYPE_DWORD)
-gg.refineNumber("1952533772", gg.TYPE_DWORD)
+    if not input then 
+      return gg.alert(_( "batal" )) 
+    end
 
-local results = gg.getResults(10000)
-if #results == 0 then
-return gg.alert(string.format("%s: %s", name, _("noResults_regata")))
-end
+    local points, enable = tonumber(input[1]), input[2]
 
-local edits = {}
-for _, r in ipairs(results) do
-table.insert(edits, { address = r.address + 0x70, flags = gg.TYPE_DWORD, value = 0 }) -- Status
-table.insert(edits, { address = r.address + 0x74, flags = gg.TYPE_DWORD, value = 1500 }) -- Task Value
+    -- 🔍 Validasi poin
+    if enable and (not points or points < 150 or points > 300) then
+      return gg.alert(_( "poinTidakValid" ))
+    end
 
-if enable then  
-  local pointBase = gg.getValues({ { address = r.address + 0x1B0, flags = gg.TYPE_QWORD } })[1].value  
-  if pointBase and pointBase > 0x100000 then  
-    table.insert(edits, { address = pointBase + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- Clear Points  
-    table.insert(edits, { address = pointBase + 0x4, flags = gg.TYPE_DWORD, value = points }) -- Set Points  
-  end  
-end
+    _regataSettings = {
+      points = points,
+      enable = enable
+    }
 
-end
+    gg.toast(_( "pengaturanSimpan" ))
+  end
 
-gg.setValues(edits)
+  local points = _regataSettings.points
+  local enable = _regataSettings.enable
 
-if enable then
-gg.alert(string.format("%s: %s\n⭐ Points: %d", name, _("updated_regata"), points))
-else
-gg.alert(string.format("%s: %s", name, _("updated_regata")))
-end
+  -- 🏆 League setup
+  local patterns = {
+    [1] = "1952533772;3369059;15::405", -- Golden
+    [2] = "1952533772;3369059;13::405", -- Silver
+    [3] = "1952533772;3369059;11::405", -- Steel
+    [4] = "1952533772;3369059;9::405",  -- Bronze
+    [5] = "1952533772;3369059;7::405"   -- Wooden
+  }
 
-gg.toast(_("toastDone_regata"))
+  local pattern = patterns[league]
+  local name = teks.leagues[_LANG or "id"][league]
+
+  -- 🔍 Cari data
+  gg.clearResults()
+  gg.searchNumber(pattern, gg.TYPE_DWORD)
+  gg.refineNumber("1952533772", gg.TYPE_DWORD)
+
+  local results = gg.getResults(10000)
+  if #results == 0 then
+    return gg.alert(name .. _( "tidakAdaHasil" ))
+  end
+
+  -- ✏️ Edit nilai
+  local edits = {}
+  for _, r in ipairs(results) do
+    table.insert(edits, { address = r.address + 0x70, flags = gg.TYPE_DWORD, value = 0 })      -- Status
+    table.insert(edits, { address = r.address + 0x74, flags = gg.TYPE_DWORD, value = 11000 })  -- Task Value
+
+    if enable then
+      local pointBase = gg.getValues({ { address = r.address + 0x1B0, flags = gg.TYPE_QWORD } })[1].value
+      if pointBase and pointBase > 0x100000 then
+        table.insert(edits, { address = pointBase + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- Clear Points
+        table.insert(edits, { address = pointBase + 0x4, flags = gg.TYPE_DWORD, value = points }) -- Set Points
+      end
+    end
+  end
+
+  gg.setValues(edits)
+
+  if enable then
+    gg.alert(name .. _( "alertPoinBerhasil" ) .. points)
+  else
+    gg.alert(name .. _( "alertUpdate" ))
+  end
+
+  gg.toast(_( "toastBerhasil" ))
 end
 
 -- ✅ Fungsi utama ms2
