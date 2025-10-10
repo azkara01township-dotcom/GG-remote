@@ -1374,7 +1374,7 @@ end
 function gp1(caller)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("7269421Ah;6E726526h;00000031h:201", gg.TYPE_DWORD)
+  gg.searchNumber("6C61481Ah;6E726526h;00000031h:201", gg.TYPE_DWORD)
   gg.refineNumber("00000031h", gg.TYPE_DWORD)
 
   local results = gg.getResults(10)
