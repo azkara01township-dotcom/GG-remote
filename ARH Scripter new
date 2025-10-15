@@ -1,6 +1,6 @@
-local passFile           = "/sdcard/.ulog_craft"
-local permCodeFile       = "/sdcard/.brush_viu"
-local expiredDevicesFile = "/sdcard/.vutlenot"
+local passFile           = "/sdcard/.syscfg_u1"
+local permCodeFile       = "/sdcard/.bin_xv"
+local expiredDevicesFile = "/sdcard/.tmp_87g"
 
 -- 🔑 Expired code
 local expiredCode   = "ARHPremiumTS-2025"
