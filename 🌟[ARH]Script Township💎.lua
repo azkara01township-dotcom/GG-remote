@@ -389,12 +389,13 @@ local teks = {
     
     ----regata menu----
 
-  ["title_pilih_poin"] = {id = "🎯 Pilih Jumlah Poin Regata",en = "🎯 Select Regatta Points Amount"},
-  ["alert_harus_pilih"] = {id = "❌ Harus memilih jumlah poin!",en = "❌ You must select a point amount!"},
-  ["alert_tidak_ditemukan"] = {id = "❌ Tidak ditemukan hasil, coba ulangi lagi.",en = "❌ No results found, please try again."},
-  ["alert_sukses"] = {id = " tugas regata berhasil diperbarui!",en = " regatta tasks have been updated!"},
-  ["toast_sukses"] = {id = "✅ Semua tugas berhasil diperbarui!",en = "✅ All tasks have been updated!"},
-  ["label_jumlah_poin"] = {id = "Jumlah Poin",en = "Points"},
+  ["title_pilih_poin"] = {id = "Pilih jumlah poin regata:",en = "Select regatta point amount:"},
+  ["alert_pilih_dulu"] = {id = "⚠️ Kamu harus memilih jumlah poin terlebih dahulu!",en = "⚠️ You must select a point amount first!"},
+  ["alert_tidak_ditemukan"] = {id = "⚠️ Tidak ditemukan blok regata.",en = "⚠️ No regatta block found."},
+  ["alert_tidak_valid"] = {id = "⚠️ Tidak ada blok regata yang valid.",en = "⚠️ No valid regatta block found."},
+  ["alert_berhasil_prefix"] = {id = "✅ Jumlah blok regata diperbarui:",en = "✅ Regatta blocks updated:"},
+  ["alert_berhasil_suffix"] = {id = "⭐ Poin baru:",en = "⭐ New points:"},
+  ["toast_berhasil"] = {id = "🎯 Poin regata berhasil diperbarui!",en = "🎯 Regatta points successfully updated!"},
 
   ["promptPoints_regata"] = {id = "⭐ Masukkan Jumlah Poin Regata (150–300):",en = "⭐ Enter Regatta Points Amount (150–300):"},
   ["promptEnable_regata"] = {id = "✅ Aktifkan edit poin?",en = "✅ Enable point editing?"},
@@ -7704,7 +7705,7 @@ local title = banner
 end
 
 function vipRegata()
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
@@ -7715,51 +7716,46 @@ function vipRegata()
     "⭐ 300 Point"
   }, nil, _( "title_pilih_poin" ))
 
-  if poinChoice == nil then
-    return gg.alert(_( "alert_harus_pilih" ))
+  if not poinChoice then
+    return gg.alert(_( "alert_pilih_dulu" ))
   end
 
-  local points
-  if poinChoice == 1 then
-    points = 150
-  elseif poinChoice == 2 then
-    points = 200
-  elseif poinChoice == 3 then
-    points = 300
-  end
+  local points = ({150, 200, 300})[poinChoice]
 
-  -- 🔍 Cari semua blok regata
-  gg.clearResults()
-  gg.searchNumber("65538;7200", gg.TYPE_DWORD)
-  gg.refineNumber("7200", gg.TYPE_DWORD)
-
-  local results = gg.getResults(1000)
-  if #results == 0 then
+  gg.searchNumber("65538", gg.TYPE_QWORD)
+  local allResults = gg.getResults(99999)
+  if #allResults == 0 then
     return gg.alert(_( "alert_tidak_ditemukan" ))
   end
 
-  local edits = {}
-  local count = 0
+  local checkList = {}
+  for i, r in ipairs(allResults) do
+    checkList[i] = { address = r.address + 0x100, flags = gg.TYPE_DWORD }
+  end
+  local checkVals = gg.getValues(checkList)
 
-  -- 🔁 Loop semua hasil refine (edit semua blok)
-  for i, res in ipairs(results) do
-    -- Reset status & task
-    table.insert(edits, { address = res.address - 0xC, flags = gg.TYPE_DWORD, value = 0 })
-    table.insert(edits, { address = res.address - 0x10, flags = gg.TYPE_DWORD, value = 0 })
-
-    -- Ambil base poin
-    local baseVal = gg.getValues({ { address = res.address + 0x78, flags = gg.TYPE_QWORD } })[1].value
-    if baseVal and baseVal > 0x100000 then
-      table.insert(edits, { address = baseVal + 0x0, flags = gg.TYPE_DWORD, value = 0 })       -- Clear Points
-      table.insert(edits, { address = baseVal + 0x4, flags = gg.TYPE_DWORD, value = points })  -- Set Points
-      count = count + 1
+  local edits, count = {}, 0
+  for i, c in ipairs(checkVals) do
+    if c.value == -1 then
+      local addr = allResults[i].address
+      local baseVal = gg.getValues({ { address = addr + 0x148, flags = gg.TYPE_QWORD } })[1].value
+      if baseVal and baseVal > 0x100000 then
+        count = count + 1
+        edits[#edits + 1] = { address = addr + 0xC0, flags = gg.TYPE_DWORD, value = 0 }
+        edits[#edits + 1] = { address = addr + 0xC4, flags = gg.TYPE_DWORD, value = 0 }
+        edits[#edits + 1] = { address = baseVal, flags = gg.TYPE_DWORD, value = 0 }
+        edits[#edits + 1] = { address = baseVal + 0x4, flags = gg.TYPE_DWORD, value = points }
+      end
     end
   end
 
   if #edits > 0 then
     gg.setValues(edits)
-    gg.alert("✅ " .. count .. _( "alert_sukses" ) .. "\n⭐ " .. _( "label_jumlah_poin" ) .. ": " .. points)
-    gg.toast(_( "toast_sukses" ))
+    gg.alert(_( "alert_berhasil_prefix" ) .. " " .. count .. "\n" ..
+             _( "alert_berhasil_suffix" ) .. " " .. points)
+    gg.toast(_( "toast_berhasil" ))
+  else
+    gg.alert(_( "alert_tidak_valid" ))
   end
 end
 
