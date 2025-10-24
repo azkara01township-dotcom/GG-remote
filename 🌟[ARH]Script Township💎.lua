@@ -49,17 +49,14 @@ local teks = {
   
   ----Freeze menu----
   
-  ["freeze_title_freezeinfo"]     = {id = "Aktivasi Pembekuan Hadiah", en = "Activate Freeze Rewards"},
-["freeze_confirm_freezeinfo"]   = {id = "Apakah Anda yakin ingin mengaktifkan fitur Pembekuan Hadiah?", en = "Are you sure you want to activate Freeze Rewards?"},
-["freeze_explain_freezeinfo"]   = {id = "Fitur ini akan membekukan nilai hadiah (30).", en = "This feature will freeze reward values (30)."},
-["cancel_info_freezeinfo"]      = {id = "Batalkan jika ragu atau ingin kembali.", en = "Cancel if you're unsure or want to go back."},
-["proceed_freezeinfo"]          = {id = "Lanjutkan", en = "Proceed"},
-["cancel_freezeinfo"]           = {id = "Batal", en = "Cancel"},
-
-["freeze_failed_freezeinfo"]    = {id = "Gagal membekukan hadiah.", en = "Failed to freeze rewards."},
-["freeze_not_found_freezeinfo"] = {id = "Tidak ada nilai yang cocok ditemukan.\nSilakan coba lagi atau mulai ulang game.", en = "No matching values found.\nPlease try again or restart the game."},
-["freeze_done_freezeinfo"]      = {id = "Pembekuan Hadiah aktif.", en = "Freeze Rewards are now active."},
-  
+  ["freeze_info_title"]      = {id = "❄️ Informasi Pembekuan ❄️", en = "❄️ Freeze Information ❄️"},
+  ["freeze_info_question"]   = {id = "🎁 Bekukan hadiah sekarang?", en = "🎁 Freeze rewards now?"},
+  ["freeze_info_explain"]    = {id = "✅ Fitur ini membuka hadiah dan penukaran lainnya.", en = "✅ This feature unlocks rewards and other exchanges."},
+  ["freeze_continue"]        = {id = "🚀 Lanjutkan", en = "🚀 Continue"},
+  ["freeze_cancel"]          = {id = "❌ Batal", en = "❌ Cancel"},
+  ["freeze_fail_title"]      = {id = "❌ Gagal melakukan pembekuan!\n\nAlamat target tidak ditemukan.", en = "❌ Failed to apply freeze!\n\nTarget address not found."},
+  ["freeze_active_toast"]    = {id = "✅ Pembekuan hadiah aktif", en = "✅ Reward freeze active"},
+	
   ----Change Reward Free----
   
 ["smelt_ingots_changefree"]       = {id = "🪙 • Batangan Logam", en = "🪙 • Metal Ingots"},
@@ -1383,49 +1380,54 @@ function menue2()
 end
 
 function gp2(caller)
-  if cstatus_featureX == off then
+if cstatus_featureX == off then
     local confirm = gg.alert(
-      "❄️ " .. _("freeze_title_freezeinfo") .. " ❄️\n\n" ..
-      "⚠️ " .. _("freeze_confirm_freezeinfo") .. "\n\n" ..
-      "✅ " .. _("freeze_explain_freezeinfo") .. "\n" ..
-      "❌ " .. _("cancel_info_freezeinfo"),
-      "🚀 " .. _("proceed_freezeinfo"),
-      "❌ " .. _("cancel_freezeinfo")
+      _("freeze_info_title") .. "\n\n" ..
+      _("freeze_info_question") .. "\n" ..
+      _("freeze_info_explain"),
+      _("freeze_continue"),
+      _("freeze_cancel")
     )
 
-    if confirm ~= 1 then
-      return
-    end
-
-    -- Aktifkan fitur tanpa alert kedua
+    if confirm ~= 1 then return end
     cstatus_featureX = on
     rewardVisible = true
   end
 
-  -- 🔍 Memory Freeze
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("65537;1599361808;1599099674::", gg.TYPE_DWORD)
-  gg.refineNumber("1599361808", gg.TYPE_DWORD)
+  gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
+  local hasil = gg.getResults(1000)
 
-  local count = gg.getResultCount()
-  if count == 0 then
-    gg.alert("❌ " .. _("freeze_failed_freezeinfo") .. "\n\n" .. _("freeze_not_found_freezeinfo"))
+  if #hasil == 0 then
+    return gg.alert(_("freeze_fail_title"))
+  end
+
+  local kandidat = {}
+
+  -- 🧩 Filter hasil dengan offset +0x1CC = 27491
+  for i, res in ipairs(hasil) do
+    local check = gg.getValues({{address = res.address + 0x1CC, flags = gg.TYPE_DWORD}})
+    if check[1].value == 27491 then
+      table.insert(kandidat, res)
+    end
+  end
+
+  if #kandidat == 0 then
     return
   end
 
-  local results = gg.getResults(count)
+  -- ❄️ Siapkan pembekuan untuk semua kandidat
   local freezeItems = {}
-
-  for _, v in ipairs(results) do
-    table.insert(freezeItems, {address = v.address - 8,  flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(freezeItems, {address = v.address - 12, flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(freezeItems, {address = v.address - 16, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+  for _, target in ipairs(kandidat) do
+    table.insert(freezeItems, {address = target.address - 8,  flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeItems, {address = target.address - 12, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeItems, {address = target.address - 16, flags = gg.TYPE_DWORD, value = 0, freeze = true})
   end
 
   gg.addListItems(freezeItems)
 
-  -- 🎉 Typing Effect
+  -- 🎉 Efek Mengetik Toast
   local function typingToast(msg, delay)
     for i = 1, #msg do
       gg.toast(msg:sub(1, i))
@@ -1433,7 +1435,7 @@ function gp2(caller)
     end
   end
 
-  typingToast("✅ " .. _("freeze_done_freezeinfo"), 70)
+  typingToast(_("freeze_active_toast"), 70)
   gg.clearResults()
 end
 
