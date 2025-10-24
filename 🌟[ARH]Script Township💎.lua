@@ -43,10 +43,10 @@ local teks = {
   
   ----GP Free----
   
-  ["astro_fail_title_gpfree"]  = {id = "Gagal Membuka Season Pass", en = "Failed to Unlock Season Pass"},
-["astro_fail_body_gpfree"]   = {id = "🔍 Nilai tidak ditemukan.\nCoba lagi atau mulai ulang game.", en = "🔍 No values found.\nTry again or restart the game."},
-["astro_success_gpfree"]     = {id = "Season Pass Berhasil Dibuka!", en = "Season Pass Unlocked!"},
-  
+["gold_not_found"] = {id = "⚠️ Tiket emas tidak ditemukan",en = "⚠️ Gold ticket not found"},
+  ["addr_not_found"] = {id = "⚠️ Alamat tidak ditemukan",en = "⚠️ Address not found"},
+  ["gold_enabled"] = {id = "✅ Tiket Emas diaktifkan!",en = "✅ Gold Pass activated!"},
+	
   ----Freeze menu----
   
   ["freeze_info_title"]      = {id = "❄️ Informasi Pembekuan ❄️", en = "❄️ Freeze Information ❄️"},
@@ -1353,26 +1353,44 @@ function menue1()
 end
 
 function gp1(caller)
+  gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("6C61481Ah;6E726526h;00000031h:201", gg.TYPE_DWORD)
-  gg.refineNumber("00000031h", gg.TYPE_DWORD)
 
-  local results = gg.getResults(10)
-  if #results < 1 then
-    gg.alert("❌ " .. _("astro_fail_title_gpfree") .. "\n\n🔍 " .. _("astro_fail_body_gpfree"))
-    return
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("6875698586322892050", gg.TYPE_QWORD)
+  local hasil = gg.getResults(100)
+
+  if #hasil == 0 then
+    return gg.alert(_("gold_not_found"))
   end
 
-  local edits = {}
-  for _, v in ipairs(results) do
-    table.insert(edits, {address = v.address - 0x8, flags = gg.TYPE_DWORD, value = 1})     -- Activate
-    table.insert(edits, {address = v.address - 0x14, flags = gg.TYPE_DWORD, value = 651})     -- Reset
-    table.insert(edits, {address = v.address - 0x18, flags = gg.TYPE_DWORD, value = 0})   -- Arabia ID
+  local kandidat = {}
+
+  -- 🧩 Filter hasil berdasarkan offset +0x48 = 640
+  for i, res in ipairs(hasil) do
+    local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
+    if check[1].value == 640 then
+      table.insert(kandidat, res)
+    end
   end
 
-  gg.setValues(edits)
-  gg.toast("✅ " .. _("astro_success_gpfree"))
+  if #kandidat == 0 then
+    return gg.alert(_("addr_not_found"))
+  elseif #kandidat > 1 then
+    -- kamu bisa tambahkan handling jika perlu
+  end
+
+  -- 🏆 Aktifkan tiket emas (Gold Pass)
+  local target = kandidat[1]
+  local edit = {
+    {address = target.address + 0x118, flags = gg.TYPE_DWORD, value = 0},
+    {address = target.address + 0x11C, flags = gg.TYPE_DWORD, value = 651},  -- kode Gold Pass
+    {address = target.address + 0x128, flags = gg.TYPE_DWORD, value = 1}
+  }
+
+  gg.setValues(edit)
+  gg.toast(_("gold_enabled"))
 end
 
 -- ❄️ Freeze Rewards
