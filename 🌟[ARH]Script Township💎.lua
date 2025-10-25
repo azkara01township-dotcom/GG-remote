@@ -596,7 +596,7 @@ local teks = {
     
     ----tambah kotak pasar----
     
-["prompt_market_boxes"] = {id = "Masukkan jumlah kotak pasar (10–2000):",en = "Enter number of market boxes (10–2000):"},
+["prompt_market_boxes"] = {id = "📦 Masukkan jumlah kotak pasar (10–2000):",en = "📦 Enter number of market boxes (10–2000):"},
 ["invalid_input_market"] = {id = "⚠️ Input tidak valid! Masukkan angka antara 10 dan 2000.",en = "⚠️ Invalid input! Please enter a number between 10 and 2000."},
 ["data_not_found_market"] = {id = "❌ Data kotak pasar tidak ditemukan!",en = "❌ Market box data not found!"},
 ["no_valid_offset_market"] = {id = "⚠️ Data tidak ditemukan.",en = "⚠️ Data not found."},
@@ -8792,7 +8792,7 @@ function parming5()
   -- ✏️ Edit nilai pada offset +0x1B8 dari hasil valid
   local edits = {}
   for _, v in ipairs(valid) do
-    table.insert(edits, {address = v.address + 0x1B8, value = count, flags = gg.TYPE_DWORD})
+    table.insert(edits, {address = v.address - 0x38, value = count, flags = gg.TYPE_DWORD})
   end
 
   gg.setValues(edits)
