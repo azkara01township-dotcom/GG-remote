@@ -596,13 +596,14 @@ local teks = {
     
     ----tambah kotak pasar----
     
-  ["invalid_input_kotakpasar"]      = {id="🚫 Input tidak valid.\nMasukkan angka antara 10–2000.", en="🚫 Invalid input.\nPlease enter a number between 10–2000."},
-  ["no_data_found_kotakpasar"]      = {id="❌ Data market box tidak ditemukan.\n\nSilakan restart game dan coba lagi.", en="❌ No market box data found.\n\nPlease restart the game and try again."},
-  ["prompt_enter_count_kotakpasar"] = {id="🧺 Masukkan jumlah market box [10–2000]:", en="🧺 Enter market box count [10–2000]:"},
-  ["toast_activated_kotakpasar"]    = {id="🧺 Market box diaktifkan!", en="🧺 Market boxes activated!"},
-  ["alert_set_count_kotakpasar"]    = {id="✅ Jumlah market box diatur.", en="✅ Market box count set."},
-  ["alert_exit_market_kotakpasar"]  = {id="\n\nSilakan keluar dan masuk kembali ke City Market untuk menerapkan perubahan.", en="\n\nPlease exit and re-enter the City Market to apply changes."},
-
+["prompt_market_boxes"] = {id = "Masukkan jumlah kotak pasar (10–2000):",en = "Enter number of market boxes (10–2000):"},
+["invalid_input_market"] = {id = "⚠️ Input tidak valid! Masukkan angka antara 10 dan 2000.",en = "⚠️ Invalid input! Please enter a number between 10 and 2000."},
+["data_not_found_market"] = {id = "❌ Data kotak pasar tidak ditemukan!",en = "❌ Market box data not found!"},
+["no_valid_offset_market"] = {id = "⚠️ Data tidak ditemukan.",en = "⚠️ Data not found."},
+["toast_success_market"] = {id = "✅ Kotak pasar berhasil diatur menjadi ",en = "✅ Market boxes successfully set to "},
+["alert_success_market_1"] = {id = "📦 Jumlah kotak pasar telah diatur ke ",en = "📦 Number of market boxes set to "},
+["alert_success_market_2"] = {id = ".\nKeluar dari pasar dan buka kembali untuk melihat perubahan.",en = ".\nExit and reopen the market to see the change."},
+	
 ----menu ragam----
 
   ["industry_boost_gamragam"]   = {id = "🏭 • Pengurangan Waktu Industri", en = "🏭 • Industry Time Reduction"},
@@ -8757,38 +8758,49 @@ function parming5()
   gg.setVisible(false)
 
   -- 📥 Prompt input awal
-  local i = gg.prompt({_( "prompt_enter_count" )}, nil, {"number"})
+  local i = gg.prompt({_("prompt_market_boxes")}, nil, {"number"})
   local count = tonumber(i and i[1])
   if not count or count < 10 or count > 2000 then
-    gg.alert(_( "invalid_input" ))
+    gg.alert(_("invalid_input_market"))
     return
   end
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("65707320h;74696314h;46A8C000h::513", gg.TYPE_DWORD)
-  gg.refineNumber("1953063700", gg.TYPE_DWORD)
+  gg.searchNumber("7020372369389216534", gg.TYPE_QWORD)
 
-  local r = gg.getResults(50)
-  if #r == 0 then
-    gg.alert(_( "no_data_found_kotakpasar" ))
+  local hasil = gg.getResults(100)
+  if #hasil == 0 then
+    gg.alert(_("data_not_found_market"))
     return
   end
 
-  for _, v in ipairs(r) do
-    v.address = v.address + 0x1b8
-    v.value = count
-    v.flags = gg.TYPE_DWORD
+  -- 🔍 Filter hasil dengan offset +48 = 1185464320
+  local valid = {}
+  for _, v in ipairs(hasil) do
+    local check = gg.getValues({{address = v.address + 0x48, flags = gg.TYPE_DWORD}})
+    if check[1].value == 1185464320 then
+      table.insert(valid, v)
+    end
   end
 
-  gg.setValues(r)
+  if #valid == 0 then
+    gg.alert(_("no_valid_offset_market"))
+    return
+  end
+
+  -- ✏️ Edit nilai pada offset +0x1B8 dari hasil valid
+  local edits = {}
+  for _, v in ipairs(valid) do
+    table.insert(edits, {address = v.address + 0x1B8, value = count, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(edits)
   a2()
 
-  -- 🎯 Toast dengan teks multi-bahasa + angka
-  gg.toast(string.format("%s %d", _( "toast_activated_kotakpasar" ), count))
-
-  -- 🎯 Alert dengan teks multi-bahasa + angka
-  gg.alert(string.format("%s %d%s", _( "alert_set_count_kotakpasar" ), count, _( "alert_exit_market_kotakpasar" )))
+  -- 🎯 Notifikasi
+  gg.toast(_("toast_success_market") .. count)
+  gg.alert(_("alert_success_market_1") .. count .. _("alert_success_market_2"))
 end
 
 -- 📌 Menu 4
