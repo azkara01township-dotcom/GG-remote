@@ -7802,20 +7802,27 @@ function ms1()
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("65540", gg.TYPE_QWORD)
-  local hasil = gg.getResults(99999)
+  local hasil = gg.getResults(1000)
 
   if #hasil == 0 then
     return
   end
 
-  -- 🧩 Filter alamat dengan offset +0x130 bernilai -1
+  -- 🧩 Filter alamat dengan offset +0x130 == -1 dan +0x1E8 == 1
   local kandidat = {}
   for i, v in ipairs(hasil) do
-    local cek = gg.getValues({ { address = v.address + 0x130, flags = gg.TYPE_DWORD } })[1]
-    if cek.value == -1 then
+    local cek = gg.getValues({
+      { address = v.address + 0x130, flags = gg.TYPE_DWORD },
+      { address = v.address + 0x1E8, flags = gg.TYPE_DWORD }
+    })
+
+    local val130 = cek[1].value
+    local val1E8 = cek[2].value
+
+    if val130 == -1 and val1E8 == 1 then
       table.insert(kandidat, v)
     end
-  end
+	end
 
   if #kandidat == 0 then
     return gg.alert(_( "noData_regata" ))
