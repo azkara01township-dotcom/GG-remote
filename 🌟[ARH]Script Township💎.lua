@@ -1360,7 +1360,7 @@ function gp1(caller)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("6875698586322892050", gg.TYPE_QWORD)
-  local hasil = gg.getResults(100)
+  local hasil = gg.getResults(100) -- ambil lebih banyak hasil untuk keamanan
 
   if #hasil == 0 then
     return gg.alert(_("gold_not_found"))
@@ -1368,28 +1368,31 @@ function gp1(caller)
 
   local kandidat = {}
 
-  -- 🧩 Filter hasil berdasarkan offset +0x48 = 640
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 640
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check[1].value == 640 then
+    if check and check[1] and check[1].value == 640 then
       table.insert(kandidat, res)
     end
   end
 
   if #kandidat == 0 then
-return gg.alert(_("addr_not_found"))
-elseif #kandidat > 1 then
-end
+    return gg.alert(_("addr_not_found"))
+  end
 
--- 🏆 Aktifkan tiket emas (Gold Pass)
-local target = kandidat[1]
-local edit = {
-{address = target.address + 0x118, flags = gg.TYPE_DWORD, value = 0},
-{address = target.address + 0x11C, flags = gg.TYPE_DWORD, value = 651},  -- kode Gold Pass
-{address = target.address + 0x128, flags = gg.TYPE_DWORD, value = 1}
-}
+  -- 🔁 Siapkan daftar edit untuk SEMUA kandidat
+  local edits = {}
+  for _, t in ipairs(kandidat) do
+    local base = t.address
+    table.insert(edits, {address = base + 0x118, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = base + 0x11C, flags = gg.TYPE_DWORD, value = 651}) -- kode Gold Pass
+    table.insert(edits, {address = base + 0x128, flags = gg.TYPE_DWORD, value = 1})
+  end
 
-gg.setValues(edit)
+  -- 🛠 Terapkan perubahan
+  gg.setValues(edits)
+
+  -- ✅ Info ke user
   gg.toast(_("gold_enabled"))
 end
 
