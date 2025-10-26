@@ -1,4 +1,4 @@
-local passFile           = "/sdcard/.syscfg_u1"
+local passFile           = "/sdcard/ARH_Script/.syscfg_u1"
 local permCodeFile       = "/sdcard/.bin_xv"
 local expiredDevicesFile = "/sdcard/.tmp_87g"
 
@@ -106,7 +106,6 @@ local loginOK = false
 
 -- ✅ Auto-login permanent code
 if isPermanentDeviceRegistered(expectedHash) then
-    gg.toast("✅ Auto-login success (Permanent Code)")
     loginOK = true
 end
 
@@ -115,7 +114,6 @@ if not loginOK and isExpiredDeviceRegistered(expiredCode) then
     if isExpiredDate50() then
         gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
-        gg.toast("✅ Auto-login success (Expired Code)")
         loginOK = true
     end
 end
@@ -131,8 +129,7 @@ while not loginOK do
             local pfw = io.open(passFile, "a")  
             if pfw then pfw:write(expectedHash .. "\n") pfw:close() end  
             permanentDevices[#permanentDevices + 1] = expectedHash  
-        end  
-        gg.toast("✅ Access granted with Permanent Code")  
+        end    
         showLoginInfo("Permanent Code")  
         loginOK = true  
 
@@ -145,7 +142,6 @@ while not loginOK do
                 if efw then efw:write(expiredCode .. "\n") efw:close() end  
                 expiredDevices[#expiredDevices+1] = expiredCode  
             end  
-            gg.toast("✅ Access granted with Expired Code")  
             showLoginInfo("Expired Code")  
             loginOK = true  
         end  
