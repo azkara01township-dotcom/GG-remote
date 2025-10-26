@@ -1377,20 +1377,19 @@ function gp1(caller)
   end
 
   if #kandidat == 0 then
-    return gg.alert(_("addr_not_found"))
-  elseif #kandidat > 1 then
-    -- kamu bisa tambahkan handling jika perlu
-  end
+return gg.alert(_("addr_not_found"))
+elseif #kandidat > 1 then
+end
 
-  -- 🏆 Aktifkan tiket emas (Gold Pass)
-  local target = kandidat[1]
-  local edit = {
-    {address = target.address + 0x118, flags = gg.TYPE_DWORD, value = 0},
-    {address = target.address + 0x11C, flags = gg.TYPE_DWORD, value = 651},  -- kode Gold Pass
-    {address = target.address + 0x128, flags = gg.TYPE_DWORD, value = 1}
-  }
+-- 🏆 Aktifkan tiket emas (Gold Pass)
+local target = kandidat[1]
+local edit = {
+{address = target.address + 0x118, flags = gg.TYPE_DWORD, value = 0},
+{address = target.address + 0x11C, flags = gg.TYPE_DWORD, value = 651},  -- kode Gold Pass
+{address = target.address + 0x128, flags = gg.TYPE_DWORD, value = 1}
+}
 
-  gg.setValues(edit)
+gg.setValues(edit)
   gg.toast(_("gold_enabled"))
 end
 
