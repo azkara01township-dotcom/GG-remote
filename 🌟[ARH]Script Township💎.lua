@@ -7802,50 +7802,56 @@ function ms1()
     return gg.alert(_( "invalidPoints_regata" ))
   end
 
-  -- 🔍 Cari QWORD utama
+  -- 🔍 Cari QWORD utama (dibatasi agar tidak delay)
   gg.searchNumber("65540", gg.TYPE_QWORD)
-  local hasil = gg.getResults(1000)
+  local hasil = gg.getResults(300) -- 🔧 batasi jumlah hasil
 
   if #hasil == 0 then
     return
   end
 
-  -- 🧩 Filter alamat dengan offset +0x130 == -1 dan +0x1E8 == 1
-  local kandidat = {}
+  -- 🧩 Cek offset secara batch untuk mempercepat
+  local addrList = {}
   for i, v in ipairs(hasil) do
-    local cek = gg.getValues({
-      { address = v.address + 0x130, flags = gg.TYPE_DWORD },
-      { address = v.address + 0x1E8, flags = gg.TYPE_DWORD }
-    })
+    table.insert(addrList, { address = v.address + 0x130, flags = gg.TYPE_DWORD })
+    table.insert(addrList, { address = v.address + 0x1E8, flags = gg.TYPE_DWORD })
+  end
 
-    local val130 = cek[1].value
-    local val1E8 = cek[2].value
+  local valBatch = gg.getValues(addrList)
+  local kandidat
+
+  for i = 1, #hasil do
+    local idx130 = (i - 1) * 2 + 1
+    local idx1E8 = (i - 1) * 2 + 2
+    local val130 = valBatch[idx130].value
+    local val1E8 = valBatch[idx1E8].value
 
     if val130 == -1 and val1E8 == 1 then
-      table.insert(kandidat, v)
+      kandidat = hasil[i]
+      break -- 🔥 stop begitu ketemu kandidat pertama
     end
-	end
+  end
 
-  if #kandidat == 0 then
+  if not kandidat then
     return gg.alert(_( "noData_regata" ))
   end
 
-  local targetAddress = kandidat[1].address
+  local targetAddress = kandidat.address
 
   -- 🧠 Persiapan data edit
   local edit = {
-    { address = targetAddress + 0xC8, flags = gg.TYPE_DWORD, value = 0 },     -- status
-    { address = targetAddress + 0xCC, flags = gg.TYPE_DWORD, value = 15000 }  -- nilai tugas
+    { address = targetAddress + 0xC8, flags = gg.TYPE_DWORD, value = 0 },
+    { address = targetAddress + 0xCC, flags = gg.TYPE_DWORD, value = 15000 }
   }
 
-  -- 🧮 Jika aktif, ubah poin via offset +208
+  -- 🧮 Jika aktif, ubah poin via offset +208 (referensi QWORD)
   if aktif then
     local baseData = gg.getValues({ { address = targetAddress + 0x208, flags = gg.TYPE_QWORD } })[1]
     local base = baseData and baseData.value or 0
 
     if base > 0x100000 then
-      table.insert(edit, { address = base + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- reset poin
-      table.insert(edit, { address = base + 0x4, flags = gg.TYPE_DWORD, value = poin })  -- set poin
+      table.insert(edit, { address = base + 0x0, flags = gg.TYPE_DWORD, value = 0 })
+      table.insert(edit, { address = base + 0x4, flags = gg.TYPE_DWORD, value = poin })
     end
   end
 
@@ -7853,13 +7859,12 @@ function ms1()
   gg.setValues(edit)
   gg.clearResults()
 
-  -- ✅ Alert hanya jika aktif
   if aktif then
     gg.alert(_( "successTitle_regata" ) .. "\n" .. _( "successBody_regata" ) .. poin)
   end
 
   gg.toast(_( "toast_regata" ))
-end
+	end
 
 -- ✅ Fungsi utama ms2
 function ms2()
