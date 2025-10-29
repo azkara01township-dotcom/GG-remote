@@ -1202,7 +1202,6 @@ local loginOK = false
 
 -- ✅ Auto-login permanent code
 if isPermanentDeviceRegistered(expectedHash) then
-    gg.toast("✅ Auto-login success (Permanent Code)")
     loginOK = true
 end
 
@@ -1211,7 +1210,6 @@ if not loginOK and isExpiredDeviceRegistered(expiredCode) then
     if isExpiredDate50() then
         gg.alert("⛔ Expired code expired on " .. expireDate50 .. "\n\nPlease use a Permanent Code to continue.")
     else
-        gg.toast("✅ Auto-login success (Expired Code)")
         loginOK = true
     end
 end
