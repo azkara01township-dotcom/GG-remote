@@ -1369,7 +1369,7 @@ function gp1(caller)
   -- 🧩 Filter hasil berdasarkan offset +0x48 == 640
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 640 then
+    if check and check[1] and check[1].value == 650 then
       table.insert(kandidat, res)
     end
   end
