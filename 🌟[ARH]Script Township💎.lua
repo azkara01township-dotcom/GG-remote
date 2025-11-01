@@ -682,58 +682,77 @@ local teks = {
   ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
 
 ["premium_info"] = {id = [[
-   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
-   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
-   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
-   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
- 
-💎 Dapatkan Akses tanpa batas dengan Premium 💎
+┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
+┃🚀ɴɪᴋᴍᴀᴛɪ ꜱᴇᴍᴜᴀ ꜰɪᴛᴜʀ ᴛᴀɴᴘᴀ ʙᴀᴛᴀꜱ!🚀
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
+🌟 Keuntungan Premium:
+• 🌊 Regatta otomatis selesai
+• 👍 Like kota tanpa batas
+• 📦 Slot pasar tambahan
+• 🎭 Semua skin lama terbuka
+• 🏞️ 200+ Dekorasi eksklusif
+• 🤖 Stiker obrolan koop
+• 💝 Bingkai & Nama warna pink
+• 🚀 Booster Match-3 lengkap
+• 🧪 Booster Laboratorium lengkap
+• 🏡 Booster Lumbung tanpa batas
+• ✨ ...dan masih banyak lagi!
+──────────────────────────
 💵 Harga:
 • 🇮🇩 IDR 450.000
 
 📆 Masa Aktif:
-• Seumur Hidup
-─────────────────────────────────────
+• ♾️ Seumur Hidup
+──────────────────────────
 🔐 Cara Membeli:
-1️⃣ Kirim pembayaran via : Barcode QRIS.
-2️⃣ Salin *kode License* yang muncul sebelum memulai script.
-3️⃣ Kirimkan kode License tersebut ke pemilik script.
-4️⃣ Aktivasi langsung setelah pembayaran dikonfirmasi!
-
+➡️ Lakukan pembayaran via: Barcode QRIS
+➡️ Salin Kode License yang muncul sebelum script berjalan
+➡️ Kirim Kode License ke pemilik script
+➡️ Aktivasi otomatis setelah pembayaran dikonfirmasi
+──────────────────────────
 📩 Kontak Pemilik:
-• Telegram: @azka_arh
+• 📨 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Update):
-• ARH TownScript
+• 📨 ARH TownScript
 ]],en = [[
-   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
-   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
-   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
-   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
- 
-💎 Get Unlimited Access with Premium 💎
+┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
+┃🚀ᴇɴᴊᴏʏ ᴀʟʟ ꜰᴇᴀᴛᴜʀᴇꜱ ᴡɪᴛʜ ɴᴏ ʟɪᴍɪᴛꜱ!🚀
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
+🌟 Premium Benefits:
+• 🌊 Auto Regatta completion
+• 👍 Unlimited city likes
+• 📦 Extra market slots
+• 🎭 All legacy skins unlocked
+• 🏞️ 200+ Exclusive decorations
+• 🤖 Coop chat stickers
+• 💝 Pink name & frame color
+• 🚀 Complete Match-3 boosters
+• 🧪 Complete Laboratory boosters
+• 🏡 Unlimited Barn boosters
+• ✨ ...and much more!
+──────────────────────────
 💵 Price:
-• 🇺🇸 USD 30$
+• 💲 USD 30 / 🇮🇩 IDR 450.000
 
-📆 Validity:
-• Lifetime Access
-─────────────────────────────────────
+📆 Duration:
+• ♾️ Lifetime Access
+──────────────────────────
 🔐 How to Buy:
-1️⃣ Send payment via QRIS Barcode.
-2️⃣ Copy the *License code* shown before starting the script.
-3️⃣ Send your License code to the owner.
-4️⃣ Activation will be instant after payment confirmation!
-
+➡️ Make payment via: -
+➡️ Copy your License Code (appears before script starts)
+➡️ Send the License Code to the owner
+➡️ Activation is automatic after payment confirmed
+──────────────────────────
 📩 Contact Owner:
-• Telegram: @azka_arh
+• 📨 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Updates):
-• ARH TownScript
-]]
-  },
-  ["btn_back"] = {id = "❌ Kembali", en = "❌ Back"},
+• 📨 ARH TownScript
+]]},
+  ["btn_back"] = {id = "❌ Kembali", en = "❌ Go Back"},
   ["btn_tele"] = {id = "📩 Telegram", en = "📩 Telegram"},
   ["btn_wa"]   = {id = "📢 WhatsApp Channel", en = "📢 WhatsApp Channel"},
   ["toast_back"] = {id = "↩️ Kembali ke menu sebelumnya", en = "↩️ Back to previous menu"},
