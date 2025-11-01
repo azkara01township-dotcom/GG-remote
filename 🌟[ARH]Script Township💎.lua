@@ -681,16 +681,64 @@ local teks = {
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
   ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
 
-["contact_telegram"] = {id = "Hubungi via Telegram", en = "Contact via Telegram"},
-["contact_facebook"] = {id = "Hubungi via Facebook", en = "Contact via Facebook"},
-["contact_menu_title"] = {id = "Menu Kontak Admin", en = "Admin Contact Menu"},
-["contact_menu_desc"] = {id = "Pilih platform untuk menghubungi:", en = "Choose a platform to reach out:"},
-["exit_script1"] = {id = "Keluar Script", en = "Exit Script"},
-["exit1"] = {id = "Keluar", en = "Exit"},
-["copy_link1"] = {id = "Salin Tautan", en = "Copy Link"},
-["link_copied"] = {id = "Tautan disalin ke clipboard 📋", en = "Link copied to clipboard 📋"},
-["contact_cancelled"] = {id = "Kontak dibatalkan.", en = "Contact cancelled."},
-["exit_contact_menu"] = {id = "Keluar dari menu kontak Admin.", en = "Exiting Admin contact menu."},
+["premium_info"] = {id = [[
+   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
+   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
+   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
+   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
+ 
+💎 Dapatkan Akses tanpa batas dengan Premium 💎
+
+💵 Harga:
+• 🇮🇩 IDR 450.000
+
+📆 Masa Aktif:
+• Seumur Hidup
+─────────────────────────────────────
+🔐 Cara Membeli:
+1️⃣ Kirim pembayaran via : Barcode QRIS.
+2️⃣ Salin *kode License* yang muncul sebelum memulai script.
+3️⃣ Kirimkan kode License tersebut ke pemilik script.
+4️⃣ Aktivasi langsung setelah pembayaran dikonfirmasi!
+
+📩 Kontak Pemilik:
+• Telegram: @azka_arh
+
+📢 WhatsApp Channel (Info & Update):
+• ARH TownScript
+]],en = [[
+   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
+   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
+   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
+   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
+ 
+💎 Get Unlimited Access with Premium 💎
+
+💵 Price:
+• 🇺🇸 USD 30$
+
+📆 Validity:
+• Lifetime Access
+─────────────────────────────────────
+🔐 How to Buy:
+1️⃣ Send payment via QRIS Barcode.
+2️⃣ Copy the *License code* shown before starting the script.
+3️⃣ Send your License code to the owner.
+4️⃣ Activation will be instant after payment confirmation!
+
+📩 Contact Owner:
+• Telegram: @azka_arh
+
+📢 WhatsApp Channel (Info & Updates):
+• ARH TownScript
+]]
+  },
+  ["btn_back"] = {id = "❌ Kembali", en = "❌ Back"},
+  ["btn_tele"] = {id = "📩 Telegram", en = "📩 Telegram"},
+  ["btn_wa"]   = {id = "📢 WhatsApp Channel", en = "📢 WhatsApp Channel"},
+  ["toast_back"] = {id = "↩️ Kembali ke menu sebelumnya", en = "↩️ Back to previous menu"},
+  ["toast_tele"] = {id = "✅ Username Telegram berhasil disalin!", en = "✅ Telegram username copied!"},
+  ["toast_wa"]   = {id = "✅ Link WhatsApp berhasil disalin!", en = "✅ WhatsApp link copied!"},
 	
 ["thank_you_exit"] = {id = "Terima kasih telah menggunakan script ini!\nSemoga harimu menyenangkan!",en = "Thanks for using this script!\nHave a great day!"},
 
@@ -9279,48 +9327,18 @@ end
 
 -- Fungsi utama
 function showContactMenu()
-  gg.setVisible(false)
+  local pilihan = gg.alert(_"premium_info", _"btn_back", _"btn_tele", _"btn_wa")
 
-  local menu = gg.choice({
-    "✈️ • " .. _("contact_telegram"),
-    "📘 • " .. _("contact_facebook"),
-    "❌ • " .. _("exit_script1")
-  }, nil, "👤 " .. _("contact_menu_title") .. "\n📩 " .. _("contact_menu_desc"))
-
-  if not menu then
-    return
-  end
-
-  local contacts = {
-    [1] = { link = "https://t.me/@azka_arh", label = "✈️ Telegram" },
-    [2] = { link = "https://m.me/azka.arhh", label = "📘 Facebook" }
-  }
-
-  if contacts[menu] then
-    local selected = contacts[menu]
-    local action = gg.alert(
-      "🔗 " .. selected.label .. "\n\n" ..
-      selected.link,
-      "❌ " .. _("exit1"), "📋 " .. _("copy_link1")
-    )
-
-    if action == 2 then
-      gg.copyText(selected.link)
-      gg.toast("✅ " .. _("link_copied"))
-    else
-      gg.toast("❌ " .. _("contact_cancelled"))
-    end
-    exit()
-
-  elseif menu == 3 then
-    gg.toast("👋 " .. _("exit_contact_menu"))
-    exit()
+  if pilihan == 1 then
+    gg.toast(_"toast_back")
+  elseif pilihan == 2 then
+    gg.copyText("https://t.me/@azka_arh")
+    gg.toast(_"toast_tele")
+  elseif pilihan == 3 then
+    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q") -- ganti link WA asli
+    gg.toast(_"toast_wa")
   end
 end
-
--- Alias agar bisa dipanggil lewat dua nama
-buykey = showContactMenu
-about2 = showContactMenu
 
 function a2()
 function progressBarLoading()
