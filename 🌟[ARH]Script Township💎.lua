@@ -9340,6 +9340,9 @@ function showContactMenu()
   end
 end
 
+buykey = showContactMenu
+about2 = showContactMenu
+
 function a2()
 function progressBarLoading()
   local bar = {"[░░░░░░░░░░]", "[█░░░░░░░░░]", "[██░░░░░░░░]", "[███░░░░░░░]", "[████░░░░░░]", "[█████░░░░░]", "[██████░░░░]", "[███████░░░]", "[████████░░]", "[█████████░]", "[██████████]"}
