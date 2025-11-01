@@ -761,118 +761,72 @@ local teks = {
 	
 ["thank_you_exit"] = {id = "Terima kasih telah menggunakan script ini!\nSemoga harimu menyenangkan!",en = "Thanks for using this script!\nHave a great day!"},
 
-["about_msg"] = {id =[[
-   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
-   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
-   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
-   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
+["about_msg"] = {id = [[
+┏━━━━━━━━｢‼️𝗜𝗡𝗙𝗢 𝗡𝗔𝗦𝗞𝗔𝗛‼️｣━━━━━━━━┓
+┃📖ᴀʀʜ ᴛᴏᴡɴꜱᴄʀɪᴘᴛ — ᴘᴀɴᴅᴜᴀɴ & ᴘᴇʀɪɴɢᴀᴛᴀɴ📖
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-📜 *Informasi Script – Azka Project*
+⚠️ PERINGATAN PENTING
+Gunakan script ini dengan bijak. Kami tidak bertanggung jawab atas konsekuensi penggunaan yang melanggar ketentuan permainan termasuk banned permanen.
 
-🔹 Nama Script: 👑ARH-Script Township👑.lua  
-🔹 Versi: 1.0.0  
-🔹 Admin: Azka Raditya Hermawan  
-🔹 Platform: Game Guardian (Android)  
-🔹 Fitur Premium:
-        • 🎭 Buka skin lama
-        • 🏞️ 200+ dekorasi
-        • 🚀 Booster Match-3 Lengkap
-        • 🏡 Booster Gudang Tak Terbatas
-        • 🔐 Fitur Premium Lainnya
-        • ✨ ...dan masih banyak lagi!
+💸 Batas T-Cash
+• Disarankan: maksimal 10.000 T-Cash per akun.  
+• Ingin top-up lebih besar? Pertimbangkan risiko banned permanen.
+• Toleransi pengisian maksimal 25.000 T-Cash melebihi toleransi berisiko kena banned.
 
-⚠️ *Peringatan Penting:*  
-Gunakan script ini **dengan bijak** agar tidak terkena banned.
+🏡 Peningkatan Lumbung (Barn Upgrade)
+• Lakukan peningkatan sesuai panduan resmi (salin link untuk melihat panduan upgrade).  
+• Upgrade berlebih atau tidak sesuai risiko deteksi dan banned.
 
-1. 💸 *T-Cash Hack*  
-      • Batas aman: **maksimal 25.000 T-Cash**  
-      • Jika ingin lebih, tunggu **6 bulan** sejak upgrade terakhir  
-      • Melebihi batas ini bisa menyebabkan **banned permanen**
+🤝 Global Co-op
+• Bergabung dengan koop papan atas (global) tidak diwajibkan.  
+• Bergabung pada kelompok yang berisiko tinggi dapat meningkatkan kemungkinan banned.
 
-2. 🏡 *Upgrade Lumbung*  
-      • Ikuti batas upgrade dari game  
-      • Selalu lihat **tabel upgrade resmi Playrix**  
-      • Mengabaikan bisa menyebabkan **auto-banned**
+🔧 Jika fitur tidak bekerja
+• Coba restart game 1–3 kali.  
+• Masih bermasalah? Hubungi Pemilik melalui menu Kontak di dalam script.
 
-3. 🤝 *Global Co-op*  
-      • Anda **tidak perlu bergabung** dengan global co-op top  
-      • Bergabung bisa menyebabkan **banned dalam 3–7 hari**
+📌 Catatan Tambahan
+• Gunakan akun cadangan untuk percobaan.  
+• Hindari aktivitas yang jelas melanggar aturan permainan.
 
-💡 Jika hack gagal:  
-      • Restart game 2–3 kali  
-      • Masih gagal? Hubungi Admin lewat menu kontak
+🙏 Terima kasih
+Terima kasih sudah menggunakan ARH Townscript. Gunakan secara bijak.
+]],en = [[
+┏━━━━━｢‼️𝗦𝗖𝗥𝗜𝗣𝗧 𝗜𝗡𝗙𝗢‼️｣━━━━━━━━┓
+┃📖ᴀʀʜ ᴛᴏᴡɴꜱᴄʀɪᴘᴛ — ɢᴜɪᴅᴇ & ᴡᴀʀɴɪɴɢ📖
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-🔐 Upgrade Premium:  
-Buka semua fitur + dukungan prioritas dari Admin!
+⚠️ IMPORTANT WARNING
+Use this script responsibly. We are not responsible for any consequences, including permanent bans, due to violating game policies.
 
-🙏 Terima kasih:  
-Terima kasih sudah menggunakan script ini!
+💸 T-Cash Limit
+• Recommended: maximum 10,000 T-Cash per account.  
+• Want more top-up? Consider the risk of a permanent ban.  
+• Exceeding 25,000 T-Cash tolerance may lead to permanent ban.
 
-📢 *Gabung Channel WhatsApp Resmi:*  
-Update dan info terbaru:  
-Township Script (ARH)  
-🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
+🏡 Barn Upgrade
+• Follow the official upgrade guide (copy link below to view).  
+• Excessive or irregular upgrades increase detection and ban risk.
 
-────────────
-© Azka Project
-]],en =[[
-   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
-   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
-   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
-   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛
+🤝 Global Co-op
+• Joining top (global) co-ops is not mandatory.  
+• Joining high-risk groups increases ban likelihood.
 
-📜 *Script Information – Azka Project*
+🔧 If features don’t work
+• Try restarting the game 1–3 times.  
+• Still not working? Contact the Owner through the in-script Contact menu.
 
-🔹 Script Name: 👑ARH-Script Township👑.lua  
-🔹 Version: 1.0.0  
-🔹 Admin: Azka Raditya Hermawan  
-🔹 Platform: Game Guardian (Android)  
-🔹 Premium Features:
-        • 🎭 Unlock old skins
-        • 🏞️ 200+ decorations
-        • 🚀 Full Match-3 Boosters
-        • 🏡 Unlimited Barn Boosters
-        • 🔐 Other Premium Features
-        • ✨ ...and much more!
+📌 Additional Notes
+• Use a backup account for testing.  
+• Avoid any clearly rule-breaking actions.
 
-⚠️ *Important Warning:*  
-Use this script **wisely** to avoid being banned.
-
-1. 💸 *T-Cash Hack*  
-      • Safe limit: **maximum 25,000 T-Cash**  
-      • If you want more, wait at least **6 months** after the last upgrade  
-      • Exceeding this limit may cause a **permanent ban**
-
-2. 🏡 *Barn Upgrade*  
-      • Follow the upgrade limits from the game  
-      • Always check the **official Playrix upgrade tables**  
-      • Ignoring this may trigger an **auto-ban**
-
-3. 🤝 *Global Co-op*  
-      • You **do NOT need to join** top global co-ops  
-      • Joining them may cause a **ban within 3–7 days**
-
-💡 If the hack fails:  
-      • Restart the game 2–3 times  
-      • Still not working? Contact the Admin via the contact menu
-
-🔐 Premium Upgrade:  
-Unlock all features + get priority support from the Admin!
-
-🙏 Thank You:  
-Thank you for using this script!
-
-📢 *Join the Official WhatsApp Channel:*  
-Stay updated with the latest news and updates:  
-Township Script (ARH)  
-🔗 https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q
-
-────────────
-© Azka Project
+🙏 Thank You
+Thank you for using ARH Townscript. Use it responsibly.
 ]]},
-["exit"] = {id = "❌ Keluar",en = "❌ Exit"},
-["copy_link"] = {id = "📋 Salin Link",en = "📋 Copy Link"},
-["copied"] = {id = "✅ Link berhasil disalin!",en = "✅ Link copied to clipboard!"},
+["back_btn"]    = { id = "❌ Kembali", en = "❌ Go Back" },
+["barn_table"]  = { id = "🏡 Tabel lumbung", en = "🏡 Barn table" },
+["copied_link"] = { id = "✅ Link berhasil disalin!", en = "✅ Link copied successfully!" },
 }
 function _(k) return teks[k] and teks[k][lang] or k end
 
@@ -9333,14 +9287,13 @@ function adminMenu()
 end
 
 function about1()
-  local msg = _("about_msg")
-  local result = gg.alert(msg, _( "exit" ), _( "copy_link" ))
+  local msg = _( "about_msg" )
+  local result = gg.alert(msg, _( "back_btn" ), _( "barn_table" ))
 
   if result == 2 then
-    gg.copyText("https://t.me/@azka_arh")
-    gg.toast(_"copied")
+    gg.copyText("https://township.fandom.com/wiki/Barn")
+    gg.toast(_( "copied_link" ))
   end
-
   menu6() -- kembali ke menu sebelumnya
 end
 
