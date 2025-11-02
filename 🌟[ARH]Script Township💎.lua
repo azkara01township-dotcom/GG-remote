@@ -383,9 +383,11 @@ local teks = {
   
   ----spesial menu----
     
-    ["option1_spesial"] = {id = "🌊 • Selesaikan Tugas Secara Otomatis", en = "🌊 • Auto-Complete Tasks"},
-["option2_spesial"] = {id = "👍 • Like Kota Tanpa Batas", en = "👍 • Unlimited City Likes"},
-    ["back_spesial"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
+["vip_regatta_task"] = {id = "💎 • VIP Tugas Regata",en = "💎 • VIP Regatta Task"},
+["auto_finish_task"] = {id = "🌊 • Selesaikan Tugas Otomatis",en = "🌊 • Auto Complete Task"},
+["edit_regatta_points"] = {id = "⭐ • Edit Poin Regata",en = "⭐ • Edit Regatta Points"},
+["unlimited_likes"] = {id = "👍 • Like Kota Tanpa Batas",en = "👍 • Unlimited City Likes"},
+["back_main_menu_spesial"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
     
     ----regata menu----
 
@@ -397,15 +399,16 @@ local teks = {
   ["alert_berhasil_suffix"] = {id = "⭐ Poin baru:",en = "⭐ New points:"},
   ["toast_berhasil"] = {id = "🎯 Poin regata berhasil diperbarui!",en = "🎯 Regatta points successfully updated!"},
 
-  ["promptPoints_regata"] = {id = "⭐ Masukkan Jumlah Poin Regata (150–300):",en = "⭐ Enter Regatta Points Amount (150–300):"},
-  ["promptEnable_regata"] = {id = "✅ Aktifkan edit poin?",en = "✅ Enable point editing?"},
-  ["cancel_regata"] = {id = "❌ Operasi dibatalkan oleh pengguna.",en = "❌ Operation canceled by user."},
-  ["invalidPoints_regata"] = {id = "⚠️ Jumlah poin tidak valid!\n\nMasukkan nilai antara 150 hingga 300.",en = "⚠️ Invalid point value!\n\nPlease enter a value between 150 and 300."},
-  ["noData_regata"] = {id = "⚠️ Tidak dapat menemukan data regata aktif.\n\n💡 Silakan ambil atau mulai tugas regata terlebih dahulu di dalam game, lalu jalankan kembali skrip ini.",en = "⚠️ Unable to find active regatta data.\n\n💡 Please start or take a regatta task in-game, then run this script again."},
-  ["successTitle_regata"] = {id = "🎉 Regata berhasil diperbarui!",en = "🎉 Regatta updated successfully!"},
-  ["successBody_regata"] = {id = "⭐ Poin Regata telah diatur ke: ",en = "⭐ Regatta points have been set to: "},
-  ["toast_regata"] = {id = "🎉 Regata berhasil diperbarui!",en = "🎉 Regatta updated successfully!"},
+  ["regata_failed"] = {id = "⚠️ Tidak dapat menyelesaikan tugas regata.\n\n💡 Silakan ambil atau mulai tugas regata terlebih dahulu di dalam game, lalu jalankan kembali skrip ini.",en = "⚠️ Unable to complete regatta task.\n\n💡 Please start or pick a regatta task in the game first, then run this script again."},
+  ["regata_done"] = {id = "🎉 Regata berhasil diperbarui!",en = "🎉 Regatta successfully updated!"},
 
+  ["pilih_poin"] = {id = "🎯 Pilih jumlah poin yang ingin diedit:",en = "🎯 Choose the amount of points to edit:"},
+  ["edit150"] = { id = "⭐ Edit Poin 150", en = "⭐ Edit Points 150" },
+  ["edit200"] = { id = "⭐ Edit Poin 200", en = "⭐ Edit Points 200" },
+  ["edit300"] = { id = "⭐ Edit Poin 300", en = "⭐ Edit Points 300" },
+  ["dibatalkan"] = { id = "❌ Edit Poin dibatalkan.", en = "❌ Point edit canceled." },
+  ["gagal_regata"] = {id = "⚠️ Tidak dapat mengedit poin tugas regata.\n\n💡 Silakan mulai atau ambil tugas regata terlebih dahulu.",en = "⚠️ Unable to edit regatta task points.\n\n💡 Please start or take a regatta task first."},
+  ["sukses"] = {id = "✅ Poin berhasil diubah ke ⭐ ",en = "✅ Points successfully changed to ⭐ "},
   ----boom like----
   
   ["cancel_boomlike"]             = {id="❌ Dibatalkan.", en="❌ Cancelled."},
@@ -7710,31 +7713,33 @@ end
 -------------------------------------------------
   
 function menuSpecial()
-local title = banner
+  local title = banner
   local menu = gg.choice({
-	"💎 • VIP Regata Task",        -- 🔹 Opsi baru di paling atas
-    _( "option1_spesial" ),
-    _( "option2_spesial" ),
-    _( "back_spesial" )
+    _("vip_regatta_task"),   -- 💎 • VIP Tugas Regata
+    _("auto_finish_task"),   -- 🌊 • Selesaikan Tugas Otomatis
+    _("edit_regatta_points"),-- ⭐ • Edit Poin Regata
+    _("unlimited_likes"),    -- 👍 • Like Kota Tanpa Batas
+    _("back_main_menu_spesial")      -- ❌ • Kembali ke Menu Utama
   }, nil, title)
 
   if menu == nil then
     return
-
   elseif menu == 1 then
-    vipRegata() -- 🔹 Fungsi untuk menu baru
-  elseif menu == 2 then
     ms1()
-  elseif menu == 3 then
+  elseif menu == 2 then
     ms2()
+  elseif menu == 3 then
+    ms3()
   elseif menu == 4 then
+    ms4()
+  elseif menu == 5 then
     Main()
     return
   else
     return
   end
 
-  -- Tunggu klik GG lalu ulangi menu
+  -- 🔁 Ulangi menu setelah fungsi selesai
   while true do
     if gg.isVisible(true) then
       gg.setVisible(false)
@@ -7744,7 +7749,7 @@ local title = banner
   end
 end
 
-function vipRegata()
+function ms1()
 gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
@@ -7799,89 +7804,123 @@ gg.setVisible(false)
   end
 end
 
-function ms1()
-gg.setVisible(false)
+function ms2()
+  gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  -- 💬 Prompt input
-  local input = gg.prompt({
-    _( "promptPoints_regata" ),
-    _( "promptEnable_regata" )
-  }, nil, { "number", "checkbox" })
-
-  if not input then
-    return gg.alert(_( "cancel_regata" ))
-	end
-
-  local poin, aktif = tonumber(input[1]), input[2]
-
-  -- 🔎 Validasi poin
-  if aktif and (not poin or poin < 150 or poin > 300) then
-    return gg.alert("⚠️ Jumlah poin tidak valid!\n\nMasukkan nilai antara 150 hingga 300.")
-  end
-
   -- 🔍 Cari QWORD utama
   gg.searchNumber("65540", gg.TYPE_QWORD)
-  local hasil = gg.getResults(1000)
+  local hasil = gg.getResults(1000) -- batasi agar lebih ringan
 
   if #hasil == 0 then
     return
   end
 
-  -- 🧩 Filter alamat dengan offset +0x130 == -1 dan +0x1E8 == 1
-  local kandidat = {}
+  -- 🧩 Ambil semua offset sekaligus (lebih cepat)
+  local offsets = {}
   for i, v in ipairs(hasil) do
-    local cek = gg.getValues({
-      { address = v.address + 0x130, flags = gg.TYPE_DWORD },
-      { address = v.address + 0x1E8, flags = gg.TYPE_DWORD }
-    })
+    table.insert(offsets, { address = v.address + 0x130, flags = gg.TYPE_DWORD })
+    table.insert(offsets, { address = v.address + 0x1E8, flags = gg.TYPE_DWORD })
+  end
 
-    local val130 = cek[1].value
-    local val1E8 = cek[2].value
+  local nilai = gg.getValues(offsets)
+  local kandidat = nil
 
+  -- 🧮 Cek nilai offset
+  for i = 1, #hasil do
+    local val130 = nilai[(i - 1) * 2 + 1].value
+    local val1E8 = nilai[(i - 1) * 2 + 2].value
     if val130 == -1 and val1E8 == 1 then
-      table.insert(kandidat, v)
+      kandidat = hasil[i]
+      break
     end
   end
 
-  if #kandidat == 0 then
-    return gg.alert(_( "noData_regata" ))
+  if not kandidat then
+    return gg.alert(_("regata_failed" ))
   end
 
-  local targetAddress = kandidat[1].address
-
   -- 🧠 Persiapan data edit
+  local targetAddress = kandidat.address
   local edit = {
     { address = targetAddress + 0xC8, flags = gg.TYPE_DWORD, value = 0 },     -- status
     { address = targetAddress + 0xCC, flags = gg.TYPE_DWORD, value = 15000 }  -- nilai tugas
   }
 
-  -- 🧮 Jika aktif, ubah poin via offset +208 (referensi QWORD)
-  if aktif then
-    local baseData = gg.getValues({ { address = targetAddress + 0x208, flags = gg.TYPE_QWORD } })[1]
-    local base = baseData and baseData.value or 0
-
-    if base > 0x100000 then  
-      table.insert(edit, { address = base + 0x0, flags = gg.TYPE_DWORD, value = 0 })     -- reset poin  
-      table.insert(edit, { address = base + 0x4, flags = gg.TYPE_DWORD, value = poin })  -- set poin  
-    end
-  end
-
   -- ✏️ Terapkan perubahan
   gg.setValues(edit)
   gg.clearResults()
 
-  -- ✅ Tampilkan alert hanya jika mode aktif
-  if aktif then
-    gg.alert(_( "successTitle_regata" ) .. "\n" .. _( "successBody_regata" ) .. poin)
+  -- ✅ Notifikasi sukses
+  gg.toast(_("regata_done"))
+end
+
+function ms3()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 💬 Pilihan poin
+  local pilihan = gg.choice({
+    _( "edit150" ),
+    _( "edit200" ),
+    _( "edit300" )
+  }, nil, _( "pilih_poin" ))
+
+  if not pilihan then
+    return gg.toast(_"dibatalkan")
   end
 
-  gg.toast(_( "toast_regata" ))
+  local poin = ({150, 200, 300})[pilihan]
+
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("65540", gg.TYPE_QWORD)
+  local hasil = gg.getResults(1000)
+  if #hasil == 0 then
+    return
+  end
+
+  -- 🧩 Siapkan batch offset
+  local checkList = {}
+  for i, v in ipairs(hasil) do
+    table.insert(checkList, { address = v.address + 0x130, flags = gg.TYPE_DWORD })
+    table.insert(checkList, { address = v.address + 0x1E8, flags = gg.TYPE_DWORD })
+  end
+
+  local checked = gg.getValues(checkList)
+  local kandidat = nil
+
+  for i = 1, #hasil do
+    local val130 = checked[(i - 1) * 2 + 1].value
+    local val1E8 = checked[(i - 1) * 2 + 2].value
+    if val130 == -1 and val1E8 == 1 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    return gg.alert(_"gagal_regata")
+  end
+
+  local baseData = gg.getValues({ { address = kandidat.address + 0x208, flags = gg.TYPE_QWORD } })[1]
+  if not baseData or baseData.value <= 0x100000 then
+    return
+  end
+
+  -- ✏️ Edit poin
+  gg.setValues({
+    { address = baseData.value + 0x0, flags = gg.TYPE_DWORD, value = 0 },
+    { address = baseData.value + 0x4, flags = gg.TYPE_DWORD, value = poin }
+  })
+
+  gg.clearResults()
+  gg.toast(_"sukses" .. poin)
 end
 
 -- ✅ Fungsi utama ms2
-function ms2()
+function ms4()
   -- 1. Input awal
   local input = gg.prompt({_("promptLevel_boomlike"), _("promptLikeStart_boomlike")}, nil, {"number", "number"})
   if not input then gg.alert(_("cancel_boomlike")) return end
