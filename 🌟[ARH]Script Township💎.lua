@@ -9337,22 +9337,38 @@ function about1()
 end
 
 -- Fungsi utama
-function showContactMenu()
+function showContactMenu(backFunc)
   local pilihan = gg.alert(_"premium_info", _"btn_back", _"btn_tele", _"btn_wa")
 
   if pilihan == 1 then
     gg.toast(_"toast_back")
+    if type(backFunc) == "function" then
+      backFunc() -- balik ke menu yang dikirim
+    end
   elseif pilihan == 2 then
     gg.copyText("https://t.me/@azka_arh")
     gg.toast(_"toast_tele")
+    if type(backFunc) == "function" then
+      backFunc()
+    end
   elseif pilihan == 3 then
-    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q") -- ganti link WA asli
+    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q")
     gg.toast(_"toast_wa")
+    if type(backFunc) == "function" then
+      backFunc()
+    end
   end
 end
 
-buykey = showContactMenu
-about2 = showContactMenu
+-- 🔹 Buykey versi: balik ke menu sebelumnya (misal menuPremium)
+function buykey()
+  showContactMenu(mainMenu)
+end
+
+-- 🔹 About2 versi: balik ke menu6
+function about2()
+  showContactMenu(menu6)
+end
 
 function a2()
 function progressBarLoading()
