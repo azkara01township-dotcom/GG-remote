@@ -7574,7 +7574,7 @@ function cardbadge()
     {offset = -0x38, value = 0},
     {offset = -0x34, value = 0},
     {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 140},
+    {offset = -0x2C, value = 130},
     {offset = 0x10, value = 0},
     {offset = 0x18, value = 0},
     {offset = 0x20, value = 0}
