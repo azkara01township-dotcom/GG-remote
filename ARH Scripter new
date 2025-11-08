@@ -4,9 +4,9 @@ local permCodeFile       = "/sdcard/Android/media/.bin_xv"
 local expiredDevicesFile = "/sdcard/Android/media/.tmp_87g"
 
 -- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
-local expiredUserID = 20                         -- 🔢 Ganti: 20, 30, 40, 50, dst
+local expiredUserID = 10                         -- 🔢 Ganti: 20, 30, 40, 50, dst
 local expiredCode   = "ARHPremiumTS-2025"        -- 🔑 Kode expired
-local expireDate    = "2025-11-05"               -- 📅 Ganti tanggal kadaluarsa
+local expireDate    = "2025-11-08"               -- 📅 Ganti tanggal kadaluarsa
 
 -- ============================ JANGAN UBAH DI BAWAH INI ============================ --
 
@@ -83,7 +83,7 @@ local function isExpiredDeviceRegistered(id)
     return false
 end
 
--- 📌 Alert login info
+-- 📌 Alert login info + auto notifikasi sisa hari
 local function showLoginInfo(mode)
     local now = os.date("%Y-%m-%d %H:%M:%S")
     local expDate = expireDate
@@ -108,6 +108,15 @@ local function showLoginInfo(mode)
         header = "✅ Expired Login Success"  
         message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (User %d)",
             header, now, expDate, leftText, mode, expiredUserID)  
+
+        -- 🔔 Tambahan notifikasi otomatis sisa hari
+        if daysLeft > 0 and daysLeft <= 3 then
+            gg.toast("⚠️ Your access will expire in " .. daysLeft .. " day" .. (daysLeft ~= 1 and "s" or ""))
+        elseif daysLeft == 0 then
+            gg.toast("⚠️ Your code expires today!")
+        elseif daysLeft < 0 then
+            gg.toast("❌ Your code is already expired.")
+        end
     end  
 
     gg.alert(message)
@@ -130,6 +139,10 @@ if not loginOK and isExpiredDeviceRegistered(expiredCode) then
                  daysOver, daysOver ~= 1 and "s" or ""))
     else
         loginOK = true
+        local sisa = getDaysLeft(expireDate)
+        if sisa <= 3 then
+            gg.toast("⚠️ Your access will expire in " .. sisa .. " day" .. (sisa ~= 1 and "s" or ""))
+        end
     end
 end
 
