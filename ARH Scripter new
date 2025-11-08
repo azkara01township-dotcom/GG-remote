@@ -6,7 +6,7 @@ local expiredDevicesFile = "/sdcard/Android/media/.tmp_87g"
 -- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
 local expiredUserID = 20                         -- 🔢 Ganti: 20, 30, 40, 50, dst
 local expiredCode   = "ARHPremiumTS-2025"        -- 🔑 Kode expired
-local expireDate    = "2025-11-5"               -- 📅 Ganti tanggal kadaluarsa
+local expireDate    = "2025-11-25"               -- 📅 Ganti tanggal kadaluarsa
 
 -- ============================ JANGAN UBAH DI BAWAH INI ============================ --
 
@@ -19,19 +19,20 @@ local function hash(str)
     return tostring(h)
 end
 
--- 📅 Cek apakah expired
+-- 📅 Cek apakah expired (pakai waktu Unix agar akurat)
 local function isExpiredDate()
-    local today = os.date("%Y-%m-%d")
-    return today > expireDate
+    local y, m, d = expireDate:match("(%d+)-(%d+)-(%d+)")
+    local exp = os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=23, min=59, sec=59}
+    local now = os.time()
+    return now > exp
 end
 
--- 🕒 Hitung sisa hari
+-- 🕒 Hitung sisa atau lewat hari
 local function getDaysLeft(expDate)
     local y, m, d = expDate:match("(%d+)-(%d+)-(%d+)")
     local target = os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=23, min=59, sec=59}
     local now = os.time()
     local diff = math.floor((target - now) / (24*60*60))
-    if diff < 0 then diff = 0 end
     return diff
 end
 
@@ -95,9 +96,17 @@ local function showLoginInfo(mode)
 
     elseif mode == "Expired Code" then  
         local daysLeft = getDaysLeft(expDate)  
-        local leftText = (daysLeft == 1) and "1 day left" or (daysLeft .. " days left")  
+        local leftText
+        if daysLeft > 0 then
+            leftText = string.format("⏳ %d day%s left", daysLeft, daysLeft ~= 1 and "s" or "")
+        elseif daysLeft == 0 then
+            leftText = "⚠️ Expiring today!"
+        else
+            leftText = string.format("❌ Expired %d day%s ago", math.abs(daysLeft), math.abs(daysLeft) ~= 1 and "s" or "")
+        end
+
         header = "✅ Expired Login Success"  
-        message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n⏳ %s\n🔑 Type: %s (User %d)",
+        message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (User %d)",
             header, now, expDate, leftText, mode, expiredUserID)  
     end  
 
@@ -115,7 +124,10 @@ end
 -- ✅ Auto-login expired code
 if not loginOK and isExpiredDeviceRegistered(expiredCode) then
     if isExpiredDate() then
-        gg.alert("⛔ Expired code expired on " .. expireDate .. "\n\nPlease use a Permanent Code to continue.")
+        local daysOver = math.abs(getDaysLeft(expireDate))
+        gg.alert("⛔ Expired code expired on " .. expireDate ..
+                 string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
+                 daysOver, daysOver ~= 1 and "s" or ""))
     else
         loginOK = true
     end
@@ -138,7 +150,10 @@ while not loginOK do
 
     elseif code == expiredCode then  
         if isExpiredDate() then  
-            gg.alert("⛔ Expired code expired on " .. expireDate .. "\n\nPlease use a Permanent Code to continue.")  
+            local daysOver = math.abs(getDaysLeft(expireDate))
+            gg.alert("⛔ Expired code expired on " .. expireDate ..
+                     string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
+                     daysOver, daysOver ~= 1 and "s" or ""))
         else  
             if not isExpiredDeviceRegistered(expiredCode) then  
                 local efw = io.open(expiredDevicesFile, "a")  
