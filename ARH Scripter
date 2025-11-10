@@ -1,0 +1,1301 @@
+-- ✅ Ensure script is hidden before menu starts
+gg.setVisible(false)
+
+local come =[[
+   ┏┳┳┓┏━┓─────────┏━━┓┏━┓
+   ┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
+   ┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
+   ┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛]]
+
+local banner =[[
+┏━┓─┏┓─┏━━┓──────┏━┓───┏┓─┏┓─
+┃╋┣━┫┗┓┗┓┏┻┳┳┳┳━┳┫━╋━┳━╋╋━┫┗┓
+┃┳┃┣┫┃┃─┃┃╋┃┃┃┃┃┃┣━┃┣┫┣┫┃╋┃┏┫
+┗┻┻┛┗┻┛─┗┻━┻━━┻┻━┻━┻━┻┛┗┫┏┻━┛
+────────────────────────┗┛───]]
+
+local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya Hermawan\n┇📅 %A, %d %B %Y | ⏰ %I:%M %p")
+---------------------------------------------------------------------------------------------------------
+-- 🌐 Bahasa
+lang = "en" -- Default bahasa
+local teks = {
+["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
+  ["addr_not_found"] = {id = "❌ Alamat tidak ditemukan, segera restart game, jika dilanjutkan tidak bisa tukar hadiah",en = "❌ Address not found, please restart the game immediately, if continued you will not be able to exchange rewards"},
+  ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
+  ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
+  ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
+	
+  ["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
+  ["free_script"] = {id="🔓 • Skrip Gratis", en="🔓• Free Script"},
+  ["premium_script"] = {id="💎 • Skrip Premium", en="💎 • Premium Script"},
+  ["buy_key"] = {id="🔑 • Beli Kunci Premium", en="🔑 • Buy Premium Key"},
+  ["exit_script"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
+  
+  ----Menu Free----
+  
+  ["free_menu_freemenu"]      = {id="📜 Menu Skrip Gratis", en="📜 Free Script Menu"},
+["unlock_season_freemenu"]  = {id="🌟 • Buka Season Pass", en="🌟 • Unlock Season Pass"},
+["freeze_rewards_freemenu"] = {id="❄️ • Bekukan Hadiah", en="❄️ • Freeze Rewards"},
+["change_reward_freemenu"]  = {id="🎁 • Ubah Hadiah", en="🎁 • Change Rewards"},
+["misc_mods_freemenu"]      = {id="🛠️ • Modifikasi Lainnya", en="🛠️ • Other Mods"},
+["script_info_freemenu"]    = {id="ℹ️ • Informasi Skrip", en="ℹ️ • Script Information"},
+  ["exit_script_freemenu"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
+  
+  ----GP Free----
+  
+["gold_not_found"] = {id = "⚠️ Tiket emas tidak ditemukan",en = "⚠️ Gold ticket not found"},
+  ["addr_not_found"] = {id = "⚠️ Alamat tidak ditemukan",en = "⚠️ Address not found"},
+  ["gold_enabled"] = {id = "✅ Tiket Emas diaktifkan!",en = "✅ Gold Pass activated!"},
+	
+  ----Freeze menu----
+  
+  ["freeze_info_title"]      = {id = "❄️ Informasi Pembekuan ❄️", en = "❄️ Freeze Information ❄️"},
+  ["freeze_info_question"]   = {id = "🎁 Bekukan hadiah sekarang?", en = "🎁 Freeze rewards now?"},
+  ["freeze_info_explain"]    = {id = "✅ Fitur ini membuka hadiah dan penukaran lainnya.", en = "✅ This feature unlocks rewards and other exchanges."},
+  ["freeze_continue"]        = {id = "🚀 Lanjutkan", en = "🚀 Continue"},
+  ["freeze_cancel"]          = {id = "❌ Batal", en = "❌ Cancel"},
+  ["freeze_fail_title"]      = {id = "❌ Gagal melakukan pembekuan!\n\nAlamat target tidak ditemukan.", en = "❌ Failed to apply freeze!\n\nTarget address not found."},
+  ["freeze_active_toast"]    = {id = "✅ Pembekuan hadiah aktif", en = "✅ Reward freeze active"},
+	
+  ----Change Reward Free----
+  
+["smelt_ingots_changefree"]       = {id = "🪙 • Batangan Logam", en = "🪙 • Metal Ingots"},
+["mining_tools1_changefree"]      = {id = "⛏️ • Alat Tambang", en = "⛏️ • Mining Tools"},
+["redeem_coupons_changefree"]     = {id = "🎟️ • Klaim Kupon", en = "🎟️ • Claim Coupons"},
+["add_gems_changefree"]           = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
+["match3_boosters_changefree"]    = {id = "🧩 • Booster Match-3", en = "🧩 • Match-3 Boosters"},
+["community_materials_changefree"] = {id = "🏗️ • Material Komunitas", en = "🏗️ • Community Materials"},
+["claim_perks_changefree"]        = {id = "🎉 • Klaim Keuntungan", en = "🎉 • Claim Perks"},
+  ["go_back_changefree"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
+  
+  ----Aneka Ragam Hack---
+  
+  ["menu4_opt1_hackfree"] = {id = "🚁 • T-Cash dari Helikopter", en = "🚁 • T-Cash from Helicopter"},
+["menu4_opt2_hackfree"] = {id = "🌾 • EXP dari Panen Gandum", en = "🌾 • EXP from Wheat Harvest"},
+["menu4_opt3_hackfree"] = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Boxes"},
+["menu4_opt4_hackfree"] = {id = "🚧 • Bekukan Ekspansi Kota", en = "🚧 • Freeze City Expansion"},
+["menu4_opt5_hackfree"] = {id = "🏭 • Peleburan Instan di Pabrik", en = "🏭 • Instant Smelting"},
+["menu4_opt6_hackfree"] = {id = "🐮 • Produksi Peternakan Cepat", en = "🐮 • Fast Animal Production"},
+["menu4_opt7_hackfree"] = {id = "⚡ • Isi Ulang Energi Petualangan", en = "⚡ • Refill Adventure Energy"},
+  ["menu_back_hackfree"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
+  
+----Premium Menu----
+  
+["premium_menu_premenu"]     = {id = "📜 Menu Skrip Premium", en = "📜 Premium Script Menu"},
+["special_hack_premenu"]     = {id = "💠 • Menu Spesial", en = "💠 • Special Menu"},
+["unlock_season_premenu"]    = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["limited_events_premenu"]   = {id = "🎯 • Event Terbatas", en = "🎯 • Limited-Time Events"},
+["skip_time_premenu"]        = {id = "⏩ • Lewati Waktu", en = "⏩ • Skip Time"},
+["farming_products_premenu"] = {id = "🚜 • Produk Pertanian", en = "🚜 • Farming Products"},
+["misc_mods_premenu"]        = {id = "🛠️ • Modifikasi Lainnya", en = "🛠️ • Other Mods"},
+["script_info_premenu"]      = {id = "ℹ️ • Informasi Skrip", en = "ℹ️ • Script Information"},
+["exit_script_premenu"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
+  
+  ----Menu Hack RW Premium----
+  
+  ["unlock_pass_rwpremium"]     = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["freeze_rewards_rwpremium"]  = {id = "❄️ • Bekukan Hadiah", en = "❄️ • Freeze Rewards"},
+["skins_decor_rwpremium"] = {id = "🎭 • Kostum, Avatar & Dekorasi",en = "🎭 • Skins, Avatars & Decorations"},
+["add_cash_rwpremium"]        = {id = "💵 • Tambah T-Cash", en = "💵 • Add T-Cash"},
+["boosters_rwpremium"]        = {id = "🚀•  Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
+["redeem_coupon_rwpremium"]   = {id = "🎟️ • Klaim Kupon", en = "🎟️ • Claim Coupons"},
+["add_gems_rwpremium"]        = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
+["special_product_rwpremium"] = {id = "🛍️ • Produk Alat-Alat",en = "🛍️ • Tool Products"},
+["claim_bonus_rwpremium"]     = {id = "🎉 • Klaim Keuntungan", en = "🎉 • Claim Perks"},
+  ["go_back_rwpremium"] = {id = "❌ • Kembali", en = "❌ • Go Back"},
+  
+----Tambah Cash----
+
+["add_tcash_tambahduit"]       = {id = "Tambah T-Cash", en = "Add T-Cash"},
+["add_coins_tambahduit"]       = {id = "Tambah Koin", en = "Add Coins"},
+["add_regatta_tambahduit"]     = {id = "Tambah Token Regatta", en = "Add Regatta Token"},
+["add_clover_tambahduit"]      = {id = "Tambah Semanggi", en = "Add Clover"},
+["add_statuecoins_tambahduit"] = {id = "Tambah Koin Patung", en = "Add Statue Coin"},
+["go_back_tambahduit"]         = {id = "Kembali", en = "Go Back"},
+
+["tcash_tambahduit"]   = {id = "💵 T-Cash", en = "💵 T-Cash"},
+["coin_tambahduit"]    = {id = "💰 Koin", en = "💰 Coins"},
+["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
+["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
+["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
+["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
+["set_to_tambahduit"]  = {id = " diatur menjadi ", en = " set to "},
+["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
+  
+  ----menu boost----
+  
+  ["match3_boosters_menuboost"]    = {id = "Booster Match-3", en = "Match-3 Boosters"},
+["lab_boosters_menuboost"]       = {id = "Booster Lab", en = "Lab Boosters"},
+["go_back_menuboost"]            = {id = "Kembali", en = "Go Back"},
+
+----event boost----
+
+  ["rainbow_ball_eventboost"]       = {id = "Bola Pelangi", en = "Rainbow Ball"},
+["bomb_eventboost"]               = {id = "Bom", en = "Bomb"},
+["rocket_eventboost"]             = {id = "Roket", en = "Rocket"},
+["jackhammer_eventboost"]         = {id = "Jackhammer", en = "Jackhammer"},
+["hydrant_eventboost"]            = {id = "Hidran", en = "Hydrant"},
+["gloves_eventboost"]             = {id = "Sarung Tangan", en = "Gloves"},
+
+["infinite_lives_30_eventboost"]  = {id = "30 Hari Nyawa Tak Terbatas", en = "30-Day Infinite Lives"},
+["double_points_30_eventboost"]   = {id = "30 Hari Poin Ganda", en = "30-Day Double Points"},
+["rainbow_ball_30_eventboost"]    = {id = "30 Hari Bola Pelangi", en = "30-Day Rainbow Ball"},
+["bomb_30_eventboost"]            = {id = "30 Hari Bom", en = "30-Day Bomb"},
+["rocket_30_eventboost"]          = {id = "30 Hari Roket", en = "30-Day Rocket"},
+
+["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
+["exploder_adventure_eventboost"] = {id = "Peledak Petualangan", en = "Exploder Adventure"},
+
+["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
+
+["booster_amount_eventboost"]     = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
+["no_input_eventboost"]           = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara", en = "🚫 Invalid input.\nEnter a number between 1 and"},
+["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
+["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
+["booster_applied_eventboost"]    = {id = "Booster diterapkan:", en = "Booster applied:"},
+["success_30d_eventboost"]        = {id = "Booster 30 Hari diterapkan", en = "30-Day Booster applied."},
+
+["rainbow_amount_eventboost"]     = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball amount"},
+["bomb_amount_eventboost"]        = {id = "Masukkan jumlah Bom", en = "Enter Bomb amount"},
+["rocket_amount_eventboost"]      = {id = "Masukkan jumlah Roket", en = "Enter Rocket amount"},
+["jack_amount_eventboost"]        = {id = "Masukkan jumlah Jackhammer", en = "Enter Jackhammer amount"},
+["hydrant_amount_eventboost"]     = {id = "Masukkan jumlah Hidran", en = "Enter Hydrant amount"},
+["gloves_amount_eventboost"]      = {id = "Masukkan jumlah Sarung Tangan", en = "Enter Gloves amount"},
+
+["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
+["exploder_adventure_prompt_eventboost"]= {id = "💥 Masukkan jumlah Peledak Petualangan [1–5000]:", en = "💥 Enter Exploder Adventure amount [1–5000]:"},
+
+["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 100000.", en = "🚫 Invalid input.\nEnter a number between 1 and 100000."},
+["invalid_value_exploder_eventboost"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 5000.", en = "🚫 Invalid input.\nEnter a number between 1 and 5000."},
+
+["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan disetel ke: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
+["toast_exploder_applied_eventboost"] = {id = "💥 Peledak Petualangan disetel ke: %d ✅", en = "💥 Exploder Adventure set to: %d ✅"},
+
+----lab boost----
+
+["profitable_flight_labboost"]     = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
+["rich_fields_labboost"]           = {id = "Ladang Subur", en = "Rich Fields"},
+["record_demand_labboost"]         = {id = "Permintaan Tinggi", en = "Record Demand"},
+["busy_trade_labboost"]            = {id = "Perdagangan Sibuk", en = "Busy Trade"},
+["smart_navigation_labboost"]      = {id = "Navigasi Cerdas", en = "Smart Navigation"},
+["active_cooperation_labboost"]    = {id = "Kerja Sama Aktif", en = "Active Cooperation"},
+["efficient_smelting_labboost"]    = {id = "Peleburan Efisien", en = "Efficient Smelting"},
+["vibrant_market_labboost"]        = {id = "Pasar Ramai", en = "Vibrant Market"},
+["high_speed_production_labboost"] = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
+["super_harvest_labboost"]         = {id = "Panen Super", en = "Super Harvest"},
+["advanced_farming_labboost"]      = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
+["generous_customers_labboost"]    = {id = "Pelanggan Dermawan", en = "Generous Customers"},
+["see_the_light_labboost"]         = {id = "Melihat Cahaya", en = "See the Light"},
+["shortcut_labboost"]              = {id = "Jalur Pintas", en = "Shortcut"},
+["extra_hands_labboost"]           = {id = "Bantuan Tambahan", en = "Extra Pair of Hands"},
+["spacious_barn_labboost"]         = {id = "Lumbung Luas", en = "Spacious Barn"},
+["large_request_labboost"]         = {id = "Permintaan Besar", en = "Large Request"},
+["favorable_voyage_labboost"]      = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
+["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
+
+["no_match_labboost"]              = {id = "❌ Nilai tidak ditemukan. Tidak dapat menerapkan ", en = "❌ No matching value found. Cannot apply "},
+["enter_amount_labboost"]          = {id = "Masukkan jumlah booster [1–500]:", en = "Enter booster amount [1–500]:"},
+["no_amount_labboost"]             = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
+["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
+["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
+["unnamed_booster_labboost"]       = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
+
+-- Alias/shortcut (lab1–lab17) → diseragamkan
+["lab1_labboost"]  = {id = "Penerbangan Menguntungkan", en = "Profitable Flight"},
+["lab2_labboost"]  = {id = "Ladang Subur", en = "Rich Fields"},
+["lab3_labboost"]  = {id = "Permintaan Tinggi", en = "Record Demand"},
+["lab4_labboost"]  = {id = "Perdagangan Sibuk", en = "Busy Trade"},
+["lab5_labboost"]  = {id = "Navigasi Cerdas", en = "Smart Navigation"},
+["lab6_labboost"]  = {id = "Kerja Sama Aktif", en = "Active Cooperation"},
+["lab7_labboost"]  = {id = "Peleburan Efisien", en = "Efficient Smelting"},
+["lab8_labboost"]  = {id = "Pasar Ramai", en = "Vibrant Market"},
+["lab9_labboost"]  = {id = "Produksi Kecepatan Tinggi", en = "High-Speed Production"},
+["lab10_labboost"] = {id = "Panen Super", en = "Super Harvest"},
+["lab11_labboost"] = {id = "Pertanian Lanjutan", en = "Advanced Farming"},
+["lab12_labboost"] = {id = "Pelanggan Dermawan", en = "Generous Customers"},
+["lab13_labboost"] = {id = "Melihat Cahaya", en = "See the Light"},
+["lab14_labboost"] = {id = "Jalur Pintas", en = "Shortcut"},
+["lab15_labboost"] = {id = "Bantuan Tambahan", en = "Extra Pair of Hands"},
+["lab16_labboost"] = {id = "Lumbung Luas", en = "Spacious Barn"},
+["lab17_labboost"] = {id = "Permintaan Besar", en = "Large Request"},
+
+----kuponpon----
+
+["coupon_loader_kuponpon"]  = {id = "Kupon Pengisian Barang",  en = "Loader Coupon"},
+["coupon_dealer_kuponpon"]  = {id = "Kupon Sewa Pedagang",      en = "Hire Dealer Coupon"},
+["coupon_barn_kuponpon"]    = {id = "Kupon Upgrade Lumbung",    en = "Barn Upgrade Coupon"},
+["coupon_city_kuponpon"]    = {id = "Kupon Perluasan Kota",     en = "City Expansion Coupon"},
+["coupon_factory_kuponpon"] = {id = "Kupon Upgrade Pabrik",     en = "Factory Upgrade Coupon"},
+["coupon_train_kuponpon"]   = {id = "Kupon Upgrade Kereta",     en = "Train Upgrade Coupon"},
+["coupon_island_kuponpon"]  = {id = "Kupon Upgrade Pulau",      en = "Island Upgrade Coupon"},
+["back_kuponpon"]           = {id = "Kembali",        en = "Go Back"},
+
+["loader_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Pengisian Barang", en = "Enter Loader Coupon amount"},
+["dealer_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Sewa Pedagang",    en = "Enter Hire Dealer Coupon amount"},
+["barn_coupon_kuponpon"]    = {id = "Masukkan jumlah Kupon Upgrade Lumbung",  en = "Enter Barn Upgrade Coupon amount"},
+["city_coupon_kuponpon"]    = {id = "Masukkan jumlah Kupon Perluasan Kota",   en = "Enter City Expansion Coupon amount"},
+["factory_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Pabrik",   en = "Enter Factory Upgrade Coupon amount"},
+["train_coupon_kuponpon"]   = {id = "Masukkan jumlah Kupon Upgrade Kereta",   en = "Enter Train Upgrade Coupon amount"},
+["island_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Upgrade Pulau",    en = "Enter Island Upgrade Coupon amount"},
+["no_amount_kuponpon"]      = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_range_kuponpon"]  = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
+
+["Loader Coupon_kuponpon"]  = {id = "Kupon Pengisian Barang",   en = "Loader Coupon"},
+["Hire Dealer Coupon_kuponpon"] = {id = "Kupon Sewa Pedagang",  en = "Hire Dealer Coupon"},
+["Barn Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Lumbung", en = "Barn Upgrade Coupon"},
+["City Expansion Coupon_kuponpon"] = {id = "Kupon Perluasan Kota", en = "City Expansion Coupon"},
+["Factory Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Pabrik", en = "Factory Upgrade Coupon"},
+["Train Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Kereta", en = "Train Upgrade Coupon"},
+["Island Upgrade Coupon_kuponpon"] = {id = "Kupon Upgrade Pulau", en = "Island Upgrade Coupon"},
+
+  ----gem----
+  
+  ["orange_gem_gemgem"]        = {id ="Permata Jingga", en = "Orange Gem"},
+  ["green_gem_gemgem"]         = {id ="Permata Hijau",en =  "Green Gem"},
+  ["red_gem_gemgem"]           = {id ="Permata Merah",en =  "Red Gem"},
+  ["go_back_gemgem"]           = {id ="Kembali", en = "Go Back"},
+
+  ["no_input_gemgem"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara ",en = "🚫 Invalid input.\nEnter a number between 1 and "},
+  ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
+  ["reward_set_gemgem"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
+  ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
+  ["green_gem_gemgem"]  = {id = "Permata Hijau",  en = "Green Gem"},
+  ["red_gem_gemgem"]    = {id = "Permata Merah",  en = "Red Gem"},
+
+  ----material----
+  
+  ["metal_ingots_materialyal"]    = {id = "Batangan Logam", en = "Metal Ingots"},
+["mining_tools_materialyal"]    = {id = "Alat Tambang", en = "Mining Tools"},
+["community_tools_materialyal"] = {id = "Alat Bangunan Komunitas", en = "Community Building Tools"},
+["barn_tools_materialyal"]      = {id = "Alat Upgrade Lumbung", en = "Barn Upgrade Tools"},
+["expansion_tools_materialyal"] = {id = "Alat Perluasan Kota", en = "City Expansion Tools"},
+["go_back_materialyal"]         = {id = "Kembali", en = "Go Back"},
+
+----batangan----
+
+["bronze_ingot_batangtang"]   = {id = "Batangan Perunggu", en = "Bronze Ingot"},
+["silver_ingot_batangtang"]   = {id = "Batangan Perak",    en = "Silver Ingot"},
+["gold_ingot_batangtang"]     = {id = "Batangan Emas",     en = "Gold Ingot"},
+["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
+["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
+
+ ["enter_amount_batangtang"] = {id = "Masukkan jumlah batangan", en = "Enter amount ingots"},
+  ["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara", en = "🚫 Invalid input.\nEnter a number between"},
+  ["invalid_range_batangtang"] = {id = "Masukkan angka antara", en = "Please enter a number between"},
+  ["no_input_batangtang"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["set_to_batangtang"] = {id = "diset ke", en = "set to"},
+  ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
+  ["silver_batangtang"] = {id = "Batang Perak",    en = "Silver Ingots"},
+["gold_batangtang"]   = {id = "Batang Emas",     en = "Gold Ingots"},
+  ["platinum_batangtang"] = {id = "Batang Platinum", en = "Platinum Ingots"},
+
+----gali----
+
+  ["pickaxe_macul"] = {id = "Beliung", en = "Pickaxe"},
+  ["tnt_macul"] = {id = "TNT", en = "TNT"},
+  ["dynamite_macul"] = {id = "Dinamit", en = "Dynamite"},
+  ["x2_ore_bonus_macul"] = {id = "Bonus Bijih ×2 (30 Hari)", en = "×2 Ore Bonus (30 Days)"},
+  ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
+
+  ["mining_prompt_macul"] = {id = "Masukkan jumlah alat tambang",en = "Enter amount mining tools"},
+  ["cancel_input_macul"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+  ["invalid_input_macul"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara",en = "🚫 Invalid input.\nPlease enter a number between"},
+  ["not_found_macul"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
+  ["success_bonus_macul"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
+  ["pickaxes_macul"] = {id = "Beliung", en = "Pickaxes"},
+  ["tnt_macul"] = {id = "TNT", en = "TNT"},
+  ["dynamite_macul"] = {id = "Dinamit", en = "Dynamite"},
+  ["ore_bonus_macul"] = {id = "Bonus Tambang ×2 (30 Hari)", en = "30-Day ×2 Ore Bonus"},
+
+----material gedung----
+
+["glass_matdung"]         = {id = "Kaca", en = "Glass"},
+["bricks_matdung"]        = {id = "Bata", en = "Bricks"},
+["slab_matdung"]          = {id = "Lempengan", en = "Slab"},
+["jackhammer_matdung"]    = {id = "Bor Beton", en = "Jackhammer"},
+["electric_saw_matdung"]  = {id = "Gergaji Listrik", en = "Electric Saw"},
+["drill_matdung"]         = {id = "Bor", en = "Drill"},
+["back_matdung"]          = {id = "Kembali", en = "Go Back"},
+
+["input_construct_matdung"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
+["no_amount_matdung"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
+["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan angka 1 antara {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
+["reward_set_matdung"] = {id = "{emoji} {label} diatur ke: {amount} ✅",en = "{emoji} {label} reward set to: {amount} ✅"},
+["glass_matdung"] = {id = "Kaca", en = "Glass"},
+["bricks_matdung"] = {id = "Batu Bata", en = "Bricks"},
+["slabs_matdung"] = {id = "Lempengan", en = "Slabs"},
+["jackhammer_matdung"] = {id = "Bor Beton", en = "Jackhammer"},
+["saw_matdung"] = {id = "Gergaji Listrik", en = "Electric Saw"},
+["drill_matdung"] = {id = "Bor", en = "Drill"},
+
+----alat gudang----
+
+["hammer_gudangdang"] = {id = "Palu", en = "Hammer"},
+["nail_gudangdang"] = {id = "Paku", en = "Nail"},
+["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
+["go_back_gudangdang"] = {id = "Kembali", en = "Go Back"},
+
+  ["hammers_gudangdang"] = {id = "Palu", en = "Hammers"},
+  ["nails_gudangdang"] = {id = "Paku", en = "Nails"},
+  ["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
+  ["enter_amount_gudangdang"] = {id = "Masukkan jumlah [1-5000]", en = "Enter amount [1-5000]"},
+  ["invalid_input_gudangdang"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 dan 5000.", en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+  ["barn_reward_set_gudangdang"] = {id = "Hadiah lumbung diatur menjadi", en = "Barn reward set to"},
+
+----alat luas----
+
+  ["saw_waswas"]         = { id = "Gergaji", en = "Saw" },
+  ["axe_waswas"]         = { id = "Kapak", en = "Axe" },
+  ["shovel_waswas"]      = { id = "Sekop", en = "Shovel" },
+  ["go_back_waswas"]     = { id = "Kembali", en = "Go Back" },
+  
+    ["enter_amount_waswas"] = {id = "Masukkan jumlah alat perluasan",en = "Enter amount expansion tools"},
+    ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 5000.",en = "🚫 Invalid input.\nPlease enter a number between 1 and 5000."},
+    ["reward_set_waswas"] = {id = "Hadiah diset ke",en = "Reward set to"},
+    ["saw_waswas"] = {id = "Gergaji", en = "Saw"},
+    ["axe_waswas"] = {id = "Kapak", en = "Axe"},
+    ["shovel_waswas"] = {id = "Sekop", en = "Shovel"},
+
+----tunjangan----
+
+["express_plane_keuntungan"] = { id = "✈️ • Pengiriman Pesawat Ekspres", en = "✈️ • Express Plane Delivery" },
+["instant_crop_keuntungan"]  = { id = "🌾 • Panen Tanaman Instan", en = "🌾 • Instant Crop Harvest" },
+["fast_farm_keuntungan"]     = { id = "🐄 • Produksi Pertanian Cepat", en = "🐄 • Fast Farm Production" },
+["instant_build_keuntungan"] = { id = "🏗️ • Konstruksi Bangunan Instan", en = "🏗️ • Instant Building Construction" },
+["unlimited_barn_keuntungan"] = { id = "🏡 • Kapasitas Gudang Tak Terbatas", en = "🏡 • Unlimited Barn Capacity" },
+["train_booster_keuntungan"] = { id = "⏱️ • Booster Waktu Kereta", en = "⏱️ • Train Time Booster" },
+["double_train_keuntungan"]  = { id = "🚃 • Gerbong Kereta Ganda", en = "🚃 • Double Train Carriages" },
+["go_back_keuntungan"]       = { id = "❌ • Kembali", en = "❌ • Go Back" },
+
+  ["perk_express_plane_keuntungan"] = {id = "Pengiriman Pesawat Ekspres", en = "Express Plane Delivery"},
+  ["perk_instant_crop_keuntungan"] = {id = "Panen Tanaman Instan", en = "Instant Crop Harvest"},
+  ["perk_rapid_farm_keuntungan"] = {id = "Produksi Peternakan Cepat", en = "Rapid Farm Production"},
+  ["perk_instant_building_keuntungan"] = {id = "Konstruksi Bangunan Instan", en = "Instant Building Construction"},
+  ["perk_unlimited_barn_keuntungan"] = {id = "Kapasitas Lumbung Tak Terbatas", en = "Unlimited Barn Capacity"},
+  ["perk_train_boost_keuntungan"] = {id = "Booster Waktu Kereta", en = "Train Time Booster"},
+  ["perk_double_train_keuntungan"] = {id = "Gerbong Kereta Ganda", en = "Double Train Carriages"},
+  ["enter_barn_boost_keuntungan"] = {id = "Masukkan persentase boost lumbung (1-20000):", en = "Enter barn boost percentage (1-20000):"},
+  ["source_not_found_keuntungan"] = {id = "❌ Struktur sumber tidak ditemukan.", en = "❌ Source structure not found."},
+  ["perk_applied_keuntungan"] = {id = "perk berhasil diterapkan!", en = "perk applied!"},
+  
+  ----spesial menu----
+    
+["vip_regatta_task"] = {id = "💎 • VIP Tugas Regata",en = "💎 • VIP Regatta Task"},
+["auto_finish_task"] = {id = "🌊 • Selesaikan Tugas Otomatis",en = "🌊 • Auto Complete Task"},
+["edit_regatta_points"] = {id = "⭐ • Edit Poin Regata",en = "⭐ • Edit Regatta Points"},
+["unlimited_likes"] = {id = "👍 • Like Kota Tanpa Batas",en = "👍 • Unlimited City Likes"},
+["back_main_menu_spesial"] = {id = "❌ • Kembali",en = "❌ • Go Back"},
+    
+    ----regata menu----
+
+  ["title_pilih_poin"] = {id = "Pilih jumlah poin regata:",en = "Select regatta point amount:"},
+  ["alert_pilih_dulu"] = {id = "⚠️ Kamu harus memilih jumlah poin terlebih dahulu!",en = "⚠️ You must select a point amount first!"},
+  ["alert_tidak_ditemukan"] = {id = "⚠️ Tidak ditemukan blok regata.",en = "⚠️ No regatta block found."},
+  ["alert_tidak_valid"] = {id = "⚠️ Tidak ada blok regata yang valid.",en = "⚠️ No valid regatta block found."},
+  ["alert_berhasil_prefix"] = {id = "✅ Jumlah blok regata diperbarui:",en = "✅ Regatta blocks updated:"},
+  ["alert_berhasil_suffix"] = {id = "⭐ Poin baru:",en = "⭐ New points:"},
+  ["toast_berhasil"] = {id = "🎯 Poin regata berhasil diperbarui!",en = "🎯 Regatta points successfully updated!"},
+
+  ["regata_failed"] = {id = "⚠️ Tidak dapat menyelesaikan tugas regata.\n\n💡 Silakan ambil atau mulai tugas regata terlebih dahulu di dalam game, lalu jalankan kembali skrip ini.",en = "⚠️ Unable to complete regatta task.\n\n💡 Please start or pick a regatta task in the game first, then run this script again."},
+  ["regata_done"] = {id = "🎉 Regata berhasil diperbarui!",en = "🎉 Regatta successfully updated!"},
+
+  ["pilih_poin"] = {id = "🎯 Pilih jumlah poin yang ingin diedit:",en = "🎯 Choose the amount of points to edit:"},
+  ["edit150"] = { id = "⭐ Edit Poin 150", en = "⭐ Edit Points 150" },
+  ["edit200"] = { id = "⭐ Edit Poin 200", en = "⭐ Edit Points 200" },
+  ["edit300"] = { id = "⭐ Edit Poin 300", en = "⭐ Edit Points 300" },
+  ["dibatalkan"] = { id = "❌ Edit Poin dibatalkan.", en = "❌ Point edit canceled." },
+  ["gagal_regata"] = {id = "⚠️ Tidak dapat mengedit poin tugas regata.\n\n💡 Silakan mulai atau ambil tugas regata terlebih dahulu.",en = "⚠️ Unable to edit regatta task points.\n\n💡 Please start or take a regatta task first."},
+  ["sukses"] = {id = "✅ Poin berhasil diubah ke ⭐ ",en = "✅ Points successfully changed to ⭐ "},
+  ----boom like----
+  
+  ["cancel_boomlike"]             = {id="❌ Dibatalkan.", en="❌ Cancelled."},
+  ["invalidInput_boomlike"]       = {id="❌ Input tidak valid.", en="❌ Invalid input."},
+  ["initialNotFound_boomlike"]    = {id="❌ Data awal tidak ditemukan.", en="❌ Initial data not found."},
+  ["pleaseLike_boomlike"]         = {id="📌 Silakan like kota.\nSetelah selesai, buka ikon GameGuardian untuk melanjutkan.",en="📌 Please like the city.\nOnce done, open the GameGuardian icon to continue."},
+  ["likesNotIncrease_boomlike"]   = {id="❌ Likes tidak bertambah atau input tidak valid.", en="❌ Likes did not increase or invalid input."},
+  ["refineFailed_boomlike"]       = {id="❌ Refine gagal, data tidak ditemukan.", en="❌ Refine failed, data not found."},
+  ["extraSearchFailed_boomlike"]  = {id="❌ Pencarian extra gagal, data tidak ditemukan.", en="❌ Extra search failed, data not found."},
+  ["refine176Failed_boomlike"]    = {id="❌ Refine gagal.", en="❌ Refine failed."},
+  ["likesFrozen_boomlike"]        = {id="✅ Likes berhasil dibekukan", en="✅ Likes successfully frozen"},
+  ["promptLevel_boomlike"]        = {id="📊 Masukkan level kota:", en="📊 Enter city level:"},
+  ["promptLikeStart_boomlike"]    = {id="👍 Masukkan jumlah likes saat ini:", en="👍 Enter current likes:"},
+  ["promptLikeNew_boomlike"]      = {id="👍 Masukkan jumlah likes baru:", en="👍 Enter new like count:"},
+  
+  ----menu event----
+  
+  ["menu2_add_points_menuipen"]      = {id="🏆 • Tambah Poin Piala Ernie", en="🏆 • Add Ernie Cup Points"},
+["menu2_refill_energy_menuipen"]   = {id="⚡ • Isi Ulang Energi Petualangan", en="⚡ • Refill Adventure Energy"},
+["menu2_free_ore_menuipen"]        = {id="👑 • Penguasa Tambang (Poin Gratis)", en="👑 • Ruler of the Mine (Free Points)"},
+["menu2_freeze_treasure_menuipen"] = {id="🏴‍☠️ • Hapus Kartu Hitam Bajak Laut", en="🏴‍☠️•  Remove Pirate Black Card"},
+  ["menu_back_menuipen"]             = {id="❌ • Kembali", en="❌ • Go Back"},
+  
+  ----cup ernot----
+  
+  ["alertMinPoint_ernot"]      = {id="⚠️ Lihat jumlah poin, minimal 1 poin untuk ditambahkan.", en="⚠️ Check the point amount, at least 1 point to add."},
+  ["invalidInput_ernot"]       = {id="🚫 Input tidak valid.", en="🚫 Invalid input."},
+  ["dataNotFound_ernot"]       = {id="❌ Data Ernie Cup tidak ditemukan!\n\nSilakan restart game dan coba lagi.", en="❌ Ernie Cup data not found!\n\nPlease restart the game and try again."},
+  ["pointsUpdated_ernot"]      = {id="🏆 Poin Ernie Cup berhasil diperbarui!\n\nCek event untuk verifikasi.", en="🏆 Ernie Cup points updated!\n\nCheck your event to verify."},
+  ["toastSuccess_ernot"]       = {id="✅ Poin berhasil ditambahkan!", en="✅ Points successfully added!"},
+  ["promptPoints_ernot"]       = {id="🏆 Masukkan Poin Ernie Cup:", en="🏆 Enter Ernie Cup Points:"},
+  
+  ----petir----
+
+  ["adventure_energy_petir"] = {id = "Energi Petualangan",en = "Energy Adventure"},
+  ["adventure_explosive_petir"] = {id = "Petualangan Peledak",en = "Explosive Adventure"},
+  ["select_adventure_type_petir"] = {id = "Pilih jenis petualangan yang akan diubah:",en = "Select Adventure Type to Edit:"},
+  ["operation_canceled_petir"] = {id = "Operasi dibatalkan.",en = "Operation canceled."},
+  ["enter_energy_value_petir"] = {id = "Masukkan nilai energi baru [450–9999]:",en = "Enter new energy value [450–9999]:"},
+  ["enter_explosive_value_petir"] = {id = "Masukkan nilai peledak baru [5–99]:",en = "Enter new explosive value [5–99]:"},
+  ["energy_not_found_petir"] = {id = "Data Energi Petualangan tidak ditemukan!\n\nSilakan mulai ulang game dan coba lagi.",en = "Energy Adventure data not found!\n\nPlease restart the game and try again."},
+  ["explosive_not_found_petir"] = {id = "Data Petualangan Peledak tidak ditemukan!\n\nSilakan mulai ulang game dan coba lagi.",en = "Explosive Adventure data not found!\n\nPlease restart the game and try again."},
+  ["invalid_input_petir"] = {id = "Input tidak valid. Harap masukkan nilai antara",en = "Invalid input. Please enter a value between"},
+  ["value_updated_petir"] = {id = "Nilai berhasil diperbarui!",en = "Value updated!"},
+  ["updated_to_petir"] = {id = "diperbarui menjadi",en = "updated to"},
+  ["check_event_petir"] = {id = "Silakan cek event di dalam game.",en = "Please check the event in game."},
+  
+  ----free ore poin----
+  
+  ["dataNotFound_ore"]       = {id="❌ Data 'Rule of the Mine' tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en="❌ 'Rule of the Mine' data not found!\n\nPlease restart the game and try again."},
+  ["toastUpdated_ore"]       = {id="🎉 'Rule of the Mine' berhasil diperbarui!", en="🎉 'Rule of the Mine' updated!"},
+  ["alertApplied_ore"]       = {id="💸 Edit berhasil diterapkan!\n\nAmbil 1 ore untuk mengaktifkan auto-mining.",en="💸 Edit applied!\n\nTake 1 ore to activate auto-mining."},
+  
+  ----bajak laut----
+  
+  ["dataNotFound_bajak"] = {id = "❌ Harta Karun Bajak Laut tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en = "❌ Pirate Treasure not found!\n\nPlease restart the game and try again."},
+  ["toastFreeze_bajak"] = {id = "🏴‍☠️ Freeze Harta Karun Bajak Laut diterapkan pada entri!",en = "🏴‍☠️ Pirate Treasure freeze applied to entries!"},
+  
+  ----skip time----
+  
+  ["faster_arrivals_skiptime"]  = {id="⚙️ • Kedatangan Lebih Cepat", en="⚙️ • Faster Arrivals"},
+["no_feed_timer_skiptime"]    = {id="🥣 • Pabrik Pakan Tanpa Waktu Tunggu", en="🥣 • No Feed Timer"},
+["no_farm_timer_skiptime"]    = {id="⏳ • Hewan Ternak Tanpa Waktu Tunggu", en="⏳ • No Farm Timer"},
+["no_dealer_rest_skiptime"]   = {id="🛒 • Dealer Tanpa Istirahat", en="🛒 • No Dealer Rest"},
+["instant_foundry_skiptime"]  = {id="🏭 • Peleburan Instan", en="🏭 • Instant Foundry"},
+["no_request_delay_skiptime"] = {id="⏱️ • Permintaan Tanpa Penundaan", en="⏱️ • No Request Delay"},
+["go_back_skiptime"]          = {id="❌ • Kembali", en="❌ • Go Back"},
+
+----skip time arrival----
+    
+  ["shipBoost_aripal"]     = {id="🚢 • Percepatan Kedatangan Kapal", en="🚢 • Ship Arrival Boost"},
+["cargoAuto1_aripal"]    = {id="✈️ • Muat Pesawat Otomatis", en="✈️ • Cargo Plane Auto-Load"},
+["heliAuto_aripal"]      = {id="🚁 • Helikopter Siap Otomatis", en="🚁 • Helicopter Auto-Ready"},
+["trainBoost11_aripal"]  = {id="🚂 • Percepatan Kedatangan Kereta", en="🚂 • Train Arrival Boost"},
+  ["goBack_aripal"]           = {id="❌ • Kembali", en="❌ • Go Back"},
+  
+    ----skip time kapal----
+  
+  ["no_ship_kpl"] = {id="❌ Data kapal tidak ditemukan.\n\nSilakan restart game dan coba lagi.", en="❌ No ship data found.\n\nPlease restart the game and try again."},
+    ["fast_ship_on_kpl"] = {id="🚢  Percepatan kedatangan kapal berhasil diaktifkan!", en="🚢  Ship arrival boost activated successfully!"},
+
+  ----skip time wawat----
+
+  ["no_airplane_data_psw"] = {id = "❌ Data pesawat tidak ditemukan.\n\nSilakan restart game dan coba lagi.",en = "❌ No airplane data found.\n\nPlease restart the game and try again."},
+  ["auto_cargo_success_psw"] = {id = "✈️ Muat pesawat otomatis berhasil diaktifkan!",en = "✈️ Cargo plane auto-load activated successfully!"},
+
+  ----skip time helcop----
+
+["helicopter_no_data_helkop"] = {id = "❌ Data permintaan helikopter tidak ditemukan.\n\nSilakan restart game dan coba lagi.",en = "❌ No helicopter request data found.\n\nPlease restart the game and try again."},
+["helicopter_auto_ready_helkop"] = {id = "🚁 Helikopter siap otomatis diaktifkan!",en = "🚁 Helicopter auto-ready activated!"},
+["helicopter_removed_success_helkop"] = {id = "✅ Permintaan helikopter berhasil dihapus.\n\nJika helikopter meminta lagi, cukup hapus dan atur ulang.",en = "✅ Helicopter orders removed successfully.\n\nIf a helicopter requests again, simply delete and reassign it."},
+
+  ----skip time kereta----
+
+    ["train_prompt_kreta"] = {id = {"⏰ Jam Kereta [1;5]", "⏱️ Menit Kereta [0;55]", "❄️ Bekukan Isi Gerbong"},en = {"⏰ Train Hours [1;5]", "⏱️ Train Minutes [0;55]", "❄️ Freeze Train Carriage Contents"}},
+    ["cancelled_kreta"] = {id="⚠️ Dibatalkan.", en="⚠️ Cancelled."},
+    ["invalid_input_kreta"] = {id="❌ Input tidak valid.\n\nMasukkan waktu antara 1–5 jam dan 0–55 menit.", en="❌ Invalid input.\n\nEnter valid time between 1–5 hours and 0–55 minutes."},
+    ["no_timer_kreta"] = {id="❌ Timer Kereta tidak ditemukan.\nCoba sesuaikan waktu atau restart game.",en="❌ No Train Timer found.\nTry adjusting time or restart the game."},
+    ["success_msg_kreta"] = {id="✅ Sukses!\n\n", en="✅ Success!\n\n"},
+    ["train_updated_kreta"] = {id="✅ Kereta diperbarui.", en="✅ Train updated."},
+    ["train_timer_frozen_kreta"] = {id="🚂 Timer kereta dibekukan selama ", en="🚂 Train timer frozen for "},
+    ["carriage_frozen_kreta"] = {id="\n❄️ Gerbong juga dibekukan.", en="\n❄️ Carriages also frozen."},
+
+  ----skip time  pabrik pakan----
+
+  ["feed_not_found_pbrikkan"] = {id="🚫 Data Pabrik Pakan tidak ditemukan.\nSilakan restart game dan coba lagi.", en="🚫 Feed Factory data not found.\nPlease restart the game and try again."},
+  ["no_slot_selected_pbrikkan"] = {id="⚠️ Slot tidak dipilih. Operasi dibatalkan.", en="⚠️ No slot selected. Operation canceled."},
+  ["invalid_amount_pbrikkan"] = {id="❗ Jumlah tidak valid. Masukkan antara 3 dan 500.", en="❗ Invalid amount. Please enter between 3 and 500."},
+  ["select_slots_pbrikkan"] = {id="🧃 Pilih slot pakan untuk diterapkan", en="🧃 Select feed slots to apply"},
+  ["enter_amount_pbrikkan"] = {id="📦 Masukkan jumlah pakan [3–500]:", en="📦 Enter feed amount [3–500]:"},
+  ["feed_updated_pbrikkan"] = {id="✅ Pabrik Pakan diperbarui", en="✅ Feed Factory updated"},
+  
+  ----ternak makan cepet----
+
+  ["alert_feed_not_found_mkncpt"] = {id = "❌ Pola Fast Feed tidak ditemukan.\n\nSilakan masuk ke layar pemberian makan hewan dan coba lagi.",en = "❌ No Fast Feed pattern found.\n\nPlease enter the animal feeding screen and try again."},
+  ["toast_fast_feed_applied_mkncpt"] = {id = "🐮 Fast Feeding berhasil diterapkan!",en = "🐮 Fast Feeding applied successfully!"},
+  
+    ----skip time dealer----
+  
+  ["dealer_cooldown_not_found_dealer"] = {id = "❌ Tidak ada cooldown Dealer yang ditemukan.\n\nSilakan restart game dan coba lagi.",en = "❌ No Dealer cooldown found to freeze.\n\nPlease restart the game and try again."},
+["dealer_cooldown_frozen_dealer"] = {id = "🛒 Tanpa istirahat dealer berhasil dibekukan!",en = "🛒 No dealer rest successfully frozen!"},
+
+----Foundry----
+
+  ["no_smelter_data_foundry"] = {id = "🚫 Data peleburan tidak ditemukan.\n\nSilakan mulai ulang game dan coba lagi.",en = "🚫 No smelter data found.\n\nPlease restart the game and try again."},
+  ["smelter_success_foundry"] = {id = "🏭 Peleburan instan berhasil diterapkan!",en = "🏭 Instant smelting applied successfully!"},
+
+  ----skip time minta----
+
+  ["stime6_no_values_minta"] = {id = "🚫 Tidak ada nilai cooldown request ditemukan.\n\nSilakan restart game dan coba lagi.",en = "🚫 No request cooldown values found.\n\nPlease restart the game and try again."},
+  ["stime6_success_minta"] = {id = "⏱️ Delay permintaan berhasil dihapus!",en = "⏱️ Request delay removed successfully!"},
+
+----menu farm----
+
+["wheat_exp_menupenambah"]     = {id = "🌾 • Boost EXP Gandum", en = "🌾 • Wheat EXP Boost"},
+["animal_count_menupenambah"]  = {id = "🐾 • Edit Jumlah Hewan", en = "🐾 • Edit Animal Count"},
+["extra_ship_menupenambah"]    = {id = "📦 • Tambahan Barang Kapal", en = "📦 • Extra Ship Items"},
+["more_requests_menupenambah"] = {id = "📬 • Permintaan Lebih Banyak", en = "📬 • More Requests"},
+["market_unlim_menupenambah"]  = {id = "🛒 • Pasar Tanpa Batas", en = "🛒 • Unlimited Market"},
+["back_menupenambah"]          = {id = "❌ • Kembali", en = "❌ • Go Back"},
+
+----exp gandum----
+
+["oder2_prompt_boostexp"] = {id = "⭐ Masukkan jumlah EXP:",en = "⭐ Enter EXP amount:"},
+  ["oder2_cancel_boostexp"] = {id = "⚠️ Tidak ada EXP yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No EXP entered.\nOperation cancelled."},
+  ["oder2_notfound_boostexp"] = {id = "❌ Nilai tidak ditemukan.\nEXP Gandum gagal diterapkan.\nCoba lagi atau mulai ulang game!",en = "❌ No matching value found.\nWheat EXP could not be applied.\nPlease try again or restart the game!"},
+  ["oder2_success_boostexp"] = {id = "🌾 EXP Gandum berhasil: ",en = "🌾 Wheat EXP applied: "},
+  
+  ----tambah binatang----
+
+  ["animal_prompt_curr_hew"] = {id = "🐾 Masukkan jumlah hewan SAAT INI [3–9]:", en = "🐾 Enter CURRENT animal count [3–9]:"},
+  ["animal_prompt_new_hew"]  = {id = "🆕 Masukkan jumlah BARU hewan [3–9]:", en = "🆕 Enter NEW animal count [3–9]:"},
+  ["invalid_input_hew"]      = {id = "⚠️ Input tidak valid. Nilai harus antara 3 sampai 9.", en = "⚠️ Invalid input. Value must be between 3 and 9."},
+  ["select_animals_hew"]     = {id = "🐾 Pilih jenis hewan yang ingin diubah:", en = "🐾 Select animal types to update:"},
+  ["cancel_operation_hew"]   = {id = "❌ Operasi dibatalkan.", en = "❌ Operation canceled."},
+  ["not_found_prefix_hew"]   = {id = "🚫 Data", en = "🚫"},
+  ["not_found_suffix_hew"]   = {id = "tidak ditemukan.", en = "data not found."},
+  ["updated_prefix_hew"]     = {id = "✅", en = "✅"},
+  ["updated_suffix_hew"]     = {id = "jumlah diubah menjadi", en = "count updated to"},
+
+  ["cow_hew"]       = {id = "🐄  Sapi", en = "🐄  Cow"},
+  ["chicken_hew"]   = {id = "🐔  Ayam", en = "🐔  Chicken"},
+  ["sheep_hew"]     = {id = "🐑  Domba", en = "🐑  Sheep"},
+  ["bee_hew"]      = {id = "🐝  Lebah", en = "🐝  Bee"},
+  ["pig_hew"]       = {id = "🐖  Babi", en = "🐖  Pig"},
+  ["mushroom_hew"]  = {id = "🍄  Jamur", en = "🍄  Mushroom"},
+  
+  ----tambah buah kapal----
+  
+["ship_warning_palkapal"]   = {id = "⚠️ Jangan tinggalkan layar Produk Kapal sampai proses selesai!", en = "⚠️ Do NOT leave the Ship Product screen until editing is complete!"},
+["ship_input1_palkapal"]    = {id = "📦 Masukkan jumlah produk kapal saat ini:", en = "📦 Enter current number of ship products:"},
+["ship_input2_palkapal"]    = {id = "➕ Atur jumlah produk baru [3–500]:", en = "➕ Set new product quantity [3–500]:"},
+["cancelled_palkapal"]      = {id = "❌ Operasi dibatalkan.", en = "❌ Operation cancelled."},
+["invalid_range_palkapal"]  = {id = "🚫 Input tidak valid. Masukkan antara 3 dan 500.", en = "🚫 Invalid input. Enter between 3 and 500."},
+["not_found_palkapal"]      = {id = "🚫 Data Produk Kapal tidak ditemukan.\nCoba restart game lalu ulangi.", en = "🚫 No Ship Product data found.\nTry restarting the game and retry."},
+["ship_done_toast_palkapal"]= {id = "🛳️ Produk kapal berhasil diubah menjadi ", en = "🛳️ Ship products set to "},
+["ship_done_alert_palkapal"]= {id = "✅ Produk diperbarui menjadi ", en = "✅ Products updated to "},
+["ship_done_alert2_palkapal"]= {id = ".\nSilakan ambil sebelum peti diperbarui.", en = ".\nPlease collect them before the crate is refreshed."},  
+
+----tambah jumlah minta minta----
+  
+    ["🌿 Select crops to modify"] = {id="🌿 Pilih tanaman untuk diubah", en="🌿 Select crops to modify"},
+    ["📦 Enter crop amount [1;500]:"] = {id="📦 Masukkan jumlah tanaman [1;500]:", en="📦 Enter crop amount [1;500]:"},
+    ["🚫 Invalid input. Must be between 1 and 500."] = {id="🚫 Input tidak valid. Harus antara 1 sampai 500.", en="🚫 Invalid input. Must be between 1 and 500."},
+    ["❌ Not found: "] = {id="❌ Tidak ditemukan: ", en="❌ Not found: "},
+    ["✅ "] = {id="✅ ", en="✅ "},
+    [" set to "] = {id=" diset ke ", en=" set to "},
+    
+    ----tambah kotak pasar----
+    
+["prompt_market_boxes"] = {id = "📦 Masukkan jumlah kotak pasar (10–2000):",en = "📦 Enter number of market boxes (10–2000):"},
+["invalid_input_market"] = {id = "⚠️ Input tidak valid! Masukkan angka antara 10 dan 2000.",en = "⚠️ Invalid input! Please enter a number between 10 and 2000."},
+["data_not_found_market"] = {id = "❌ Data kotak pasar tidak ditemukan!",en = "❌ Market box data not found!"},
+["no_valid_offset_market"] = {id = "⚠️ Data tidak ditemukan.",en = "⚠️ Data not found."},
+["toast_success_market"] = {id = "✅ Kotak pasar berhasil diatur menjadi ",en = "✅ Market boxes successfully set to "},
+["alert_success_market_1"] = {id = "📦 Jumlah kotak pasar telah diatur ke ",en = "📦 Number of market boxes set to "},
+["alert_success_market_2"] = {id = ".\nKeluar dari pasar dan buka kembali untuk melihat perubahan.",en = ".\nExit and reopen the market to see the change."},
+	
+----menu ragam----
+
+  ["industry_boost_gamragam"]   = {id = "🏭 • Pengurangan Waktu Industri", en = "🏭 • Industry Time Reduction"},
+["heli_tcash_gamragam"]       = {id = "🚁 • T-Cash dari Helikopter", en = "🚁 • T-Cash from Helicopter"},
+["free_boxes_gamragam"]       = {id = "🎁 • Kotak Pabrik Gratis", en = "🎁 • Free Factory Box"},
+["build_no_tools_gamragam"]   = {id = "👷‍♀️ • Komunitas Tanpa Alat", en = "👷‍♀️ • Community Without Tools"},
+["freeze_expansion_gamragam"] = {id = "🚧 • Bekukan Ekspansi Kota", en = "🚧 • Freeze City Expansion"},
+["barn_expand_gamragam"]      = {id = "🏡 • Perluas Gudang Tanpa Alat", en = "🏡 • Expand Barn Without Tools"},
+["dealer_rent_gamragam"]      = {id = "📦 • Sewa Dealer 30 Hari", en = "📦 • 30-Day Dealer Rental"},
+  ["back_gamragam"]             = {id = "❌ • Kembali", en = "❌ • Go Back"},
+  
+  ["alert_star_brik"]   = {id = "🌟 Pilih level bintang di industri", en = "🌟 Select the star level in the industry"},
+  ["prompt_star_brik"]  = {id = "🔢 Masukkan nomor level bintang [2–53]:", en = "🔢 Enter star level number [2–53]:"},
+  ["prompt_value_brik"] = {id = "🕑 Masukkan nilai cooldown [99;100]", en = "🕑 Cooldown value [99;100]"},
+  ["err_star_brik"]     = {id = "❌ Level bintang tidak valid (harus 2–53).", en = "❌ Invalid star level (must be 2–53)."},
+  ["err_value_brik"]    = {id = "❌ Nilai cooldown tidak valid (harus 99 atau 100).", en = "❌ Invalid star value (must be 99 or 100)."},
+  ["not_found_brik"]    = {id = "❌ Pola tidak ditemukan", en = "❌ Pattern not found"},
+  ["patched_brik"]      = {id = "✅ Pola berhasil diubah", en = "✅ Pattern successfully set"},
+  
+    ----heli hack----
+
+  ["input_oder1_suntikheli"] = {id = {"💰 Koin [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Tanpa Batas]"},en = {"💰 Coins [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Unlimited]"}},
+  ["no_input_suntikheli"] = {id = "⚠️ Tidak ada input.\nOperasi dibatalkan.",en = "⚠️ No input provided.\nOperation cancelled."},
+  ["zero_values_suntikheli"] = {id = "⚠️ Semua nilai nol.\nHadiah tidak diterapkan.",en = "⚠️ All values are zero.\nNo rewards applied."},
+  ["no_match_suntikheli"] = {id = "❌ Nilai tidak ditemukan.\nSilakan mulai ulang game.",en = "❌ No matching values found.\nPlease restart the game."},
+  ["toast_oder1_suntikheli"] = {id = "🚁 Hadiah helikopter berhasil diterapkan!",en = "🚁 Helicopter rewards applied!"},
+
+----free boks pabrik----
+
+  ["prompt_cash_input_freebox"] = {id = "💸 Masukkan jumlah Uang Tunai yang terlihat di kotak pabrik:",en = "💸 Enter the Cash amount shown in the factory box:"},
+  ["invalid_or_cancel_freebox"] = {id = "❌ Input tidak valid atau dibatalkan.",en = "❌ Invalid input or cancelled."},
+  ["not_found_new_freebox"] = {id = "❌ Tata Letak Baru tidak ditemukan.",en = "❌ New Layout not found."},
+  ["activated_new_freebox"] = {id = "✅ Nilai Tata Letak Baru diubah ke 0 dan dibekukan.",en = "✅ New Layout value changed to 0 and frozen."},
+
+----free open komunitas----
+    
+  ["other4_not_found_nitas"] = {en = "❌ No matching values found.\n\n'Community Without Tools' could not be applied.\nPlease try again or restart the game.",id = "❌ Tidak ada nilai yang cocok ditemukan.\n\n'Komunitas Tanpa Alat' tidak dapat diterapkan.\nSilakan coba lagi atau mulai ulang permainan."},
+  ["other4_success_nitas"] = {en = "✅ 'Community Without Tools' has been successfully applied.\n\nPlease restart the game to apply changes.",id = "✅ 'Komunitas Tanpa Alat' berhasil diterapkan.\n\nSilakan mulai ulang permainan untuk menerapkan perubahan."},
+  ["other4_toast_nitas"] = {en = "🛠️ Building unlocked without tools!",id = "🛠️ Bangunan terbuka tanpa alat!"},
+  
+  ----free luasan----
+
+  ["expansion_city_freeluas"] = {id = "Perluasan Kota (Tanpa Populasi)",en = "City Expansion (No Population)"},
+  ["not_found_restart_freeluas"] = {id = "tidak ditemukan! Coba restart lokasi dan ulangi.",en = "not found! Try restarting the location and try again."},
+  ["frozen_freeluas"] = {id = "telah dibekukan.",en = "has been frozen."},
+  ["land_freeze_success_freeluas"] = {id = "Perluasan kota berhasil dibekukan!",en = "City expansion successfully frozen!"},
+  
+  ----gudang dang----
+  
+  ["barn_not_found_gudangdang"] = {id = "❌ Data lumbung tidak ditemukan.\n\nSilakan restart game lalu coba lagi.",en = "❌ No barn data found.\n\nPlease restart the game and try again."},
+  ["barn_freeze_not_found_gudangdang"] = {id = "❌ Target pembekuan lumbung tidak ditemukan.\n\nSilakan restart game lalu coba lagi.",en = "❌ No matching barn freeze targets found.\n\nPlease restart the game and try again."},
+  ["barn_frozen_gudangdang"] = {id = "🏡 Kapasitas lumbung berhasil dibekukan di ",en = "🏡 Barn capacity successfully frozen in "},
+  ["entries_gudangdang"] = {id = " entri!",en = " entry(ies)!"},
+  
+  ----delerler----
+  
+  ["dealer_not_found_deler"] = {id = "❌ Data Dealer 30-hari tidak ditemukan.\n\nSilakan restart game dan coba lagi.",en = "❌ No 30-day Dealer data found.\n\nPlease restart the game and try again."},
+["dealer_success_deler"] = {id = "✅ Sewa Dealer diperpanjang 30 hari.\n\nSilakan keluar dan masuk kembali ke pasar kota untuk menerapkan perubahan.",en = "✅ Dealer rental extended by 30 days.\n\nPlease exit and re-enter the city market to apply changes."},
+["dealer_toast_deler"] = {id = "📦 Sewa Dealer 30 hari aktif!",en = "📦 30-day Dealer rental activated!"},
+
+  ["cancelled"] = {id = "❌ Dibatalkan", en = "❌ Cancelled"},
+  ["invalid"]   = {id = "❌ Username atau Password Salah!", en = "❌ Invalid Username or Password!"},
+  ["adminMenuTitle"] = {id = "⚙️ Admin ARH Reset Logs", en = "⚙️ ARH Admin Reset Logs"},
+  ["resetLogs"] = {id = "🔁 • Reset Log Pengguna", en = "🔁 • Reset User Logs"},
+  ["exitMenu"]  = {id = "❌ • Keluar Skrip", en="❌ • Exit Script"},
+  ["logsReset"] = {id = "🔁 Log berhasil direset.\n\nScript akan ditutup. Silakan masukkan username baru (mudah diingat), kemudian hubungi admin dan berikan username Anda. Terima kasih.", en = "🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you."},
+  ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
+
+["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
+["contact_dev"]  = {id="📞 • Kontak Admin", en="📞 • Contact Admin"},
+["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
+["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
+  ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
+
+  ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
+  ["lang_set"] = {id="✅ Bahasa diatur ke: Indonesia", en="✅ Language set to: English"},
+
+["premium_info"] = {id = [[
+┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
+┃🚀ɴɪᴋᴍᴀᴛɪ ꜱᴇᴍᴜᴀ ꜰɪᴛᴜʀ ᴛᴀɴᴘᴀ ʙᴀᴛᴀꜱ!🚀
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🌟 Keuntungan Premium:
+• 🌊 Regatta otomatis selesai
+• 👍 Like kota tanpa batas
+• 📦 Slot pasar tambahan
+• 🎭 Semua skin lama terbuka
+• 🏞️ 200+ Dekorasi eksklusif
+• 🤖 Stiker obrolan koop
+• 💝 Bingkai & Nama warna pink
+• 🚀 Booster Match-3 lengkap
+• 🧪 Booster Laboratorium lengkap
+• 🏡 Booster Lumbung tanpa batas
+• ✨ ...dan masih banyak lagi!
+──────────────────────────
+💵 Harga:
+• 🇮🇩 IDR 450.000
+
+📆 Masa Aktif:
+• ♾️ Seumur Hidup
+──────────────────────────
+🔐 Cara Membeli:
+➡️ Lakukan pembayaran via: Barcode QRIS
+➡️ Salin Kode License yang muncul sebelum script berjalan
+➡️ Kirim Kode License ke pemilik script
+➡️ Aktivasi otomatis setelah pembayaran dikonfirmasi
+──────────────────────────
+📩 Kontak Pemilik:
+• 📨 Telegram: @azka_arh
+
+📢 WhatsApp Channel (Info & Update):
+• 📨 ARH TownScript
+]],en = [[
+┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
+┃🚀ᴇɴᴊᴏʏ ᴀʟʟ ꜰᴇᴀᴛᴜʀᴇꜱ ᴡɪᴛʜ ɴᴏ ʟɪᴍɪᴛꜱ!🚀
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🌟 Premium Benefits:
+• 🌊 Auto Regatta completion
+• 👍 Unlimited city likes
+• 📦 Extra market slots
+• 🎭 All legacy skins unlocked
+• 🏞️ 200+ Exclusive decorations
+• 🤖 Coop chat stickers
+• 💝 Pink name & frame color
+• 🚀 Complete Match-3 boosters
+• 🧪 Complete Laboratory boosters
+• 🏡 Unlimited Barn boosters
+• ✨ ...and much more!
+──────────────────────────
+💵 Price:
+• 🇺🇸 USD 30$
+
+📆 Duration:
+• ♾️ Lifetime Access
+──────────────────────────
+🔐 How to Buy:
+➡️ Make payment via: -
+➡️ Copy your License Code (appears before script starts)
+➡️ Send the License Code to the owner
+➡️ Activation is automatic after payment confirmed
+──────────────────────────
+📩 Contact Owner:
+• 📨 Telegram: @azka_arh
+
+📢 WhatsApp Channel (Info & Updates):
+• 📨 ARH TownScript
+]]},
+  ["btn_back"] = {id = "❌ Kembali", en = "❌ Go Back"},
+  ["btn_tele"] = {id = "📩 Telegram", en = "📩 Telegram"},
+  ["btn_wa"]   = {id = "📢 WhatsApp Channel", en = "📢 WhatsApp Channel"},
+  ["toast_back"] = {id = "↩️ Kembali ke menu sebelumnya", en = "↩️ Back to previous menu"},
+  ["toast_tele"] = {id = "✅ Username Telegram berhasil disalin!", en = "✅ Telegram username copied!"},
+  ["toast_wa"]   = {id = "✅ Link WhatsApp berhasil disalin!", en = "✅ WhatsApp link copied!"},
+	
+["thank_you_exit"] = {id = "Terima kasih telah menggunakan script ini!\nSemoga harimu menyenangkan!",en = "Thanks for using this script!\nHave a great day!"},
+
+["about_msg"] = {id = [[
+┏━━━━━━━━｢‼️𝗜𝗡𝗙𝗢 𝗡𝗔𝗦𝗞𝗔𝗛‼️｣━━━━━━━━┓
+┃📖ᴀʀʜ ᴛᴏᴡɴꜱᴄʀɪᴘᴛ — ᴘᴀɴᴅᴜᴀɴ & ᴘᴇʀɪɴɢᴀᴛᴀɴ📖
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+⚠️ PERINGATAN PENTING
+Gunakan script ini dengan bijak. Kami tidak bertanggung jawab atas konsekuensi penggunaan yang melanggar ketentuan permainan termasuk banned permanen.
+
+💸 Batas T-Cash
+• Disarankan: maksimal 10.000 T-Cash per akun.  
+• Ingin top-up lebih besar? Pertimbangkan risiko banned permanen.
+• Toleransi pengisian maksimal 25.000 T-Cash melebihi toleransi berisiko kena banned.
+
+🏡 Peningkatan Lumbung (Barn Upgrade)
+• Lakukan peningkatan sesuai panduan resmi (salin link untuk melihat panduan upgrade).  
+• Upgrade berlebih atau tidak sesuai risiko deteksi dan banned.
+
+🤝 Global Co-op
+• Bergabung dengan koop papan atas (global) tidak diwajibkan.  
+• Bergabung pada kelompok yang berisiko tinggi dapat meningkatkan kemungkinan banned.
+
+🔧 Jika fitur tidak bekerja
+• Coba restart game 1–3 kali.  
+• Masih bermasalah? Hubungi Pemilik melalui menu Kontak di dalam script.
+
+📌 Catatan Tambahan
+• Gunakan akun cadangan untuk percobaan.  
+• Hindari aktivitas yang jelas melanggar aturan permainan.
+
+🙏 Terima kasih
+Terima kasih sudah menggunakan ARH Townscript. Gunakan secara bijak.
+]],en = [[
+┏━━━━━｢‼️𝗦𝗖𝗥𝗜𝗣𝗧 𝗜𝗡𝗙𝗢‼️｣━━━━━━━━┓
+┃📖ᴀʀʜ ᴛᴏᴡɴꜱᴄʀɪᴘᴛ — ɢᴜɪᴅᴇ & ᴡᴀʀɴɪɴɢ📖
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+⚠️ IMPORTANT WARNING
+Use this script responsibly. We are not responsible for any consequences, including permanent bans, due to violating game policies.
+
+💸 T-Cash Limit
+• Recommended: maximum 10,000 T-Cash per account.  
+• Want more top-up? Consider the risk of a permanent ban.  
+• Exceeding 25,000 T-Cash tolerance may lead to permanent ban.
+
+🏡 Barn Upgrade
+• Follow the official upgrade guide (copy link below to view).  
+• Excessive or irregular upgrades increase detection and ban risk.
+
+🤝 Global Co-op
+• Joining top (global) co-ops is not mandatory.  
+• Joining high-risk groups increases ban likelihood.
+
+🔧 If features don’t work
+• Try restarting the game 1–3 times.  
+• Still not working? Contact the Owner through the in-script Contact menu.
+
+📌 Additional Notes
+• Use a backup account for testing.  
+• Avoid any clearly rule-breaking actions.
+
+🙏 Thank You
+Thank you for using ARH Townscript. Use it responsibly.
+]]},
+["back_btn"]    = { id = "❌ Kembali", en = "❌ Go Back" },
+["barn_table"]  = { id = "🏡 Tabel lumbung", en = "🏡 Barn table" },
+["copied_link"] = { id = "✅ Link berhasil disalin!", en = "✅ Link copied successfully!" },
+}
+function _(k) return teks[k] and teks[k][lang] or k end
+
+function saveLang()
+  local file = io.open("/sdcard/.langmode.txt", "w")
+  if file then
+    file:write(lang)
+    file:close()
+  end
+end
+
+function loadLang()
+  local file = io.open("/sdcard/.langmode.txt", "r")
+  if file then
+    local content = file:read("*l")
+    if content == "id" or content == "en" then
+      lang = content
+    end
+    file:close()
+  end
+end
+
+-- ⏳ Panggil saat awal
+loadLang()
+
+-- 📁 Cache Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileItem = folder .. "itemcache.txt"
+local fileAddr = folder .. "addresscache.txt"
+
+-- 🧹 Delete File Safely
+local function deleteFile(path)
+pcall(function() os.remove(path) end)
+end
+
+-- 📍 Get Cached or New Address
+function getAddr()
+local cacheInvalid = false
+local cachedAddr
+local file = io.open(fileAddr, "r")
+
+if file then
+cachedAddr = tonumber(file:read("*l") or "")
+file:close()
+end
+
+if cachedAddr then
+local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
+if check and check[1] and check[1].value == 30 then
+return cachedAddr
+else
+deleteFile(fileAddr)
+deleteFile(fileItem)
+gg.toast(_("cache_cleared"))
+cacheInvalid = true
+end
+end
+
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+gg.refineNumber("30", gg.TYPE_DWORD)
+local results = gg.getResults(1)
+
+if #results == 0 then
+gg.alert(_("addr_not_found"))
+return nil
+end
+
+local newAddr = results[1].address
+local fileSave = io.open(fileAddr, "w")
+if fileSave then
+fileSave:write(newAddr)
+fileSave:close()
+end
+
+if cacheInvalid then
+gg.toast(_("addr_refreshed"))
+while not gg.isVisible(true) do gg.sleep(200) end
+gg.setVisible(false)
+end
+
+return newAddr
+end
+
+-- 📁 Global config
+local configFile = "/sdcard/.mymode.txt"
+local menuMode, menuRunning = nil, false
+
+-- 📥 Load saved mode
+function loadMode()
+  local file = io.open(configFile, "r")
+  if file then
+    local mode = file:read("*l")
+    file:close()
+    if mode == "free" or mode == "premium" then
+      menuMode = mode
+    else
+      menuMode = nil
+    end
+  else
+    menuMode = nil
+  end
+end
+
+-- 💾 Save mode
+function saveMode(mode)
+  local file = io.open(configFile, "w")
+  if file then
+    file:write(mode or "")
+    file:close()
+  end
+end
+
+-- 🔁 Reset mode
+function resetMode()
+  menuMode = nil
+  saveMode(nil)
+  gg.toast(_("mode_reset"))
+end
+
+-- ✅ Jalankan pengecekan alamat
+if type(getAddr) == "function" then
+  local addr = getAddr()
+  if addr then
+    -- 🔧 Tambahkan patching memori di sini jika diperlukan
+  else
+    gg.toast(_("addr_not_found"))
+  end
+else
+  gg.toast(_("fn_not_defined"))
+end
+
+function mainMenu()
+  local menu = gg.choice({
+    _( "free_script" ),
+    _( "premium_script" ),
+    _( "buy_key" ),
+    _( "exit_script" )
+  }, nil, _( "main_menu" ))
+
+  if menu == 1 then
+    menuMode = "free" saveMode(menuMode) freekey()
+  elseif menu == 2 then
+    menuMode = "premium" saveMode(menuMode) Main()
+  elseif menu == 3 then
+    buykey()
+  elseif menu == 4 then
+    exit()
+  end
+end
+
+-- 🌐 Feature Status Setup
+local on, off = " ✓ ", ""
+local cstatus_featureX = off
+
+function toggle_featureX(silent)
+  cstatus_featureX = (cstatus_featureX == off) and on or off
+  if not silent then
+    if cstatus_featureX == on then
+      gg.alert("❄️ Freeze feature is now ON ✅")
+    else
+      gg.toast("🔥 Freeze feature is now OFF ❌")
+    end
+  end
+end
+
+-- 🔓 Free Script Menu
+local freezeFlagAddr = 0x20000000  -- Gunakan alamat kosong/aman
+
+function setFreezeFlag(value)
+  gg.setValues({{address = freezeFlagAddr, flags = gg.TYPE_DWORD, value = value}})
+end
+
+function getFreezeFlag()
+  local v = gg.getValues({{address = freezeFlagAddr, flags = gg.TYPE_DWORD}})
+  return v[1].value == 1
+end
+
+function freekey()
+  menuRunning = true
+while menuRunning and menuMode == "free" do
+    local menuList = {
+      _( "unlock_season_freemenu" ),
+      _( "freeze_rewards_freemenu" ) .. " " .. cstatus_featureX
+    }
+
+    local idxChangeReward = nil
+    if rewardVisible then
+      table.insert(menuList, _( "change_reward_freemenu" ))
+      idxChangeReward = #menuList
+    end
+
+    local idxMisc = #menuList + 1
+    table.insert(menuList, _( "misc_mods_freemenu" ))
+
+    local idxInfo = #menuList + 1
+    table.insert(menuList, _( "script_info_freemenu" ))
+
+    local idxExit = #menuList + 1
+    table.insert(menuList, _( "exit_script_freemenu" ))
+
+    local menu = gg.choice(menuList, nil, _( "free_menu_freemenu" ))
+    if not menu then break end
+
+    if menu == 1 then menue1()
+    elseif menu == 2 then menue2()
+    elseif idxChangeReward and menu == idxChangeReward then menue3()
+    elseif menu == idxMisc then menue4()
+    elseif menu == idxInfo then menu6()
+    elseif menu == idxExit then exit() menuRunning = false break
+    else
+    end
+  end
+  menuRunning = false
+end
+
+function menue3()
+  local title = banner
+  local menu = gg.choice({
+    _("smelt_ingots_changefree"),        -- 🪙 Smelt Ingots
+    _("mining_tools1_changefree"),        -- ⛏️ Mining Tools
+    _("redeem_coupons_changefree"),      -- 🎟️ Redeem Coupons
+    _("add_gems_changefree"),            -- 💎 Add Gems
+    _("match3_boosters_changefree"),     -- 🧩 Match-3 Boosters
+    _("community_materials_changefree"), -- 🏗️ Community Materials
+    _("claim_perks_changefree"),         -- 🎉 Claim Perks
+    _("go_back_changefree")              -- ❌ • Go Back
+  }, nil, title)
+
+  if not menu then
+    return
+  end
+
+  local actions = {rw1, rw2, rw3, rw4, rw5, rw6, rw7, rw8, freekey}
+  if actions[menu] then
+    actions[menu]()
+  else
+  end
+end
+
+function menue4()
+  local title = banner
+  local menu = gg.choice({
+    _( "menu4_opt1_hackfree" ), -- 🚁 T-Cash dari Helikopter
+    _( "menu4_opt2_hackfree" ), -- 🌾 EXP dari Panen Gandum
+    _( "menu4_opt3_hackfree" ), -- 🎁 Kotak Pabrik Gratis
+    _( "menu4_opt4_hackfree" ), -- 🚧 Perluas Lahan
+    _( "menu4_opt5_hackfree" ), -- 🏭 Leleh Instan
+    _( "menu4_opt6_hackfree" ), -- 🐮 Produksi Peternakan Cepat
+    _( "menu4_opt7_hackfree" ), -- ⚡ Isi Ulang Energi Adventure
+    _( "menu_back_hackfree" )   -- ❌ Kembali
+  }, nil, title)
+
+  if not menu then
+    return
+  end
+
+  local actions = {
+    oder1, -- Helicopter T-Cash
+    oder2, -- Wheat EXP
+    oder3, -- Factory Boxes
+    oder4, -- Land Expansion
+    oder5, -- Furnace Speedup
+    oder6, -- Farm Production
+    oder7, -- Refill Energy
+    freekey -- Back
+  }
+
+  if actions[menu] then
+    actions[menu]()
+  else
+    return
+  end
+
+  if menu ~= 8 then
+    while not gg.isVisible(true) do end
+    gg.setVisible(false)
+    menue4()
+  end
+end
+
+-- 💎 Premium Script Menu
+function Main()
+  menuRunning = true
+  while menuRunning and menuMode == "premium" do
+
+-- 📁 Lokasi file
+local passFile           = "/sdcard/Android/media/.syscfg_u1"
+local permCodeFile       = "/sdcard/Android/media/.bin_xv"
+local expiredDevicesFile = "/sdcard/Android/media/.tmp_87g"
+
+-- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
+local expiredUserID = 100                         -- 🔢 Ganti: 20, 30, 40, 50, dst
+local expiredCode   = "ARHPremiumTS-2days"        -- 🔑 Kode expired
+local expireDate    = "2025-11-10"               -- 📅 Ganti tanggal kadaluarsa
+
+-- ============================ JANGAN UBAH DI BAWAH INI ============================ --
+
+-- 🔒 Hash helper
+local function hash(str)
+    local h = 0
+    for i = 1, #str do
+        h = (h * 31 + str:byte(i)) % 1000000007
+    end
+    return tostring(h)
+end
+
+-- 📅 Cek apakah expired (pakai waktu Unix agar akurat)
+local function isExpiredDate()
+    local y, m, d = expireDate:match("(%d+)-(%d+)-(%d+)")
+    local exp = os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=23, min=59, sec=59}
+    local now = os.time()
+    return now > exp
+end
+
+-- 🕒 Hitung sisa atau lewat hari
+local function getDaysLeft(expDate)
+    local y, m, d = expDate:match("(%d+)-(%d+)-(%d+)")
+    local target = os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=23, min=59, sec=59}
+    local now = os.time()
+    local diff = math.floor((target - now) / (24*60*60))
+    return diff
+end
+
+-- 📂 Ambil permanent code
+local f = io.open(permCodeFile, "r")
+local permanentCode = f and f:read("*a") or nil
+if f then f:close() end
+
+if not permanentCode then
+    gg.alert("❌ Permanent code not found. Please re-run main script.")
+    resetMode()
+    os.exit()
+end
+
+local expectedHash = hash(permanentCode)
+
+-- 🔍 Load daftar device permanent
+local permanentDevices = {}
+local pf = io.open(passFile, "r")
+if pf then
+    for line in pf:lines() do
+        permanentDevices[#permanentDevices + 1] = line
+    end
+    pf:close()
+end
+
+local function isPermanentDeviceRegistered(idHash)
+    for _, h in ipairs(permanentDevices) do
+        if h == idHash then return true end
+    end
+    return false
+end
+
+-- 🔍 Load daftar device expired
+local expiredDevices = {}
+local ef = io.open(expiredDevicesFile, "r")
+if ef then
+    for line in ef:lines() do
+        expiredDevices[#expiredDevices+1] = line
+    end
+    ef:close()
+end
+
+local function isExpiredDeviceRegistered(id)
+    for _, d in ipairs(expiredDevices) do
+        if d == id then return true end
+    end
+    return false
+end
+
+-- 📌 Alert login info + auto notifikasi sisa hari
+local function showLoginInfo(mode)
+    local now = os.date("%Y-%m-%d %H:%M:%S")
+    local expDate = expireDate
+    local header, message
+
+    if mode == "Permanent Code" then  
+        header = "✅ Permanent Login Success"  
+        message = string.format("%s\n\n📅 Login: %s\n🔑 Type: %s",
+            header, now, mode)  
+
+    elseif mode == "Expired Code" then  
+        local daysLeft = getDaysLeft(expDate)  
+        local leftText
+        if daysLeft > 0 then
+            leftText = string.format("⏳ %d day%s left", daysLeft, daysLeft ~= 1 and "s" or "")
+        elseif daysLeft == 0 then
+            leftText = "⚠️ Expiring today!"
+        else
+            leftText = string.format("❌ Expired %d day%s ago", math.abs(daysLeft), math.abs(daysLeft) ~= 1 and "s" or "")
+        end
+
+        header = "✅ Expired Login Success"  
+        message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (User %d)",
+            header, now, expDate, leftText, mode, expiredUserID)  
+
+        -- 🔔 Tambahan notifikasi otomatis sisa hari
+        if daysLeft > 0 and daysLeft <= 3 then
+            gg.toast("⚠️ Your access will expire in " .. daysLeft .. " day" .. (daysLeft ~= 1 and "s" or ""))
+        elseif daysLeft == 0 then
+            gg.toast("⚠️ Your code expires today!")
+        elseif daysLeft < 0 then
+            gg.toast("❌ Your code is already expired.")
+        end
+    end  
+
+    gg.alert(message)
+end
+
+-- 🔐 Status login
+local loginOK = false
+
+-- ✅ Auto-login permanent code
+if isPermanentDeviceRegistered(expectedHash) then
+    loginOK = true
+end
+
+-- ✅ Auto-login expired code
+if not loginOK and isExpiredDeviceRegistered(expiredCode) then
+    if isExpiredDate() then
+        local daysOver = math.abs(getDaysLeft(expireDate))
+        gg.alert("⛔ Expired code expired on " .. expireDate ..
+                 string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
+                 daysOver, daysOver ~= 1 and "s" or ""))
+    else
+        loginOK = true
+        local sisa = getDaysLeft(expireDate)
+        if sisa <= 3 then
+            gg.toast("⚠️ Your access will expire in " .. sisa .. " day" .. (sisa ~= 1 and "s" or ""))
+        end
+    end
+end
+
+-- 🔑 Kalau belum ada auto-login, minta kode manual
+while not loginOK do
+    local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+    local code = input[1]
+
+    if code == permanentCode then  
+        if not isPermanentDeviceRegistered(expectedHash) then  
+            local pfw = io.open(passFile, "a")  
+            if pfw then pfw:write(expectedHash .. "\n") pfw:close() end  
+            permanentDevices[#permanentDevices + 1] = expectedHash  
+        end    
+        showLoginInfo("Permanent Code")  
+        loginOK = true  
+
+    elseif code == expiredCode then  
+        if isExpiredDate() then  
+            local daysOver = math.abs(getDaysLeft(expireDate))
+            gg.alert("⛔ Expired code expired on " .. expireDate ..
+                     string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
+                     daysOver, daysOver ~= 1 and "s" or ""))
+        else  
+            if not isExpiredDeviceRegistered(expiredCode) then  
+                local efw = io.open(expiredDevicesFile, "a")  
+                if efw then efw:write(expiredCode .. "\n") efw:close() end  
+                expiredDevices[#expiredDevices+1] = expiredCode  
+            end  
+            showLoginInfo("Expired Code")  
+            loginOK = true  
+        end  
+    else  
+        gg.alert("❌ Invalid code, please try again")  
+    end  
+end
