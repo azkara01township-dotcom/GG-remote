@@ -7578,7 +7578,7 @@ function duplicatebadge()
   gg.setRanges(gg.REGION_C_ALLOC)
   -- 🔍 Fast search
   gg.searchNumber("1918984976;1918984974", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
-  local list = gg.getResults(200)  -- ⚡ optimized result count
+  local list = gg.getResults(1000)  -- ⚡ optimized result count
   if #list == 0 then
     gg.alert("❌ Card data not found.\n\n" .."🔄 Open the card page first, then run the script.\n" .."🔁 If it still fails, restart the game and try again.")
     return
