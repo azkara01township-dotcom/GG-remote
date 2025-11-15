@@ -458,10 +458,12 @@ local teks = {
   
   ----free ore poin----
   
-  ["dataNotFound_ore"]       = {id="❌ Data 'Rule of the Mine' tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en="❌ 'Rule of the Mine' data not found!\n\nPlease restart the game and try again."},
-  ["toastUpdated_ore"]       = {id="🎉 'Rule of the Mine' berhasil diperbarui!", en="🎉 'Rule of the Mine' updated!"},
-  ["alertApplied_ore"]       = {id="💸 Edit berhasil diterapkan!\n\nAmbil 1 ore untuk mengaktifkan auto-mining.",en="💸 Edit applied!\n\nTake 1 ore to activate auto-mining."},
-  
+  ["Etamwarn_event_not_claimed"] = {id = "⚠️ Script ini hanya bekerja jika hadiah 'Penguasa Tambang' belum pernah diambil sama sekali.\n\nJika kamu sudah pernah mendapatkannya, maka script tidak akan berfungsi.",en = "⚠️ This script only works if the 'Mine Ruler' reward has never been claimed.\n\nIf you've already claimed it before, the script will not work."},
+  ["Etamno_data_found"] = {id = "❌ Data acara 'Penguasa Tambang' tidak ditemukan.\n\n🔁 Silakan restart game dan coba lagi.",en = "❌ 'Mine Ruler' event data not found.\n\n🔁 Please restart the game and try again."},
+  ["Etamno_target"] = {id = "❌ Data 'Penguasa Tambang' tidak ditemukan.\n\n📝 Pastikan event masih aktif dan belum pernah diselesaikan.",en = "❌ 'Mine Ruler' data not found.\n\n📝 Make sure the event is still active and has never been completed."},
+  ["Etamsuccess_alert"] = {id = "✅ Edit berhasil diterapkan!\n\n📌 Ambil 1 ore untuk mengaktifkan auto-mining.",en = "✅ Edit applied successfully!\n\n📌 Mine 1 ore to activate auto-mining."},
+  ["Etamsuccess_toast"] = {id = "🎉 Penguasa Tambang berhasil diupdate!",en = "🎉 Mine Ruler updated successfully!"},
+	
   ----bajak laut----
   
   ["dataNotFound_bajak"] = {id = "❌ Harta Karun Bajak Laut tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en = "❌ Pirate Treasure not found!\n\nPlease restart the game and try again."},
@@ -7535,17 +7537,80 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 function kums6()
 local indev = dev
   local menu = gg.choice({
- "🃏 • Card Pack Badge",
-"🎖️ • Collection Badge",
+ "⚡ • Duplicate Card",
+"🎴 • Card Pack Badge",
+"🏆 • Collection Badge",
     "❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
     return
-  elseif menu == 1 then cardbadge()
-  elseif menu == 2 then packbadge()
-  elseif menu == 3 then gp3()
+  elseif menu == 1 then duplicatebadge()
+  elseif menu == 2 then cardbadge()
+  elseif menu == 3 then packbadge()
+  elseif menu == 4 then gp3()
   end
+end
+
+function duplicatebadge()
+  gg.setVisible(false)
+  gg.clearResults()
+
+  -- 🔢 Combined input prompt
+  local input = gg.prompt({"🃏 Enter the VISIBLE card amount (example: 1):","✨ Enter the NEW card amount (10 - 1000):"},{},{"number", "number"})
+
+  if not input then return end
+  local visibleCount = tonumber(input[1])
+  local newCount = tonumber(input[2])
+
+  -- ❌ Input validation
+  if visibleCount == nil or newCount == nil then
+    gg.alert("❌ Invalid input.\nPlease enter numeric values only.")
+    return
+  end
+
+  -- 🔒 Limit new amount: 10–1000
+  if newCount < 10 or newCount > 1000 then
+    gg.alert("⚠️ The new card amount must be between 10 and 1000!")
+    return
+  end
+
+  gg.setRanges(gg.REGION_C_ALLOC)
+  -- 🔍 Fast search
+  gg.searchNumber("1918984976;1918984974", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+  local list = gg.getResults(200)  -- ⚡ optimized result count
+  if #list == 0 then
+    gg.alert("❌ Card data not found.\n\n" .."🔄 Open the card page first, then run the script.\n" .."🔁 If it still fails, restart the game and try again.")
+    return
+  end
+
+  gg.loadResults(list)  -- ⚡ reduces post-search delay
+  local targets = {}
+  -- 🎯 Filter +0x1C offset values
+  for i = 1, #list do
+    local addr = list[i].address + 0x1C
+    local value = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1].value
+    if value == visibleCount then
+      targets[#targets + 1] = addr
+    end
+  end
+
+  gg.clearResults() -- ⚡ clears heavy search data immediately
+  if #targets == 0 then
+    gg.alert("⚠️ No card entries match the amount you entered.\n" .."Please make sure the number is correct.")
+    return
+  end
+
+  -- ✏️ Apply edits
+  local edits = {}
+  for i = 1, #targets do
+    edits[i] = {address = targets[i], flags = gg.TYPE_DWORD, value = newCount}
+  end
+  gg.setValues(edits)
+
+  a2()
+  gg.toast("🔥 Card amount updated successfully!")
+  gg.alert("🎉 Success!\n\n" .."All card entries with the amount **" .. visibleCount .."** have been updated to **" .. newCount .. "**.\n\n" .."📌 Reopen the card menu to see the updated values.")
 end
 
 function cardbadgecol(label, emoji, values)
@@ -8158,25 +8223,47 @@ end
 function ipen3()
   gg.setVisible(false)
   gg.clearResults()
+  gg.alert(_"Etamwarn_event_not_claimed")
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  gg.searchNumber("00010001h;00326D04h;00000075h;0031656Eh:269", gg.TYPE_DWORD)
-  gg.refineNumber("00326D04h", gg.TYPE_DWORD)
+  -- Search main QWORD
+  gg.searchNumber("3304708", gg.TYPE_QWORD)
+  local list = gg.getResults(500)
 
-  local r = gg.getResults(10)
-  if #r == 0 then
-    gg.alert(_("dataNotFound_ore"))
+  if #list == 0 then
+    gg.alert(_"Etamno_data_found")
     return
   end
 
+  -- Check offset +0xD4
+  local target = nil
+
+  for i, v in ipairs(list) do
+    local checkAddr = v.address + 0xD4
+    local check = gg.getValues({
+      {address = checkAddr, flags = gg.TYPE_DWORD}
+    })
+
+    if check[1].value == 3237230 then
+      target = v.address
+      break
+    end
+  end
+
+  if not target then
+    gg.alert(_"Etamno_target")
+    return
+  end
+
+  -- Apply edit
   gg.setValues({
-    {address = r[1].address - 0x18, flags = gg.TYPE_DWORD, value = 0},
-    {address = r[1].address - 0x14, flags = gg.TYPE_DWORD, value = 2000}
+    {address = target - 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = target - 0x14, flags = gg.TYPE_DWORD, value = 2000}
   })
 
   a2()
-  gg.toast(_("toastUpdated_ore"))
-  gg.alert(_("alertApplied_ore"))
+  gg.alert(_"Etamsuccess_alert")
+  gg.toast(_"Etamsuccess_toast")
 end
 
 -- ✅ Fungsi utama ipen4 multi-bahasa
