@@ -856,66 +856,6 @@ end
 -- ⏳ Panggil saat awal
 loadLang()
 
--- 📁 Cache Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileItem = folder .. "itemcache.txt"
-local fileAddr = folder .. "addresscache.txt"
-
--- 🧹 Delete File Safely
-local function deleteFile(path)
-pcall(function() os.remove(path) end)
-end
-
--- 📍 Get Cached or New Address
-function getAddr()
-local cacheInvalid = false
-local cachedAddr
-local file = io.open(fileAddr, "r")
-
-if file then
-cachedAddr = tonumber(file:read("*l") or "")
-file:close()
-end
-
-if cachedAddr then
-local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
-if check and check[1] and check[1].value == 30 then
-return cachedAddr
-else
-deleteFile(fileAddr)
-deleteFile(fileItem)
-gg.toast(_("startcache_cleared"))
-cacheInvalid = true
-end
-end
-
-gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
-gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
-gg.refineNumber("30", gg.TYPE_DWORD)
-local results = gg.getResults(1)
-
-if #results == 0 then
-gg.alert(_("startaddr_not_found"))
-return nil
-end
-
-local newAddr = results[1].address
-local fileSave = io.open(fileAddr, "w")
-if fileSave then
-fileSave:write(newAddr)
-fileSave:close()
-end
-
-if cacheInvalid then
-gg.toast(_("startaddr_refreshed"))
-while not gg.isVisible(true) do gg.sleep(200) end
-gg.setVisible(false)
-end
-
-return newAddr
-end
-
 -- 📁 Global config
 local configFile = "/sdcard/.mymode.txt"
 local menuMode, menuRunning = nil, false
@@ -1437,7 +1377,65 @@ if cstatus_featureX == off then
     cstatus_featureX = on
     rewardVisible = true
   end
+-- 📁 Cache Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileItem = folder .. "itemcache.txt"
+local fileAddr = folder .. "addresscache.txt"
 
+-- 🧹 Delete File Safely
+local function deleteFile(path)
+pcall(function() os.remove(path) end)
+end
+
+-- 📍 Get Cached or New Address
+function getAddr()
+local cacheInvalid = false
+local cachedAddr
+local file = io.open(fileAddr, "r")
+
+if file then
+cachedAddr = tonumber(file:read("*l") or "")
+file:close()
+end
+
+if cachedAddr then
+local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
+if check and check[1] and check[1].value == 30 then
+return cachedAddr
+else
+deleteFile(fileAddr)
+deleteFile(fileItem)
+gg.toast(_("startcache_cleared"))
+cacheInvalid = true
+end
+end
+
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+gg.refineNumber("30", gg.TYPE_DWORD)
+local results = gg.getResults(1)
+
+if #results == 0 then
+gg.alert(_("startaddr_not_found"))
+return nil
+end
+
+local newAddr = results[1].address
+local fileSave = io.open(fileAddr, "w")
+if fileSave then
+fileSave:write(newAddr)
+fileSave:close()
+end
+
+if cacheInvalid then
+gg.toast(_("startaddr_refreshed"))
+while not gg.isVisible(true) do gg.sleep(200) end
+gg.setVisible(false)
+end
+
+return newAddr
+	end
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
