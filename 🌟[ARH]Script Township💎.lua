@@ -7534,11 +7534,11 @@ function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Comp
 
 function kums6()
 local indev = dev
-  local menu = gg.choice({
- "⚡ • Duplicate Card",
+local menu = gg.choice({
+"⚡ • Duplicate Card",
 "🎴 • Card Pack Badge",
 "🏆 • Collection Badge",
-    "❌ • Go Back"
+"❌ • Go Back"
   }, nil,indev)
 
   if menu == nil then
@@ -7556,7 +7556,7 @@ local indev = dev
   while true do
     if gg.isVisible(true) then
       gg.setVisible(false)
-      menuSpecial()
+      kums6()
       break
     end
   end
