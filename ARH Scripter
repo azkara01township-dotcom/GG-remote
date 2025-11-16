@@ -1296,3 +1296,1783 @@ while not loginOK do
         gg.alert("❌ Invalid code, please try again")  
     end  
 end
+local menu = gg.choice({
+_( "special_hack_premenu" ),  -- 🔹 Menu baru di atas limited_events
+  _( "unlock_season_premenu" ),
+  _( "limited_events_premenu" ),
+  _( "skip_time_premenu" ),     -- 🔹 Menu baru di bawah limited_events (sudah ada)
+  _( "farming_products_premenu" ),
+  _( "misc_mods_premenu" ),
+  _( "script_info_premenu" ),
+  _( "exit_script_premenu" )
+}, nil, _( "premium_menu_premenu" ))
+
+if menu == nil then break end
+if menu == 2 then
+  menu1()
+elseif menu == 1 then
+  menuSpecial() -- 🔹 Fungsi untuk special hack
+elseif menu == 3 then
+  menu2()
+elseif menu == 4 then
+  menu7() -- 🔹 Skip waktu
+elseif menu == 5 then
+  menu3()
+elseif menu == 6 then
+  menu4()
+elseif menu == 7 then
+  menu6()
+elseif menu == 8 then
+  exit()
+  menuRunning = false
+else
+end
+break
+end
+menuRunning = false
+end
+
+rewardVisible = rewardVisible or false  -- bersifat sementara (reset tiap restart)
+
+function menu1()
+  local title = banner
+  local menuList = {
+    _("unlock_pass_rwpremium"), -- 1
+    _("freeze_rewards_rwpremium") .. cstatus_featureX -- 2
+  }
+
+  if rewardVisible then
+    table.insert(menuList, _("skins_decor_rwpremium"))      -- 3
+    table.insert(menuList, _("add_cash_rwpremium"))         -- 4
+    table.insert(menuList, _("boosters_rwpremium"))         -- 5
+    table.insert(menuList, _("redeem_coupon_rwpremium"))    -- 6
+    table.insert(menuList, _("add_gems_rwpremium"))         -- 7
+    table.insert(menuList, _("special_product_rwpremium"))  -- 8
+    table.insert(menuList, _("claim_bonus_rwpremium"))      -- 9
+  end
+
+  table.insert(menuList, _("go_back_rwpremium")) -- 10 (atau 3 jika rewardVisible = false)
+
+  local menu = gg.choice(menuList, nil, title)
+
+  if not menu then
+    return  -- ⛔ Stop di sini, jangan lanjut ke loop
+  end
+
+  if menu == 1 then
+    gp1()
+  elseif menu == 2 then
+    gp2()
+  elseif rewardVisible and menu == 3 then
+    gp3()
+  elseif rewardVisible and menu == 4 then
+    gp4()
+  elseif rewardVisible and menu == 5 then
+    gp5()
+  elseif rewardVisible and menu == 6 then
+    gp6()
+  elseif rewardVisible and menu == 7 then
+    gp7()
+  elseif rewardVisible and menu == 8 then
+    gp8()
+  elseif rewardVisible and menu == 9 then
+    gp9()
+  elseif (not rewardVisible and menu == 3) or (rewardVisible and menu == 10) then
+    Main()
+    return
+  else
+    return
+  end
+
+  -- 🔁 Hanya lanjut loop jika opsi valid dijalankan
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      menu1()
+      break
+    end
+  end
+end
+
+-- 🌟 Unlock Season Pass
+function menue1()
+  gp1("free")
+end
+
+function gp1(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("6875698586322892050", gg.TYPE_QWORD)
+  local hasil = gg.getResults(100) -- ambil lebih banyak hasil untuk keamanan
+
+  if #hasil == 0 then
+    return gg.alert(_("gold_not_found"))
+  end
+
+  local kandidat = {}
+
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 640
+  for i, res in ipairs(hasil) do
+    local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
+    if check and check[1] and check[1].value == 650 then
+      table.insert(kandidat, res)
+    end
+  end
+
+  if #kandidat == 0 then
+    return gg.alert(_("addr_not_found"))
+  end
+
+  -- 🔁 Siapkan daftar edit untuk SEMUA kandidat
+  local edits = {}
+  for _, t in ipairs(kandidat) do
+    local base = t.address
+    table.insert(edits, {address = base + 0x118, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = base + 0x11C, flags = gg.TYPE_DWORD, value = 651}) -- kode Gold Pass
+    table.insert(edits, {address = base + 0x128, flags = gg.TYPE_DWORD, value = 1})
+  end
+
+  -- 🛠 Terapkan perubahan
+  gg.setValues(edits)
+
+  -- ✅ Info ke user
+  gg.toast(_("gold_enabled"))
+end
+
+-- ❄️ Freeze Rewards
+function menue2()
+  gp2("free")
+end
+
+function gp2(caller)
+if cstatus_featureX == off then
+    local confirm = gg.alert(
+      _("freeze_info_title") .. "\n\n" ..
+      _("freeze_info_question") .. "\n" ..
+      _("freeze_info_explain"),
+      _("freeze_continue"),
+      _("freeze_cancel")
+    )
+
+    if confirm ~= 1 then return end
+    cstatus_featureX = on
+    rewardVisible = true
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
+  local hasil = gg.getResults(1000)
+
+  if #hasil == 0 then
+    return gg.alert(_("freeze_fail_title"))
+  end
+
+  local kandidat = {}
+
+  -- 🧩 Filter hasil dengan offset +0x1CC = 27491
+  for i, res in ipairs(hasil) do
+    local check = gg.getValues({{address = res.address + 0x1CC, flags = gg.TYPE_DWORD}})
+    if check[1].value == 27491 then
+      table.insert(kandidat, res)
+    end
+  end
+
+  if #kandidat == 0 then
+    return
+  end
+
+  -- ❄️ Siapkan pembekuan untuk semua kandidat
+  local freezeItems = {}
+  for _, target in ipairs(kandidat) do
+    table.insert(freezeItems, {address = target.address - 8,  flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeItems, {address = target.address - 12, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeItems, {address = target.address - 16, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+  end
+
+  gg.addListItems(freezeItems)
+
+  -- 🎉 Efek Mengetik Toast
+  local function typingToast(msg, delay)
+    for i = 1, #msg do
+      gg.toast(msg:sub(1, i))
+      gg.sleep(delay or 50)
+    end
+  end
+
+  typingToast(_("freeze_active_toast"), 70)
+  gg.clearResults()
+end
+
+function gp4() -- 💰 Currency Menu
+  local indev = dev
+  local menu = gg.choice({
+    "💵 • " .. _("add_tcash_tambahduit"),
+    "💰 • " .. _("add_coins_tambahduit"),
+    "🪙 • " .. _("add_regatta_tambahduit"),
+    "🍀 • " .. _("add_clover_tambahduit"),
+    "🗽 • " .. _("add_statuecoins_tambahduit"),
+    "❌ • " .. _("go_back_tambahduit")
+  }, nil, indev)
+
+  if menu == nil then
+    return
+  end
+
+  local actions = {
+    cash1,   -- 💵 T-Cash
+    cash2,   -- 💰 Coins
+    cash3,   -- 🪙 Regatta Token
+    cash4,   -- 🍀 Clover
+    cash5,   -- 🗽 Statue Coins
+    menu1    -- ❌ Back
+  }
+
+  if actions[menu] then
+    actions[menu]()
+  else
+    return
+  end
+
+  -- Kembali ke menu Currency jika belum memilih "Back"
+  if menu ~= 6 then
+while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        gp4()
+        break
+      end
+    end
+  end
+end
+
+-- 🔄 Apply Reward Using Cached Address
+function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
+  local label = _(key)
+  local addr = getAddr()
+  if not addr then return end
+
+  local amount = fixedAmount
+  if not amount and promptRange then
+    local min, max = promptRange[1], promptRange[2]
+    local input = gg.prompt({label .. " [" .. min .. "–" .. max .. "]:"}, nil, {"number"})
+    amount = tonumber(input and input[1])
+    if not amount or amount < min or amount > max then
+      gg.alert(_( "invalid_tambahduit" ) .. min .. " dan " .. max .. ".")
+      return
+    end
+  end
+
+  local edits = {}
+  for _, v in ipairs(pattern) do
+    table.insert(edits, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
+  end
+  if amount then
+    table.insert(edits, {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = amount})
+  end
+  table.insert(edits, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+
+  gg.setValues(edits)
+  gg.toast(label .. (amount and (_("set_to_tambahduit") .. amount .. " ✅") or _("applied_tambahduit")))
+end
+
+function cash1() applyCurrencyReward("tcash_tambahduit", {
+  {-0x48, 0x73616308}, {-0x44, 0x68}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
+}, {1, 25000}) end
+
+function cash2() applyCurrencyReward("coin_tambahduit", {
+  {-0x48, 0x696F630A}, {-0x44, 0x736E}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
+}, {1, 999999}) end
+
+function cash3() applyCurrencyReward("regatta_tambahduit", {
+  {-0x48, 0x67655214}, {-0x44, 0x43617461}, {-0x40, 0x687361}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
+}, {1, 2000}) end
+
+function cash4() applyCurrencyReward("clover_tambahduit", {
+  {-0x48, 0x6F6C630C}, {-0x44, 0x726576}, {-0x40,0}, {-0x3C,0}, {-0x38,0}, {-0x34,0}, {-0x30,0}
+}, {1, 50}) end
+
+function cash5() applyCurrencyReward("statue_tambahduit", {
+  {-0x48, 1635021594}, {-0x44, 1600484724}, {-0x40, 1953067639}, {-0x3C, 29285}, {-0x38,0}, {-0x34,0}, {-0x30,0}
+}, nil, 1) end
+
+function gp5()
+  local title = banner
+  local menu = gg.choice({
+    "🧩 • " .. _("match3_boosters_menuboost"),
+    "🧪 • " .. _("lab_boosters_menuboost"),
+    "❌ • " .. _("go_back_menuboost")
+  }, nil, title)
+
+  if menu == nil then
+    return
+  end
+
+  local actions = {
+    [1] = boost1,   -- Match-3 Boosters
+    [2] = boost2,   -- Lab Boosters
+    [3] = menu1     -- Back to main menu
+  }
+
+  local selectedAction = actions[menu]
+  if selectedAction then
+    selectedAction()
+  else
+  end
+end
+
+-- ✅ Alias rw5 untuk Free Script
+function rw5()
+  boost1("free")
+end
+
+function boost1(caller)
+  local indev = dev
+  local menu, actions = {}, {}
+
+  -- Booster Umum (Free & Premium)
+  table.insert(menu, "🎲 • " .. _("rainbow_ball_eventboost"))     table.insert(actions, booster1)
+  table.insert(menu, "💣 • " .. _("bomb_eventboost"))             table.insert(actions, booster2)
+  table.insert(menu, "🚀 • " .. _("rocket_eventboost"))           table.insert(actions, booster3)
+
+  -- Booster Tambahan (Premium Only)
+  if caller ~= "free" then
+    table.insert(menu, "🔨 • " .. _("jackhammer_eventboost"))             table.insert(actions, booster4)
+    table.insert(menu, "🚿 • " .. _("hydrant_eventboost"))                table.insert(actions, booster5)
+    table.insert(menu, "🧤 • " .. _("gloves_eventboost"))                 table.insert(actions, booster6)
+    table.insert(menu, "❤️ • " .. _("infinite_lives_30_eventboost"))     table.insert(actions, booster7)
+    table.insert(menu, "✨ • " .. _("double_points_30_eventboost"))       table.insert(actions, booster8)
+    table.insert(menu, "🎲 • " .. _("rainbow_ball_30_eventboost"))        table.insert(actions, booster9)
+table.insert(menu, "💣 • " .. _("bomb_30_eventboost"))                table.insert(actions, booster10)
+    table.insert(menu, "🚀 • " .. _("rocket_30_eventboost"))              table.insert(actions, booster11)
+    table.insert(menu, "⚡ • " .. _("energy_adventure_eventboost"))       table.insert(actions, booster12)
+    table.insert(menu, "💥 • " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
+  end
+
+  table.insert(menu, "❌ • " .. _("go_back_eventboost"))
+
+  local choice = gg.choice(menu, nil, indev)
+  if not choice then
+    return
+  end
+
+  if choice == #menu then
+    if caller == "free" then
+      menue3()
+    else
+      gp5()
+    end
+    return
+  end
+
+  local selected = actions[choice]
+  if selected then
+    selected(caller)
+  else
+  end
+
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      boost1(caller)
+      break
+    end
+  end
+end
+
+-- 🔧 Booster biasa dengan input jumlah
+local function patchBooster(emoji, name, promptKey, hexData, caller)
+  local addr = getAddr()
+  if not addr then return end
+
+  local maxLimit = (caller == "free") and 500 or 5000
+  local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [1–" .. maxLimit .. "]:"}, nil, {"number"})
+  local amount = tonumber(input and input[1])
+
+  if not amount then
+    gg.alert(_ ("no_input_eventboost"))
+    return
+  end
+
+  if amount < 1 or amount > maxLimit then
+    gg.alert(_ ("invalid_range_eventboost") .. " " .. maxLimit .. ".")
+    return
+  end
+
+  local patch = {}
+  for _, v in ipairs(hexData) do
+    table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
+  end
+
+  table.insert(patch, {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = amount})
+  table.insert(patch, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+
+  gg.setValues(patch)
+  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount)
+end
+
+-- 🔧 Booster dengan waktu 30 hari
+local function patchTimedBooster(emoji, name, hexData)
+  local addr = getAddr()
+  if not addr then return end
+
+  local patch = {}
+  for _, v in ipairs(hexData) do
+    table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
+  end
+
+  gg.setValues(patch)
+  gg.toast("✅ " .. emoji .. " " .. name .. " - " .. _ ("success_30d_eventboost"))
+end
+
+local function patchTimedBooster(emoji, name, hexData)
+local addr = getAddr()
+if not addr then return end
+
+local patch = {}
+for _, v in ipairs(hexData) do
+table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
+end
+
+gg.setValues(patch)
+gg.toast("" .. emoji .. " " .. name .. " (30 Days) successfully applied.")
+end
+
+-- 🔁 Booster dengan template salin
+local function copyPatchTemplate(offset)
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("1952533798;1701669204;8;23;28;23;1395879196::417", gg.TYPE_DWORD)
+gg.refineNumber("28", gg.TYPE_DWORD)
+local ref = gg.getResults(1)
+if #ref == 0 then return nil end
+
+local base = ref[1].address + offset
+local copied = {}
+for i = 0, 5 do
+table.insert(copied, {address = base + i * 4, flags = gg.TYPE_DWORD})
+end
+return gg.getValues(copied)
+end
+
+-- 🔁 Booster dengan template salin
+local function apply30DayBooster(name, offset)
+  local copied = copyPatchTemplate(offset)
+  if not copied then
+    gg.alert(_ ("template_not_found_eventboost") .. " " .. name)
+    return
+  end
+
+  gg.alert(_ ("template_copied_eventboost") .. ": " .. name)
+
+  local target = getAddr()
+  if not target then return end
+
+  local addr = target - 0x48
+  local patch = {}
+  for i, v in ipairs(copied) do
+    table.insert(patch, {address = addr + (i - 1) * 4, flags = gg.TYPE_DWORD, value = v.value})
+  end
+
+  local extra = {
+    {0x18, 0}, {0x1C, 2592000}, {0x58, 0}, {0x60, 0}, {0x68, 0}
+  }
+  for _, e in ipairs(extra) do
+    table.insert(patch, {address = addr + e[1], flags = gg.TYPE_DWORD, value = e[2]})
+  end
+
+  gg.setValues(patch)
+  gg.toast("✅ 30-Day " .. name .. " " .. _ ("booster_applied_eventboost"))
+end
+
+-- ✅ Booster Functions
+function booster1(caller) patchBooster("🎲", "Rainbow Ball", "rainbow_amount_eventboost", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{-0x48,1110666508},{-0x44,6450543},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+
+function booster4(caller) patchBooster("🔨", "Jackhammer", "jack_amount_eventboost", {{-0x48,1211329808},{-0x44,1701670241},{-0x40,114},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster5(caller) patchBooster("🚿", "Hydrant", "hydrant_amount_eventboost", {{-0x48,1395879196},{-0x44,1734632812},{-0x40,1835100261},{-0x3C,7497069},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster6(caller) patchBooster("🧤", "Gloves", "gloves_amount_eventboost", {{-0x48,1194552590},{-0x44,1702260588},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+
+function booster7() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
+function booster8() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
+
+function booster9() apply30DayBooster("🎲 Rainbow Ball", -0x8) end
+function booster10() apply30DayBooster("💣 Bomb", -0x70) end
+function booster11() apply30DayBooster("🚀 Rocket", 0x60) end
+
+function booster12()
+  local addr = getAddr()
+  if not addr then return end
+  local prompt = gg.prompt({_("adventure_energy_prompt_eventboost")}, nil, {"number"})
+  local energy = tonumber(prompt and prompt[1])
+  if not energy or energy < 1 or energy > 100000 then
+    gg.alert(_("invalid_value_energy_eventboost"))
+    return
+  end
+  local patch = {1886938400,1953064037,1164865385,1735550318,121,0,0,energy}
+  local edits = {}
+  for i = 0, #patch - 1 do
+    table.insert(edits, {address = addr - 0x48 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
+  end
+  table.insert(edits, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+  gg.setValues(edits)
+  gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
+end
+
+function booster13()
+  local addr = getAddr()
+  if not addr then return end
+  local prompt = gg.prompt({_("exploder_adventure_prompt_eventboost")}, nil, {"number"})
+  local amount = tonumber(prompt and prompt[1])
+  if not amount or amount < 1 or amount > 5000 then
+    gg.alert(_("invalid_value_exploder_eventboost"))
+    return
+  end
+  local patch = {1886938394,1953064037,1416523625,1862292558,419456110,113,0,amount}
+  local edits = {}
+for i = 0, #patch - 1 do
+    table.insert(edits, {address = addr - 0x48 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
+  end
+  table.insert(edits, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+  gg.setValues(edits)
+  gg.toast(string.format(_("toast_exploder_applied_eventboost"), amount))
+end
+
+function boost2()
+  local indev = dev
+  local menu = gg.choice({
+    "✈️ • " .. _("profitable_flight_labboost"),
+    "🌾 • " .. _("rich_fields_labboost"),
+    "📈 • " .. _("record_demand_labboost"),
+    "🚚 • " .. _("busy_trade_labboost"),
+    "🧭 • " .. _("smart_navigation_labboost"),
+    "🤝 • " .. _("active_cooperation_labboost"),
+    "🔥 • " .. _("efficient_smelting_labboost"),
+    "🛒 • " .. _("vibrant_market_labboost"),
+    "⚙️ • " .. _("high_speed_production_labboost"),
+    "🌽 • " .. _("super_harvest_labboost"),
+    "🌾 • " .. _("advanced_farming_labboost"),
+    "💰 • " .. _("generous_customers_labboost"),
+    "💡 • " .. _("see_the_light_labboost"),
+    "🚀 • " .. _("shortcut_labboost"),
+    "🙌 • " .. _("extra_hands_labboost"),
+    "🏡 • " .. _("spacious_barn_labboost"),
+    "📦 • " .. _("large_request_labboost"),
+    "⛵ • " .. _("favorable_voyage_labboost"),
+    "❌ • " .. _("go_back_labboost")
+  }, nil, indev)
+
+  if not menu then
+    return
+  end
+
+  local actions = {
+    lab1, lab2, lab3, lab4, lab5, lab6, lab7, lab8, lab9,
+    lab10, lab11, lab12, lab13, lab14, lab15, lab16, lab17, lab18,
+    gp5 -- index 19: kembali ke menu utama booster
+  }
+
+  if actions[menu] then
+    actions[menu]()
+    if menu >= 1 and menu <= 18 then
+      -- opsional: efek visual atau suara bisa ditambahkan di sini
+    end
+  else
+  end
+
+-- Re-show the menu unless user chose "Back"
+if menu ~= 19 then
+while true do
+if gg.isVisible(true) then
+gg.setVisible(false)
+boost2()
+break
+end
+end
+end
+end
+
+-- 🧱 Booster Lab: Modular Patch Functfunction applyLabBooster(label, emoji, name)
+  function applyLabBooster(label, emoji, name)
+  local addr = getAddr()
+  if not addr then
+    gg.alert(_("no_match_labboost", name))
+    return
+  end
+
+  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost")}, nil, {"number"})
+  if not prompt then
+    gg.alert(_("no_amount_labboost"))
+return
+  end
+
+  local amt = tonumber(prompt[1])
+  if not amt or amt < 1 or amt > 500 then
+    gg.alert(_("invalid_input_labboost"))
+    return
+  end
+
+  local patch = {}
+  for i, val in ipairs(label) do
+    table.insert(patch, {address = addr - 0x48 + (i - 1) * 4, flags = 4, value = val})
+  end
+
+  table.insert(patch, {address = addr - 0x30, flags = 4, value = 0})    -- duration
+  table.insert(patch, {address = addr - 0x2C, flags = 4, value = amt})  -- amount
+  for _, offset in ipairs({0x10, 0x18, 0x20}) do
+    table.insert(patch, {address = addr + offset, flags = 4, value = 0})
+  end
+
+  gg.setValues(patch)
+  gg.toast(emoji .. " " .. name .. " set to " .. amt .. "")
+end
+
+-- 🧬 Copy Template for Lab18
+local function copyPatchTemplate(offset)
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("1701081679;1919906915;49;23::", gg.TYPE_DWORD)
+gg.refineNumber("23", gg.TYPE_DWORD)
+local ref = gg.getResults(1)
+if #ref == 0 then return nil end
+
+local base = ref[1].address + offset
+local copied = {}
+for i = 0, 5 do
+table.insert(copied, {address = base + i * 4, flags = gg.TYPE_DWORD})
+end
+return gg.getValues(copied)
+end
+
+function lab18(name, offset)
+  name = name or _("unnamed_booster_labboost")
+  offset = offset or -0x8
+
+  local copied = copyPatchTemplate(offset)
+  if not copied then
+    gg.alert(_("ref_not_found_labboost", name))
+    return
+  end
+
+  gg.alert("📋 " .. name .. " template copied")
+
+  local addr = getAddr()
+  if not addr then return end
+  addr = addr - 0x48
+
+  local patch = {}
+  for i, v in ipairs(copied) do
+    patch[i] = {address = addr + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD}
+  end
+
+  patch[7] = {address = addr + 6 * 4, value = 0, flags = gg.TYPE_DWORD} -- duration
+
+  local input = gg.prompt({"⛵ " .. _("enter_amount_labboost")}, nil, {"number"})
+  local val = tonumber(input and input[1])
+  if not val or val < 1 or val > 500 then
+    gg.alert(_("invalid_amount_labboost"))
+    return
+  end
+
+  patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
+  for _, o in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+table.insert(patch, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(patch)
+  gg.toast("⛵ " .. name .. " set to " .. val)
+end
+
+-- 🧪 Booster Lab Functions (lab1 to lab17)
+function lab1()  applyLabBooster({0x6F6F4222,0x69417473,0x726F7072,0x696F4374,0x0000736E,0x00000000}, "✈️", _("lab1_labboost")) end
+function lab2()  applyLabBooster({0x6F6F4226,0x70537473,0x55646565,0x72614870,0x74736576,0x00000000}, "🌾", _("lab2_labboost")) end
+function lab3()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x64724F70,0x00007265,0x00000000}, "📈", _("lab3_labboost")) end
+function lab4()  applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61654470,0x0072656C,0x00000000}, "🚚", _("lab4_labboost")) end
+function lab5()  applyLabBooster({0x6F6F4222,0x70537473,0x55646565,0x69685370,0x00007370,0x00000000}, "🧭", _("lab5_labboost")) end
+function lab6()  applyLabBooster({0x6F6F4228,0x6C437473,0x65486E61,0x6552706C,0x73657571,0x00000074}, "🤝", _("lab6_labboost")) end
+function lab7()  applyLabBooster({0x6F6F4222,0x69547473,0x6D53656D,0x65746C65,0x00007972,0x00000000}, "🔥", _("lab7_labboost")) end
+function lab8()  applyLabBooster({0x6F6F421E,0x69547473,0x614D656D,0x74656B72,0x00000000,0x00000000}, "🛒", _("lab8_labboost")) end
+function lab9()  applyLabBooster({0x6F6F4220,0x69547473,0x6146656D,0x726F7463,0x00000079,0x00000000}, "⚙️", _("lab9_labboost")) end
+function lab10() applyLabBooster({0x6F6F4226,0x72507473,0x6375646F,0x72614874,0x74736576,0x00000000}, "🌽", _("lab10_labboost")) end
+function lab11() applyLabBooster({0x6F6F4220,0x72507473,0x6375646F,0x72614674,0x0000006D,0x00000000}, "🌾", _("lab11_labboost")) end
+function lab12() applyLabBooster({0x6F6F421E,0x6F4D7473,0x4F79656E,0x72656472,0x00000000,0x00000000}, "💰", _("lab12_labboost")) end
+function lab13() applyLabBooster({0x6F6F4220,0x614C7473,0x7265746E,0x6E694D6E,0x00000065,0x00000000}, "💡", _("lab13_labboost")) end
+function lab14() applyLabBooster({0x6F6F4224,0x70537473,0x55646565,0x61725470,0x00736E69,0x00000000}, "🚀", _("lab14_labboost")) end
+function lab15() applyLabBooster({0x6F6F4224,0x6F447473,0x656C6275,0x74636146,0x0079726F,0x00000000}, "🙌", _("lab15_labboost")) end
+function lab16() applyLabBooster({0x6F6F4228,0x74537473,0x6761726F,0x70614365,0x74696361,0x00000079}, "🏡", _("lab16_labboost")) end
+function lab17() applyLabBooster({0x6F6F421C,0x614D7473,0x6E6F4478,0x00657461,0x74696361,0x00000079}, "📦", _("lab17_labboost")) end
+
+-- ✅ Alias rw3() untuk akses dari menue3
+function rw3()
+  gp6("free")
+end
+
+-- ✅ Menu Kupon Utama (dipakai juga di gp8)
+function gp6(caller)
+  local indev = dev
+  local menu = gg.choice({
+    "🚚 • " .. _("coupon_loader_kuponpon"),
+    "🧑‍💼 • " .. _("coupon_dealer_kuponpon"),
+    "🏡 • " .. _("coupon_barn_kuponpon"),
+    "🌆 • " .. _("coupon_city_kuponpon"),
+    "🏭 • " .. _("coupon_factory_kuponpon"),
+    "🚆 • " .. _("coupon_train_kuponpon"),
+    "🏝️ • " .. _("coupon_island_kuponpon"),
+    "❌ • " .. _("back_kuponpon")
+  }, nil, indev)
+
+  if not menu then
+    return
+  end
+
+  local actions = {
+    kupon1, kupon2, kupon3,
+    kupon4, kupon5, kupon6, kupon7
+  }
+
+  if menu >= 1 and menu <= 7 then
+    actions[menu](caller)
+  elseif menu == 8 then
+    if caller == "free" then
+      menue3()
+    else
+      menu1()
+    end
+    return
+  else
+    return
+  end
+
+  -- ✅ Tampilkan ulang jika bukan 'Back'
+  if menu ~= 8 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        gp6(caller)
+        break
+      end
+    end
+  end
+end
+
+-- 🧱 Fungsi Modular Apply Kupon
+function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
+  local addr = getAddr()
+  if not addr then return end
+
+  if caller == "free" and maxAmount > 500 then
+    maxAmount = 500
+  end
+
+  local prompt = gg.prompt({emoji .. " " .. _(promptKey) .. " [1–" .. maxAmount .. "]:"}, nil, {"number"})
+  local amt = tonumber(prompt and prompt[1])
+  if not amt then return gg.alert(_("no_amount_kuponpon")) end
+  if amt < 1 or amt > maxAmount then
+    return gg.alert(_("invalid_range_kuponpon") .. " 1 – " .. maxAmount)
+  end
+
+  local edits = {}
+  for k, v in pairs(offsets) do
+    edits[#edits + 1] = {
+      address = addr + k,
+      flags = gg.TYPE_DWORD,
+      value = (v == "AMT") and amt or v
+    }
+  end
+
+  gg.setValues(edits)
+  gg.toast(emoji .. " " .. _(label) .. ": " .. amt .. " ✅")
+end
+
+-- 🎟️ Kupon-Kupon
+function kupon1(caller) applyCoupon("Loader Coupon", "🚚", "loader_coupon_kuponpon", 25000, caller, {
+  [-0x48]=1970225964, [-0x44]=1282305904, [-0x40]=1415864687,
+  [-0x3C]=1852399986, [-0x38]=1886546241, [-0x34]=7631471,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon2(caller) applyCoupon("Hire Dealer Coupon", "🧑‍💼", "dealer_coupon_kuponpon", 10000, caller, {
+  [-0x48]=0x756F4320, [-0x44]=0x486E6F70, [-0x40]=0x44657269,
+  [-0x3C]=0x656C6165, [-0x38]=0x00000072, [-0x34]=0,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon3(caller) applyCoupon("Barn Upgrade Coupon", "🏡", "barn_coupon_kuponpon", 5000, caller, {
+  [-0x48]=1701996056, [-0x44]=1651327333, [-0x40]=1850307169,
+  [-0x3C]=99, [-0x38]=0, [-0x34]=0,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon4(caller) applyCoupon("City Expansion Coupon", "🌆", "city_coupon_kuponpon", 5000, caller, {
+  [-0x48]=1701996058, [-0x44]=1886930277, [-0x40]=1769172577,
+  [-0x3C]=28271, [-0x38]=0, [-0x34]=0,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon5(caller) applyCoupon("Factory Upgrade Coupon", "🏭", "factory_coupon_kuponpon", 5000, caller, {
+  [-0x48]=1970225960, [-0x44]=1433300848, [-0x40]=1634887536,
+  [-0x3C]=1632003428, [-0x38]=1919906915, [-0x34]=121,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon6(caller) applyCoupon("Train Upgrade Coupon", "🚆", "train_coupon_kuponpon", 5000, caller, {
+  [-0x48]=1970225956, [-0x44]=1433300848, [-0x40]=1634887536,
+  [-0x3C]=1918133604, [-0x38]=7235937, [-0x34]=120,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+
+function kupon7(caller) applyCoupon("Island Upgrade Coupon", "🏝️", "island_coupon_kuponpon", 5000, caller, {
+  [-0x48]=1970225958, [-0x44]=1433300848, [-0x40]=1634887536,
+  [-0x3C]=1934189924, [-0x38]=1684955500, [-0x34]=0,
+  [-0x30]=0, [-0x2C]="AMT", [0x10]=0, [0x18]=0, [0x20]=0
+}) end
+  
+  -- ✅ Alias rw3() untuk akses dari menue3
+function rw4()
+  gp7("free")
+end
+
+function gp7(caller)
+  local indev = dev
+  local menu = gg.choice({
+    "🟧 • " .. _("orange_gem_gemgem"),
+    "🟩 • " .. _("green_gem_gemgem"),
+    "🟥 • " .. _("red_gem_gemgem"),
+    "❌ • " .. _("go_back_gemgem")
+  }, nil, indev)
+
+  if not menu then
+    return
+  end
+
+  local actions = {gem1, gem2, gem3}
+  if menu >= 1 and menu <= 3 then
+    actions[menu]()
+  elseif menu == 4 then
+    if caller == "free" then
+      menue3()
+    else
+      menu1()
+    end
+    return
+else
+    return
+  end
+
+  if menu ~= 4 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        gp7(caller)
+        break
+      end
+    end
+  end
+end
+
+-- 💎 Modular Gem Reward Function (dengan batasan free max 100)
+function applyGemReward(label, emoji, gemId, caller)
+  local base = getAddr()
+  if not base then
+    return
+  end
+
+  local max = (caller == "free") and 100 or 10000
+  local promptText = string.format("%s %s %s [1–%d]:", emoji, _("enter_amount_gemgem"), label, max)
+  local p = gg.prompt({promptText}, nil, {"number"})
+  local val = tonumber(p and p[1])
+
+  if not val then
+    gg.alert(_("no_input_gemgem"))
+    return
+  end
+
+  if val < 1 or val > max then
+    gg.alert(_("invalid_input_gemgem") .. max .. ".")
+    return
+  end
+
+  local a = {}
+  local function dw(offset, v)
+    table.insert(a, {address = base + offset, flags = gg.TYPE_DWORD, value = v})
+  end
+
+  dw(-0x48, 1835362056)
+  dw(-0x44, gemId)
+  for _, o in ipairs({-0x40, -0x3C, -0x38, -0x34, -0x30}) do dw(o, 0) end
+  dw(-0x2C, val)
+  dw(0x10, 0)
+  dw(0x18, 0)
+  dw(0x20, 0)
+
+  gg.setValues(a)
+  gg.toast(string.format("%s %s %s %s 💎", emoji, label, _("reward_set_gemgem"), val))
+end
+
+-- 🔸 Specific Gem Wrappers
+function gem1(caller) applyGemReward(_("orange_gem_gemgem"), "🟧", 49, caller) end
+function gem2(caller) applyGemReward(_("green_gem_gemgem"),  "🟩", 50, caller) end
+function gem3(caller) applyGemReward(_("red_gem_gemgem"),    "🟥", 51, caller) end
+  
+  function gp8()
+  local title = banner
+  local menu = gg.choice({
+    "🏅 • " .. _("metal_ingots_materialyal"),
+    "⛏️ • " .. _("mining_tools_materialyal"),
+    "🧰 • " .. _("community_tools_materialyal"),
+    "🏡 • " .. _("barn_tools_materialyal"),
+    "🚧 • " .. _("expansion_tools_materialyal"),
+    "❌ • " .. _("go_back_materialyal")
+  }, nil, title)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then tools1()
+  elseif menu == 2 then tools2()
+elseif menu == 3 then tools3()
+  elseif menu == 4 then tools4()
+  elseif menu == 5 then tools5()
+  elseif menu == 6 then menu1()
+  else
+  end
+end
+
+-- ✅ Alias rw2 untuk Free Script
+function rw1()
+  tools1("free")
+end
+
+function tools1(caller)
+  local indev = dev
+  _G.ingotCaller = caller -- Simpan caller secara global
+
+  local menu = gg.choice({
+    "🥉 • " .. _("bronze_ingot_batangtang"),
+    "🥈 • " .. _("silver_ingot_batangtang"),
+    "🥇 • " .. _("gold_ingot_batangtang"),
+    "🏅 • " .. _("platinum_ingot_batangtang"),
+    "❌ • " .. _("go_back_batangtang")
+  }, nil, indev)
+
+  if menu == nil then
+    return
+  end
+
+  local actions = {
+    batang1, batang2, batang3, batang4
+  }
+
+  if menu >= 1 and menu <= 4 then
+    actions[menu]()
+  elseif menu == 5 then
+    -- Kembali ke menu sesuai asal
+    if caller == "free" then
+      menue3()
+    else
+      gp8()
+    end
+    return
+  else
+    return
+  end
+
+  -- Tampilkan ulang jika bukan tombol "Go Back"
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      tools1(caller)
+      break
+    end
+  end
+end
+
+-- ✅ Fungsi utama untuk memberi reward Ingot
+function applyIngotReward(labelKey, emoji, hexes)
+  local base = getAddr()
+  if not base then return end
+
+  local maxval = _G.ingotCaller == "free" and 100 or 5000
+  local prompt = gg.prompt({
+    emoji .. " " .. _( "enter_amount_batangtang") .. " " .. _(labelKey) .. " [1–" .. maxval .. "]:"
+  }, nil, {"number"})
+  local val = tonumber(prompt and prompt[1])
+
+  if not val or val < 1 or val > maxval then
+    if val then
+      gg.alert(_( "invalid_input_batangtang") .. "\n" .. _( "invalid_range_batangtang") .. " 1–" .. maxval .. ".")
+    else
+      gg.alert(_( "no_input_batangtang"))
+    end
+    return
+  end
+
+  local a, offsets = {}, {-0x48, -0x44, -0x40, -0x3C, -0x38, -0x34}
+  for i, v in ipairs(hexes) do
+    a[#a + 1] = {address = base + offsets[i], flags = gg.TYPE_DWORD, value = v}
+  end
+
+  -- Patch tambahan
+  local patch = {
+    {-0x30, 0},
+    {-0x2C, val},
+    {0x10, 0},
+    {0x18, 0},
+    {0x20, 0}
+  }
+  for _, v in ipairs(patch) do
+    a[#a + 1] = {address = base + v[1], flags = gg.TYPE_DWORD, value = v[2]}
+  end
+
+  gg.setValues(a)
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "set_to_batangtang") .. ": " .. val .. " ✅")
+end
+
+-- ✅ Fungsi-fungsi ingot individual
+function batang1()
+  applyIngotReward("bronze", "🥉", {
+    0x6F724228, 0x42657A6E, 0x696C6C75,
+    0x6F436E6F, 0x65746E75, 0x00000072
+  })
+end
+
+function batang2()
+  applyIngotReward("silver", "🥈", {
+    0x6C695328, 0x42726576, 0x696C6C75,
+    0x6F436E6F, 0x65746E75, 0x00000072
+  })
+end
+
+function batang3()
+  applyIngotReward("gold", "🥇", {
+    0x6C6F4724, 0x6C754264, 0x6E6F696C,
+    0x6E756F43, 0x00726574, 0x00000000
+  })
+end
+
+function batang4()
+  applyIngotReward("platinum", "🏅", {
+    0x616C502C, 0x756E6974, 0x6C75426D,
+    0x6E6F696C, 0x6E756F43, 0x00726574
+  })
+end
+
+-- ✅ Alias rw2() untuk akses dari menue3
+function rw2()
+  tools2("free")
+end
+
+-- ✅ tools2 juga dipakai di gp8
+function tools2(caller)
+  local indev = dev
+  local options, actions = {}, {}
+
+  -- Tambahkan item normal
+  table.insert(options, "⛏️ • " .. _("pickaxe_macul"))
+  table.insert(actions, altam1)
+  table.insert(options, "🧨 • " .. _("tnt_macul"))
+  table.insert(actions, altam2)
+  table.insert(options, "💣 • " .. _("dynamite_macul"))
+  table.insert(actions, altam3)
+
+  -- Bonus hanya untuk premium
+  if caller ~= "free" then
+    table.insert(options, "🔁 • " .. _("x2_ore_bonus_macul"))
+    table.insert(actions, altam4)
+  end
+
+  table.insert(options, "❌ • " .. _("go_back_macul"))
+
+local subMenu = gg.choice(options, nil, indev)
+
+  if subMenu == nil then
+    return
+  end
+
+  if subMenu >= 1 and subMenu <= #actions then
+    actions[subMenu](caller)
+  elseif subMenu == #options then
+    if caller == "free" then
+      menue3()
+    else
+      gp8()
+    end
+    return
+  else
+    return
+  end
+
+  -- Auto refresh menu
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      tools2(caller)
+      break
+    end
+  end
+end
+
+-- 🎯 Modular Mining Tools Reward
+function applyMiningReward(label, emoji, itemId, caller, duration)
+  local base = getAddr()
+  if not base then
+    return
+  end
+
+  local edits = {}
+  local val
+
+  local function dw(off, v)
+    table.insert(edits, {address = base + off, flags = gg.TYPE_DWORD, value = v})
+  end
+
+  if duration then
+    -- 30-Day Bonus Patch
+    dw(-0x48, 1835619372)
+    dw(-0x44, 1850041445)
+    dw(-0x40, 2037672308)
+    dw(-0x3C, 1635214674)
+    dw(-0x38, 1766679666)
+    dw(-0x34, itemId)
+    dw(-0x30, 0)
+    dw(-0x2C, duration)
+    val = duration
+  else
+    local max = (caller == "free") and 500 or 25000
+    local input = gg.prompt({emoji .. " " .. _("mining_prompt_macul") .. " " .. label .. " [1–" .. max .. "]:"}, nil, {"number"})
+    val = tonumber(input and input[1])
+    if not val then
+      gg.alert(_("cancel_input_macul"))
+      return
+    end
+    if val < 1 or val > max then
+      gg.alert(_("invalid_input_macul") .. " 1 - " .. max .. ".")
+      return
+    end
+
+    -- Normal Item Patch
+    dw(-0x48, itemId)
+    for i = -0x44, -0x30, 4 do dw(i, 0) end
+    dw(-0x2C, val)
+  end
+
+  -- Clean-up
+  dw(0x10, 0)
+  dw(0x18, 0)
+dw(0x20, 0)
+
+  gg.setValues(edits)
+
+  if duration then
+    gg.toast(emoji .. " " .. label .. " " .. _("success_bonus_macul"))
+  else
+    gg.toast(emoji .. " " .. label .. " set to: " .. val .. " ✅")
+  end
+end
+
+-- 🧱 Modular Calls
+function altam1(caller) applyMiningReward(_("pickaxes_macul"),  "⛏️", 3304708, caller) end
+function altam2(caller) applyMiningReward(_("tnt_macul"),       "🧨", 3239172, caller) end
+function altam3(caller) applyMiningReward(_("dynamite_macul"),  "💣", 3370244, caller) end
+function altam4(caller) applyMiningReward(_("ore_bonus_macul"), "🔁", 3237230, caller, 2592000) end
+
+-- ✅ Alias rw7() untuk akses dari menue3
+function rw6()
+  tools3("free")
+end
+
+-- ✅ tools3 digunakan di gp8
+function tools3(caller)
+  local indev = dev
+  local menu = gg.choice({
+    "🪟 • " .. _("glass_matdung"),
+    "🧱 • " .. _("bricks_matdung"),
+    "🪵 • " .. _("slab_matdung"),
+    "🔨 • " .. _("jackhammer_matdung"),
+    "⚙️ • " .. _("electric_saw_matdung"),
+    "🪛 • " .. _("drill_matdung"),
+    "❌ • " .. _("back_matdung")
+  }, nil, indev)
+
+  if not menu then
+    return
+  end
+
+  local actions = {
+    gekom1, gekom2, gekom3, gekom4, gekom5, gekom6
+  }
+
+  if menu >= 1 and menu <= 6 then
+    actions[menu](caller)
+  elseif menu == 7 then
+    if caller == "free" then
+      menue3()
+    else
+      gp8()
+    end
+    return
+  else
+    return
+  end
+
+  -- ✅ Tampilkan ulang hanya jika bukan "Back"
+  if menu ~= 7 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        tools3(caller)
+        break
+      end
+    end
+  end
+end
+
+-- ✅ Fungsi modular hadiah konstruksi
+function applyConstructReward(label, emoji, hexList, caller)
+  local base = getAddr()
+  if not base then return end
+
+  local max = (caller == "free") and 100 or 5000
+  local promptText = _("input_construct_matdung"):gsub("{label}", label):gsub("{max}", max)
+  local prompt = gg.prompt({emoji .. " " .. promptText}, nil, {"number"})
+  local amount = tonumber(prompt and prompt[1])
+
+  if not amount then
+    gg.alert(_("no_amount_matdung"))
+    return
+  end
+
+  if amount < 1 or amount > max then
+local msg = _("invalid_input_matdung"):gsub("{max}", max)
+    gg.alert(msg)
+    return
+  end
+
+  local edits = {}
+  for _, hex in ipairs(hexList) do
+    local addr = base + hex[1]
+    local val = (hex[2] == "amount") and amount or hex[2]
+    table.insert(edits, {address = addr, flags = gg.TYPE_DWORD, value = val})
+  end
+
+  gg.setValues(edits)
+
+  local msg = _("reward_set_matdung"):gsub("{emoji}", emoji):gsub("{label}", label):gsub("{amount}", amount)
+  gg.toast(msg)
+end
+
+-- ✅ Fungsi hadiah spesifik
+function gekom1(caller) applyConstructReward(_("glass_matdung"), "🪟", {
+  {-0x48, 0x616C470A}, {-0x44, 0x00007373}, {-0x40, 0xA4A23A90},
+  {-0x3C, 0x8EFCC1BB}, {-0x38, 0x23330000}, {-0x34, 0x6F},
+  {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0}, {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function gekom2(caller) applyConstructReward(_("bricks_matdung"), "🧱", {
+  {-0x48, 0x6972420A}, {-0x44, 0x00006B63}, {-0x40, 0}, {-0x3C, 0},
+  {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
+  {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function gekom3(caller) applyConstructReward(_("slabs_matdung"), "🪵", {
+  {-0x48, 0x696C500A}, {-0x44, 0x00006174}, {-0x40, 0}, {-0x3C, 0},
+  {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
+  {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function gekom4(caller) applyConstructReward(_("jackhammer_matdung"), "🔨", {
+  {-0x48, 1667328532}, {-0x44, 1835100267}, {-0x40, 7497069}, {-0x3C, 0},
+  {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
+  {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function gekom5(caller) applyConstructReward(_("saw_matdung"), "⚙️", {
+  {-0x48, 2003791888}, {-0x44, 1634955877}, {-0x40, 119}, {-0x3C, 0},
+  {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
+  {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function gekom6(caller) applyConstructReward(_("drill_matdung"), "🪛", {
+  {-0x48, 1769104394}, {-0x44, 1627417708}, {-0x40, 119}, {-0x3C, 0},
+  {-0x38, 0}, {-0x34, 0}, {-0x30, 0}, {-0x2C, "amount"}, {0x10, 0},
+  {0x18, 0}, {0x20, 0}
+}, caller) end
+
+function tools4()
+  local indev = dev
+  local menu = gg.choice({
+    "🔨 • " .. _("hammer_gudangdang"),
+    "📍 • " .. _("nail_gudangdang"),
+    "🪣 • " .. _("red_paint_gudangdang"),
+    "❌ • " .. _("go_back_gudangdang")
+  }, nil, indev)
+
+  if menu == nil then
+    return
+  end
+
+  local actions = {
+    lumbung1, -- Hammer
+    lumbung2, -- Nail
+    lumbung3, -- Red Paint
+    gp8       -- Back
+  }
+
+  if actions[menu] then
+    actions[menu]()
+if menu >= 1 and menu <= 3 then
+    end
+  else
+    return
+  end
+
+  if menu ~= 4 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        tools4()
+        break
+      end
+    end
+  end
+end
+
+-- 🛠 Fungsi apply barn reward
+function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
+  local base = getAddr()
+  if not base then return end
+
+  local p = gg.prompt({emoji .. " " .. _( "enter_amount_gudangdang" ) .. " " .. _( labelKey ) .. ":"}, nil, {"number"})
+  local amount = tonumber(p and p[1])
+  if not amount or amount < 1 or amount > 5000 then
+    gg.alert(_( "invalid_input_gudangdang" ))
+    return
+  end
+
+  local patch = {
+    {address = base - 0x48, flags = gg.TYPE_DWORD, value = hex1},
+    {address = base - 0x44, flags = gg.TYPE_DWORD, value = hex2},
+    {address = base - 0x40, flags = gg.TYPE_DWORD, value = hex3},
+    {address = base - 0x2C, flags = gg.TYPE_DWORD, value = amount},
+    {address = base + 0x10, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x20, flags = gg.TYPE_DWORD, value = 0}
+  }
+
+  for o = 0x3C, 0x30, -4 do
+    table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+  end
+
+  gg.setValues(patch)
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set_gudangdang" ) .. ": " .. amount .. " ✅")
+end
+
+-- 📦 Item lumbung
+function lumbung1()
+  applyBarnReward("hammers_gudangdang", "🔨", 0x6D616812, 0x4D72656D, 0x00007461)
+end
+
+function lumbung2()
+  applyBarnReward("nails_gudangdang", "📍", 0x69616E0E, 0x74614D6C, 0x00000000)
+end
+
+function lumbung3()
+  applyBarnReward("red_paint_gudangdang", "🪣", 0x69617016, 0x6552746E, 0x74614D64)
+end
+
+function tools5()
+  local indev = dev
+  local menu = gg.choice({
+    "🪚 • " .. _("saw_waswas" ),
+    "🪓 • " .. _("axe_waswas" ),
+    "⛏️ • " .. _("shovel_waswas" ),
+    "❌ • " .. _("go_back_waswas" )
+  }, nil, indev)
+
+  if menu == nil then
+    return
+  end
+
+  local actions = {
+    luas1,    -- Saw
+    luas2,    -- Axe
+    luas3,    -- Shovel
+    gp8       -- Back
+  }
+
+  if actions[menu] then
+    actions[menu]()
+if menu >= 1 and menu <= 3 then
+      -- bisa tambahkan aksi lain di sini kalau perlu
+    end
+  else
+    return
+  end
+
+  -- Tampilkan ulang menu jika bukan Back
+  if menu ~= 4 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        tools5()
+        break
+      end
+    end
+  end
+end
+
+function applyExpansionReward(labelKey, emoji, toolId, metaVal)
+    local base = getAddr()
+    if not base then return end
+
+    local label = _(labelKey)
+    local p = gg.prompt({emoji .. " " .. _("enter_amount_waswas") .. " " .. label}, nil, {"number"})
+
+    local amount = tonumber(p and p[1])
+    if not amount or amount < 1 or amount > 5000 then
+        gg.alert(_("invalid_input_waswas"))
+        return
+    end
+
+    local patch = {
+        {address = base - 0x48, flags = gg.TYPE_DWORD, value = toolId},
+        {address = base - 0x2C, flags = gg.TYPE_DWORD, value = amount},
+        {address = base + 0x10, flags = gg.TYPE_DWORD, value = 0},
+        {address = base + 0x18, flags = gg.TYPE_DWORD, value = 0},
+        {address = base + 0x20, flags = gg.TYPE_DWORD, value = 0}
+    }
+
+    if metaVal then
+        table.insert(patch, {address = base - 0x44, flags = gg.TYPE_DWORD, value = metaVal})
+        for o = 0x40, 0x30, -4 do
+            table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+        end
+    else
+        for o = 0x44, 0x30, -4 do
+            table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+        end
+    end
+
+    gg.setValues(patch)
+    gg.toast(emoji .. " " .. label .. " " .. _("reward_set_waswas") .. ": " .. amount .. " ✅")
+end
+
+-- 🔧 Tool Reward Functions
+function luas1() applyExpansionReward("saw_waswas", "🪚", 1414419462) end
+function luas2() applyExpansionReward("axe_waswas", "🪓", 1702387974) end
+function luas3() applyExpansionReward("shovel_waswas", "⛏️", 1667854344, 107) end
+
+-- 🔹 Fungsi menu rw7
+function rw7()
+  gp9("free")
+end
+
+-- 🔹 Fungsi utama gp9 dengan multi bahasa
+function gp9(caller)
+  local indev = dev
+  local isPremium = (caller ~= "free")
+
+  -- Susun menu sesuai status premium
+  local menuLabels = {
+    _("express_plane_keuntungan"),
+    _("instant_crop_keuntungan"),
+    _("fast_farm_keuntungan"),
+  }
+
+  if isPremium then
+    table.insert(menuLabels, _("instant_build_keuntungan"))
+    table.insert(menuLabels, _("unlimited_barn_keuntungan"))
+  end
+
+  table.insert(menuLabels, _("train_booster_keuntungan"))
+  table.insert(menuLabels, _("double_train_keuntungan"))
+  table.insert(menuLabels, _("go_back_keuntungan"))
+
+  local menu = gg.choice(menuLabels, nil, indev)
+  if not menu then
+    return
+  end
+
+  local actions = {
+    perk1,  -- Express Plane
+    perk2,  -- Instant Crop
+    perk3,  -- Fast Farm
+  }
+
+  if isPremium then
+    table.insert(actions, perk4) -- Instant Build
+    table.insert(actions, perk5) -- Unlimited Barn
+  end
+
+  table.insert(actions, perk6) -- Train Booster
+  table.insert(actions, perk7) -- Double Train
+
+  if menu >= 1 and menu <= #actions then
+    actions[menu](caller)
+  elseif menu == #menuLabels then
+    if caller == "free" then
+      menue3()
+    else
+      menu1()
+    end
+    return
+  else
+    return
+  end
+
+  if menu ~= #menuLabels then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        gp9(caller)
+        break
+      end
+    end
+  end
+end
+
+-- 📌 Fungsi umum apply perk
+function applyPerk(labelKey, emoji, values)
+  local base = getAddr()
+  if not base then return end
+
+  local addrList = {}
+  for _, item in ipairs(values) do
+    table.insert(addrList, {
+      address = base + item.offset,
+      flags = gg.TYPE_DWORD,
+value = item.value
+    })
+  end
+
+  gg.setValues(addrList)
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied_keuntungan"))
+end
+
+function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1852793872;1600484449;23;24::201", gg.TYPE_DWORD)
+  gg.refineNumber(matchValue, gg.TYPE_DWORD)
+  local src = gg.getResults(1)
+  if #src == 0 then
+    gg.alert(_"source_not_found")
+    return
+  end
+
+  local base = src[1].address - 0x8
+  local copy = {}
+  for i = 0, 5 do
+    table.insert(copy, {address = base + i * 4, flags = gg.TYPE_DWORD})
+  end
+  copy = gg.getValues(copy)
+
+  local tgt = getAddr()
+  if not tgt then return end
+
+  local addr = tgt - 0x48
+  local newValues = {}
+
+  for i, val in ipairs(copy) do
+    table.insert(newValues, {
+      address = addr + (i - 1) * 4,
+      value = val.value,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  for _, v in ipairs(extraValues or {}) do
+    table.insert(newValues, {
+      address = addr + v.offset,
+      value = v.value,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  if customInput then
+    local input = gg.prompt({emoji .. " " .. _(customInput.prompt)}, nil, {"number"})
+    if not input then return end
+    local amount = tonumber(input[1])
+    if not amount or amount < customInput.min or amount > customInput.max then
+      gg.alert("🚫 " .. _(customInput.prompt))
+      return
+    end
+    table.insert(newValues, {
+      address = addr + customInput.offset,
+      value = amount,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  gg.setValues(newValues)
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _("perk_applied_keuntungan"))
+end
+
+-- 📌 Perk functions multi bahasa
+function perk1()
+  applyPerk("perk_express_plane_keuntungan", "✈️", {
+    {offset = -0x48, value = 1599099684},
+    {offset = -0x44, value = 1936682818},
+    {offset = -0x40, value = 1701860212},
+    {offset = -0x3C, value = 1884644453},
+    {offset = -0x38, value = 7498049},
+    {offset = -0x34, value = 7631717},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 100},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function perk2()
+  applyPerk("perk_instant_crop_keuntungan", "🌾", {
+    {offset = -0x48, value = 1599099692},
+    {offset = -0x44, value = 1936682818},
+    {offset = -0x40, value = 1701860212},
+    {offset = -0x3C, value = 1884644453},
+    {offset = -0x38, value = 1987207496},
+    {offset = -0x34, value = 7631717},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 100},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function perk3()
+  applyPerk("perk_rapid_farm_keuntungan", "🐄", {
+    {offset = -0x48, value = 1599099688},
+    {offset = -0x44, value = 1936682818},
+    {offset = -0x40, value = 1701860212},
+    {offset = -0x3C, value = 1884644453},
+    {offset = -0x38, value = 1836212550},
+    {offset = -0x34, value = 7602291},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 100},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function perk4()
+  applyCopiedPerk("perk_instant_building_keuntungan", "🏗️", 24, {
+    {offset = 24, value = 0},
+    {offset = 0x58, value = 0},
+    {offset = 0x60, value = 0},
+    {offset = 0x68, value = 0},
+    {offset = 28, value = 100}
+  })
+end
+
+function perk5()
+  applyCopiedPerk("perk_unlimited_barn_keuntungan", "🏡", 23, {
+    {offset = 24, value = 0},
+    {offset = 0x58, value = 0},
+    {offset = 0x60, value = 0},
+    {offset = 0x68, value = 0}
+  }, {
+    prompt = "enter_barn_boost_keuntungan",
+    offset = 28,
+    min = 1,
+    max = 20000
+  })
+end
+
+function perk6()
+  applyPerk("perk_train_boost_keuntungan", "🚆", {
+    {offset = -0x48, value = 0x5F50532A},
+    {offset = -0x44, value = 0x736F6F42},
+    {offset = -0x40, value = 0x65705374},
+    {offset = -0x3C, value = 0x70556465},
+    {offset = -0x38, value = 0x69617254},
+    {offset = -0x34, value = 0x0000736E},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 3},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function perk7()
+  applyPerk("perk_double_train_keuntungan", "🚃", {
+    {offset = -0x48, value = 0x5F505322},
+    {offset = -0x44, value = 0x736F6F42},
+    {offset = -0x40, value = 0x61725474},
+    {offset = -0x3C, value = 0x614D6E69},
+    {offset = -0x38, value = 0x4A007374},
+    {offset = -0x34, value = 0x00000078},
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 3},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+  
+function gp3()
+  local title = banner
+  local menu = gg.choice({
+  "🎍 • Decoration Collection",
+  "🚛 • Transport Skins",
+  "🪧 • City Town Sign",
+  "🧩 • Stickers",
+  "🖼️ • Frame Style",
+  "👤 • Avatar List",
+  "🎖️ • Bagde Collection",
+  "❌ • Go Back"
+}, nil, title)
+
+  if menu == nil then
+    return
+    elseif menu == 1 then minidekor()
+  elseif menu == 2 then kums1()
+  elseif menu == 3 then kums2()
+  elseif menu == 4 then kums3()
+  elseif menu == 5 then kums4()
+  elseif menu == 6 then kums5()
+  elseif menu == 7 then kums6()
+  elseif menu == 8 then menu1()
+  end
+end
+
+function minidekor()
+local indev = dev
+  local menu = gg.choice({
+"🎄 • Christmas Decoration",
+"🏮 • Lantern Decoration",
+"🐰 • Easter Decoration",
+"💘 • Valentine Decoration",
+"🎃 • Halloween Decoration",
+"🏺 • Egypt Decoration",
+"🌟 • Exclusive Decoration",
+  "❌ • Go Back"
+  }, nil, indev)
+
+    if menu == nil then
+    return
+  elseif menu == 1 then coldekor1()
+  elseif menu == 2 then coldekor2()
+  elseif menu == 3 then coldekor3()
+  elseif menu == 4 then coldekor4()
+  elseif menu == 5 then coldekor5()
+  elseif menu == 6 then coldekor6()
+  elseif menu == 7 then coldekor7()
+  elseif menu == 8 then gp3()
+  end
+end
+
