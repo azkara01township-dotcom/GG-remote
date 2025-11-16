@@ -19,12 +19,11 @@ local dev = os.date("┇💎﹝A R H   S C R I P T﹞💎\n┇👑 Azka Raditya 
 -- 🌐 Bahasa
 lang = "en" -- Default bahasa
 local teks = {
-["cache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
-  ["addr_not_found"] = {id = "❌ Alamat tidak ditemukan, segera restart game, jika dilanjutkan tidak bisa tukar hadiah",en = "❌ Address not found, please restart the game immediately, if continued you will not be able to exchange rewards"},
-  ["addr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
+["startcache_cleared"] = { id = "👑 Azka Raditya Hermawan 👑", en = "👑 Azka Raditya Hermawan 👑"},
+  ["startaddr_not_found"] = {id = "❌ Alamat tidak ditemukan, segera restart game, jika dilanjutkan tidak bisa tukar hadiah",en = "❌ Address not found, please restart the game immediately, if continued you will not be able to exchange rewards"},
+  ["startaddr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
   ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
-  ["fn_not_defined"] = {id = "⚠️ Fungsi getAddr() tidak ditemukan.",en = "⚠️ getAddr() function is not defined."},
-	
+  
   ["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
   ["free_script"] = {id="🔓 • Skrip Gratis", en="🔓• Free Script"},
   ["premium_script"] = {id="💎 • Skrip Premium", en="💎 • Premium Script"},
@@ -711,7 +710,7 @@ local teks = {
 • ♾️ Seumur Hidup
 ──────────────────────────
 🔐 Cara Membeli:
-➡️ Lakukan pembayaran via: Barcode QRIS
+➡️ Lakukan pembayaran via: -
 ➡️ Salin Kode License yang muncul sebelum script berjalan
 ➡️ Kirim Kode License ke pemilik script
 ➡️ Aktivasi otomatis setelah pembayaran dikonfirmasi
@@ -885,7 +884,7 @@ return cachedAddr
 else
 deleteFile(fileAddr)
 deleteFile(fileItem)
-gg.toast(_("cache_cleared"))
+gg.toast(_("startcache_cleared"))
 cacheInvalid = true
 end
 end
@@ -897,7 +896,7 @@ gg.refineNumber("30", gg.TYPE_DWORD)
 local results = gg.getResults(1)
 
 if #results == 0 then
-gg.alert(_("addr_not_found"))
+gg.alert(_("startaddr_not_found"))
 return nil
 end
 
@@ -909,7 +908,7 @@ fileSave:close()
 end
 
 if cacheInvalid then
-gg.toast(_("addr_refreshed"))
+gg.toast(_("startaddr_refreshed"))
 while not gg.isVisible(true) do gg.sleep(200) end
 gg.setVisible(false)
 end
@@ -962,7 +961,6 @@ if type(getAddr) == "function" then
     gg.toast(_("addr_not_found"))
   end
 else
-  gg.toast(_("fn_not_defined"))
 end
 
 function mainMenu()
@@ -7549,6 +7547,18 @@ local indev = dev
   elseif menu == 2 then cardbadge()
   elseif menu == 3 then packbadge()
   elseif menu == 4 then gp3()
+  return
+  else
+    return
+  end
+
+  -- 🔁 Ulangi menu setelah fungsi selesai
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      menuSpecial()
+      break
+    end
   end
 end
 
@@ -7609,8 +7619,7 @@ function duplicatebadge()
   gg.setValues(edits)
 
   a2()
-  gg.toast("🔥 Card amount updated successfully!")
-  gg.alert("🎉 Success!\n\n" .."All card entries with the amount **" .. visibleCount .."** have been updated to **" .. newCount .. "**.\n\n" .."📌 Reopen the card menu to see the updated values.")
+  gg.toast("✅ Duplicate card to:🃏 " .. newCount .. ".")
 end
 
 function cardbadgecol(label, emoji, values)
