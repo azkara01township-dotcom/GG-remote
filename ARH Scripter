@@ -3076,3 +3076,2001 @@ local indev = dev
   end
 end
 
+-- ✨ Placeholder for unavailable decorations
+local function dekorNotAvailable()
+  gg.alert("⚠️ This decoration is not available yet.\nPlease wait for the next update.\n\nThank you!")
+  minidekor()
+end
+
+function coldekor1()
+  dekorNotAvailable()
+end
+
+function coldekor5()
+  dekorNotAvailable()
+end
+
+function coldekor6()
+  dekorNotAvailable()
+end
+
+function coldekor2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🏮 • Paper Lanterns",
+"🏯 • Chinese House",
+"🌳 • Lantern Tree",
+"🐠 • Goldfish",
+"🐒 • Monkey Statue",
+"🐉 • Red Dragon",
+"🐕 • Yellow Dog",
+"🦁 • Chinese Lion",
+"🐱 • Maneki-neko",
+"🌉 • Red Bridge",
+"🐸 • Money Toad",
+"🥣 • Bowl of Wealth",
+"🎉 • New Year Symbol",
+"🐲 • Dragon Dance",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🏮 Lantern Decoration"
+    )
+
+    if not choice then
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[15] then
+      if type(minidekor) == "function" then
+        minidekor()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 14 do
+      if choice[i] then
+        local func = _G["lenterndek" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Lantern " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Lantern Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Lantern Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Lantern Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1768440596;6778692;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen lantern decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Lantern Decoration Source Base
+local baseLanternAddr = nil
+function initLanternDecorationSearch()
+  if baseLanternAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1768440596;6778692;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Lantern decoration structure not found.") return false end
+  baseLanternAddr = r[1].address
+  return true
+end
+
+-- 🏮 Apply Lantern Decoration
+function lanterndecor(offset, label, emoji)
+  if not initLanternDecorationSearch() then return end
+  local src = baseLanternAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " lantern decoration applied!")
+end
+
+function lenterndek1()  lanterndecor(-0x204, "Paper Lanterns", "🏮") end
+function lenterndek2()  lanterndecor(-0x1b4, "Chinese House", "🏯") end
+function lenterndek3()  lanterndecor(-0x164, "Lantern Tree", "🌳") end
+function lenterndek4()  lanterndecor(-0x114, "Goldfish", "🐠") end
+function lenterndek5()  lanterndecor(-0xC4, "Monkey Statue", "🐒") end
+function lenterndek6()  lanterndecor(-0x74, "Red Dragon", "🐉") end
+function lenterndek7()  lanterndecor(-0x24, "Yellow Dog", "🐕") end
+function lenterndek8()  lanterndecor(0x2c, "Chinese Lion", "🦁") end
+function lenterndek9()  lanterndecor(0x7c, "Maneki-neko", "🐱") end
+function lenterndek10() lanterndecor(0xCC, "Red Bridge", "🌉") end
+function lenterndek11() lanterndecor(0x11c, "Money Toad", "🐸") end
+function lenterndek12() lanterndecor(0x16c, "Bowl of Wealth", "🥣") end
+function lenterndek13() lanterndecor(0x1bc, "New Year Symbol", "🎉") end
+function lenterndek14() lanterndecor(0x20c, "Dragon Dance", "🐲") end
+
+function coldekor3()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🥚 • Faberge Egg (Red)",
+"🍫 • Chocolate Fountain",
+"🐇 • Easter Bunny's House",
+"🎨 • Throes of Art",
+"🌸 • Spring",
+"⛲ • Easter Fountain",
+"🚧 • Easter Fence",
+"🧸 • Stuffed Bunny",
+"🌳 • Easter Topiary",
+"🎁 • Cart Full of Gifts",
+"🌲 • Easter Tree",
+"🥚 • Egg Topiary",
+"🥚 • Faberge Egg (Blue)",
+"🐇 • Talented Bunny Statue",
+"🏭 • Easter Workshop",
+"⛵ • Boat Ride Attraction",
+"🚂 • Easter Railway",
+"🛏️ • Easter Hammock",
+"🍇 • Vineyard",
+"🏠 • Rabbit's House",
+"🍄 • Mushroom Stump",
+"💡 • Flower Lamppost",
+"💎 • Rabbit Treasure",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🐰 Easter Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[24] then
+      if type(minidekor) == "function" then
+        minidekor()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 23 do
+      if choice[i] then
+        local func = _G["eastdek" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Easter " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Easter Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Easter Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Easter Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1818318362;1801413998;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen easter decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Easter Decoration Source Base
+local baseEasterAddr = nil
+function initEasterDecorationSearch()
+  if baseEasterAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1818318362;1801413998;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Easter decoration structure not found.") return false end
+  baseEasterAddr = r[1].address
+  return true
+end
+
+-- 🐣 Apply Easter Decoration
+function easterdecor(offset, label, emoji)
+  if not initEasterDecorationSearch() then return end
+  local src = baseEasterAddr + offset
+  local vals = {}
+for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " easter decoration applied!")
+end
+
+function eastdek1()  easterdecor(0x2C,  "Faberge Egg (Red)", "🥚") end
+function eastdek2()  easterdecor(0x7C,  "Chocolate Fountain", "🍫") end
+function eastdek3()  easterdecor(0xCC,  "Easter Bunny's House", "🐇") end
+function eastdek4()  easterdecor(0x11C, "Throes of Art", "🎨") end
+function eastdek5()  easterdecor(0x16C, "Spring", "🌸") end
+function eastdek6()  easterdecor(0x1BC, "Easter Fountain", "⛲") end
+function eastdek7()  easterdecor(0x20C, "Easter Fence", "🚧") end
+function eastdek8()  easterdecor(0x25C, "Stuffed Bunny", "🧸") end
+function eastdek9()  easterdecor(0x2AC, "Easter Topiary", "🌳") end
+function eastdek10() easterdecor(0x2FC, "Cart Full of Gifts", "🎁") end
+function eastdek11() easterdecor(0x34C, "Easter Tree", "🌲") end
+function eastdek12() easterdecor(0x39C, "Egg Topiary", "🥚") end
+function eastdek13() easterdecor(0x3EC, "Faberge Egg (Blue)", "🥚") end
+function eastdek14() easterdecor(0x43C, "Talented Bunny Statue", "🐇") end
+function eastdek15() easterdecor(0x48C, "Easter Workshop", "🏭") end
+function eastdek16() easterdecor(0x4DC, "Boat Ride Attraction", "⛵") end
+function eastdek17() easterdecor(0x52C, "Easter Railway", "🚂") end
+function eastdek18() easterdecor(0x57C, "Easter Hammock", "🛏️") end
+function eastdek19() easterdecor(0x5CC, "Vineyard", "🍇") end
+function eastdek20() easterdecor(0x61C, "Rabbit's House", "🏠") end
+function eastdek21() easterdecor(0x66C, "Mushroom Stump", "🍄") end
+function eastdek22() easterdecor(0x6BC, "Flower Lamppost", "💡") end
+function eastdek23() easterdecor(0x70C, "Rabbit Treasure", "💎") end
+
+function coldekor4()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🌸 • Heart Flowerbed",
+"🏞️ • Small Romantic Park",
+"🕊️ • Doves in Love",
+"❤️ • Ruby Heart",
+"🚃 • Carriage",
+"📦 • Love Delivery Statue",
+"🍷 • Romantic Date",
+"🌳 • Heartfelt Topiary",
+"🏹 • Cupid",
+"🐻 • Bear in Love",
+"🦄 • Stuffed Unicorn",
+"🗿 • Affection Statue",
+"⛲ • Heart to Heart Fountain",
+"🗿 • Statue of Lovers",
+"🦚 • Peacocks in Love",
+"🎁 • Unexpected Gift",
+"📸 • Perfect Pair Photo Zone",
+"🌳 • Topiary",
+"🏡 • Romantic Gazebo",
+"🦢 • Pond with Swans",
+"🛒 • Flower Cart",
+"🧸 • Teddy Bear",
+"👼 • Flowerbed with Angels",
+"🎠 • Carousel",
+"🤴 • Prince on a White Horse",
+"🪑 • Lovers Bench",
+"🔒 • Love Padlocks",
+"🌉 • Love Tunnel",
+"💘 • Flying Hearts",
+"🏹 • Cupid Arrow",
+"🐰 • Stuffed Bunny",
+"🐱 • Cuddly Kitty",
+"👁️ • Eagle Eye Cupid",
+"🌹 • Love Arch",
+"💞 • Eternal Love Sculpture",
+"🗝️ • Key to the Heart",
+        "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "💘 Valentine Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[37] then
+      if type(minidekor) == "function" then
+        minidekor()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 36 do
+      if choice[i] then
+        local func = _G["valdek" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Valentine " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Valentine Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Valentine Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Valentine Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634035750;1918137458;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen valentine decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Valentine Decoration Source Base
+local baseValentineAddr = nil
+function initValentineDecorationSearch()
+  if baseValentineAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634035750;1918137458;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Valentine decoration structure not found.") return false end
+  baseValentineAddr = r[1].address
+  return true
+end
+
+-- ?? Apply Valentine Decoration
+function valentinedecor(offset, label, emoji)
+  if not initValentineDecorationSearch() then return end
+  local src = baseValentineAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " valentine decoration applied!")
+end
+
+function valdek1()  valentinedecor(-0x378, "Heart Flowerbed", "🌸") end
+function valdek2()  valentinedecor(-0x78, "Small Romantic Park", "🏞️") end
+function valdek3()  valentinedecor(0x288, "Doves in Love", "🕊️") end
+function valdek4()  valentinedecor(0x588, "Ruby Heart", "❤️") end
+function valdek5()  valentinedecor(0x888, "Carriage", "🚃") end
+function valdek6()  valentinedecor(0xB88, "Love Delivery Statue", "📦") end
+function valdek7()  valentinedecor(0xE88, "Romantic Date", "🍷") end
+function valdek8()  valentinedecor(0x1188, "Heartfelt Topiary", "🌳") end
+function valdek9()  valentinedecor(0x1488, "Cupid", "🏹") end
+function valdek10() valentinedecor(0x1788, "Bear in Love", "🐻") end
+function valdek11() valentinedecor(0x1A88, "Stuffed Unicorn", "🦄") end
+function valdek12() valentinedecor(0x1D88, "Affection Statue", "🗿") end
+function valdek13() valentinedecor(0x2088, "Heart to Heart Fountain", "⛲") end
+function valdek14() valentinedecor(0x2388, "Statue of Lovers", "🗿") end
+function valdek15() valentinedecor(0x2688, "Peacocks in Love", "🦚") end
+function valdek16() valentinedecor(0x2988, "Unexpected Gift", "🎁") end
+function valdek17() valentinedecor(0x2C88, "Perfect Pair Photo Zone", "📸") end
+function valdek18() valentinedecor(0x2F88, "Topiary", "🌳") end
+function valdek19() valentinedecor(0x3288, "Romantic Gazebo", "🏡") end
+function valdek20() valentinedecor(0x3588, "Pond with Swans", "🦢") end
+function valdek21() valentinedecor(0x3888, "Flower Cart", "🛒") end
+function valdek22() valentinedecor(0x3B88, "Teddy Bear", "🧸") end
+function valdek23() valentinedecor(0x3E88, "Flowerbed with Angels", "👼") end
+function valdek24() valentinedecor(0x4188, "Carousel", "🎠") end
+function valdek25() valentinedecor(0x4488, "Prince on a White Horse", "🤴") end
+function valdek26() valentinedecor(0x4788, "Lovers Bench", "🪑") end
+function valdek27() valentinedecor(0x4A88, "Love Padlocks", "🔒") end
+function valdek28() valentinedecor(0x4D88, "Love Tunnel", "🌉") end
+function valdek29() valentinedecor(0x5088, "Flying Hearts", "💘") end
+function valdek30() valentinedecor(0x5388, "Cupid Arrow", "🏹") end
+function valdek31() valentinedecor(0x5688, "Stuffed Bunny", "🐰") end
+function valdek32() valentinedecor(0x5988, "Cuddly Kitty", "🐱") end
+function valdek33() valentinedecor(0x5C88, "Eagle Eye Cupid", "👁️") end
+function valdek34() valentinedecor(0x5F88, "Love Arch", "🌹") end
+function valdek35() valentinedecor(0x6288, "Eternal Love Sculpture", "💞") end
+function valdek36() valentinedecor(0x6588, "Key to the Heart", "🗝️") end
+
+function coldekor7()
+local indev = dev
+  local menu = gg.choice({
+"✨ • Special Decoration",
+"💎 • Rare Decoration",
+"🌸 • Unique Decoration",
+"🏵️ • Limited Decoration",
+"🎀 • Premium Decoration",
+"🏰 • Classic Decoration",
+    "❌ • Go Back"
+  }, nil, indev)
+
+    if menu == nil then
+    return
+  elseif menu == 1 then randecor1()
+  elseif menu == 2 then randecor2()
+  elseif menu == 3 then randecor3()
+  elseif menu == 4 then randecor4()
+  elseif menu == 5 then randecor5()
+  elseif menu == 6 then randecor6()
+  elseif menu == 7 then minidekor()
+  end
+end
+
+function randecor1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"👨‍🍳 • Chef",
+"🍽️ • Romantic Dinner",
+"🫖 • Tea Party Fountain",
+"🍹 • Pear Tiki Bar",
+"🌉 • Fruit Bridge",
+"☕ • Coffee Bike",
+"🌳 • Broccoli Tree",
+"🚚 • Hot Pizza Truck",
+"🍦 • Ice Cream Cafe",
+"🎈 • Hot Air Balloon",
+"🎨 • Cooking Masterpiece Banner",
+"🎉 • 5 Year Together Banner",
+"🏪 • Hot Cup Coffee Shop",
+"🍫 • Chocolate Mill",
+"🌭 • Hot Dog Swings",
+"🏬 • Bargain District",
+"🚡 • Ski Lift",
+"🔥 • Eternal Torch",
+"✈️ • Biomass-powered Airplane",
+"🕷️ • Mechanical Spider",
+"🤖 • Humanoid Robot",
+"🌸 • Flower Arch",
+"⛵ • Boat with Flowers",
+"🚗 • Car Flower Bed",
+"🦚 • Peacock Flower Bed",
+"🎈 • Balloon Arch",
+"🌲 • Inflatable Tree",
+"🐶 • Inflatable Dog",
+"🏠 • Flying House",
+"🕺 • Air Dancer",
+"3️⃣ • Inflatable Number 3",
+"🏰 • Moving Castle",
+"⛺ • Camping",
+"🎂 • Township Turned 2!",
+"🕍 • Chamber of Horrors",
+"👻 • Ghost Huntress",
+"⚰️ • Spooky Crypt",
+"🎻 • Supernatural Orchestra",
+"🐷 • Inflatable Pig",
+"🐔 • Inflatable Chicken",
+"🐑 • Inflatable Sheep",
+"🐄 • Inflatable Cow",
+"🌾 • Goddess of Harvest",
+"🍉 • Giant Watermelon",
+"🥕 • Carrot Tree",
+"🌽 • Harvest a Giant",
+"🌶️ • Spicy House",
+"🏛️ • Grand Harvest Square",
+"🌊 • Poseidon Statue",
+"💰 • Treasure Chest",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "✨ Special Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[51] then
+if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 50 do
+      if choice[i] then
+        local func = _G["spesialdekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Special " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Special Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Special Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Special Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1935754524;1852732770;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen special decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Special Decoration Source Base
+local baseSpecialAddr = nil
+function initSpecialDecorationSearch()
+  if baseSpecialAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1935754524;1852732770;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Special decoration structure not found.") return false end
+  baseSpecialAddr = r[1].address
+  return true
+end
+
+-- 💎 Apply Special Decoration
+function specialdecor(offset, label, emoji)
+  if not initSpecialDecorationSearch() then return end
+  local src = baseSpecialAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " special decoration applied!")
+end
+
+function spesialdekor1()  specialdecor(0x2C,  "Chef", "👨‍🍳") end
+function spesialdekor2()  specialdecor(0x7C,  "Romantic Dinner", "🍽️") end
+function spesialdekor3()  specialdecor(0xCC,  "Tea Party Fountain", "🫖") end
+function spesialdekor4()  specialdecor(0x11C, "Pear Tiki Bar", "🍹") end
+function spesialdekor5()  specialdecor(0x16C, "Fruit Bridge", "🌉") end
+function spesialdekor6()  specialdecor(0x1BC, "Coffee Bike", "☕") end
+function spesialdekor7()  specialdecor(0x20C, "Broccoli Tree", "🌳") end
+function spesialdekor8()  specialdecor(0x25C, "Hot Pizza Truck", "🚚") end
+function spesialdekor9()  specialdecor(0x2AC, "Ice Cream Cafe", "🍦") end
+function spesialdekor10() specialdecor(0x2FC, "Hot Air Balloon", "🎈") end
+function spesialdekor11() specialdecor(0x34C, "Cooking Masterpiece Banner", "🎨") end
+function spesialdekor12() specialdecor(0x39C, "5 Year Together Banner", "🎉") end
+function spesialdekor13() specialdecor(0x3EC, "Hot Cup Coffee Shop", "🏪") end
+function spesialdekor14() specialdecor(0x43C, "Chocolate Mill", "🍫") end
+function spesialdekor15() specialdecor(0x48C, "Hot Dog Swings", "🌭") end
+function spesialdekor16() specialdecor(0x4DC, "Bargain District", "🏬") end
+function spesialdekor17() specialdecor(0x52C, "Ski Lift", "🚡") end
+function spesialdekor18() specialdecor(0x57C, "Eternal Torch", "🔥") end
+function spesialdekor19() specialdecor(0x5CC, "Biomass-powered Airplane", "✈️") end
+function spesialdekor20() specialdecor(0x61C, "Mechanical Spider", "🕷️") end
+function spesialdekor21() specialdecor(0x66C, "Humanoid Robot", "🤖") end
+function spesialdekor22() specialdecor(0x6BC, "Flower Arch", "🌸") end
+function spesialdekor23() specialdecor(0x70C, "Boat with Flowers", "⛵") end
+function spesialdekor24() specialdecor(0x75C, "Car Flower Bed", "🚗") end
+function spesialdekor25() specialdecor(0x7AC, "Peacock Flower Bed", "🦚") end
+function spesialdekor26() specialdecor(0x7FC, "Balloon Arch", "🎈") end
+function spesialdekor27() specialdecor(0x84C, "Inflatable Tree", "🌲") end
+function spesialdekor28() specialdecor(0x89C, "Inflatable Dog", "🐶") end
+function spesialdekor29() specialdecor(0x8EC, "Flying House", "🏠") end
+function spesialdekor30() specialdecor(0x93C, "Air Dancer", "🕺") end
+function spesialdekor31() specialdecor(0x98C, "Inflatable Number 3", "3️⃣") end
+function spesialdekor32() specialdecor(0x9DC, "Moving Castle", "🏰") end
+function spesialdekor33() specialdecor(0xA2C, "Camping", "⛺") end
+function spesialdekor34() specialdecor(0xA7C, "Township Turned 2!", "🎂") end
+function spesialdekor35() specialdecor(0xACC, "Chamber of Horrors", "🕍") end
+function spesialdekor36() specialdecor(0xB1C, "Ghost Huntress", "👻") end
+function spesialdekor37() specialdecor(0xB6C, "Spooky Crypt", "⚰️") end
+function spesialdekor38() specialdecor(0xBBC, "Supernatural Orchestra", "🎻") end
+function spesialdekor39() specialdecor(0xC0C, "Inflatable Pig", "🐷") end
+function spesialdekor40() specialdecor(0xC5C, "Inflatable Chicken", "🐔") end
+function spesialdekor41() specialdecor(0xCAC, "Inflatable Sheep", "🐑") end
+function spesialdekor42() specialdecor(0xCFC, "Inflatable Cow", "🐄") end
+function spesialdekor43() specialdecor(0xD4C, "Goddess of Harvest", "🌾") end
+function spesialdekor44() specialdecor(0xD9C, "Giant Watermelon", "🍉") end
+function spesialdekor45() specialdecor(0xDEC, "Carrot Tree", "🥕") end
+function spesialdekor46() specialdecor(0xE3C, "Harvest a Giant", "🌽") end
+function spesialdekor47() specialdecor(0xE8C, "Spicy House", "🌶️") end
+function spesialdekor48() specialdecor(0xEDC, "Grand Harvest Square", "🏛️") end
+function spesialdekor49() specialdecor(0xF2C, "Poseidon Statue", "🌊") end
+function spesialdekor50() specialdecor(0xF7C, "Treasure Chest", "💰") end
+
+function randecor2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🏛️ • Ruins of Atlantis",
+"🚢 • Pirate Ship Bow",
+"🚤 • Submarine",
+"🍭 • Mountain of Candy",
+"🌉 • Candy Bridge",
+"🌳 • Candy Tree",
+"🏠 • Candy House",
+"🐄 • Confectioner Cow",
+"🎠 • Candy Carousel",
+"🍬 • Sweet Tooth Street",
+"🏪 • Souvenir Shop",
+"🏋️ • Training Ground",
+"🤿 • Diving Board",
+"⛲ • New Record Fountain",
+"🏆 • Champions Plaza",
+"🔥 • Torchbearer Statue",
+"🌊 • Snow Wave Statue",
+"🎖️ • Triumphal Victory Statue",
+"🏒 • Hockey Rink",
+"🛷 • Bobsled Track",
+"⛷️ • Never-ending Slope",
+"🏊 • Triathlon",
+"🛹 • Skateboarders",
+"🥅 • Seasoned Goalkeeper",
+"🌍 • World Champion",
+"⛸️ • Forest Skating Rink",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "💎 Rare Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[27] then
+      if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+for i = 1, 26 do
+      if choice[i] then
+        local func = _G["raredekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Rare " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Rare Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Rare Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Rare Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034218;1634038388;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen rare decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Rare Decoration Source Base
+local baseRareAddr = nil
+function initRareDecorationSearch()
+  if baseRareAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034218;1634038388;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Rare decoration structure not found.") return false end
+  baseRareAddr = r[1].address
+  return true
+end
+
+-- 💎 Apply Rare Decoration
+function raredecor(offset, label, emoji)
+  if not initRareDecorationSearch() then return end
+local src = baseRareAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " rare decoration applied!")
+end
+
+function raredekor1()  raredecor(0x2C,  "Ruins of Atlantis", "🏛️") end
+function raredekor2()  raredecor(0x7C,  "Pirate Ship Bow", "🚢") end
+function raredekor3()  raredecor(0xCC,  "Submarine", "🚤") end
+function raredekor4()  raredecor(0x11C, "Mountain of Candy", "🍭") end
+function raredekor5()  raredecor(0x16C, "Candy Bridge", "🌉") end
+function raredekor6()  raredecor(0x1BC, "Candy Tree", "🌳") end
+function raredekor7()  raredecor(0x20C, "Candy House", "🏠") end
+function raredekor8()  raredecor(0x25C, "Confectioner Cow", "🐄") end
+function raredekor9()  raredecor(0x2AC, "Candy Carousel", "🎠") end
+function raredekor10() raredecor(0x2FC, "Sweet Tooth Street", "🍬") end
+function raredekor11() raredecor(0x34C, "Souvenir Shop", "🏪") end
+function raredekor12() raredecor(0x39C, "Training Ground", "🏋️") end
+function raredekor13() raredecor(0x3EC, "Diving Board", "🤿") end
+function raredekor14() raredecor(0x43C, "New Record Fountain", "⛲") end
+function raredekor15() raredecor(0x48C, "Champions Plaza", "🏆") end
+function raredekor16() raredecor(0x4DC, "Torchbearer Statue", "🔥") end
+function raredekor17() raredecor(0x52C, "Snow Wave Statue", "🌊") end
+function raredekor18() raredecor(0x57C, "Triumphal Victory Statue", "🎖️") end
+function raredekor19() raredecor(0x5CC, "Hockey Rink", "🏒") end
+function raredekor20() raredecor(0x61C, "Bobsled Track", "🛷") end
+function raredekor21() raredecor(0x66C, "Never-ending Slope", "⛷️") end
+function raredekor22() raredecor(0x6BC, "Triathlon", "🏊") end
+function raredekor23() raredecor(0x70C, "Skateboarders", "🛹") end
+function raredekor24() raredecor(0x75C, "Seasoned Goalkeeper", "🥅") end
+function raredekor25() raredecor(0x7AC, "World Champion", "🌍") end
+function raredekor26() raredecor(0x7FC, "Forest Skating Rink", "⛸️") end
+
+function randecor3()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🌊 • Sea Fence",
+"⚓ • Admiralty Anchor",
+"🐚 • Pearl Shell",
+"🐴 • Sea Horse",
+"🎣 • Lucky Fisherman",
+"🐟 • Dancing Koi",
+"🧜‍♀️ • The Mermaid",
+"🏰 • Water Tower",
+"🐙 • Fishing Octopus",
+"🛥️ • Stranded Yacht",
+"🏯 • Flooded Tower",
+"🏡 • Fisherman's House",
+"⚙️ • Watermill",
+"🐠 • Carp Pond",
+"🎠 • Underwater World Carousel",
+"🐝 • Bee Pilot",
+"🛩️ • Amphibious Aircraft",
+"🎈 • Inflatable Plane",
+"🚁 • Helicopter Trampoline",
+"🕊️ • Dovecote",
+"🪁 • Fly-seasoned Friends",
+"🎏 • Kite Master",
+"🎢 • Takeoff Ride",
+"🎒 • Jet Pack Attraction",
+"🏆 • Winged Winner",
+"🗽 • Happy Town Day Statue",
+"📸 • Festival Selfie Banner",
+"🏰 • Inflatable Castle",
+"🚂 • Kids Train Ride",
+"🚗 • Bumper Car Ride",
+"🗿 • Titans",
+"🌳 • Tree of Life Fountain",
+"🎨 • Jolly Painters",
+"🏙️ • Art District",
+"🧊 • Thingamacube",
+"🤹 • Juggler",
+"🖌️ • Graffiti Championship",
+"⛄ • Winter Fun",
+"🏚️ • Lake House",
+"🌀 • Endless Stairs",
+"🦣 • Frozen Mammoth",
+"🦀 • Hermit Crab",
+"🤿 • Divers",
+"💦 • Happy Splashes",
+"🏪 • Fishing-wharf Market",
+"🎣 • Lure Makers Hut",
+"🏊 • Polar Water Park",
+"⛩️ • Underwater Temple",
+"👨‍🚀 • Diver",
+"🔭 • Bathyscaphe Model",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🌸 Unique Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[51] then
+      if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 50 do
+      if choice[i] then
+        local func = _G["uniquedekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Unique " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Unique Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Unique Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Unique Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034214;1734439524;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen unique decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Unique Decoration Source Base
+local baseUniqueAddr = nil
+function initUniqueDecorationSearch()
+  if baseUniqueAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034214;1734439524;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Unique decoration structure not found.") return false end
+  baseUniqueAddr = r[1].address
+  return true
+end
+
+-- 💎 Apply Unique Decoration
+function unikdecor(offset, label, emoji)
+  if not initUniqueDecorationSearch() then return end
+  local src = baseUniqueAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " unique decoration applied!")
+end
+
+function uniquedekor1()  unikdecor(0x2C,  "Sea Fence", "🌊") end
+function uniquedekor2()  unikdecor(0x7C,  "Admiralty Anchor", "⚓") end
+function uniquedekor3()  unikdecor(0xCC,  "Pearl Shell", "🐚") end
+function uniquedekor4()  unikdecor(0x11C, "Sea Horse", "🐴") end
+function uniquedekor5()  unikdecor(0x16C, "Lucky Fisherman", "🎣") end
+function uniquedekor6()  unikdecor(0x1BC, "Dancing Koi", "🐟") end
+function uniquedekor7()  unikdecor(0x20C, "The Mermaid", "🧜‍♀️") end
+function uniquedekor8()  unikdecor(0x25C, "Water Tower", "🏰") end
+function uniquedekor9()  unikdecor(0x2AC, "Fishing Octopus", "🐙") end
+function uniquedekor10() unikdecor(0x2FC, "Stranded Yacht", "🛥️") end
+function uniquedekor11() unikdecor(0x34C, "Flooded Tower", "🏯") end
+function uniquedekor12() unikdecor(0x39C, "Fisherman's House", "🏡") end
+function uniquedekor13() unikdecor(0x3EC, "Watermill", "⚙️") end
+function uniquedekor14() unikdecor(0x43C, "Carp Pond", "🐠") end
+function uniquedekor15() unikdecor(0x48C, "Underwater World Carousel", "🎠") end
+function uniquedekor16() unikdecor(0x4DC, "Bee Pilot", "🐝✈️") end
+function uniquedekor17() unikdecor(0x52C, "Amphibious Aircraft", "🛩️") end
+function uniquedekor18() unikdecor(0x57C, "Inflatable Plane", "🎈✈️") end
+function uniquedekor19() unikdecor(0x5CC, "Helicopter Trampoline", "🚁") end
+function uniquedekor20() unikdecor(0x61C, "Dovecote", "🕊️") end
+function uniquedekor21() unikdecor(0x66C, "Fly-seasoned Friends", "🪁") end
+function uniquedekor22() unikdecor(0x6BC, "Kite Master", "🎏") end
+function uniquedekor23() unikdecor(0x70C, "Takeoff Ride", "🎢") end
+function uniquedekor24() unikdecor(0x75C, "Jet Pack Attraction", "🎒") end
+function uniquedekor25() unikdecor(0x7AC, "Winged Winner", "🏆") end
+function uniquedekor26() unikdecor(0x7FC, "Happy Town Day Statue", "🗽") end
+function uniquedekor27() unikdecor(0x84C, "Festival Selfie Banner", "📸") end
+function uniquedekor28() unikdecor(0x89C, "Inflatable Castle", "🏰") end
+function uniquedekor29() unikdecor(0x8EC, "Kids Train Ride", "🚂") end
+function uniquedekor30() unikdecor(0x93C, "Bumper Car Ride", "🚗") end
+function uniquedekor31() unikdecor(0x98C, "Titans", "🗿") end
+function uniquedekor32() unikdecor(0x9DC, "Tree of Life Fountain", "🌳") end
+function uniquedekor33() unikdecor(0xA2C, "Jolly Painters", "🎨") end
+function uniquedekor34() unikdecor(0xA7C, "Art District", "🏙️") end
+function uniquedekor35() unikdecor(0xACC, "Thingamacube", "🧊") end
+function uniquedekor36() unikdecor(0xB1C, "Juggler", "🤹") end
+function uniquedekor37() unikdecor(0xB6C, "Graffiti Championship", "🖌️") end
+function uniquedekor38() unikdecor(0xBBC, "Winter Fun", "⛄") end
+function uniquedekor39() unikdecor(0xC0C, "Lake House", "🏚️") end
+function uniquedekor40() unikdecor(0xC5C, "Endless Stairs", "🌀") end
+function uniquedekor41() unikdecor(0xCAC, "Frozen Mammoth", "🦣") end
+function uniquedekor42() unikdecor(0xCFC, "Hermit Crab", "🦀") end
+function uniquedekor43() unikdecor(0xD4C, "Divers", "🤿") end
+function uniquedekor44() unikdecor(0xD9C, "Happy Splashes", "💦") end
+function uniquedekor45() unikdecor(0xDEC, "Fishing-wharf Market", "🏪") end
+function uniquedekor46() unikdecor(0xE3C, "Lure Makers Hut", "🎣🏠") end
+function uniquedekor47() unikdecor(0xE8C, "Polar Water Park", "🏊") end
+function uniquedekor48() unikdecor(0xEDC, "Underwater Temple", "⛩️") end
+function uniquedekor49() unikdecor(0xF2C, "Diver", "👨‍🚀") end
+function uniquedekor50() unikdecor(0xF7C, "Bathyscaphe Model", "🔭") end
+
+function randecor4()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🐠 • City Aquarium",
+"🎐 • Inflatable Jellyfish",
+"🛩️ • Biplane",
+"⛵ • Air Galleon",
+"🎮 • Flight Simulator",
+"✈️ • Experimental Plane",
+"🛰️ • System Plane",
+"🎯 • Regatta Carnival Game",
+"🪑 • Friendship Bench",
+"🎈 • Duck Balloon",
+"📸 • Superfriends Photo Cutout",
+"🏝️ • Summer-fun Island",
+"🐑 • Stuffed Sheep",
+"🌉 • Glass Bridge",
+"📎 • Clothespin Art Object",
+"👑 • His Majesty's Throne",
+"🏖️ • Vacation",
+"🌴 • Cozy Tropics",
+"🐬 • Visiting the Dolphins",
+"🍕 • Open Air Pizzeria",
+"👨‍🍳 • Jolly Chefs",
+"⛵ • Golden Sail",
+"🌳 • Wild Park",
+"🚤 • Pleasure Boat",
+"🔔 • Gong",
+"🎆 • Fireworks Stand",
+"🎈 • Balloon Bouquet",
+"🏡 • Florist House",
+"🐑 • Sheep Flowerbed",
+"🌸 • Vase of Flowers",
+"💦 • Jet Ski",
+"💎 • The Biggest Diamond",
+"🚪 • Gates of Glory",
+"🌺 • Flower Gate",
+"🥕 • Veggie Cart",
+"❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🏵️  Limited Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[36] then
+      if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 35 do
+      if choice[i] then
+        local func = _G["limiteddekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Limited " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Limited Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Limited Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Limited Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1701860140;1918989681;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen limited decoration first.") return nil end
+
+  local newAddr = r[1].address
+local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Limited Decoration Source Base
+local baseLimitedAddr = nil
+function initLimitedDecorationSearch()
+  if baseLimitedAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1701860140;1918989681;1769300575::37", gg.TYPE_DWORD)
+  gg.refineNumber("1769300575", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Limited decoration structure not found.") return false end
+  baseLimitedAddr = r[1].address
+  return true
+end
+
+-- 💎 Apply Limited Decoration
+function limiteddecor(offset, label, emoji)
+  if not initLimitedDecorationSearch() then return end
+  local src = baseLimitedAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " limited decoration applied!")
+end
+
+function limiteddekor1()  limiteddecor(-0x24,  "Sea Fence", "🌊") end
+function limiteddekor2()  limiteddecor(0x2C,  "Sea Fence", "🌊") end
+function limiteddekor3()  limiteddecor(0x7C,  "Admiralty Anchor", "⚓") end
+function limiteddekor4()  limiteddecor(0xCC,  "Pearl Shell", "🐚") end
+function limiteddekor5()  limiteddecor(0x11C, "Sea Horse", "🐴") end
+function limiteddekor6()  limiteddecor(0x16C, "Lucky Fisherman", "🎣") end
+function limiteddekor7()  limiteddecor(0x1BC, "Dancing Koi", "🐟") end
+function limiteddekor8()  limiteddecor(0x20C, "The Mermaid", "🧜‍♀️") end
+function limiteddekor9()  limiteddecor(0x25C, "Water Tower", "🏰") end
+function limiteddekor10()  limiteddecor(0x2AC, "Fishing Octopus", "🐙") end
+function limiteddekor11() limiteddecor(0x2FC, "Stranded Yacht", "🛥️") end
+function limiteddekor12() limiteddecor(0x34C, "Flooded Tower", "🏯") end
+function limiteddekor13() limiteddecor(0x39C, "Fisherman's House", "🏡") end
+function limiteddekor14() limiteddecor(0x3EC, "Watermill", "⚙️") end
+function limiteddekor15() limiteddecor(0x43C, "Carp Pond", "🐠") end
+function limiteddekor16() limiteddecor(0x48C, "Underwater World Carousel", "🎠") end
+function limiteddekor17() limiteddecor(0x4DC, "Bee Pilot", "🐝✈️") end
+function limiteddekor18() limiteddecor(0x52C, "Amphibious Aircraft", "🛩️") end
+function limiteddekor19() limiteddecor(0x57C, "Inflatable Plane", "🎈✈️") end
+function limiteddekor20() limiteddecor(0x5CC, "Helicopter Trampoline", "🚁") end
+function limiteddekor21() limiteddecor(0x61C, "Dovecote", "🕊️") end
+function limiteddekor22() limiteddecor(0x66C, "Fly-seasoned Friends", "🪁") end
+function limiteddekor23() limiteddecor(0x6BC, "Kite Master", "🎏") end
+function limiteddekor24() limiteddecor(0x70C, "Takeoff Ride", "🎢") end
+function limiteddekor25() limiteddecor(0x75C, "Jet Pack Attraction", "🎒") end
+function limiteddekor26() limiteddecor(0x7AC, "Winged Winner", "🏆") end
+function limiteddekor27() limiteddecor(0x7FC, "Happy Town Day Statue", "🗽") end
+function limiteddekor28() limiteddecor(0x84C, "Festival Selfie Banner", "📸") end
+function limiteddekor29() limiteddecor(0x89C, "Inflatable Castle", "🏰") end
+function limiteddekor30() limiteddecor(0x8EC, "Kids Train Ride", "🚂") end
+function limiteddekor31() limiteddecor(0x93C, "Bumper Car Ride", "🚗") end
+function limiteddekor32() limiteddecor(0x98C, "Titans", "🗿") end
+function limiteddekor33() limiteddecor(0x9DC, "Tree of Life Fountain", "🌳") end
+function limiteddekor34() limiteddecor(0xA2C, "Jolly Painters", "🎨") end
+function limiteddekor35() limiteddecor(0xA7C, "Art District", "🏙️") end
+
+function randecor5()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+    local skins = {
+"🏠 • Egyptian House",
+"🌄 • Pyramid of Cheops",
+"🗿 • Pharaoh Statue",
+"⛵ • Papyrus Boat",
+"🏬 • Papyrus Shop",
+"🐴 • Trojan Horse",
+"🏟️ • Amphitheater",
+"🚙 • Chariot",
+"🤾 • Discobolus",
+"🚢 • Odysseus Ship",
+"🐂 • Minotaur",
+"⚒️ • Sculptor's Workshop",
+"🏜️ • Oasis",
+"🏰 • Sheikh's Palace",
+"🔮 • Magic Lamp",
+"🐎 • Arabian Horse",
+"🦅 • Falconry",
+"♟️ • Chess Match",
+"🌳 • Hanging Gardens",
+"🌴 • Beach Swing",
+"🏡 • Bungalow",
+"🥥 • Coconut Paradise Juice Bar",
+"🌊 • Catch the Wave Ride",
+"🎨 • Primeval Painter",
+"🪨 • Stonehenge",
+"🏇 • The First Rider",
+"🦕 • Diplodocus",
+"🏠 • Stone Age House",
+"🚢 • Haunted Ship",
+"🐉 • Nessie",
+"🛸 • First Contact",
+"❄️ • Yeti",
+"☕ • Shuttle Cafe",
+"🔭 • Astronomical Tower",
+"🌌 • Open-air Planetarium",
+"👩‍🚀 • Betsy the Astronaut",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🎀 Premium Decoration"
+    )
+
+    if not choice then 
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[37] then
+      if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 36 do
+      if choice[i] then
+        local func = _G["premiumdekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Premium " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Premium Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Premium Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Premium Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("2036811032;1768776050;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen premium decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Premium Decoration Source Base
+local basePrmAddr = nil
+function initPrmDecorationSearch()
+  if basePrmAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("2036811032;1768776050;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Premium decoration structure not found.") return false end
+  basePrmAddr = r[1].address
+  return true
+end
+
+-- 💖 Apply Premium Decoration
+function premiumdecor(offset, label, emoji)
+  if not initPrmDecorationSearch() then return end
+  local src = basePrmAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " premium decoration applied!")
+end
+
+function premiumdekor1()  premiumdecor(-0x378, "Egyptian House", "🏠") end
+function premiumdekor2()  premiumdecor(-0x78,  "Pyramid of Cheops", "🌄") end
+function premiumdekor3()  premiumdecor(0x288,  "Pharaoh Statue", "🗿") end
+function premiumdekor4()  premiumdecor(0x588,  "Papyrus Boat", "⛵") end
+function premiumdekor5()  premiumdecor(0x888,  "Papyrus Shop", "🏬") end
+function premiumdekor6()  premiumdecor(0xB88,  "Trojan Horse", "🐴") end
+function premiumdekor7()  premiumdecor(0xE88,  "Amphitheater", "🏟️") end
+function premiumdekor8()  premiumdecor(0x1188, "Chariot", "🚙") end
+function premiumdekor9()  premiumdecor(0x1488, "Discobolus", "🤾") end
+function premiumdekor10() premiumdecor(0x1788, "Odysseus Ship", "🚢") end
+function premiumdekor11() premiumdecor(0x1A88, "Minotaur", "🐂") end
+function premiumdekor12() premiumdecor(0x1D88, "Sculptor's Workshop", "⚒️") end
+function premiumdekor13() premiumdecor(0x2088, "Oasis", "🏜️") end
+function premiumdekor14() premiumdecor(0x2388, "Sheikh's Palace", "🏰") end
+function premiumdekor15() premiumdecor(0x2688, "Magic Lamp", "🔮") end
+function premiumdekor16() premiumdecor(0x2988, "Arabian Horse", "🐎") end
+function premiumdekor17() premiumdecor(0x2C88, "Falconry", "🦅") end
+function premiumdekor18() premiumdecor(0x2F88, "Chess Match", "♟️") end
+function premiumdekor19() premiumdecor(0x3288, "Hanging Gardens", "🌳") end
+function premiumdekor20() premiumdecor(0x3588, "Beach Swing", "🌴") end
+function premiumdekor21() premiumdecor(0x3888, "Bungalow", "🏡") end
+function premiumdekor22() premiumdecor(0x3B88, "Coconut Paradise Juice Bar", "🥥") end
+function premiumdekor23() premiumdecor(0x3E88, "Catch the Wave Ride", "🌊") end
+function premiumdekor24() premiumdecor(0x4188, "Primeval Painter", "🎨") end
+function premiumdekor25() premiumdecor(0x4488, "Stonehenge", "🪨") end
+function premiumdekor26() premiumdecor(0x4788, "The First Rider", "🏇") end
+function premiumdekor27() premiumdecor(0x4A88, "Diplodocus", "🦕") end
+function premiumdekor28() premiumdecor(0x4D88, "Stone Age House", "🏠") end
+function premiumdekor29() premiumdecor(0x5088, "Haunted Ship", "🚢") end
+function premiumdekor30() premiumdecor(0x5388, "Nessie", "🐉") end
+function premiumdekor31() premiumdecor(0x5688, "First Contact", "🛸") end
+function premiumdekor32() premiumdecor(0x5988, "Yeti", "❄️") end
+function premiumdekor33() premiumdecor(0x5C88, "Shuttle Cafe", "☕") end
+function premiumdekor34() premiumdecor(0x5F88, "Astronomical Tower", "🔭") end
+function premiumdekor35() premiumdecor(0x6288, "Open-air Planetarium", "🌌") end
+function premiumdekor36() premiumdecor(0x6588, "Betsy the Astronaut", "👩‍🚀") end
+
+function randecor6()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+"🚀 • Mars rover",
+"🏙️ • Lost city",
+"🗿 • Ancient statue",
+"🦓 • Wildlife reserve",
+"🍌 • Banana breaks",
+"🏝️ • Jungle village",
+"❄️ • Polar station",
+"🐕 • Dogsled",
+"🐧 • Penguin skating rink",
+"🦌 • Ice sculpture reindeer",
+"🚢 • Icebreaker",
+"🔱 • Atlantean trident",
+"🏨 • Atlantis hotel",
+"🪸 • Coral fence",
+"🐠 • Atlantean aquarium",
+"🛏️ • Atlantean rest",
+"💰 • Sea riches statue",
+"🏴‍☠️ • Pirate camp",
+"🎠 • Pirate playground",
+"🤠 • Saloon",
+"🎬 • Western movie set",
+"🐞 • Scarab statue",
+"⛺ • Paradise tent",
+"🌐 • Plasma globe",
+"🧪 • Experimental monument",
+"📽️ • 3D projector",
+"🏢 • Research facility",
+"📚 • Knowledge tower",
+"🍊 • Orange juice fountain",
+"💃 • Flower dancerfloor",
+"🌴 • Palm tree juice bar",
+"🟡 • Yellow submarine club",
+"🥭 • Mixed fruit",
+"🐘 • Happy elephants",
+"🏡 • Elf house",
+"🏰 • Ice castle",
+"🏮 • Chinatown",
+"🌺 • Coral garden",
+"🤿 • Deep sea explorers",
+"🌸 • Spring holiday",
+"🔪 • Knife throwing",
+  "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(
+      skins,
+      nil,
+      "🏰 Classic Decoration"
+    )
+
+    if not choice then
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[42] then
+      if type(coldekor7) == "function" then
+        coldekor7()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 41 do
+      if choice[i] then
+        local func = _G["classicdekor" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Classic " .. i .. " Decoration applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Classic Decoration " .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Classic Decoration have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Classic Decoration Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034214;1735292266;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen classic decoration first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 📦 Classic Decoration Source Base
+local baseClassicAddr = nil
+function initClassicDecorationSearch()
+  if baseClassicAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034214;1735292266;1769300498::121", gg.TYPE_DWORD)
+  gg.refineNumber("1769300498", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Classic decoration structure not found.") return false end
+  baseClassicAddr = r[1].address
+  return true
+end
+
+-- 🏺 Apply Classic Decoration
+function classicdecor(offset, label, emoji)
+  if not initClassicDecorationSearch() then return end
+  local src = baseClassicAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " classic decoration applied!")
+end
+
+function classicdekor1()  classicdecor(-0x378, "Mars rover", "🚀") end
+function classicdekor2()  classicdecor(-0x78,  "Lost city", "🏙️") end
+function classicdekor3()  classicdecor(0x288,  "Ancient statue", "🗿") end
+function classicdekor4()  classicdecor(0x588,  "Wildlife reserve", "🦓") end
+function classicdekor5()  classicdecor(0x888,  "Banana breaks", "🍌") end
+function classicdekor6()  classicdecor(0xB88,  "Jungle village", "🏝️") end
+function classicdekor7()  classicdecor(0xE88,  "Polar station", "❄️") end
+function classicdekor8()  classicdecor(0x1188, "Dogsled", "🐕") end
+function classicdekor9()  classicdecor(0x1488, "Penguin skating rink", "🐧") end
+function classicdekor10() classicdecor(0x1788, "Ice sculpture reindeer", "🦌") end
+function classicdekor11() classicdecor(0x1A88, "Icebreaker", "🚢") end
+function classicdekor12() classicdecor(0x1D88, "Atlantean trident", "🔱") end
+function classicdekor13() classicdecor(0x2088, "Atlantis hotel", "🏨") end
+function classicdekor14() classicdecor(0x2388, "Coral fence", "🪸") end
+function classicdekor15() classicdecor(0x2688, "Atlantean aquarium", "🐠") end
+function classicdekor16() classicdecor(0x2988, "Atlantean rest", "🛏️") end
+function classicdekor17() classicdecor(0x2C88, "Sea riches statue", "💰") end
+function classicdekor18() classicdecor(0x2F88, "Pirate camp", "🏴‍☠️") end
+function classicdekor19() classicdecor(0x3288, "Pirate playground", "🎠") end
+function classicdekor20() classicdecor(0x3588, "Saloon", "🤠") end
+function classicdekor21() classicdecor(0x3888, "Western movie set", "🎬") end
+function classicdekor22() classicdecor(0x3B88, "Scarab statue", "🐞") end
+function classicdekor23() classicdecor(0x3E88, "Paradise tent", "⛺") end
+function classicdekor24() classicdecor(0x4188, "Plasma globe", "🌐") end
+function classicdekor25() classicdecor(0x4488, "Experimental monument", "🧪") end
+function classicdekor26() classicdecor(0x4788, "3D projector", "📽️") end
+function classicdekor27() classicdecor(0x4A88, "Research facility", "🏢") end
+function classicdekor28() classicdecor(0x4D88, "Knowledge tower", "📚") end
+function classicdekor29() classicdecor(0x5088, "Orange juice fountain", "🍊") end
+function classicdekor30() classicdecor(0x5388, "Flower dancerfloor", "💃") end
+function classicdekor31() classicdecor(0x5688, "Palm tree juice bar", "🌴") end
+function classicdekor32() classicdecor(0x5988, "Yellow submarine club", "🟡") end
+function classicdekor33() classicdecor(0x5C88, "Mixed fruit", "🥭") end
+function classicdekor34() classicdecor(0x5F88, "Happy elephants", "🐘") end
+function classicdekor35() classicdecor(0x6288, "Elf house", "🏡") end
+function classicdekor36() classicdecor(0x6588, "Ice castle", "🏰") end
+function classicdekor37() classicdecor(0x6888, "Chinatown", "🏮") end
+function classicdekor38() classicdecor(0x6B88, "Coral garden", "🌺") end
+function classicdekor39() classicdecor(0x6E88, "Deep sea explorers", "🤿") end
+function classicdekor40() classicdecor(0x7188, "Spring holiday", "🌸") end
+function classicdekor41() classicdecor(0x7488, "Knife throwing", "🔪") end
+
+function kums1()
+local indev = dev
+  local menu = gg.choice({
+"🚁 • Helicopter Skins",
+"✈️ • Airplane Skins",
+"🚄 • Train Skins",
+"🛳️ • Ship Skins",
+"🏯 • Fortress Skins",
+      "❌ • Go Back"
+  }, nil, indev)
+
+    if menu == nil then
+    return
+  elseif menu == 1 then colek1()
+  elseif menu == 2 then colek2()
+  elseif menu == 3 then colek3()
+  elseif menu == 4 then colek4()
+elseif menu == 5 then colek5()
+  elseif menu == 6 then gp3()
+  end
+end
+
+function colek1()
+local indev = dev
+  local menu = gg.choice({
+    "🚁 • Helipad Skins",
+    "🚁 • Helicopter Skins",
+      "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then skinhel1()
+  elseif menu == 2 then skinhel2()
+  elseif menu == 3 then kums1()
+  end
+end
+
+function skinhel1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🛸 • Flying Saucer Hangar",
+"🤖 • Docking Station",
+"🎄 • Sleigh Parking Lot",
+"🎩 • Private Helipad",
+"🥗 • Veggie Helipad",
+"🕌 • Sultan's Palace",
+"🏖️ • Five-Star Helipad",
+"🧳 • Wanderers' Harbor",
+"🏃‍♂️ • Fitness Pad",
+"🏰 • Royal Palace",
+"🕵️ • Detective Agency",
+"🎃 • Haunted Tower",
+"🎭 • Carnival Platform (🇧🇷)",
+"🐰 • Easter Helipad",
+"💧 • Underwater Palace",
+"🏴‍☠️ • Pirate Helipad",
+"🐉 • Festive Helipad",
+"💃 • Ballroom Helipad",
+  "❌ • Go Back"
+  }
+
+  local choice = gg.multiChoice(skins, nil, "🚁 Select an Helipad Skins:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek1) == "function" then
+        colek1()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["pad" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+else
+          gg.alert("❌ Function Helipad" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Helipad have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Helipad Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen helipad skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🛬 Helipad Skin Source Base
+local baseHelipadAddr = nil
+function initHelipadSkinSearch()
+  if baseHelipadAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Helipad skin structure not found.") return false end
+  baseHelipadAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Helipad Skin
+function helipadSkin(offset, label, emoji)
+  if not initHelipadSkinSearch() then return end
+  local src = baseHelipadAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " helipad skin applied!")
+end
