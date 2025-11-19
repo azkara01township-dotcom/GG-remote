@@ -7692,7 +7692,6 @@ function infinitesendcard()
 end
 
 function duplicatecard()
-  function jem()
   gg.setVisible(false)
   gg.clearResults()
 
