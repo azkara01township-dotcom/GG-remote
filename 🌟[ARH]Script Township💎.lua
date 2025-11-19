@@ -7531,26 +7531,32 @@ function comAvatar322() applyCompleteAvatar({1635148044, 3619123}, "📚", "Comp
 function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Complete Avatar 323") end
 
 function kums6()
-local indev = dev
-local menu = gg.choice({
-"⚡ • Duplicate Card",
-"🎴 • Card Pack Badge",
-"🏆 • Collection Badge",
-"❌ • Go Back"
-  }, nil,indev)
+  local indev = dev
+  local menu = gg.choice({
+    "🪙 • Send Gold Card",
+    "♾️ • Send Cards Without Limit",
+    "🔁 • Duplicate Cards",
+    "🎴 • Card Pack Reward",
+    "🏆 • Collection Badge",
+    "❌ • Go Back"
+  }, nil, indev)
 
-  if menu == nil then
-    return
-  elseif menu == 1 then duplicatebadge()
-  elseif menu == 2 then cardbadge()
-  elseif menu == 3 then packbadge()
-  elseif menu == 4 then gp3()
-  return
-  else
-    return
+  if menu == nil then return end
+
+  if menu == 1 then
+    goldsendcard()
+  elseif menu == 2 then
+    infinitesendcard()
+  elseif menu == 3 then
+    duplicatecard()
+  elseif menu == 4 then
+    packbadge()
+  elseif menu == 5 then
+    cardbadge()
+  elseif menu == 6 then
+    gp3()
   end
 
-  -- 🔁 Ulangi menu setelah fungsi selesai
   while true do
     if gg.isVisible(true) then
       gg.setVisible(false)
@@ -7560,64 +7566,212 @@ local menu = gg.choice({
   end
 end
 
-function duplicatebadge()
+function goldsendcard()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari base utama
+  gg.searchNumber("1918984976", gg.TYPE_DWORD)
+  local hasil = gg.getResults(1000)
+
+  if #hasil == 0 then
+    gg.alert("🚫 No matching data found.\n\nPlease restart your game and try again.")
+    return
+  end
+
+  -- 🔍 Cek offset valid (hanya ambil yang nilai +0x48 == 65537)
+  local checkOffsets = {}
+  for _, item in ipairs(hasil) do
+    table.insert(checkOffsets, {
+      address = item.address + 0x48,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  local values = gg.getValues(checkOffsets)
+  local targets = {}
+
+  for i = 1, #values do
+    if values[i].value == 65537 then
+      table.insert(targets, hasil[i].address)
+    end
+  end
+
+  if #targets == 0 then
+    gg.alert("⚠️ Unlimited Card Sending base not found.\n\nTry reopening the game first.")
+    return
+  end
+
+  -- 🛠 Patch + Freeze di 3 offset utama
+  local edits = {}
+  for _, base in ipairs(targets) do
+    table.insert(edits, {
+      address = base - 0xA0,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+    table.insert(edits, {
+      address = base - 0x58,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+    table.insert(edits, {
+      address = base - 0x10,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+  end
+
+  gg.setValues(edits)
+  gg.addListItems(edits)
+  gg.clearResults()
+
+  a2()
+  gg.toast("✨ Unlimited card sending is now active!")
+end
+
+function infinitesendcard()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari DRAFT Gold Card Identifier
+  gg.searchNumber("1701667150", gg.TYPE_DWORD)
+  local hasil = gg.getResults(5000)
+
+  if #hasil == 0 then
+    gg.alert("⚠️ Gold Card data not found.\n\n🔁 Please restart the game and try again.")
+    return
+  end
+
+  -- 🔍 Siapkan list offset untuk dicek (hanya 0x20)
+  local offsets = {}
+  for _, v in ipairs(hasil) do
+    offsets[#offsets + 1] = {
+      address = v.address + 0x20,
+      flags = gg.TYPE_DWORD
+    }
+  end
+
+  -- 📥 Ambil nilai offset
+  local nilai = gg.getValues(offsets)
+
+  local kandidat = nil
+
+  -- 🔎 Validasi offset
+  for i = 1, #nilai do
+    if nilai[i].value == 1684828007 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    gg.alert("❌ Gold Card data could not be verified.\n\n📝 Make sure the Gold Card event is active.")
+    return
+  end
+
+  -- ✏️ Siapkan patch
+  local edit = {
+    {
+      address = kandidat.address + 0x20,
+      flags = gg.TYPE_DWORD,
+      value = 0   -- reset status agar bisa dikirim
+    }
+  }
+
+  gg.setValues(edit)
+  gg.clearResults()
+
+  -- 🎉 Sukses
+  gg.toast("✨ Gold Cards are now sendable!")
+end
+
+function duplicatecard()
   gg.setVisible(false)
   gg.clearResults()
 
-  -- 🔢 Combined input prompt
-  local input = gg.prompt({"🃏 Enter the VISIBLE card amount (example: 1):","✨ Enter the NEW card amount (10 - 1000):"},{},{"number", "number"})
+  -- 📝 Prompt urutan baru:
+  local opt = gg.prompt(
+    {
+      "🃏 Enter VISIBLE card amount (example: 1):",
+      "✨ Enter NEW card amount (10–1000):",
+      "🔍 Search group 1",
+      "🔍 Search group 2"
+    },
+    {"", "10", false, false},
+    {"number", "number", "checkbox", "checkbox"}
+  )
 
-  if not input then return end
-  local visibleCount = tonumber(input[1])
-  local newCount = tonumber(input[2])
+  if not opt then return end
 
-  -- ❌ Input validation
-  if visibleCount == nil or newCount == nil then
+  local visibleCount = tonumber(opt[1])
+  local newCount = tonumber(opt[2])
+  local c1 = opt[3]
+  local c2 = opt[4]
+
+  -- ❌ Validasi input angka
+  if not visibleCount or not newCount then
     gg.alert("❌ Invalid input.\nPlease enter numeric values only.")
     return
   end
 
-  -- 🔒 Limit new amount: 10–1000
   if newCount < 10 or newCount > 1000 then
     gg.alert("⚠️ The new card amount must be between 10 and 1000!")
     return
   end
 
-  gg.setRanges(gg.REGION_C_ALLOC)
-  -- 🔍 Fast search
-  gg.searchNumber("1918984976;1918984974", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
-  local list = gg.getResults(1000)  -- ⚡ optimized result count
-  if #list == 0 then
-    gg.alert("❌ Card data not found.\n\n" .."🔄 Open the card page first, then run the script.\n" .."🔁 If it still fails, restart the game and try again.")
+  -- ❌ Validasi hanya boleh 1 checkbox
+  if (c1 and c2) or (not c1 and not c2) then
+    gg.alert("⚠️ Please select ONLY ONE search option.")
     return
   end
 
-  gg.loadResults(list)  -- ⚡ reduces post-search delay
+  -- 🎯 Tentukan value pencarian
+  local searchVal = c1 and "1918984974" or "1918984976"
+
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Search cepat
+  gg.searchNumber(searchVal, gg.TYPE_DWORD)
+  local list = gg.getResults(1000)
+
+  if #list == 0 then
+    gg.alert("❌ Card data not found.\n\nMake sure the card page is open before running the script.")
+    return
+  end
+
   local targets = {}
-  -- 🎯 Filter +0x1C offset values
+
+  -- 🎯 Detect offset +0x1C = visible amount
   for i = 1, #list do
     local addr = list[i].address + 0x1C
-    local value = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1].value
-    if value == visibleCount then
+    local v = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1].value
+    if v == visibleCount then
       targets[#targets + 1] = addr
     end
   end
 
-  gg.clearResults() -- ⚡ clears heavy search data immediately
+  gg.clearResults()
+
   if #targets == 0 then
-    gg.alert("⚠️ No card entries match the amount you entered.\n" .."Please make sure the number is correct.")
+    gg.alert("⚠️ No matching card entries found.\nPlease verify the visible amount.")
     return
   end
 
-  -- ✏️ Apply edits
+  -- ✏️ Apply new amount
   local edits = {}
   for i = 1, #targets do
     edits[i] = {address = targets[i], flags = gg.TYPE_DWORD, value = newCount}
   end
-  gg.setValues(edits)
 
+  gg.setValues(edits)
   a2()
-  gg.toast("✅ Duplicate card to:🃏 " .. newCount .. ".")
+  gg.toast("✅ Duplicate card : 🃏 " .. newCount)
 end
 
 function cardbadgecol(label, emoji, values)
