@@ -7571,6 +7571,63 @@ function goldsendcard()
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
+  -- 🔍 Cari DRAFT Gold Card Identifier
+  gg.searchNumber("1701667150", gg.TYPE_DWORD)
+  local hasil = gg.getResults(5000)
+
+  if #hasil == 0 then
+    gg.alert("⚠️ Gold Card data not found.\n\n🔁 Please restart the game and try again.")
+    return
+  end
+
+  -- 🔍 Siapkan list offset untuk dicek (hanya 0x20)
+  local offsets = {}
+  for _, v in ipairs(hasil) do
+    offsets[#offsets + 1] = {
+      address = v.address + 0x20,
+      flags = gg.TYPE_DWORD
+    }
+  end
+
+  -- 📥 Ambil nilai offset
+  local nilai = gg.getValues(offsets)
+
+  local kandidat = nil
+
+  -- 🔎 Validasi offset
+  for i = 1, #nilai do
+    if nilai[i].value == 1684828007 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    gg.alert("❌ Gold Card data could not be verified.\n\n📝 Make sure the Gold Card event is active.")
+    return
+  end
+
+  -- ✏️ Siapkan patch
+  local edit = {
+    {
+      address = kandidat.address + 0x20,
+      flags = gg.TYPE_DWORD,
+      value = 0   -- reset status agar bisa dikirim
+    }
+  }
+
+  gg.setValues(edit)
+  gg.clearResults()
+
+  -- 🎉 Sukses
+  gg.toast("✨ Gold Cards are now sendable!")
+end
+
+function infinitesendcard()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
   -- 🔍 Cari base utama
   gg.searchNumber("1918984976", gg.TYPE_DWORD)
   local hasil = gg.getResults(1000)
@@ -7634,64 +7691,8 @@ function goldsendcard()
   gg.toast("✨ Unlimited card sending is now active!")
 end
 
-function infinitesendcard()
-  gg.setVisible(false)
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- 🔍 Cari DRAFT Gold Card Identifier
-  gg.searchNumber("1701667150", gg.TYPE_DWORD)
-  local hasil = gg.getResults(5000)
-
-  if #hasil == 0 then
-    gg.alert("⚠️ Gold Card data not found.\n\n🔁 Please restart the game and try again.")
-    return
-  end
-
-  -- 🔍 Siapkan list offset untuk dicek (hanya 0x20)
-  local offsets = {}
-  for _, v in ipairs(hasil) do
-    offsets[#offsets + 1] = {
-      address = v.address + 0x20,
-      flags = gg.TYPE_DWORD
-    }
-  end
-
-  -- 📥 Ambil nilai offset
-  local nilai = gg.getValues(offsets)
-
-  local kandidat = nil
-
-  -- 🔎 Validasi offset
-  for i = 1, #nilai do
-    if nilai[i].value == 1684828007 then
-      kandidat = hasil[i]
-      break
-    end
-  end
-
-  if not kandidat then
-    gg.alert("❌ Gold Card data could not be verified.\n\n📝 Make sure the Gold Card event is active.")
-    return
-  end
-
-  -- ✏️ Siapkan patch
-  local edit = {
-    {
-      address = kandidat.address + 0x20,
-      flags = gg.TYPE_DWORD,
-      value = 0   -- reset status agar bisa dikirim
-    }
-  }
-
-  gg.setValues(edit)
-  gg.clearResults()
-
-  -- 🎉 Sukses
-  gg.toast("✨ Gold Cards are now sendable!")
-end
-
 function duplicatecard()
+  function jem()
   gg.setVisible(false)
   gg.clearResults()
 
@@ -7703,7 +7704,7 @@ function duplicatecard()
       "🔍 Search group 1",
       "🔍 Search group 2"
     },
-    {"", "10", false, false},
+    {"1", "10", false, false},
     {"number", "number", "checkbox", "checkbox"}
   )
 
@@ -7738,21 +7739,27 @@ function duplicatecard()
 
   -- 🔍 Search cepat
   gg.searchNumber(searchVal, gg.TYPE_DWORD)
-  local list = gg.getResults(1000)
+  local list = gg.getResults(2000)
 
   if #list == 0 then
     gg.alert("❌ Card data not found.\n\nMake sure the card page is open before running the script.")
     return
   end
 
+  local batch = {}
+  for i = 1, #list do
+    batch[i] = { address = list[i].address + 0x1C, flags = gg.TYPE_DWORD }
+  end
+
+  -- Sekali getValues → ultra cepat
+  local values = gg.getValues(batch)
+
   local targets = {}
 
-  -- 🎯 Detect offset +0x1C = visible amount
-  for i = 1, #list do
-    local addr = list[i].address + 0x1C
-    local v = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})[1].value
-    if v == visibleCount then
-      targets[#targets + 1] = addr
+  -- Filter hasil dalam RAM (super cepat juga)
+  for i = 1, #values do
+    if values[i].value == visibleCount then
+      targets[#targets + 1] = values[i].address
     end
   end
 
@@ -7772,7 +7779,7 @@ function duplicatecard()
   gg.setValues(edits)
   a2()
   gg.toast("✅ Duplicate card : 🃏 " .. newCount)
-end
+	end
 
 function cardbadgecol(label, emoji, values)
   local base = getAddr()
