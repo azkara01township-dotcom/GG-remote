@@ -7626,10 +7626,32 @@ end
 function infinitesendcard()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
-  -- 🔍 Cari base utama
-  gg.searchNumber("1918984976", gg.TYPE_DWORD)
+  -- 📢 Alert at start
+  gg.alert("ℹ️ If Search Group 1 cannot be found,\nplease try Search Group 2.")
+
+  -- 📌 Select value group to search (NO CANCEL)
+  local choice = gg.choice({
+    "🔍 Search Group 1",
+    "🔍 Search Group 2"
+  }, nil, "✨ Choose value group for Unlimited Card Sending")
+
+  if choice == nil then
+    return
+  end
+
+  local searchValue = nil
+
+  if choice == 1 then
+    searchValue = "1918984974"
+  elseif choice == 2 then
+    searchValue = "1918984976"
+  end
+
+  -- 🔍 Search base value
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber(searchValue, gg.TYPE_DWORD)
   local hasil = gg.getResults(1000)
 
   if #hasil == 0 then
@@ -7637,7 +7659,7 @@ function infinitesendcard()
     return
   end
 
-  -- 🔍 Cek offset valid (hanya ambil yang nilai +0x48 == 65537)
+  -- 🔍 Check +0x48 offset (must be 65537)
   local checkOffsets = {}
   for _, item in ipairs(hasil) do
     table.insert(checkOffsets, {
@@ -7660,7 +7682,7 @@ function infinitesendcard()
     return
   end
 
-  -- 🛠 Patch + Freeze di 3 offset utama
+  -- 🛠 Patch & Freeze at important offsets
   local edits = {}
   for _, base in ipairs(targets) do
     table.insert(edits, {
