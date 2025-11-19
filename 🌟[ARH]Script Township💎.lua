@@ -7550,9 +7550,9 @@ function kums6()
   elseif menu == 3 then
     duplicatecard()
   elseif menu == 4 then
-    packbadge()
-  elseif menu == 5 then
     cardbadge()
+  elseif menu == 5 then
+    packbadge()
   elseif menu == 6 then
     gp3()
   end
