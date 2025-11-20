@@ -5074,3 +5074,4657 @@ table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " helipad skin applied!")
 end
+
+function pad1()  helipadSkin(-0x610, "Flying Saucer Hangar", "🛸") end
+function pad2()  helipadSkin(-0x5d0, "Docking Station", "🤖") end
+function pad3()  helipadSkin(-0x590, "Sleigh Parking Lot", "🎄") end
+function pad4()  helipadSkin(-0x550, "Private Helipad", "🎩") end
+function pad5()  helipadSkin(-0x510, "Veggie Helipad", "🥗") end
+function pad6()  helipadSkin(-0x4d0, "Sultan's Palace", "🕌") end
+function pad7()  helipadSkin(-0x490, "Five-Star Helipad", "🏖️") end
+function pad8()  helipadSkin(-0x450, "Wanderers' Harbor", "🧳") end
+function pad9()  helipadSkin(-0x410, "Fitness Pad", "🏃‍♂️") end
+function pad10() helipadSkin(-0x3d0, "Royal Palace", "🏰") end
+function pad11() helipadSkin(-0x390, "Detective Agency", "🕵️") end
+function pad12() helipadSkin(-0x350, "Haunted Tower", "🎃") end
+function pad13() helipadSkin(-0x310, "Carnival Platform (🇧🇷)", "🎭") end
+function pad14() helipadSkin(-0x2d0, "Easter Helipad", "🐰") end
+function pad15() helipadSkin(-0x290, "Underwater Palace", "💧") end
+function pad16() helipadSkin(-0x250, "Pirate Helipad", "🏴‍☠️") end
+function pad17() helipadSkin(-0x210, "Festive Helipad", "🐉") end
+function pad18() helipadSkin(-0x1D0, "Ballroom Helipad", "💃") end
+
+function skinhel2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🛸 • Turbo Saucer",
+"🤖 • Robot Courier",
+"🎄 • Santa's Sleigh",
+"🎩 • Private Helicopter",
+"🥗 • Eggplant Helicopter",
+"🕌 • Flying Carpet",
+"🏖️ • Chise Lounge Drone",
+"🧳 • Flying Ship",
+"🏃‍♂️ • Helicycle",
+"🏰 • Pumpkin Helicopter",
+"🕵️ • Surveillance Airship",
+"🎃 • Flying Cauldron",
+"🎭 • Feathery Helicopter",
+"🐰 • Egg Chopper",
+"💧 • Flying Bathyscaphe",
+"🏴‍☠️ • Pirate Helicopter",
+"🐉 • Festive Helicopter",
+"💃 • Ballroom Helicopter",
+  "❌ • Go Back"
+  }
+
+local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek1) == "function" then
+        colek1()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["hel" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Helicopter" .. i .. "() not found!")
+        end
+end
+    end
+
+    gg.toast("🎉 All selected Exclusive Helicopter have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Helicopter Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen helicopter skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🚁 Helicopter Skin Source Base
+local baseHelicopterAddr = nil
+function initHelicopterSkinSearch()
+  if baseHelicopterAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
+  gg.refineNumber("1952532319", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Helicopter skin structure not found.") return false end
+  baseHelicopterAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Helicopter Skin
+function helicopterSkin(offset, label, emoji)
+  if not initHelicopterSkinSearch() then return end
+  local src = baseHelicopterAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " helicopter skin applied!")
+end
+
+function hel1()  helicopterSkin(-0x50,  "Turbo Saucer", "🛸") end
+function hel2()  helicopterSkin(-0xD0, "Robot Courier", "🤖") end
+function hel3()  helicopterSkin(-0x150, "Santa's Sleigh", "🎅") end
+function hel4()  helicopterSkin(-0x10,  "Private Helicopter", "🎩") end
+function hel5()  helicopterSkin(0x30,   "Eggplant Helicopter", "🥗") end
+function hel6()  helicopterSkin(0x70,   "Flying Carpet", "🕌") end
+function hel7()  helicopterSkin(0xB0,   "Chic Lounge Drone", "🏖️") end -- typo diperbaiki
+function hel8()  helicopterSkin(0xF0,   "Flying Ship", "🧳") end
+function hel9()  helicopterSkin(0x130,  "Helicycle", "🏃‍♂️") end
+function hel10() helicopterSkin(0x170,  "Pumpkin Helicopter", "🎃") end
+function hel11() helicopterSkin(0x1B0,  "Surveillance Airship", "🕵️") end
+function hel12() helicopterSkin(0x1F0,  "Flying Cauldron", "🎃") end
+function hel13() helicopterSkin(0x230,  "Feathery Helicopter", "🎭") end
+function hel14() helicopterSkin(0x270,  "Egg Chopper", "🐰") end
+function hel15() helicopterSkin(0x2B0,  "Flying Bathyscaphe", "💧") end
+function hel16() helicopterSkin(0x2F0,  "Pirate Helicopter", "🏴‍☠️") end
+function hel17() helicopterSkin(0x330,  "Festive Helicopter", "🐉") end
+function hel18() helicopterSkin(0x370,  "Ballroom Helicopter", "💃") end      
+
+function colek2()
+local indev = dev
+  local menu = gg.choice({
+    "🛩️ • Airport Skins",
+    "🛩️ • Airplane Skins",
+  "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then bandara1()
+  elseif menu == 2 then bandara2()
+  elseif menu == 3 then kums1()
+  end
+end
+
+function bandara1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🛫 • Aeriel Portal",
+"🐲 • Festival Airport",
+"🌴 • Tropical Airport",
+"👻 • Ghost Airport",
+"🪐 • Space Airport",
+"🎸 • Rock Airport",
+"🎬 • Cinema Airport",
+"🎅 • Santa's Residence",
+"🐣 • Easter Airport",
+"🍭 • Sugary Airport",
+"🎿 • Ski Station",
+"🌈 • Rainbow's end Airport",
+"🕵️ • Secret Base",
+"🌟 • Five-Star Airport",
+"🎼 • Symphony Airport",
+"👗 • Fashion Airport",
+"🕌 • Arabian Airport",
+  "❌ • Go Back"
+  }
+
+  local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airport Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[18] then
+      if type(colek2) == "function" then
+        colek2()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 17 do
+      if choice[i] then
+        local func = _G["das" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Airport" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Airport have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Airport Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
+  gg.refineNumber("6646134", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen airport skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🛬 Airport Skin Source Base
+local baseAirportAddr = nil
+function initAirportSkinSearch()
+  if baseAirportAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
+  gg.refineNumber("6646134", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Airport skin structure not found.") return false end
+  baseAirportAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Airport Skin
+function airportSkin(offset, label, emoji)
+  if not initAirportSkinSearch() then return end
+  local src = baseAirportAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " airport skin applied!")
+end
+
+function airportSkinManual(label, emoji, values)
+  local base = getAddr()
+  if not base then return end
+
+  -- default values
+  local defaults = {
+    {offset = -0x30, value = 0},
+    {offset = -0x2C, value = 1},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  }
+
+  -- gabungkan defaults + custom
+  local addrList = {}
+  for _, item in ipairs(values) do
+    table.insert(addrList, {
+      address = base + item.offset,
+      flags = gg.TYPE_DWORD,
+      value = item.value
+    })
+  end
+  for _, item in ipairs(defaults) do
+    table.insert(addrList, {
+      address = base + item.offset,
+      flags = gg.TYPE_DWORD,
+      value = item.value
+    })
+  end
+
+  gg.setValues(addrList)
+  gg.toast(emoji .. " " .. label .. " airport skin applied!")
+end
+
+function das1()  airportSkin(-0x190, "Aeriel Portal", "🛫") end
+function das2()  airportSkin(-0x150, "Festival Airport", "🐲") end
+function das3()  airportSkin(-0x110, "Tropical Airport", "🌴") end
+function das4()  airportSkin(-0xD0,  "Ghost Airport", "👻") end
+function das5()  airportSkin(-0x90,  "Space Airport", "🪐") end
+function das6()  airportSkin(-0x50,  "Rock Airport", "🎸") end
+function das7()  airportSkin(-0x10,  "Cinema Airport", "🎬") end
+function das8()  airportSkin(0x30,   "Santa's Residence", "🎅") end
+function das9()  airportSkin(0x70,   "Easter Airport", "🐣") end
+function das10() airportSkin(0xB0,   "Sugary Airport", "🍭") end
+function das11() airportSkin(0xF0,   "Ski Station", "🎿") end
+function das12() airportSkin(0x130,  "Rainbow's End Airport", "🌈") end
+function das13() airportSkin(0x170,  "Secret Base", "🕵️") end
+function das14() airportSkin(0x1B0,  "Five-Star Airport", "🌟") end
+function das15() airportSkin(0x1F0,  "Symphony Airport", "🎼") end
+function das16()
+  airportSkinManual("Fashion Airport", "👗", {
+    {offset = -0x48, value = 0x696B5328},
+    {offset = -0x44, value = 0x69415F6E},
+    {offset = -0x40, value = 0x726F7072},
+    {offset = -0x3C, value = 0x61665F74},
+    {offset = -0x38, value = 0x6F696873},
+    {offset = -0x34, value = 0x0000006E}
+  })
+end
+
+function das17()
+  airportSkinManual("Arabian Airport", "🕌", {
+    {offset = -0x48, value = 0x696B5322},
+    {offset = -0x44, value = 0x69415F6E},
+    {offset = -0x40, value = 0x726F7072},
+    {offset = -0x3C, value = 0x72615F74},
+    {offset = -0x38, value = 0x00006261},
+    {offset = -0x34, value = 0x00000000}
+  })
+end
+
+function bandara2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🛫 • Ultra Plane",
+"🐲 • Sky Dragon",
+"🌴 • Tropical Biplane",
+"👻 • Ghost Plane",
+"🪐 • Launch Vehicle",
+"🎸 • Rock Plane",
+"🎬 • A-Lister Jet",
+"🎅 • Holiday Plane",
+"🐣 • Bird Plane",
+"🍭 • Éclair Plane",
+"🎿 • Aero Sleigh",
+"🌈 • Lucky Jet",
+"🕵️ • Stealth Aircraft",
+"🌟 • Seaplane",
+"🎼 • Symphony Plane",
+"👗 • Fashion Airport",
+"🕌 • Arabian Airport",
+  "❌ • Go Back"
+  }
+
+local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[18] then
+      if type(colek2) == "function" then
+        colek2()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 17 do
+      if choice[i] then
+        local func = _G["wat" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Airplane" .. i .. "() not found!")
+        end
+      end
+end
+
+    gg.toast("🎉 All selected Exclusive Airplane have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Airplane Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
+  gg.refineNumber("7037807", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen airplane skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🛫 Airplane Skin Source Base
+local baseAirplaneAddr = nil
+function initAirplaneSkinSearch()
+  if baseAirplaneAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
+  gg.refineNumber("7037807", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Airplane skin structure not found.") return false end
+  baseAirplaneAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Airplane Skin
+function airplaneSkin(offset, label, emoji)
+  if not initAirplaneSkinSearch() then return end
+  local src = baseAirplaneAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " airplane skin applied!")
+end
+
+-- 🛫 Airplane Skins
+function wat1()  airplaneSkin(0x3B0, "Ultra Plane", "🛫") end
+function wat2()  airplaneSkin(0x2F0, "Sky Dragon", "🐲") end
+function wat3()  airplaneSkin(0x230, "Tropical Biplane", "🌴") end
+function wat4()  airplaneSkin(0x170, "Ghost Plane", "👻") end
+function wat5()  airplaneSkin(0xB0,  "Launch Vehicle", "🪐") end
+function wat6()  airplaneSkin(-0x10,  "Rock Plane", "🎸") end
+function wat7()  airplaneSkin(-0xD0,  "A-Lister Jet", "🎬") end
+function wat8()  airplaneSkin(-0x190, "Holiday Plane", "🎅") end
+function wat9()  airplaneSkin(-0x250, "Bird Plane", "🐣") end
+function wat10() airplaneSkin(-0x310, "Éclair Plane", "🍭") end
+function wat11() airplaneSkin(-0x3D0, "Aero Sleigh", "🎿") end
+function wat12() airplaneSkin(-0x490, "Lucky Jet", "🌈") end
+function wat13() airplaneSkin(-0x550, "Stealth Aircraft", "🕵️") end
+function wat14() airplaneSkin(-0x610, "Seaplane", "🌟") end
+function wat15() airplaneSkin(-0x6D0, "Symphony Plane", "🎼") end
+function wat16() airplaneSkin(-0x910, "Fashion Plane", "👗") end
+function wat17() airplaneSkin(-0x850, "Arabian Plane", "🕌") end
+
+-------------------------------------------------
+
+function colek3()
+local indev = dev
+  local menu = gg.choice({
+    "🚅 • Station Skins",
+    "🚅 • Train Skins",
+      "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then kret1()
+  elseif menu == 2 then kret2()
+  elseif menu == 3 then kums1()
+  end
+end
+
+function kret1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🌺 • Flower Station",
+"🎄 • Christmas Station (2)",
+"🎃 • Halloween Station",
+"🏛️ • Roman Station",
+"🏰 • Castle Station",
+"🎶 • Record Station",
+"🏕️ • Training Camp",
+"🪐 • Space Station",
+"🐲 • Chinese Station",
+"🎭 • Theater Set Station",
+"🦴 • Ancient Settlement",
+"🐣 • Easter Station",
+"🎁 • Christmas Station (1)",
+"🤠 • Cowboys Station",
+"💃 • Disco Station",
+"👻 • Ghost Station",
+"🌀 • Express Portal",
+"🏛️ • Mythic Station",
+  "❌ • Go Back"
+  }
+
+  local choice = gg.multiChoice(skins, nil, "🚆 Select an Station Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek3) == "function" then
+        colek3()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["sta" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Station" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Station skin have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/.ggcache_arh/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Station Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared 👑")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
+  gg.refineNumber("1768844127", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen station skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏆 Station Skin Source Base
+local baseStationAddr = nil
+function initStationSkinSearch()
+  if baseStationAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
+  gg.refineNumber("1768844127", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Station skin structure not found.") return false end
+  baseStationAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Station Skin
+function stationSkin(offset, label, emoji)
+  if not initStationSkinSearch() then return end
+  local src = baseStationAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " station skin applied!")
+end
+-- 🎨 Station Skin Functions
+function sta1() stationSkin(-0x400, "🌺", "Flower Station") end
+function sta2() stationSkin(-0x298, "🎄", "Christmas Station (2)") end
+function sta3() stationSkin(-0x1D8, "🎃", "Halloween Station") end
+function sta4() stationSkin(-0x118, "🏛️", "Roman Station") end
+function sta5() stationSkin(-0x58, "🏰", "Castle Station") end
+function sta6() stationSkin(0x68, "🎶", "Record Station") end
+function sta7() stationSkin(0x128, "🏕️", "Training Camp") end
+function sta8() stationSkin(0x1E8, "🪐", "Space Station") end
+function sta9() stationSkin(0x2A8, "🐲", "Chinese Station") end
+function sta10() stationSkin(0x368, "🎭", "Theater Set Station") end
+function sta11() stationSkin(0x428, "🦴", "Ancient Settlement") end
+function sta12() stationSkin(0x4E8, "🐣", "Easter Station") end
+function sta13() stationSkin(0x5A8, "🎁", "Christmas Station (1)") end
+function sta14() stationSkin(0x668, "🤠", "Cowboys Station") end
+function sta15() stationSkin(0x728, "💃", "Disco Station") end
+function sta16() stationSkin(0x7E8, "👻", "Ghost Station") end
+function sta17() stationSkin(0x8A8, "🌀", "Express Portal") end
+function sta18() stationSkin(-0x358, "🏛️", "Mythic Station") end
+
+-------------------------------------------------
+
+function kret2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+    "🌺 • Flower Train",
+"🎄 • Christmas Train (2)",
+"🎃 • Halloween Train",
+"🏛️ • Express Tram",
+"🏰 • Knight Train",
+"🎶 • Music Express",
+"🏕️ • Wooden Wagon",
+"🪐 • Mars Rover",
+"🐲 • Dragon Train",
+"🎭 • Theater Express",
+"🦴 • Primeval Express",
+"🐣 • Easter Express",
+"🎁 • Christmas Train (1)",
+"🤠 • Cowboys Train",
+"💃 • Disco Train",
+"👻 • Ghost Train",
+"🌀 • Future Express",
+"🏛️ • Mythic Train",
+  "❌ • Go Back"
+  }
+
+local choice = gg.multiChoice(skins, nil, "🚆 Select an Train Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[19] then
+      if type(colek3) == "function" then
+        colek3()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 18 do
+      if choice[i] then
+        local func = _G["ret" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Train" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Train have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Train Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
+  gg.refineNumber("1734962795", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen train skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏆 Train Skin Source Base
+local baseTrainAddr = nil
+function initTrainSkinSearch()
+  if baseTrainAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
+  gg.refineNumber("1734962795", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Train skin structure not found.") return false end
+  baseTrainAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Train Skin
+function trainSkin(offset, label, emoji)
+  if not initTrainSkinSearch() then return end
+  local src = baseTrainAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " train skin applied!")
+end
+
+-- 🚂 Train Skin Options
+function ret1()  trainSkin(-0x3CC, "Flower Train", "🌺") end
+function ret2()  trainSkin(-0x24C, "Christmas Train (2)", "🎄") end
+function ret3()  trainSkin(-0x18C, "Halloween Train", "🎃") end
+function ret4()  trainSkin(-0xCC, "Express Tram", "🏛️") end
+function ret5()  trainSkin(-0xC, "Knight Train", "🏰") end
+function ret6()  trainSkin( 0xB4, "Music Express", "🎶") end
+function ret7()  trainSkin( 0x174, "Wooden Wagon", "🏕️") end
+function ret8()  trainSkin( 0x234, "Mars Rover", "🪐") end
+function ret9()  trainSkin( 0x2F4, "Dragon Train", "🐲") end
+function ret10() trainSkin( 0x3B4, "Theater Express", "🎭") end
+function ret11() trainSkin( 0x474, "Primeval Express", "🦴") end
+function ret12() trainSkin( 0x534, "Easter Express", "🐣") end
+function ret13() trainSkin( 0x5F4, "Christmas Train (1)", "🎁") end
+function ret14() trainSkin( 0x6B4, "Cowboys Train", "🤠") end
+function ret15() trainSkin( 0x774, "Disco Train", "💃") end
+function ret16() trainSkin( 0x834, "Ghost Train", "👻") end
+function ret17() trainSkin( 0x8F4, "Future Express", "🌀") end
+function ret18() trainSkin( -0x30C, "Mythic Train", "🏛️") end
+
+-------------------------------------------------
+
+function colek4()
+local indev = dev
+  local menu = gg.choice({
+    "⛵ • Port Skins",
+    "⛵ • Ship Skins",
+      "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then laut1()
+  elseif menu == 2 then laut2()
+  elseif menu == 3 then kums1()
+  end
+end
+
+function laut1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🏴‍☠️ • Pirate Harbor",
+"🌴 • Equatorial Port",
+"🍭 • Sweet Port",
+"🦁 • Doge's Pier",
+"💀 • Port Of Horrors",
+"💘 • Romantic Harbor",
+"🛡️ • Viking Harbor",
+"🌳 • Jungle Port",
+"🎄 • Christmas Port",
+"🏮 • Lantern Harbor",
+"🏺 • Ancient Port",
+"🤠 • Saloon on the water",
+"🍬 • Candy Port",
+"🕌 • Egyptian-Themed Port",
+"❄️ • Artic Port",
+  "❌ • Go Back"
+}
+
+local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[16] then
+      if type(colek4) == "function" then
+        colek4()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 15 do
+      if choice[i] then
+        local func = _G["buhan" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Port" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Port have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Port Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
+  gg.refineNumber("1717912671", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen port skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏆 Port Skin Source Base
+local basePortAddr = nil
+function initPortSkinSearch()
+  if basePortAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
+  gg.refineNumber("1717912671", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Port skin structure not found.") return false end
+  basePortAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Port Skin
+function portSkin(offset, label, emoji)
+  if not initPortSkinSearch() then return end
+  local src = basePortAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " port skin applied!")
+end
+
+function buhan1()  portSkin(0x74,   "Pirate Harbor",         "🏴‍☠️") end
+function buhan2()  portSkin(0x34,   "Equatorial Port",       "🌴")   end
+function buhan3()  portSkin(0xB4,   "Sweet Port",            "🍭")   end
+function buhan4()  portSkin(0xF4,   "Doge's Pier",           "🦁")   end
+function buhan5()  portSkin(0x134,  "Port Of Horrors",       "💀")   end
+function buhan6()  portSkin(0x174,  "Romantic Harbor",       "💘")   end
+function buhan7()  portSkin(0x1b4,  "Viking Harbor",         "🛡️")   end
+function buhan8()  portSkin(0x1f4,  "Jungle Port",           "🌳")   end
+function buhan9()  portSkin(0x234,  "Christmas Port",        "🎄")   end
+function buhan10() portSkin(0x274,  "Lantern Harbor",        "🏮")   end
+function buhan11() portSkin(0x2b4,  "Ancient Port",          "🏺")   end
+function buhan12() portSkin(0x2f4,  "Saloon on the Water",   "🤠")   end
+function buhan13() portSkin(0x334,  "Candy Port",            "🍬")   end
+function buhan14() portSkin(0x374,  "Egyptian-Themed Port",  "🕌")   end
+function buhan15() portSkin(0x3b4,  "Arctic Port",           "❄️")   end
+
+-------------------------------------------------
+
+function laut2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🏴‍☠️ • Pirate Galleon",
+"🌴 • Cruise Liner",
+"🍭 • Croissant Ferry",
+"🦁 • Gondola",
+"💀 • Ghost Ship",
+"💘 • Love Boat",
+"🛡️ • Sturdy Drakkar",
+"🌳 • Cruise Ship",
+"🎄 • Gift Boat",
+"🏮 • Dragon Boat",
+"🏺 • Greek Bireme",
+"🤠 • River Steamboat",
+"🍬 • Sweet Boat",
+"🕌 • Egyptian-Themed Ship",
+"❄️ • Arctic Ship",
+  "❌ • Go Back"
+  }
+
+local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[16] then
+      if type(colek4) == "function" then
+        colek4()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 15 do
+      if choice[i] then
+        local func = _G["kap" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Ship" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Ship have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Boat Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
+  gg.refineNumber("1784639593", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen boat skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏆 Boat Skin Source Base
+local baseBoatAddr = nil
+function initBoatSkinSearch()
+  if baseBoatAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
+  gg.refineNumber("1784639593", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Boat skin structure not found.") return false end
+  baseBoatAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Boat Skin
+function boatSkin(offset, label, emoji)
+  if not initBoatSkinSearch() then return end
+  local src = baseBoatAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " boat skin applied!")
+end
+
+function kap1()  boatSkin(0x1F8,  "Pirate Galleon",        "🏴‍☠️") end
+function kap2()  boatSkin(-0x188, "Cruise Liner",          "🌴")   end
+function kap3()  boatSkin(-0x148, "Croissant Ferry",       "🍭")   end
+function kap4()  boatSkin(-0x108, "Gondola",               "🦁")   end
+function kap5()  boatSkin(-0xC8,  "Ghost Ship",            "💀")   end
+function kap6()  boatSkin(-0x88,  "Love Boat",             "💘")   end
+function kap7()  boatSkin(-0x48,  "Sturdy Drakkar",        "🛡️")   end
+function kap8()  boatSkin(-0x8,   "Cruise Ship",           "🌳")   end
+function kap9()  boatSkin(0x38,   "Gift Boat",             "🎄")   end
+function kap10() boatSkin(0x78,   "Dragon Boat",           "🏮")   end
+function kap11() boatSkin(0xb8,   "Greek Bireme",          "🏺")   end
+function kap12() boatSkin(0xf8,   "River Steamboat",       "🤠")   end
+function kap13() boatSkin(0x138,  "Sweet Boat",            "🍬")   end
+function kap14() boatSkin(0x178,  "Egyptian-Themed Ship",  "🕌")   end
+function kap15() boatSkin(0x1b8,  "Arctic Ship",           "❄️")   end
+
+-------------------------------------------------
+
+function colek5()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+  local skins = {
+"🏴‍☠️ • Pirate Shack",
+"⚓️ • Pirate Hub",
+"🏰 • Pirate Fort",
+"🏝️ • Island House",
+"🏯 • Island Manor",
+"🏡 • Island Residance",
+"🧙‍♀️ • Witct's House",
+"🏚️ • Witct's Manor",
+"🏰 • Witct's Castle",
+"❄️ • Ice Castle",
+"🗼 • Little Paris",
+"🐣 • Easter Village",
+"🦕 • Neanderthal Island",
+"🪵 • Aztec Island",
+  "❌ • Go Back"
+  }
+
+local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[15] then
+      if type(kums1) == "function" then
+        kums1()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 14 do
+      if choice[i] then
+        local func = _G["pulo" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function Fortress" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Exclusive Fortress have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Fortress Skin Address
+function getAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
+  gg.refineNumber("1651733601", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen fortress skin first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🏰 Fortress Skin Source Base
+local baseFortressAddr = nil
+function initFortressSkinSearch()
+  if baseFortressAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
+  gg.refineNumber("1651733601", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Fortress skin structure not found.") return false end
+  baseFortressAddr = r[1].address
+  return true
+end
+
+-- 🏆 Apply Fortress Skin
+function fortressSkin(offset, label, emoji)
+  if not initFortressSkinSearch() then return end
+  local src = baseFortressAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " fortress skin applied!")
+end
+
+-- 🌴 Ship Skins Functions
+function pulo1()  fortressSkin(-0xd0, "Pirate Shack",         "🏴‍☠️") end
+function pulo2()  fortressSkin(-0x90, "Pirate Hub",           "⚓️") end
+function pulo3()  fortressSkin(-0x50, "Pirate Fort",          "🏰") end
+function pulo4()  fortressSkin(-0x10, "Island House",         "🏝️") end
+function pulo5()  fortressSkin(0x30,  "Island Manor",         "🏯") end
+function pulo6()  fortressSkin(0x70,  "Island Residence",     "🏡") end -- ✅ Fixed typo
+function pulo7()  fortressSkin(0xb0,  "Witch's House",        "🧙‍♀️") end
+function pulo8()  fortressSkin(0xf0,  "Witch's Manor",        "🏚️") end
+function pulo9()  fortressSkin(0x130, "Witch's Castle",       "🏰") end
+function pulo10() fortressSkin(0x170, "Ice Castle",           "❄️") end
+function pulo11() fortressSkin(0x1b0, "Little Paris",         "🗼") end
+function pulo12() fortressSkin(0x1f0, "Easter Village",       "🐣") end
+function pulo13() fortressSkin(0x230, "Neanderthal Island",   "🦕") end
+function pulo14() fortressSkin(0x270, "Aztec Island", "🪵") end
+
+-------------------------------------------------
+
+function kums2()
+local indev = dev
+  local menu = gg.choice({
+"🪧 • Event Townsign",
+"🪧 • Random Townsign",
+ "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then townsign1()
+  elseif menu == 2 then townsign2()
+  elseif menu == 3 then gp3()
+  end
+end
+
+function townsign1()
+while true do
+  gg.setVisible(false)
+  gg.clearResults()
+
+  local skins = {
+"🏴‍☠️ • Pirate Town Sign",
+"❄️ • Winter Town Sign",
+"🎉 • Festive Town Sign",
+"🔮 • Mystical Town Sign",
+"👻 • Supernatural Town Sign",
+"🐙 • Cthutun Town Sign",
+"🎁 • Holiday Town Sign",
+"🛸 • Extraterrestrial Town Sign",
+"💀 • Ghostly Town Sign",
+"🍰 • Dessert Town Sign",
+"🤠 • Cowboy Town Sign",
+"🪶 • Power of Ancestors Town Sign",
+"🏛️ • Atlantis Town Sign",
+"🌿 • Smart Garden Town Sign",
+"🍭 • Sweet Treat Town Sign",
+"🐧 • Penguin Resort Town Sign",
+  "❌ • Go Back"
+  }
+
+  local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[17] then
+      if type(kums2) == "function" then
+        kums2()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 21 do
+      if choice[i] then
+        local func = _G["signEvent" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function City Townsign Event" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected City Townsign Event have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get SignEvent Address
+function getSignEventAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("32;49;37;1953055504:97", gg.TYPE_DWORD)
+  gg.refineNumber("37", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen the town sign first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🎯 SignEvent Source Base
+local baseSignAddr = nil
+function initSignEventSearch()
+  if baseSignAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("32;49;37;1953055504:97", gg.TYPE_DWORD)
+  gg.refineNumber("37", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Town Sign structure not found.") return false end
+  baseSignAddr = r[1].address
+  return true
+end
+
+-- 🪧 Apply SignEvent Skin
+function applySignEvent(offset, label, emoji)
+  if not initSignEventSearch() then return end
+  local src = baseSignAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getSignEventAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " applied!")
+end
+
+-- 🪧 SignEvent Options
+function signEvent1()  applySignEvent(-0xF8,  "Pirate Town Sign",              "🏴‍☠️") end
+function signEvent2()  applySignEvent(-0xA8,  "Winter Town Sign",              "❄️") end
+function signEvent3()  applySignEvent(-0x58,  "Festive Town Sign",             "🎉") end
+function signEvent4()  applySignEvent(-0x08,  "Mystical Town Sign",            "🔮") end
+function signEvent5()  applySignEvent(0x48,   "Supernatural Town Sign",        "👻") end
+function signEvent6()  applySignEvent(0x98,   "Cthutun Town Sign",             "🐙") end
+function signEvent7()  applySignEvent(0xE8,   "Holiday Town Sign",             "🎁") end
+function signEvent8()  applySignEvent(0x138,  "Extraterrestrial Town Sign",    "🛸") end
+function signEvent9()  applySignEvent(0x188,  "Ghostly Town Sign",             "💀") end
+function signEvent10() applySignEvent(0x1D8,  "Dessert Town Sign",             "🍰") end
+function signEvent11() applySignEvent(0x228,  "Cowboy Town Sign",              "🤠") end
+function signEvent12() applySignEvent(0x278,  "Power of Ancestors Town Sign",  "🪶") end
+function signEvent13() applySignEvent(0x2C8,  "Atlantis Town Sign",            "🏛️") end
+function signEvent14() applySignEvent(0x318,  "Smart Garden Town Sign",        "🌿") end
+function signEvent15() applySignEvent(0x368,  "Sweet Treat Town Sign",         "🍭") end
+function signEvent16() applySignEvent(0x3B8,  "Penguin Resort Town Sign",      "🐧") end
+
+function townsign2()
+while true do
+  gg.setVisible(false)
+  gg.clearResults()
+
+  local skins = {
+"🐣 • Easter Town Sign",
+"🏘️ • Town Day Town Sign",
+"🎃 • Big Halloween Sign",
+"🎄 • Christmas Town Sign",
+"🤠 • Good Old Rancho Sign",
+"🎬 • Big Screen Town Sign",
+"🛩️ • Aviator Town Sign",
+"🌺 • Aloha Town Sign",
+"🧟 • Paranormal Town Sign",
+"👾 • Inflatable Monster Sign",
+"🏂 • Snowboarding Town Sign",
+"🍬 • Bubble Gum For All Sign",
+"🥤 • Smoothie Stand Sign",
+"🏡 • Cozy Home Sign",
+"🔮 • Christmas Ball Town Sign",
+"🎤 • Coming To You Live Sign",
+"🌃 • The Town Never Sleeps Sign",
+"🍎 • Big Apple Town Sign",
+"🧚 • Fairytale Town Sign",
+"🎸 • Rock Town Sign",
+"🎉 • Anniversary Town Sign",
+  "❌ • Go Back"
+  }
+
+  local choice = gg.multiChoice(skins, nil, "🪧 City Townsign Collection")
+  if not choice then return end
+    -- 🔙 Back option
+    if choice[22] then
+      if type(kums2) == "function" then
+        kums2()
+      else
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 21 do
+      if choice[i] then
+        local func = _G["signRandom" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Function City Townsign Random" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected City Townsign Random have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
+  end
+end
+
+-- 📁 Cache & File Setup
+local folder = "/sdcard/ARH_Cache/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get SignRandom Address
+function getSignRandomAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 30 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared")
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034188;33;26;1953055504:81", gg.TYPE_DWORD)
+  gg.refineNumber("26", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen the town sign first.") return nil end
+
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
+end
+
+-- 🎯 SignRandom Source Base
+local baseSignAddr = nil
+function initSignRandomSearch()
+  if baseSignAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1634034188;33;26;1953055504:81", gg.TYPE_DWORD)
+  gg.refineNumber("26", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Town Sign structure not found.") return false end
+  baseSignAddr = r[1].address
+return true
+end
+
+-- 🪧 Apply SignRandom Skin
+function applySignRandom(offset, label, emoji)
+  if not initSignRandomSearch() then return end
+  local src = baseSignAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getSignRandomAddr()
+  if not target then return end
+  target = target - 0x48
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
+  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
+    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " applied!")
+end
+
+-- 🪧 SignRandom Options
+function signRandom1()  applySignRandom(-0x8,  "Easter Town Sign",               "🐣") end
+function signRandom2()  applySignRandom(0x228, "Town Day Town Sign",             "🏘️") end
+function signRandom3()  applySignRandom(0x278, "Big Halloween Sign",             "🎃") end
+function signRandom4()  applySignRandom(0x2C8, "Christmas Town Sign",            "🎄") end
+function signRandom5()  applySignRandom(0x638, "Good Old Rancho Sign",           "🤠") end
+function signRandom6()  applySignRandom(0x688, "Big Screen Town Sign",           "🎬") end
+function signRandom7()  applySignRandom(0x6D8, "Aviator Town Sign",              "🛩️") end
+function signRandom8()  applySignRandom(0x778, "Aloha Town Sign",                "🌺") end
+function signRandom9()  applySignRandom(0x7C8, "Paranormal Town Sign",           "🧟") end
+function signRandom10() applySignRandom(0x818, "Inflatable Monster Sign",        "👾") end
+function signRandom11() applySignRandom(0x868, "Snowboarding Town Sign",         "🏂") end
+function signRandom12() applySignRandom(0x8B8, "Bubble Gum For All Sign",        "🍬") end
+function signRandom13() applySignRandom(0x908, "Smoothie Stand Sign",            "🥤") end
+function signRandom14() applySignRandom(0x958, "Cozy Home Sign",                 "🏡") end
+function signRandom15() applySignRandom(0x9A8, "Christmas Ball Town Sign",       "🔮") end
+function signRandom16() applySignRandom(0x9F8, "Coming To You Live Sign",        "🎤") end
+function signRandom17() applySignRandom(0xA48, "The Town Never Sleeps Sign",     "🌃") end
+function signRandom18() applySignRandom(0xA98, "Big Apple Town Sign",            "🍎") end
+function signRandom19() applySignRandom(0xAE8, "Fairytale Town Sign",            "🧚") end
+function signRandom20() applySignRandom(0xB38, "Rock Town Sign",                 "🎸") end
+function signRandom21() applySignRandom(0xB88, "Anniversary Town Sign",          "🎉") end
+    
+function kums3()
+while true do
+  local options = {}
+  for i = 1, 63 do
+    table.insert(options, "🧩 • Sticker (" .. i .. ")")
+  end
+  table.insert(options, "❌ • Go Back")
+
+  -- 📋 Multi select
+  local choice = gg.multiChoice(options, nil, "🎨 Select sticker(s) to apply:")
+
+  if not choice then 
+    return 
+  end
+
+  -- 🔙 If Back selected
+  if choice[64] then
+    if type(gp3) == "function" then
+      gp3()
+    else
+    end
+    return
+  end
+
+  -- 🔁 Process selected stickers one by one
+  for i = 1, 63 do
+    if choice[i] then
+      local func = _G["tikel" .. i]
+      if type(func) == "function" then
+        func()
+        gg.toast("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+        -- ⏸️ Wait until user taps GG icon to continue
+        repeat
+          gg.sleep(500)
+        until gg.isVisible(true)
+
+        gg.setVisible(false) -- hide again after continue
+      else
+        gg.alert("❌ Sticker " .. i .. " function not found!")
+      end
+    end
+  end
+gg.toast("🎉 All selected stickers have been processed!")
+end
+end
+
+-- 🧩 Apply Sticker by Address
+function applySticker(hex1, hex2, hex3, label)
+  local addr = getAddr()
+  if not addr then return end
+
+  local patch = {
+    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex1},
+    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex2},
+    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex3},
+    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+  }
+
+  gg.setValues(patch)
+  gg.toast("✅ Sticker " .. label .. " applied successfully!")
+end
+
+-- 📦 Sticker Data
+local stickers = {
+  {0x6F6D6514, 0x735F696A, 0x00333170}, {0x6F6D6512, 0x735F696A, 0x00003274},
+  {0x6F6D6512, 0x735F696A, 0x00343470}, {0x6F6D6512, 0x735F696A, 0x00003874},
+  {0x6F6D6512, 0x735F696A, 0x00343770}, {0x6F6D6514, 0x735F696A, 0x00373170},
+  {0x6F6D6512, 0x735F696A, 0x00003970}, {0x6F6D6512, 0x735F696A, 0x00003674},
+  {1869440276, 1935632746, 3683188},     {1869440276, 1935632746, 355160},
+  {1869440276, 1935632746, 3551860},     {1869440276, 1935632746, 3682932},
+  {1869440276, 1935632746, 3748468},     {1869440276, 1935632746, 3158900},
+  {1869440276, 1935632746, 3224436},     {1869440276, 1935632746, 3289972},
+  {0x6F6D6514, 0x735F696A, 0x00343170}, {0x6F6D6514, 0x735F696A, 0x00323270},
+  {0x6F6D6512, 0x735F696A, 0x00003370}, {0x6F6D6510, 0x765F696A, 0x00000033},
+  {0x6F6D6514, 0x735F696A, 0x00313270}, {0x6F6D6512, 0x735F696A, 0x00003670},
+  {0x6F6D6510, 0x765F696A, 0x00000032}, {0x6F6D6514, 0x735F696A, 0x00393170},
+  {0x6F6D6514, 0x735F696A, 0x00303170}, {0x6F6D6514, 0x735F696A, 0x00353270},
+  {0x6F6D6514, 0x735F696A, 0x00313170}, {0x6F6D6512, 0x735F696A, 0x00003574},
+  {0x6F6D6512, 0x735F696A, 0x00003774}, {0x6F6D6514, 0x735F696A, 0x00373270},
+  {0x6F6D6512, 0x735F696A, 0x00003374}, {1869440276, 1935632746, 3617908},
+  {1869440276, 1935632746, 3683444},     {0x6F6D6514, 0x735F696A, 0x00363170},
+  {1869440276, 1935632746, 361816},      {1869440276, 1935632746, 3682676},
+  {1869440276, 1935632746, 3420788},     {1869440276, 1935632746, 3486580},
+  {0x6F6D6514, 0x735F696A, 0x00333574}, {1869440276, 1935632746, 3421044},
+  {1869440276, 1935632746, 3421556},     {1869440276, 1935632746, 3158388},
+  {1869440276, 1935632746, 3617140},     {1869440276, 1935632746, 3552628},
+  {1869440276, 1935632746, 3355252},     {1869440276, 1935632746, 3290228},
+  {1869440276, 1935632746, 3487092},     {1869440276, 1935632746, 3355764},
+  {1869440276, 1935632746, 3289716},     {1869440276, 1935632746, 3289460},
+  {1869440276, 1935632746, 3683700},     {1869440276, 1935632746, 3486324},
+  {1869440276, 1935632746, 3552116},     {1869440276, 1935632746, 3223924},
+  {1869440276, 1935632746, 3617652},     {1869440276, 1935632746, 3159668},
+  {1869440276, 1935632746, 3225204},     {1869440276, 1935632746, 3420532},
+  {1869440276, 1935632746, 3159412},     {1869440276, 1935632746, 3486068},
+  {1869440276, 1935632746, 3224948},     {1869440276, 1935632746, 3748980},
+  {1869440276, 1935632746, 3749236},
+}
+
+-- 🔁 Generate tikelX() Automatically
+for i, s in ipairs(stickers) do
+  _G["tikel" .. i] = function()
+    applySticker(s[1], s[2], s[3], i)
+  end
+end
+
+function kums4()
+  gg.setVisible(false)
+  gg.clearResults()
+
+  local skins = {
+"🌸 • Frame Festival",
+"🌸 • Name Festival",
+    "❌ • Go Back"
+  }
+
+  local choice = gg.choice(skins, nil, "🖼️  Frame Style")
+  if not choice then return end
+if choice == 3 then
+    gp3()
+    return
+  end
+
+  local func = _G["nameStyle" .. choice]
+  if type(func) == "function" then
+    func()
+  else
+  end
+
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      kums4()
+      break
+    end
+  end
+end
+
+function nameStyle1()
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Step 1: Search and copy source values
+  gg.searchNumber("1767993366;49;24;1599099692:1153", gg.TYPE_DWORD)
+  gg.refineNumber("24", gg.TYPE_DWORD)
+  local src = gg.getResults(1)
+  if #src == 0 then
+    gg.alert("❌ Source Frame Festival style not found.\nPlease try again.")
+    return
+  end
+
+  local base = src[1].address - 0x8
+  local copied = {}
+  for i = 0, 5 do
+    table.insert(copied, {address = base + i * 4, flags = gg.TYPE_DWORD})
+  end
+  copied = gg.getValues(copied)
+  gg.toast("📋 Frame Festival style copied.")
+
+  -- Step 2: Search target and paste copied values
+  gg.clearResults()
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+  gg.refineNumber("30", gg.TYPE_DWORD)
+  local tgt = gg.getResults(1)
+  if #tgt == 0 then
+    gg.toast("❌ Target Frame Festival style not found.")
+    return
+  end
+
+  local addr = tgt[1].address - 0x48
+  local patch = {}
+  for i, v in ipairs(copied) do
+    patch[#patch + 1] = {address = addr + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD}
+  end
+
+  -- Step 3: Insert fixed perk values
+  table.insert(patch, {address = addr + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(patch, {address = addr + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
+
+  -- Step 4: Insert blank cleanup slots
+  for i = 0, 2 do
+    table.insert(patch, {address = addr + 0x58 + (i * 8), value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  -- Step 5: Apply all
+  gg.setValues(patch)
+  gg.toast("✅ Frame Festival style applied!")
+end
+
+function nameStyle2()
+  gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Step 1: Salin struktur Name Style
+  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
+  gg.refineNumber("24", gg.TYPE_DWORD)
+  local src = gg.getResults(1)
+  if #src == 0 then
+    gg.alert("❌ Source Name Festival Style not found.\nPlease restart the game and try again.")
+    return
+  end
+  local copyAddr = src[1].address - 0x8
+  local copied = {}
+  for i = 0, 5 do
+    table.insert(copied, {address = copyAddr + i * 4, flags = gg.TYPE_DWORD})
+  end
+  copied = gg.getValues(copied)
+  gg.toast("📋 Name Festival style copied.")
+
+  -- Step 2: Cari target dan tempelkan Name Style
+  gg.clearResults()
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+  gg.refineNumber("30", gg.TYPE_DWORD)
+  local tgt = gg.getResults(1)
+  if #tgt == 0 then
+    gg.toast("❌ Target Name Festival style not found.")
+    return
+  end
+  local base = tgt[1].address - 0x48
+  local patch = {}
+  for i, v in ipairs(copied) do
+    table.insert(patch, {address = base + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  -- Perk tetap
+  table.insert(patch, {address = base + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(patch, {address = base + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
+
+  -- Slot kosong tambahan
+  for i = 0, 2 do
+    table.insert(patch, {address = base + 0x58 + i * 8, value = 0, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(patch)
+  gg.toast("✅ Name Festival style applied!")
+end
+
+function kums5()
+local indev = dev
+  local menu = gg.choice({
+"🎉 • Exclusive Avatars List",
+"🎊 • Complete Avatar List",
+    "❌ • Go Back"
+  }, nil,indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then avatar1()
+  elseif menu == 2 then avatar2()
+  elseif menu == 3 then gp3()
+  end
+end
+
+function avatar1()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+      "🌟 • Year 1 Avatar",
+      "🌟 • Year 2 Avatar",
+      "🌟 • Year 3 Avatar",
+      "🌟 • Year 4 Avatar",
+      "🌟 • Year 5 Avatar",
+      "🌟 • Year 6 Avatar",
+      "🌟 • Year 7 Avatar",
+"🌟 • Year 8 Avatar",
+      "🌟 • Year 9 Avatar",
+      "🌟 • Year 10 Avatar",
+      "🌟 • Year 11 Avatar (1)",
+      "🌟 • Year 11 Avatar (2)",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Avatars")
+    if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
+    end
+
+    -- 🔙 Back option
+    if choice[#skins] then
+      if type(kums5) == "function" then
+        return kums5()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+        return
+      end
+    end
+
+    -- 🔁 Process selected avatars
+    for i, _ in ipairs(skins) do
+      if choice[i] and i < #skins then
+        local func = _G["avatarYear" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+        else
+          gg.alert("❌ Function avatarYear" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected avatars have been processed!")
+  end
+end
+
+function applyAvatarAnniversary(hex, emoji, name)
+  local addr = getAddr()
+  if not addr then
+    gg.alert("❌ No matching value found.\n" .. name .. " could not be applied.\nPlease try again or restart the game!")
+    return
+  end
+
+  local patch = {
+    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3] or 0},
+    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+  }
+
+  gg.setValues(patch)
+  gg.toast("✅ " .. name .. " applied!")
+end
+
+-- 🎉 Avatar Anniversary Functions
+function avatarYear1()  applyAvatarAnniversary({1635148044, 3748145},  "🌟", "Year 1 Avatar") end
+function avatarYear2()  applyAvatarAnniversary({1635148044, 3158577},  "🌟", "Year 2 Avatar") end
+function avatarYear3()  applyAvatarAnniversary({1635148044, 3224113},  "🌟", "Year 3 Avatar") end
+function avatarYear4()  applyAvatarAnniversary({1635148044, 3289649},  "🌟", "Year 4 Avatar") end
+function avatarYear5()  applyAvatarAnniversary({1635148044, 3355185},  "🌟", "Year 5 Avatar") end
+function avatarYear6()  applyAvatarAnniversary({1635148044, 3421489},  "🌟", "Year 6 Avatar") end
+function avatarYear7()  applyAvatarAnniversary({1635148044, 3225905},  "🌟", "Year 7 Avatar") end
+function avatarYear8()  applyAvatarAnniversary({1635148044, 3748658},  "🌟", "Year 8 Avatar") end
+function avatarYear9()  applyAvatarAnniversary({1635148044, 3225650},  "🌟", "Year 9 Avatar") end
+function avatarYear10() applyAvatarAnniversary({1635148044, 3354931},  "🌟", "Year 10 Avatar") end
+function avatarYear11() applyAvatarAnniversary({1635148044, 3290675},  "🌟", "Year 11 Avatar (1)") end
+function avatarYear12() applyAvatarAnniversary({1635148044, 3225139},  "🌟", "Year 11 Avatar (2)") end 
+
+function avatar2()
+  while true do
+    gg.setVisible(false)
+    local options = {}
+
+    -- ✨ Generate avatar list
+    for i = 1, 323 do
+      table.insert(options, "✨ • Complete Avatar (" .. i .. ")")
+    end
+    table.insert(options, "❌ • Go Back")
+
+    -- 📋 Multi select menu
+    local choice = gg.multiChoice(options, nil, "🎊 Complete Avatar List")
+
+    if not choice then
+      gg.toast("❌ Menu closed.")
+      return
+    end
+
+    -- 🔙 If Back selected
+    if choice[#options] then
+      if type(kums5) == "function" then
+        kums5()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return -- keluar total dari avatar2()
+    end
+
+    -- 🔁 Process selected avatars
+    for i = 1, 323 do
+      if choice[i] then
+        local func = _G["comAvatar" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. options[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait until user taps GG icon
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false) -- hide again
+        else
+          gg.alert("❌ " .. options[i] .. " function not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 All selected Complete Avatars have been processed!")
+  end
+end
+
+function applyCompleteAvatar(hex, emoji, name)
+  local addr = getAddr()
+  if not addr then
+    gg.alert("❌ No matching value found.\n" .. name .. " could not be applied.\nPlease try again or restart the game!")
+    return
+  end
+
+  local patch = {
+    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3] or 0},
+    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+  }
+
+  gg.setValues(patch)
+  gg.toast("✅ " .. name .. " applied!")
+end
+
+function comAvatar1()  applyCompleteAvatar({0x6176610C, 0x00323031}, "🎊", "Complete Avatar 1") end
+function comAvatar2()  applyCompleteAvatar({0x6176610C, 0x00333731}, "🎂", "Complete Avatar 2") end
+function comAvatar3()  applyCompleteAvatar({0x6176610C, 0x00393631}, "🏆", "Complete Avatar 3") end
+function comAvatar4()  applyCompleteAvatar({0x6176610C, 0x00343431}, "🌈", "Complete Avatar 4") end
+function comAvatar5()  applyCompleteAvatar({0x6176610C, 0x00363232}, "🔥", "Complete Avatar 5") end
+function comAvatar6()  applyCompleteAvatar({0x6176610C, 0x00343331}, "💎", "Complete Avatar 6") end
+function comAvatar7()  applyCompleteAvatar({0x6176610C, 0x00303432}, "🌟", "Complete Avatar 7") end
+function comAvatar8()  applyCompleteAvatar({0x6176610C, 0x00303031}, "🎯", "Complete Avatar 8") end
+function comAvatar9()  applyCompleteAvatar({0x6176610C, 0x00353332}, "🛡️", "Complete Avatar 9") end
+function comAvatar10() applyCompleteAvatar({0x6176610C, 0x00383032}, "👑", "Complete Avatar 10") end
+
+function comAvatar11() applyCompleteAvatar({0x6176610C, 0x00333132}, "🐉", "Complete Avatar 11") end
+function comAvatar12() applyCompleteAvatar({0x6176610C, 0x00383331}, "⚡", "Complete Avatar 12") end
+function comAvatar13() applyCompleteAvatar({0x6176610C, 0x00303631}, "🧲", "Complete Avatar 13") end
+function comAvatar14() applyCompleteAvatar({0x6176610C, 0x00353831}, "📦", "Complete Avatar 14") end
+function comAvatar15() applyCompleteAvatar({0x6176610A, 0x00003732}, "🍭", "Complete Avatar 15") end
+function comAvatar16() applyCompleteAvatar({0x6176610A, 0x00003934}, "🚀", "Complete Avatar 16") end
+function comAvatar17() applyCompleteAvatar({0x6176610A, 0x00003634}, "🧁", "Complete Avatar 17") end
+function comAvatar18() applyCompleteAvatar({0x6176610C, 0x00313132}, "🐾", "Complete Avatar 18") end
+function comAvatar19() applyCompleteAvatar({0x6176610C, 0x00393032}, "🌍", "Complete Avatar 19") end
+function comAvatar20() applyCompleteAvatar({0x6176610A, 0x00003134}, "🎮", "Complete Avatar 20") end
+
+function comAvatar21() applyCompleteAvatar({0x6176610C, 0x00373131}, "🎨", "Complete Avatar 21") end
+function comAvatar22() applyCompleteAvatar({0x6176610C, 0x00373931}, "📚", "Complete Avatar 22") end
+function comAvatar23() applyCompleteAvatar({0x6176610C, 0x00333332}, "🎻", "Complete Avatar 23") end
+function comAvatar24() applyCompleteAvatar({0x6176610C, 0x00363332}, "💡", "Complete Avatar 24") end
+function comAvatar25() applyCompleteAvatar({0x6176610C, 0x00373831}, "🎬", "Complete Avatar 25") end
+function comAvatar26() applyCompleteAvatar({0x6176610C, 0x00323731}, "🧠", "Complete Avatar 26") end
+function comAvatar27() applyCompleteAvatar({0x6176610A, 0x00003239}, "🦄", "Complete Avatar 27") end
+function comAvatar28() applyCompleteAvatar({0x6176610A, 0x00003938}, "🍀", "Complete Avatar 28") end
+function comAvatar29() applyCompleteAvatar({0x6176610C, 0x00373631}, "🪐", "Complete Avatar 29") end
+function comAvatar30() applyCompleteAvatar({0x6176610A, 0x00003033}, "🎭", "Complete Avatar 30") end
+
+function comAvatar31() applyCompleteAvatar({0x6176610A, 0x00003632}, "🎆", "Complete Avatar 31") end
+function comAvatar32() applyCompleteAvatar({0x6176610C, 0x00323531}, "🥁", "Complete Avatar 32") end
+function comAvatar33() applyCompleteAvatar({0x6176610C, 0x00333131}, "🍓", "Complete Avatar 33") end
+function comAvatar34() applyCompleteAvatar({0x6176610A, 0x00003039}, "🍕", "Complete Avatar 34") end
+function comAvatar35() applyCompleteAvatar({0x6176610C, 0x00333831}, "🎈", "Complete Avatar 35") end
+function comAvatar36() applyCompleteAvatar({0x6176610C, 0x00303731}, "🐠", "Complete Avatar 36") end
+function comAvatar37() applyCompleteAvatar({0x6176610C, 0x00393931}, "🪄", "Complete Avatar 37") end
+function comAvatar38() applyCompleteAvatar({0x6176610C, 0x00353431}, "🔔", "Complete Avatar 38") end
+function comAvatar39() applyCompleteAvatar({0x6176610A, 0x00003338}, "🛠️", "Complete Avatar 39") end
+function comAvatar40() applyCompleteAvatar({0x6176610C, 0x00353132}, "🐺", "Complete Avatar 40") end
+
+function comAvatar41() applyCompleteAvatar({0x6176610C, 0x00393132}, "🌻", "Complete Avatar 41") end
+function comAvatar42() applyCompleteAvatar({0x6176610C, 0x00383631}, "🏰", "Complete Avatar 42") end
+function comAvatar43() applyCompleteAvatar({0x6176610C, 0x00353731}, "🎰", "Complete Avatar 43") end
+function comAvatar44() applyCompleteAvatar({0x6176610A, 0x00003138}, "🎯", "Complete Avatar 44") end
+function comAvatar45() applyCompleteAvatar({0x6176610A, 0x00003637}, "🦊", "Complete Avatar 45") end
+function comAvatar46() applyCompleteAvatar({0x6176610A, 0x00003837}, "📸", "Complete Avatar 46") end
+function comAvatar47() applyCompleteAvatar({0x6176610A, 0x00003737}, "🧬", "Complete Avatar 47") end
+function comAvatar48() applyCompleteAvatar({0x6176610C, 0x00363631}, "📦", "Complete Avatar 48") end
+function comAvatar49() applyCompleteAvatar({0x6176610C, 0x00313332}, "🎁", "Complete Avatar 49") end
+function comAvatar50() applyCompleteAvatar({0x6176610C, 0x00363132}, "📀", "Complete Avatar 50") end
+
+function comAvatar51()  applyCompleteAvatar({0x6176610A, 0x00003136}, "🥳", "Complete Avatar 51") end
+function comAvatar52()  applyCompleteAvatar({0x6176610C, 0x00383431}, "🎇", "Complete Avatar 52") end
+function comAvatar53()  applyCompleteAvatar({0x6176610C, 0x00363531}, "🏹", "Complete Avatar 53") end
+function comAvatar54()  applyCompleteAvatar({0x6176610C, 0x00303831}, "🧃", "Complete Avatar 54") end
+function comAvatar55()  applyCompleteAvatar({0x6176610C, 0x00383332}, "🚴", "Complete Avatar 55") end
+function comAvatar56()  applyCompleteAvatar({0x6176610C, 0x00333032}, "🌌", "Complete Avatar 56") end
+function comAvatar57()  applyCompleteAvatar({0x6176610A, 0x00003533}, "🍩", "Complete Avatar 57") end
+function comAvatar58()  applyCompleteAvatar({0x6176610C, 0x00343831}, "🧸", "Complete Avatar 58") end
+function comAvatar59()  applyCompleteAvatar({0x6176610C, 0x00373731}, "🚓", "Complete Avatar 59") end
+function comAvatar60()  applyCompleteAvatar({0x6176610A, 0x00003839}, "🐼", "Complete Avatar 60") end
+
+function comAvatar61()  applyCompleteAvatar({0x6176610C, 0x00383132}, "🍁", "Complete Avatar 61") end
+function comAvatar62()  applyCompleteAvatar({0x6176610C, 0x00303232}, "🛸", "Complete Avatar 62") end
+function comAvatar63()  applyCompleteAvatar({0x6176610C, 0x00383031}, "🌠", "Complete Avatar 63") end
+function comAvatar64()  applyCompleteAvatar({0x6176610C, 0x00363031}, "🐝", "Complete Avatar 64") end
+function comAvatar65()  applyCompleteAvatar({0x6176610C, 0x00363931}, "🌊", "Complete Avatar 65") end
+function comAvatar66()  applyCompleteAvatar({0x6176610C, 0x00303331}, "🌋", "Complete Avatar 66") end
+function comAvatar67()  applyCompleteAvatar({0x6176610C, 0x00383931}, "🦋", "Complete Avatar 67") end
+function comAvatar68()  applyCompleteAvatar({0x6176610C, 0x00303132}, "🍔", "Complete Avatar 68") end
+function comAvatar69()  applyCompleteAvatar({0x6176610C, 0x00353232}, "🛵", "Complete Avatar 69") end
+function comAvatar70()  applyCompleteAvatar({0x6176610A, 0x00003939}, "🐬", "Complete Avatar 70") end
+
+function comAvatar71()  applyCompleteAvatar({0x6176610C, 0x00343731}, "📣", "Complete Avatar 71") end
+function comAvatar72()  applyCompleteAvatar({0x6176610C, 0x00363231}, "🪁", "Complete Avatar 72") end
+function comAvatar73()  applyCompleteAvatar({0x6176610A, 0x00003135}, "📌", "Complete Avatar 73") end
+function comAvatar74()  applyCompleteAvatar({0x6176610C, 0x00323032}, "🪴", "Complete Avatar 74") end
+function comAvatar75()  applyCompleteAvatar({0x6176610C, 0x00383131}, "🖼️", "Complete Avatar 75") end
+function comAvatar76()  applyCompleteAvatar({0x6176610C, 0x00393731}, "🧃", "Complete Avatar 76") end
+function comAvatar77()  applyCompleteAvatar({0x6176610C, 0x00363831}, "📲", "Complete Avatar 77") end
+function comAvatar78()  applyCompleteAvatar({0x6176610A, 0x00003538}, "🍇", "Complete Avatar 78") end
+function comAvatar79()  applyCompleteAvatar({0x6176610A, 0x00003337}, "🔮", "Complete Avatar 79") end
+function comAvatar80()  applyCompleteAvatar({0x6176610C, 0x00323131}, "🐳", "Complete Avatar 80") end
+
+function comAvatar81()  applyCompleteAvatar({0x6176610C, 0x00303531}, "🍒", "Complete Avatar 81") end
+function comAvatar82()  applyCompleteAvatar({0x6176610C, 0x00313731}, "🪵", "Complete Avatar 82") end
+function comAvatar83()  applyCompleteAvatar({0x6176610C, 0x00343631}, "🍬", "Complete Avatar 83") end
+function comAvatar84()  applyCompleteAvatar({0x6176610C, 0x00363431}, "🌽", "Complete Avatar 84") end
+function comAvatar85()  applyCompleteAvatar({0x6176610C, 0x00373232}, "🍗", "Complete Avatar 85") end
+function comAvatar86()  applyCompleteAvatar({0x6176610C, 0x00313831}, "🧀", "Complete Avatar 86") end
+function comAvatar87()  applyCompleteAvatar({0x6176610C, 0x00343031}, "🥦", "Complete Avatar 87") end
+function comAvatar88()  applyCompleteAvatar({0x6176610C, 0x00343032}, "🫐", "Complete Avatar 88") end
+function comAvatar89()  applyCompleteAvatar({0x6176610C, 0x00353631}, "🍖", "Complete Avatar 89") end
+function comAvatar90()  applyCompleteAvatar({0x6176610C, 0x00353531}, "🥓", "Complete Avatar 90") end
+
+function comAvatar91()  applyCompleteAvatar({0x6176610C, 0x00383731}, "🧂", "Complete Avatar 91") end
+function comAvatar92()  applyCompleteAvatar({0x6176610C, 0x00333931}, "🍳", "Complete Avatar 92") end
+function comAvatar93()  applyCompleteAvatar({0x6176610C, 0x00333531}, "🥚", "Complete Avatar 93") end
+function comAvatar94()  applyCompleteAvatar({0x6176610C, 0x00303332}, "🥨", "Complete Avatar 94") end
+function comAvatar95()  applyCompleteAvatar({0x6176610A, 0x00003233}, "🫔", "Complete Avatar 95") end
+function comAvatar96()  applyCompleteAvatar({0x6176610A, 0x00003133}, "🍞", "Complete Avatar 96") end
+function comAvatar97()  applyCompleteAvatar({0x6176610A, 0x00003433}, "🧈", "Complete Avatar 97") end
+function comAvatar98()  applyCompleteAvatar({0x6176610C, 0x00313631}, "🥗", "Complete Avatar 98") end
+function comAvatar99()  applyCompleteAvatar({0x6176610C, 0x00313431}, "🍱", "Complete Avatar 99") end
+function comAvatar100() applyCompleteAvatar({0x6176610C, 0x00313031}, "🍙", "Complete Avatar 100") end
+
+function comAvatar101() applyCompleteAvatar({0x6176610C, 0x00313431}, "🎉", "Complete Avatar 101") end
+function comAvatar102() applyCompleteAvatar({0x6176610C, 0x00313031}, "🎂", "Complete Avatar 102") end
+function comAvatar103() applyCompleteAvatar({0x6176610A, 0x00003335}, "🏆", "Complete Avatar 103") end
+function comAvatar104() applyCompleteAvatar({0x6176610A, 0x00003437}, "🌈", "Complete Avatar 104") end
+function comAvatar105() applyCompleteAvatar({0x6176610C, 0x00373531}, "🔥", "Complete Avatar 105") end
+function comAvatar106() applyCompleteAvatar({0x6176610A, 0x00003235}, "💎", "Complete Avatar 106") end
+function comAvatar107() applyCompleteAvatar({0x6176610C, 0x00323831}, "🌟", "Complete Avatar 107") end
+function comAvatar108() applyCompleteAvatar({0x6176610C, 0x00383531}, "🎯", "Complete Avatar 108") end
+function comAvatar109() applyCompleteAvatar({0x6176610C, 0x00373031}, "🛡️", "Complete Avatar 109") end
+function comAvatar110() applyCompleteAvatar({0x6176610A, 0x00003838}, "👑", "Complete Avatar 110") end
+
+function comAvatar111() applyCompleteAvatar({0x6176610C, 0x00363131}, "🐉", "Complete Avatar 111") end
+function comAvatar112() applyCompleteAvatar({0x6176610C, 0x00383432}, "⚡", "Complete Avatar 112") end
+function comAvatar113() applyCompleteAvatar({0x6176610C, 0x00353231}, "🧲", "Complete Avatar 113") end
+function comAvatar114() applyCompleteAvatar({0x6176610C, 0x00373132}, "📦", "Complete Avatar 114") end
+function comAvatar115() applyCompleteAvatar({0x6176610C, 0x00333232}, "🍭", "Complete Avatar 115") end
+function comAvatar116() applyCompleteAvatar({0x6176610C, 0x00353931}, "🚀", "Complete Avatar 116") end
+function comAvatar117() applyCompleteAvatar({0x6176610C, 0x00313232}, "🧁", "Complete Avatar 117") end
+function comAvatar118() applyCompleteAvatar({0x6176610C, 0x00383231}, "🐾", "Complete Avatar 118") end
+function comAvatar119() applyCompleteAvatar({0x6176610C, 0x00353031}, "🌍", "Complete Avatar 119") end
+function comAvatar120() applyCompleteAvatar({0x6176610C, 0x00393231}, "🎮", "Complete Avatar 120") end
+
+function comAvatar121() applyCompleteAvatar({0x6176610C, 0x00343132}, "🎨", "Complete Avatar 121") end
+function comAvatar122() applyCompleteAvatar({0x6176610C, 0x00333431}, "📚", "Complete Avatar 122") end
+function comAvatar123() applyCompleteAvatar({0x6176610A, 0x00003738}, "🎻", "Complete Avatar 123") end
+function comAvatar124() applyCompleteAvatar({0x6176610A, 0x00003237}, "💡", "Complete Avatar 124") end
+function comAvatar125() applyCompleteAvatar({0x6176610C, 0x00353331}, "🎬", "Complete Avatar 125") end
+function comAvatar126() applyCompleteAvatar({0x6176610C, 0x00373231}, "🧠", "Complete Avatar 126") end
+function comAvatar127() applyCompleteAvatar({0x6176610C, 0x00373431}, "🦄", "Complete Avatar 127") end
+function comAvatar128() applyCompleteAvatar({0x6176610C, 0x00363731}, "🍀", "Complete Avatar 128") end
+function comAvatar129() applyCompleteAvatar({0x6176610C, 0x00303131}, "🪐", "Complete Avatar 129") end
+function comAvatar130() applyCompleteAvatar({0x6176610C, 0x00373331}, "🎭", "Complete Avatar 130") end
+
+function comAvatar131() applyCompleteAvatar({0x6176610C, 0x00393531}, "🎆", "Complete Avatar 131") end
+function comAvatar132() applyCompleteAvatar({0x6176610C, 0x00373032}, "🥁", "Complete Avatar 132") end
+function comAvatar133() applyCompleteAvatar({0x6176610C, 0x00343931}, "🍓", "Complete Avatar 133") end
+function comAvatar134() applyCompleteAvatar({0x6176610C, 0x00303931}, "🍕", "Complete Avatar 134") end
+function comAvatar135() applyCompleteAvatar({0x6176610C, 0x00393831}, "🎈", "Complete Avatar 135") end
+function comAvatar136() applyCompleteAvatar({0x6176610A, 0x00003933}, "🐠", "Complete Avatar 136") end
+function comAvatar137() applyCompleteAvatar({0x6176610C, 0x00313032}, "🪄", "Complete Avatar 137") end
+function comAvatar138() applyCompleteAvatar({0x6176610C, 0x00323532}, "🔔", "Complete Avatar 138") end
+function comAvatar139() applyCompleteAvatar({0x6176610A, 0x00003635}, "🛠️", "Complete Avatar 139") end
+function comAvatar140() applyCompleteAvatar({0x6176610A, 0x00003139}, "🐺", "Complete Avatar 140") end
+
+function comAvatar141() applyCompleteAvatar({0x6176610A, 0x00003234}, "🌻", "Complete Avatar 141") end
+function comAvatar142() applyCompleteAvatar({0x6176610C, 0x00323631}, "🏰", "Complete Avatar 142") end
+function comAvatar143() applyCompleteAvatar({0x6176610A, 0x00003532}, "🎰", "Complete Avatar 143") end
+function comAvatar144() applyCompleteAvatar({0x6176610C, 0x00323332}, "🎯", "Complete Avatar 144") end
+function comAvatar145() applyCompleteAvatar({0x6176610A, 0x00003936}, "🦊", "Complete Avatar 145") end
+function comAvatar146() applyCompleteAvatar({0x6176610A, 0x00003735}, "📸", "Complete Avatar 146") end
+function comAvatar147() applyCompleteAvatar({0x6176610A, 0x00003535}, "🧬", "Complete Avatar 147") end
+function comAvatar148() applyCompleteAvatar({0x6176610A, 0x00003435}, "🍿", "Complete Avatar 148") end
+function comAvatar149() applyCompleteAvatar({0x6176610A, 0x00003236}, "🎁", "Complete Avatar 149") end
+function comAvatar150() applyCompleteAvatar({0x6176610A, 0x00003137}, "📀", "Complete Avatar 150") end
+
+function comAvatar151() applyCompleteAvatar({1635148044, 3552562}, "🎉", "Complete Avatar 151") end
+function comAvatar152() applyCompleteAvatar({1635148044, 3749170}, "🎂", "Complete Avatar 152") end
+function comAvatar153() applyCompleteAvatar({1635148044, 3290674}, "🏆", "Complete Avatar 153") end
+function comAvatar154() applyCompleteAvatar({1635148044, 3356210}, "🌈", "Complete Avatar 154") end
+function comAvatar155() applyCompleteAvatar({1635148044, 3487282}, "🔥", "Complete Avatar 155") end
+function comAvatar156() applyCompleteAvatar({1635148044, 3618354}, "💎", "Complete Avatar 156") end
+function comAvatar157() applyCompleteAvatar({1635148044, 3158323}, "🌟", "Complete Avatar 157") end
+function comAvatar158() applyCompleteAvatar({1635148044, 3289395}, "🎯", "Complete Avatar 158") end
+function comAvatar159() applyCompleteAvatar({1635148044, 3420467}, "🛡️", "Complete Avatar 159") end
+function comAvatar160() applyCompleteAvatar({1635148044, 3486003}, "👑", "Complete Avatar 160") end
+
+function comAvatar161() applyCompleteAvatar({1635148044, 3683890}, "🐉", "Complete Avatar 161") end
+function comAvatar162() applyCompleteAvatar({1635148044, 3159602}, "⚡", "Complete Avatar 162") end
+function comAvatar163() applyCompleteAvatar({1635148044, 3749426}, "🧲", "Complete Avatar 163") end
+function comAvatar164() applyCompleteAvatar({1635148044, 3159858}, "📦", "Complete Avatar 164") end
+function comAvatar165() applyCompleteAvatar({1635148044, 3225394}, "🍭", "Complete Avatar 165") end
+function comAvatar166() applyCompleteAvatar({1635148044, 3290930}, "🚀", "Complete Avatar 166") end
+function comAvatar167() applyCompleteAvatar({1635148044, 3356466}, "🧁", "Complete Avatar 167") end
+function comAvatar168() applyCompleteAvatar({1635148044, 3487538}, "🐾", "Complete Avatar 168") end
+function comAvatar169() applyCompleteAvatar({1635148044, 3553074}, "🌍", "Complete Avatar 169") end
+function comAvatar170() applyCompleteAvatar({1635148044, 3618610}, "🎮", "Complete Avatar 170") end
+
+function comAvatar171() applyCompleteAvatar({1635148044, 3749682}, "🎨", "Complete Avatar 171") end
+function comAvatar172() applyCompleteAvatar({1635148044, 3684146}, "📚", "Complete Avatar 172") end
+function comAvatar173() applyCompleteAvatar({1635148044, 3160114}, "🎻", "Complete Avatar 173") end
+function comAvatar174() applyCompleteAvatar({1635148044, 3291186}, "💡", "Complete Avatar 174") end
+function comAvatar175() applyCompleteAvatar({1635148044, 3356722}, "🎬", "Complete Avatar 175") end
+function comAvatar176() applyCompleteAvatar({1635148044, 3422258}, "🧠", "Complete Avatar 176") end
+function comAvatar177() applyCompleteAvatar({1635148044, 3487794}, "🦄", "Complete Avatar 177") end
+function comAvatar178() applyCompleteAvatar({1635148044, 3553330}, "🍀", "Complete Avatar 178") end
+function comAvatar179() applyCompleteAvatar({1635148044, 3618866}, "🪐", "Complete Avatar 179") end
+function comAvatar180() applyCompleteAvatar({1635148044, 3684402}, "🎭", "Complete Avatar 180") end
+
+function comAvatar181() applyCompleteAvatar({1635148044, 3749938}, "🎆", "Complete Avatar 181") end
+function comAvatar182() applyCompleteAvatar({1635148044, 3225906}, "🥁", "Complete Avatar 182") end
+function comAvatar183() applyCompleteAvatar({1635148044, 3291442}, "🍓", "Complete Avatar 183") end
+function comAvatar184() applyCompleteAvatar({1635148044, 3356978}, "🍕", "Complete Avatar 184") end
+function comAvatar185() applyCompleteAvatar({1635148044, 3422514}, "🎈", "Complete Avatar 185") end
+function comAvatar186() applyCompleteAvatar({1635148044, 3488050}, "🐠", "Complete Avatar 186") end
+function comAvatar187() applyCompleteAvatar({1635148044, 3553586}, "🪄", "Complete Avatar 187") end
+function comAvatar188() applyCompleteAvatar({1635148044, 3619122}, "🔔", "Complete Avatar 188") end
+function comAvatar189() applyCompleteAvatar({1635148044, 3750194}, "🛠️", "Complete Avatar 189") end
+function comAvatar190() applyCompleteAvatar({1635148044, 3158067}, "🎮", "Complete Avatar 190") end
+
+function comAvatar191() applyCompleteAvatar({1635148044, 3684658}, "🎯", "Complete Avatar 191") end
+function comAvatar192() applyCompleteAvatar({1635148044, 3289139}, "🎨", "Complete Avatar 192") end
+function comAvatar193() applyCompleteAvatar({1635148044, 3354675}, "🎶", "Complete Avatar 193") end
+function comAvatar194() applyCompleteAvatar({1635148044, 3420211}, "🍬", "Complete Avatar 194") end
+function comAvatar195() applyCompleteAvatar({1635148044, 3485747}, "🍣", "Complete Avatar 195") end
+function comAvatar196() applyCompleteAvatar({1635148044, 3551283}, "🧃", "Complete Avatar 196") end
+function comAvatar197() applyCompleteAvatar({1635148044, 3616819}, "🐱", "Complete Avatar 197") end
+function comAvatar198() applyCompleteAvatar({1635148044, 3682355}, "🐶", "Complete Avatar 198") end
+function comAvatar199() applyCompleteAvatar({1635148044, 3747891}, "🦊", "Complete Avatar 199") end
+function comAvatar200() applyCompleteAvatar({1635148044, 3552562}, "🐼", "Complete Avatar 200") end
+
+function comAvatar201() applyCompleteAvatar({1635148044, 3619378}, "🐸", "Complete Avatar 201") end
+function comAvatar202() applyCompleteAvatar({1635148044, 3684914}, "🦁", "Complete Avatar 202") end
+function comAvatar203() applyCompleteAvatar({1635148044, 3750450}, "🐵", "Complete Avatar 203") end
+function comAvatar204() applyCompleteAvatar({1635148044, 3158310}, "🐧", "Complete Avatar 204") end
+function comAvatar205() applyCompleteAvatar({1635148044, 3225882}, "🦋", "Complete Avatar 205") end
+function comAvatar206() applyCompleteAvatar({1635148044, 3291954}, "🌸", "Complete Avatar 206") end
+function comAvatar207() applyCompleteAvatar({1635148044, 3357490}, "🌼", "Complete Avatar 207") end
+function comAvatar208() applyCompleteAvatar({1635148044, 3423026}, "🌹", "Complete Avatar 208") end
+function comAvatar209() applyCompleteAvatar({1635148044, 3488562}, "🌻", "Complete Avatar 209") end
+function comAvatar210() applyCompleteAvatar({1635148044, 3554098}, "🍂", "Complete Avatar 210") end
+
+function comAvatar211() applyCompleteAvatar({1635148044, 3619634}, "🍁", "Complete Avatar 211") end
+function comAvatar212() applyCompleteAvatar({1635148044, 3685170}, "🌲", "Complete Avatar 212") end
+function comAvatar213() applyCompleteAvatar({1635148044, 3750706}, "🌳", "Complete Avatar 213") end
+function comAvatar214() applyCompleteAvatar({1635148044, 3158566}, "🌴", "Complete Avatar 214") end
+function comAvatar215() applyCompleteAvatar({1635148044, 3226138}, "🌵", "Complete Avatar 215") end
+function comAvatar216() applyCompleteAvatar({1635148044, 3292210}, "🍄", "Complete Avatar 216") end
+function comAvatar217() applyCompleteAvatar({1635148044, 3357746}, "🌾", "Complete Avatar 217") end
+function comAvatar218() applyCompleteAvatar({1635148044, 3423282}, "💐", "Complete Avatar 218") end
+function comAvatar219() applyCompleteAvatar({1635148044, 3488818}, "🌺", "Complete Avatar 219") end
+function comAvatar220() applyCompleteAvatar({1635148044, 3554354}, "🪷", "Complete Avatar 220") end
+
+function comAvatar221() applyCompleteAvatar({1635148044, 3619890}, "🌙", "Complete Avatar 221") end
+function comAvatar222() applyCompleteAvatar({1635148044, 3685426}, "☀️", "Complete Avatar 222") end
+function comAvatar223() applyCompleteAvatar({1635148044, 3750962}, "🌞", "Complete Avatar 223") end
+function comAvatar224() applyCompleteAvatar({1635148044, 3158822}, "🌚", "Complete Avatar 224") end
+function comAvatar225() applyCompleteAvatar({1635148044, 3226394}, "⭐", "Complete Avatar 225") end
+function comAvatar226() applyCompleteAvatar({1635148044, 3292466}, "✨", "Complete Avatar 226") end
+function comAvatar227() applyCompleteAvatar({1635148044, 3358002}, "🌠", "Complete Avatar 227") end
+function comAvatar228() applyCompleteAvatar({1635148044, 3423538}, "🌟", "Complete Avatar 228") end
+function comAvatar229() applyCompleteAvatar({1635148044, 3489074}, "💫", "Complete Avatar 229") end
+function comAvatar230() applyCompleteAvatar({1635148044, 3554610}, "🔥", "Complete Avatar 230") end
+
+function comAvatar231() applyCompleteAvatar({1635148044, 3620146}, "💥", "Complete Avatar 231") end
+function comAvatar232() applyCompleteAvatar({1635148044, 3685682}, "⚡", "Complete Avatar 232") end
+function comAvatar233() applyCompleteAvatar({1635148044, 3751218}, "❄️", "Complete Avatar 233") end
+function comAvatar234() applyCompleteAvatar({1635148044, 3159078}, "🌊", "Complete Avatar 234") end
+function comAvatar235() applyCompleteAvatar({1635148044, 3226650}, "💧", "Complete Avatar 235") end
+function comAvatar236() applyCompleteAvatar({1635148044, 3292722}, "🌬️", "Complete Avatar 236") end
+function comAvatar237() applyCompleteAvatar({1635148044, 3358258}, "🍃", "Complete Avatar 237") end
+function comAvatar238() applyCompleteAvatar({1635148044, 3423794}, "🌀", "Complete Avatar 238") end
+function comAvatar239() applyCompleteAvatar({1635148044, 3489330}, "☁️", "Complete Avatar 239") end
+function comAvatar240() applyCompleteAvatar({1635148044, 3554866}, "🌪️", "Complete Avatar 240") end
+
+function comAvatar241() applyCompleteAvatar({1635148044, 3620402}, "🌫️", "Complete Avatar 241") end
+function comAvatar242() applyCompleteAvatar({1635148044, 3685938}, "🌈", "Complete Avatar 242") end
+function comAvatar243() applyCompleteAvatar({1635148044, 3751474}, "🌩️", "Complete Avatar 243") end
+function comAvatar244() applyCompleteAvatar({1635148044, 3159334}, "🕸️", "Complete Avatar 244") end
+function comAvatar245() applyCompleteAvatar({1635148044, 3226906}, "🌋", "Complete Avatar 245") end
+function comAvatar246() applyCompleteAvatar({1635148044, 3292978}, "🌌", "Complete Avatar 246") end
+function comAvatar247() applyCompleteAvatar({1635148044, 3358514}, "🎇", "Complete Avatar 247") end
+function comAvatar248() applyCompleteAvatar({1635148044, 3424050}, "🎆", "Complete Avatar 248") end
+function comAvatar249() applyCompleteAvatar({1635148044, 3489586}, "🪐", "Complete Avatar 249") end
+function comAvatar250() applyCompleteAvatar({1635148044, 3555122}, "🚀", "Complete Avatar 250") end
+
+function comAvatar251() applyCompleteAvatar({1635148044, 3620658}, "🛰️", "Complete Avatar 251") end
+function comAvatar252() applyCompleteAvatar({1635148044, 3686194}, "🛸", "Complete Avatar 252") end
+function comAvatar253() applyCompleteAvatar({1635148044, 3751730}, "👾", "Complete Avatar 253") end
+function comAvatar254() applyCompleteAvatar({1635148044, 3159590}, "🎮", "Complete Avatar 254") end
+function comAvatar255() applyCompleteAvatar({1635148044, 3227162}, "🕹️", "Complete Avatar 255") end
+function comAvatar256() applyCompleteAvatar({1635148044, 3293234}, "🎲", "Complete Avatar 256") end
+function comAvatar257() applyCompleteAvatar({1635148044, 3358770}, "♟️", "Complete Avatar 257") end
+function comAvatar258() applyCompleteAvatar({1635148044, 3424306}, "📦", "Complete Avatar 258") end
+function comAvatar259() applyCompleteAvatar({1635148044, 3489842}, "🧩", "Complete Avatar 259") end
+function comAvatar260() applyCompleteAvatar({1635148044, 3555378}, "🎁", "Complete Avatar 260") end
+
+function comAvatar261() applyCompleteAvatar({1635148044, 3620914}, "🎈", "Complete Avatar 261") end
+function comAvatar262() applyCompleteAvatar({1635148044, 3686450}, "🎊", "Complete Avatar 262") end
+function comAvatar263() applyCompleteAvatar({1635148044, 3751986}, "🧨", "Complete Avatar 263") end
+function comAvatar264() applyCompleteAvatar({1635148044, 3159846}, "🍮", "Complete Avatar 264") end
+function comAvatar265() applyCompleteAvatar({1635148044, 3227418}, "🧁", "Complete Avatar 265") end
+function comAvatar266() applyCompleteAvatar({1635148044, 3293490}, "🍭", "Complete Avatar 266") end
+function comAvatar267() applyCompleteAvatar({1635148044, 3359026}, "🍬", "Complete Avatar 267") end
+function comAvatar268() applyCompleteAvatar({1635148044, 3424562}, "🍰", "Complete Avatar 268") end
+function comAvatar269() applyCompleteAvatar({1635148044, 3490098}, "🍪", "Complete Avatar 269") end
+function comAvatar270() applyCompleteAvatar({1635148044, 3555634}, "🍩", "Complete Avatar 270") end
+
+function comAvatar271() applyCompleteAvatar({1635148044, 3621170}, "🍨", "Complete Avatar 271") end
+function comAvatar272() applyCompleteAvatar({1635148044, 3686706}, "🍧", "Complete Avatar 272") end
+function comAvatar273() applyCompleteAvatar({1635148044, 3752242}, "🍦", "Complete Avatar 273") end
+function comAvatar274() applyCompleteAvatar({1635148044, 3160102}, "🍼", "Complete Avatar 274") end
+function comAvatar275() applyCompleteAvatar({1635148044, 3227674}, "🥤", "Complete Avatar 275") end
+function comAvatar276() applyCompleteAvatar({1635148044, 3293746}, "🍹", "Complete Avatar 276") end
+function comAvatar277() applyCompleteAvatar({1635148044, 3359282}, "🍸", "Complete Avatar 277") end
+function comAvatar278() applyCompleteAvatar({1635148044, 3424818}, "🍷", "Complete Avatar 278") end
+function comAvatar279() applyCompleteAvatar({1635148044, 3490354}, "🍺", "Complete Avatar 279") end
+function comAvatar280() applyCompleteAvatar({1635148044, 3555890}, "🍻", "Complete Avatar 280") end
+
+function comAvatar281() applyCompleteAvatar({1635148044, 3621426}, "🥂", "Complete Avatar 281") end
+function comAvatar282() applyCompleteAvatar({1635148044, 3686962}, "🍾", "Complete Avatar 282") end
+function comAvatar283() applyCompleteAvatar({1635148044, 3752498}, "🥃", "Complete Avatar 283") end
+function comAvatar284() applyCompleteAvatar({1635148044, 3160358}, "🍽️", "Complete Avatar 284") end
+function comAvatar285() applyCompleteAvatar({1635148044, 3227930}, "🥢", "Complete Avatar 285") end
+function comAvatar286() applyCompleteAvatar({1635148044, 3294002}, "🥄", "Complete Avatar 286") end
+function comAvatar287() applyCompleteAvatar({1635148044, 3359538}, "🍴", "Complete Avatar 287") end
+function comAvatar288() applyCompleteAvatar({1635148044, 3425074}, "🔪", "Complete Avatar 288") end
+function comAvatar289() applyCompleteAvatar({1635148044, 3490610}, "🏺", "Complete Avatar 289") end
+function comAvatar290() applyCompleteAvatar({1635148044, 3556146}, "🧿", "Complete Avatar 290") end
+
+function comAvatar291() applyCompleteAvatar({1635148044, 3621682}, "📿", "Complete Avatar 291") end
+function comAvatar292() applyCompleteAvatar({1635148044, 3687218}, "💍", "Complete Avatar 292") end
+function comAvatar293() applyCompleteAvatar({1635148044, 3752754}, "💎", "Complete Avatar 293") end
+function comAvatar294() applyCompleteAvatar({1635148044, 3160614}, "📸", "Complete Avatar 294") end
+function comAvatar295() applyCompleteAvatar({1635148044, 3228186}, "🎥", "Complete Avatar 295") end
+function comAvatar296() applyCompleteAvatar({1635148044, 3294258}, "📹", "Complete Avatar 296") end
+function comAvatar297() applyCompleteAvatar({1635148044, 3359794}, "🎞️", "Complete Avatar 297") end
+function comAvatar298() applyCompleteAvatar({1635148044, 3425330}, "📽️", "Complete Avatar 298") end
+function comAvatar299() applyCompleteAvatar({1635148044, 3490866}, "📺", "Complete Avatar 299") end
+function comAvatar300() applyCompleteAvatar({1635148044, 3556402}, "📻", "Complete Avatar 300") end
+
+function comAvatar301() applyCompleteAvatar({1635148044, 3225395}, "🎉", "Complete Avatar 301") end
+function comAvatar302() applyCompleteAvatar({1635148044, 3290931}, "🎂", "Complete Avatar 302") end
+function comAvatar303() applyCompleteAvatar({1635148044, 3356467}, "🏆", "Complete Avatar 303") end
+function comAvatar304() applyCompleteAvatar({1635148044, 3422003}, "🌈", "Complete Avatar 304") end
+function comAvatar305() applyCompleteAvatar({1635148044, 3487539}, "🔥", "Complete Avatar 305") end
+function comAvatar306() applyCompleteAvatar({1635148044, 3553075}, "💎", "Complete Avatar 306") end
+function comAvatar307() applyCompleteAvatar({1635148044, 3618611}, "🌟", "Complete Avatar 307") end
+function comAvatar308() applyCompleteAvatar({1635148044, 3684147}, "🎯", "Complete Avatar 308") end
+function comAvatar309() applyCompleteAvatar({1635148044, 3225651}, "🛡️", "Complete Avatar 309") end
+function comAvatar310() applyCompleteAvatar({1635148044, 3356723}, "👑", "Complete Avatar 310") end
+function comAvatar311() applyCompleteAvatar({1635148044, 3422259}, "🐉", "Complete Avatar 311") end
+function comAvatar312() applyCompleteAvatar({1635148044, 3487795}, "⚡", "Complete Avatar 312") end
+function comAvatar313() applyCompleteAvatar({1635148044, 3553331}, "🧲", "Complete Avatar 313") end
+function comAvatar314() applyCompleteAvatar({1635148044, 3618867}, "📦", "Complete Avatar 314") end
+function comAvatar315() applyCompleteAvatar({1635148044, 3684403}, "🍭", "Complete Avatar 315") end
+function comAvatar316() applyCompleteAvatar({1635148044, 3749939}, "🚀", "Complete Avatar 316") end
+function comAvatar317() applyCompleteAvatar({1635148044, 3160371}, "🧁", "Complete Avatar 317") end
+function comAvatar318() applyCompleteAvatar({1635148044, 3225907}, "🐾", "Complete Avatar 318") end
+function comAvatar319() applyCompleteAvatar({1635148044, 3422515}, "🌍", "Complete Avatar 319") end
+function comAvatar320() applyCompleteAvatar({1635148044, 3488051}, "🎮", "Complete Avatar 320") end
+function comAvatar321() applyCompleteAvatar({1635148044, 3553587}, "🎨", "Complete Avatar 321") end
+function comAvatar322() applyCompleteAvatar({1635148044, 3619123}, "📚", "Complete Avatar 322") end
+function comAvatar323() applyCompleteAvatar({1635148044, 3684659}, "🎻", "Complete Avatar 323") end
+
+function kums6()
+  local indev = dev
+  local menu = gg.choice({
+    "🪙 • Send Gold Card",
+    "♾️ • Send Cards Without Limit",
+    "🔁 • Duplicate Cards",
+    "🎴 • Card Pack Reward",
+    "🏆 • Collection Badge",
+    "❌ • Go Back"
+  }, nil, indev)
+
+  if menu == nil then return end
+
+  if menu == 1 then
+    goldsendcard()
+  elseif menu == 2 then
+    infinitesendcard()
+  elseif menu == 3 then
+    duplicatecard()
+  elseif menu == 4 then
+    cardbadge()
+  elseif menu == 5 then
+    packbadge()
+  elseif menu == 6 then
+    gp3()
+  end
+
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      kums6()
+      break
+    end
+  end
+end
+
+function goldsendcard()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari DRAFT Gold Card Identifier
+  gg.searchNumber("1701667150", gg.TYPE_DWORD)
+local hasil = gg.getResults(5000)
+
+  if #hasil == 0 then
+    gg.alert("⚠️ Gold Card data not found.\n\n🔁 Please restart the game and try again.")
+    return
+  end
+
+  -- 🔍 Siapkan list offset untuk dicek (hanya 0x20)
+  local offsets = {}
+  for _, v in ipairs(hasil) do
+    offsets[#offsets + 1] = {
+      address = v.address + 0x20,
+      flags = gg.TYPE_DWORD
+    }
+  end
+
+  -- 📥 Ambil nilai offset
+  local nilai = gg.getValues(offsets)
+
+  local kandidat = nil
+
+  -- 🔎 Validasi offset
+  for i = 1, #nilai do
+    if nilai[i].value == 1684828007 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    gg.alert("❌ Gold Card data could not be verified.\n\n📝 Make sure the Gold Card event is active.")
+    return
+  end
+
+  -- ✏️ Siapkan patch
+  local edit = {
+    {
+      address = kandidat.address + 0x20,
+      flags = gg.TYPE_DWORD,
+      value = 0   -- reset status agar bisa dikirim
+    }
+  }
+
+  gg.setValues(edit)
+  gg.clearResults()
+
+  -- 🎉 Sukses
+  gg.toast("✅ Gold Cards are now sendable!")
+end
+
+function infinitesendcard()
+  gg.setVisible(false)
+  gg.clearResults()
+
+  -- 📢 Alert at start
+  gg.alert("ℹ️ If Search Group 1 cannot be found,\nplease try Search Group 2.")
+
+  -- 📌 Select value group to search (NO CANCEL)
+  local choice = gg.choice({
+    "🔍 Search Group 1",
+    "🔍 Search Group 2"
+  }, nil, "✨ Choose value group for Unlimited Card Sending")
+
+  if choice == nil then
+    return
+  end
+
+  local searchValue = nil
+
+  if choice == 1 then
+    searchValue = "1918984974"
+  elseif choice == 2 then
+    searchValue = "1918984976"
+  end
+
+  -- 🔍 Search base value
+gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber(searchValue, gg.TYPE_DWORD)
+  local hasil = gg.getResults(1000)
+
+  if #hasil == 0 then
+    gg.alert("🚫 No matching data found.\n\nPlease restart your game and try again.")
+    return
+  end
+
+  -- 🔍 Check +0x48 offset (must be 65537)
+  local checkOffsets = {}
+  for _, item in ipairs(hasil) do
+    table.insert(checkOffsets, {
+      address = item.address + 0x48,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  local values = gg.getValues(checkOffsets)
+  local targets = {}
+
+  for i = 1, #values do
+    if values[i].value == 65537 then
+      table.insert(targets, hasil[i].address)
+    end
+  end
+
+  if #targets == 0 then
+    gg.alert("⚠️ Unlimited Card Sending base not found.\n\nTry reopening the game first.")
+    return
+  end
+
+  -- 🛠 Patch & Freeze at important offsets
+  local edits = {}
+  for _, base in ipairs(targets) do
+    table.insert(edits, {
+      address = base - 0xA0,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+    table.insert(edits, {
+      address = base - 0x58,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+    table.insert(edits, {
+      address = base - 0x10,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+  end
+
+  gg.setValues(edits)
+  gg.addListItems(edits)
+  gg.clearResults()
+
+  a2()
+  gg.toast("✅ Unlimited card sending is now active!")
+end
+
+function duplicatecard()
+  gg.setVisible(false)
+  gg.clearResults()
+
+  -- 📝 Prompt urutan baru:
+  local opt = gg.prompt(
+    {
+      "🃏 Enter VISIBLE card amount (example: 1):",
+      "✨ Enter NEW card amount (10–1000):",
+      "🔍 Search group 1",
+      "🔍 Search group 2"
+    },
+    {"1", "10", false, false},
+    {"number", "number", "checkbox", "checkbox"}
+)
+
+  if not opt then return end
+
+  local visibleCount = tonumber(opt[1])
+  local newCount = tonumber(opt[2])
+  local c1 = opt[3]
+  local c2 = opt[4]
+
+  -- ❌ Validasi input angka
+  if not visibleCount or not newCount then
+    gg.alert("❌ Invalid input.\nPlease enter numeric values only.")
+    return
+  end
+
+  if newCount < 10 or newCount > 1000 then
+    gg.alert("⚠️ The new card amount must be between 10 and 1000!")
+    return
+  end
+
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local allResults = {}
+
+  -- 🔍 Jika centang 1 → cari group 1
+  if c1 then
+    gg.searchNumber("1918984974", gg.TYPE_DWORD)
+    local r1 = gg.getResults(2000)
+    for i = 1, #r1 do allResults[#allResults + 1] = r1[i] end
+    gg.clearResults()
+  end
+
+  -- 🔍 Jika centang 2 → cari group 2
+  if c2 then
+    gg.searchNumber("1918984976", gg.TYPE_DWORD)
+    local r2 = gg.getResults(2000)
+    for i = 1, #r2 do allResults[#allResults + 1] = r2[i] end
+    gg.clearResults()
+  end
+
+  -- Jika user TIDAK centang apapun
+  if not c1 and not c2 then
+    gg.alert("⚠️ Please select at least one search group.")
+    return
+  end
+
+  if #allResults == 0 then
+    gg.alert("❌ Card data not found.\n\nMake sure the card page is open before running the script.")
+    return
+  end
+
+  -- Ambil offset +1C
+  local batch = {}
+  for i = 1, #allResults do
+    batch[i] = { address = allResults[i].address + 0x1C, flags = gg.TYPE_DWORD }
+  end
+
+  local values = gg.getValues(batch)
+  local targets = {}
+
+  for i = 1, #values do
+    if values[i].value == visibleCount then
+      targets[#targets + 1] = values[i].address
+    end
+  end
+
+  gg.clearResults()
+
+  if #targets == 0 then
+    gg.alert("⚠️ No matching card entries found.\nPlease verify the visible amount.")
+    return
+  end
+
+  -- Apply patch
+  local edits = {}
+  for i = 1, #targets do
+    edits[i] = {address = targets[i], flags = gg.TYPE_DWORD, value = newCount}
+  end
+
+  gg.setValues(edits)
+  a2()
+  gg.toast("✅ Duplicate card : 🃏 " .. newCount)
+end
+
+function cardbadgecol(label, emoji, values)
+  local base = getAddr()
+  if not base then return end
+
+  local addrList = {}
+  for _, item in ipairs(values) do
+    table.insert(addrList, {
+      address = base + item.offset,
+      flags = gg.TYPE_DWORD,
+      value = item.value
+    })
+  end
+
+  gg.setValues(addrList)
+  gg.toast(emoji .. " " .. label .. " applied")
+end
+
+function cardbadge()
+  cardbadgecol("Card Pack Reward", "🎴", {
+    {offset = -0x48, value = 1918976790},
+    {offset = -0x44, value = 1348420452},
+    {offset = -0x40, value = 879453025},
+    {offset = -0x3C, value = 0},
+    {offset = -0x38, value = 0},
+    {offset = -0x34, value = 0},
+{offset = -0x30, value = 0},
+    {offset = -0x2C, value = 74},
+    {offset = 0x10, value = 0},
+    {offset = 0x18, value = 0},
+    {offset = 0x20, value = 0}
+  })
+end
+
+function packbadge()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+
+    local skins = {
+      "🏙️ Town Badge",
+      "🏆 • Legendary Town Badge",
+      "🃏 • Badge Title",
+      "🎖️ • Grand Badge Title",
+      "⛄ • Winter Badge",
+      "❄️ • Legendary Winter Badge",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
+    if not choice then
+      gg.toast("❌ Menu closed.")
+      return
+    end
+
+    -- 🔙 Back option (selalu terakhir)
+    if choice[#skins] then
+      if type(kums6) == "function" then
+        kums6()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    local processed = false
+    -- 🔁 Jalankan fungsi badge berdasarkan pilihan
+    for i = 1, #skins - 1 do
+      if choice[i] then
+        local func = _G["badgecollect" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Tunggu user tekan ikon GG sebelum lanjut
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+          gg.setVisible(false)
+
+          processed = true
+        else
+          gg.alert("❌ Function badgecollect" .. i .. "() not found!")
+        end
+      end
+    end
+
+    if processed then
+      gg.toast("🎉 Selected Exclusive Badge processed successfully!")
+    end
+    -- 🔄 Setelah selesai → balik ke menu lagi
+  end
+end
+
+-- Fungsi utama untuk menerapkan badge
+function applybBadge(hex, emoji, name)
+  local addr = getAddr()
+  if not addr then
+    gg.alert("❌ No matching value found.\n" .. name .. " could not be applied.\nPlease try again or restart the game!")
+    return
+  end
+
+  local patch = {
+    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3]},
+    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = hex[4]},
+    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = hex[5]},
+    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = hex[6]},
+    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+  }
+
+  gg.setValues(patch)
+  gg.toast("✅ " .. emoji .. " " .. name .. " applied!")
+end
+
+-- Kumpulan badge
+function badgecollect1() -- 🏙️ Town Badge
+  applybBadge({
+    0x6461621A, 0x305F6567, 0x61625F31,
+    0x00006573, 0x1965E248, 0x00000070
+  }, "🏙️", "Town Badge")
+end
+
+function badgecollect2() -- 🏆 Legendary Town Badge
+  applybBadge({
+    0x6461621C, 0x305F6567, 0x72675F31,
+    0x00646E61, 0x1965E248, 0x00000070
+  }, "🏆", "Legendary Town Badge")
+end
+
+function badgecollect3() -- 🃏 Badge Title
+  applybBadge({
+    0x64616220, 0x305F6567, 0x32765F31,
+    0x7361625F, 0x19650065, 0x00000070
+  }, "🃏", "Badge Title")
+end
+
+function badgecollect4() -- ❄️ Legendary Winter Badge
+  applybBadge({
+    0x64616222, 0x305F6567, 0x32765F31,
+    0x6172675F, 0x1900646E, 0x00000070
+  }, "🎖️", "Grand Bage Title")
+end
+
+function badgecollect5() -- ⛄ Winter Badge
+  applybBadge({
+    0x6461621A, 0x305F6567, 0x61625F32,
+    0x00006573, 0x1965E248, 0x00000070
+  }, "⛄", "Winter Badge")
+end
+
+function badgecollect6() -- 🎖️ Grand Badge Title
+  applybBadge({
+    0x6461621C, 0x305F6567, 0x72675F32,
+    0x00646E61, 0x1965E248, 0x00000070
+  }, "❄️", "Legendary Winter Badge")
+end
+
+-------------------------------------------------
+  
+function menuSpecial()
+  local title = banner
+  local menu = gg.choice({
+    _("vip_regatta_task"),   -- 💎 • VIP Tugas Regata
+    _("auto_finish_task"),   -- 🌊 • Selesaikan Tugas Otomatis
+    _("edit_regatta_points"),-- ⭐ • Edit Poin Regata
+    _("unlimited_likes"),    -- 👍 • Like Kota Tanpa Batas
+    _("back_main_menu_spesial")      -- ❌ • Kembali ke Menu Utama
+  }, nil, title)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then
+    ms1()
+  elseif menu == 2 then
+    ms2()
+  elseif menu == 3 then
+    ms3()
+  elseif menu == 4 then
+    ms4()
+  elseif menu == 5 then
+    Main()
+    return
+  else
+    return
+  end
+
+  -- 🔁 Ulangi menu setelah fungsi selesai
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      menuSpecial()
+      break
+    end
+  end
+end
+
+function ms1()
+gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 📥 Pilih jumlah poin
+  local poinChoice = gg.choice({
+    "⭐ 150 Point",
+    "⭐ 200 Point",
+    "⭐ 300 Point"
+  }, nil, _( "title_pilih_poin" ))
+
+  if not poinChoice then
+    return gg.alert(_( "alert_pilih_dulu" ))
+  end
+
+  local points = ({150, 200, 300})[poinChoice]
+
+  gg.searchNumber("65538", gg.TYPE_QWORD)
+  local allResults = gg.getResults(99999)
+  if #allResults == 0 then
+    return gg.alert(_( "alert_tidak_ditemukan" ))
+  end
+
+  local checkList = {}
+  for i, r in ipairs(allResults) do
+    checkList[i] = { address = r.address + 0x100, flags = gg.TYPE_DWORD }
+  end
+  local checkVals = gg.getValues(checkList)
+
+  local edits, count = {}, 0
+  for i, c in ipairs(checkVals) do
+    if c.value == -1 then
+      local addr = allResults[i].address
+      local baseVal = gg.getValues({ { address = addr + 0x148, flags = gg.TYPE_QWORD } })[1].value
+      if baseVal and baseVal > 0x100000 then
+        count = count + 1
+        edits[#edits + 1] = { address = addr + 0xC0, flags = gg.TYPE_DWORD, value = 0 }
+edits[#edits + 1] = { address = addr + 0xC4, flags = gg.TYPE_DWORD, value = 0 }
+        edits[#edits + 1] = { address = baseVal, flags = gg.TYPE_DWORD, value = 0 }
+        edits[#edits + 1] = { address = baseVal + 0x4, flags = gg.TYPE_DWORD, value = points }
+      end
+    end
+  end
+
+  if #edits > 0 then
+    gg.setValues(edits)
+    gg.alert(_( "alert_berhasil_prefix" ) .. " " .. count .. "\n" ..
+             _( "alert_berhasil_suffix" ) .. " " .. points)
+    gg.toast(_( "toast_berhasil" ))
+  else
+    gg.alert(_( "alert_tidak_valid" ))
+  end
+end
+
+function ms2()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("65540", gg.TYPE_QWORD)
+  local hasil = gg.getResults(1000) -- batasi agar lebih ringan
+
+  if #hasil == 0 then
+    return
+  end
+
+  -- 🧩 Ambil semua offset sekaligus (lebih cepat)
+  local offsets = {}
+  for i, v in ipairs(hasil) do
+    table.insert(offsets, { address = v.address + 0x130, flags = gg.TYPE_DWORD })
+    table.insert(offsets, { address = v.address + 0x1E8, flags = gg.TYPE_DWORD })
+  end
+
+  local nilai = gg.getValues(offsets)
+  local kandidat = nil
+
+  -- 🧮 Cek nilai offset
+  for i = 1, #hasil do
+    local val130 = nilai[(i - 1) * 2 + 1].value
+    local val1E8 = nilai[(i - 1) * 2 + 2].value
+    if val130 == -1 and val1E8 == 1 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    return gg.alert(_("regata_failed" ))
+  end
+
+  -- 🧠 Persiapan data edit
+  local targetAddress = kandidat.address
+  local edit = {
+    { address = targetAddress + 0xC8, flags = gg.TYPE_DWORD, value = 0 },     -- status
+    { address = targetAddress + 0xCC, flags = gg.TYPE_DWORD, value = 15000 }  -- nilai tugas
+  }
+
+  -- ✏️ Terapkan perubahan
+  gg.setValues(edit)
+  gg.clearResults()
+
+  -- ✅ Notifikasi sukses
+  gg.toast(_("regata_done"))
+end
+
+function ms3()
+  gg.setVisible(false)
+gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 💬 Pilihan poin
+  local pilihan = gg.choice({
+    _( "edit150" ),
+    _( "edit200" ),
+    _( "edit300" )
+  }, nil, _( "pilih_poin" ))
+
+  if not pilihan then
+    return gg.toast(_"dibatalkan")
+  end
+
+  local poin = ({150, 200, 300})[pilihan]
+
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("65540", gg.TYPE_QWORD)
+  local hasil = gg.getResults(1000)
+  if #hasil == 0 then
+    return
+  end
+
+  -- 🧩 Siapkan batch offset
+  local checkList = {}
+  for i, v in ipairs(hasil) do
+    table.insert(checkList, { address = v.address + 0x130, flags = gg.TYPE_DWORD })
+    table.insert(checkList, { address = v.address + 0x1E8, flags = gg.TYPE_DWORD })
+  end
+
+  local checked = gg.getValues(checkList)
+  local kandidat = nil
+
+  for i = 1, #hasil do
+    local val130 = checked[(i - 1) * 2 + 1].value
+    local val1E8 = checked[(i - 1) * 2 + 2].value
+    if val130 == -1 and val1E8 == 1 then
+      kandidat = hasil[i]
+      break
+    end
+  end
+
+  if not kandidat then
+    return gg.alert(_"gagal_regata")
+  end
+
+  local baseData = gg.getValues({ { address = kandidat.address + 0x208, flags = gg.TYPE_QWORD } })[1]
+  if not baseData or baseData.value <= 0x100000 then
+    return
+  end
+
+  -- ✏️ Edit poin
+  gg.setValues({
+    { address = baseData.value + 0x0, flags = gg.TYPE_DWORD, value = 0 },
+    { address = baseData.value + 0x4, flags = gg.TYPE_DWORD, value = poin }
+  })
+
+  gg.clearResults()
+  gg.toast(_"sukses" .. poin)
+end
+
+-- ✅ Fungsi utama ms2
+function ms4()
+  -- 1. Input awal
+  local input = gg.prompt({_("promptLevel_boomlike"), _("promptLikeStart_boomlike")}, nil, {"number", "number"})
+  if not input then gg.alert(_("cancel_boomlike")) return end
+  local level = tonumber(input[1])
+  local likeStart = tonumber(input[2])
+  if not level or not likeStart then gg.alert(_("invalidInput_boomlike")) return end
+
+  -- 2. Search awal
+  gg.setVisible(false)
+gg.clearResults()
+  local searchPattern = string.format("%d;%d", level, likeStart)
+  gg.searchNumber(searchPattern, gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+
+  local count = gg.getResultsCount()
+  if count == 0 then gg.alert(_("initialNotFound_boomlike")) return end
+
+  -- 3. Instruksi like
+  gg.alert(_("pleaseLike_boomlike"))
+
+  -- 4. Tunggu user klik GG icon
+  gg.setVisible(false)
+  while not gg.isVisible() do
+    gg.sleep(100)
+  end
+  gg.setVisible(false)
+
+  -- 5. Input like baru
+  local input2 = gg.prompt({_("promptLikeNew_boomlike")}, nil, {"number"})
+  if not input2 then gg.alert(_("cancel_boomlike")) return end
+  local likeNew = tonumber(input2[1])
+  if not likeNew or likeNew <= likeStart then gg.alert(_("likesNotIncrease_boomlike")) return end
+
+  -- 6. Refine dengan like baru
+  gg.refineNumber(likeNew, gg.TYPE_DWORD)
+  local count2 = gg.getResultsCount()
+  if count2 == 0 then gg.alert(_("refineFailed_boomlike")) return end
+  local finalResult = gg.getResults(count2)
+
+  -- 7. Ambil offset values
+  local addrBase = finalResult[1].address
+  local extra = gg.getValues({
+    {address = addrBase - 0x174, flags = gg.TYPE_DWORD},
+    {address = addrBase - 0x178, flags = gg.TYPE_DWORD},
+    {address = addrBase - 0x17C, flags = gg.TYPE_DWORD}
+  })
+  local v174, v178, v17C = extra[1].value, extra[2].value, extra[3].value
+
+  -- 8. Search baru dengan extra codes
+  gg.clearResults()
+  local searchExtra = string.format("1768972591;%d;%d;%d", v174, v178, v17C)
+  gg.searchNumber(searchExtra, gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1)
+  local count3 = gg.getResultsCount()
+  if count3 == 0 then gg.alert(_("extraSearchFailed_boomlike")) return end
+
+  -- 9. Refine 1768972591
+  gg.refineNumber(1768972591, gg.TYPE_DWORD)
+  local count4 = gg.getResultsCount()
+  if count4 == 0 then gg.alert(_("refine176Failed_boomlike")) return end
+  local targets = gg.getResults(count4)
+
+  -- 10. Loop semua hasil refine
+  local edits, freezeEdits = {}, {}
+  for i, t in ipairs(targets) do
+    local baseAddr = t.address
+    -- Edit offsets +4, +8, +C → 0
+    table.insert(edits, {address = baseAddr + 0x4, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = baseAddr + 0x8, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = baseAddr + 0xC, flags = gg.TYPE_DWORD, value = 0})
+    -- Edit offsets -10, -14, -18, -1C → 0 & freeze
+    table.insert(freezeEdits, {address = baseAddr - 0x10, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeEdits, {address = baseAddr - 0x14, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeEdits, {address = baseAddr - 0x18, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freezeEdits, {address = baseAddr - 0x1C, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+  end
+
+  -- Apply semua edit sekaligus
+  if #edits > 0 then gg.setValues(edits) end
+  if #freezeEdits > 0 then gg.addListItems(freezeEdits) end
+
+  gg.toast(string.format("%s (%d)", _("likesFrozen_boomlike"), count4))
+end
+            
+function menu2()
+  local title = banner
+  local menu = gg.choice({
+    _("menu2_add_points_menuipen"),        -- "🏆  Add Ernie Cup Points" / "🏆 Tambah Poin Ernie Cup"
+    _("menu2_refill_energy_menuipen"),     -- "⚡  Refill Adventure Energy" / "⚡ Isi Ulang Energi Petualangan"
+    _("menu2_free_ore_menuipen"),          -- "👑  Rule of the Mine (Free Ore)" / "👑 Aturan Tambang (Bijih Gratis)"
+    _("menu2_freeze_treasure_menuipen"),   -- "🏴  Freeze Pirate Treasure" / "🏴 Bekukan Harta Bajak Laut"
+    _("menu_back_menuipen")                -- "❌  [ << Go Back >> ]" / "❌  [ << Kembali >> ]"
+  }, nil, title)
+
+  if menu == nil then
+    return
+
+  elseif menu == 1 then ipen1()
+  elseif menu == 2 then ipen2()
+  elseif menu == 3 then ipen3()
+  elseif menu == 4 then ipen4()
+  elseif menu == 5 then
+    Main()
+    return -- stop loop kalau balik ke menu utama
+  else
+    return
+  end
+
+  -- Setelah user memilih fungsi, tunggu klik GG baru ulangi menu
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      menu2()
+      break
+    end
+  end
+end
+
+-- ✅ Fungsi utama ipen1 multi-bahasa
+function ipen1()
+  gg.setVisible(false)
+
+  gg.alert(_("alertMinPoint_ernot"))
+
+  -- Prompt nilai
+  local input = gg.prompt({_("promptPoints_ernot")}, {""}, {"number"})
+  local val = tonumber(input and input[1])
+  if not val then
+    gg.toast(_("invalidInput_ernot"))
+    return
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Cari pola memory untuk Ernie Cup
+  gg.searchNumber("65766512h;655F746Eh;0000646Eh;00000031h;00000024h:737", gg.TYPE_DWORD)
+  gg.refineNumber("65766512h", gg.TYPE_DWORD)
+
+  local r = gg.getResults(gg.getResultsCount())
+  if #r == 0 then
+    gg.alert(_("dataNotFound_ernot"))
+    return
+  end
+
+  -- Edit alamat offset +0x318
+  local offset = {}
+  for i = 1, #r do
+    table.insert(offset, {
+      address = r[i].address + 0x318,
+      flags = gg.TYPE_DWORD,
+      value = val
+    })
+  end
+  gg.setValues(offset)
+
+gg.alert(_("pointsUpdated_ernot"))
+  a2()
+  gg.toast(_("toastSuccess_ernot"))
+end
+
+function oder7()
+  ipen2("free")
+end
+
+function ipen2(caller)
+  gg.setVisible(false)
+
+  local jenis = gg.choice({
+    "⚡ " .. _("adventure_energy_petir"),
+    "💥 " .. _("adventure_explosive_petir")
+  }, nil, "🎯 " .. _("select_adventure_type_petir"))
+  if not jenis then
+    gg.alert("❌ " .. _("operation_canceled_petir"))
+    return
+  end
+
+  local config = {
+    [1] = {
+      min = 450,
+      max = 9999,
+      prompt = "⚡ " .. _("enter_energy_value_petir"),
+      pattern = "40;80;155;100;220;450",
+      refine = "450",
+      notfound = "❌ " .. _("energy_not_found_petir")
+    },
+    [2] = {
+      min = 5,
+      max = 99,
+      prompt = "💥 " .. _("enter_explosive_value_petir"),
+      pattern = "40;1;72;2;160;5::37",
+      refine = "5",
+      notfound = "❌ " .. _("explosive_not_found_petir")
+    }
+  }
+
+  local cfg = config[jenis]
+
+  local input = gg.prompt({cfg.prompt}, nil, {"number"})
+  local val = tonumber(input and input[1])
+  if not val or val < cfg.min or val > cfg.max then
+    gg.toast("🚫 " .. _("invalid_input_petir") .. " (" .. cfg.min .. "–" .. cfg.max .. ")")
+    return
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber(cfg.pattern, gg.TYPE_DWORD)
+  gg.refineNumber(cfg.refine, gg.TYPE_DWORD)
+
+  local r = gg.getResults(gg.getResultsCount())
+  if #r == 0 then
+    gg.alert(cfg.notfound)
+    return
+  end
+
+  for i = 1, #r do r[i].value = val end
+  gg.setValues(r)
+
+  local patch = {}
+  for i = 1, #r do
+    table.insert(patch, {
+      address = r[i].address - 0x4,
+      flags = gg.TYPE_DWORD,
+      value = 1
+    })
+  end
+  gg.setValues(patch)
+
+  a2()
+  gg.toast("✅ " .. _("value_updated_petir"))
+gg.alert(((jenis == 1 and "⚡ " .. _("adventure_energy_petir")) or ("💥 " .. _("adventure_explosive_petir"))) ..
+           " " .. _("updated_to_petir") .. " " .. val .. ".\n\n" .. _("check_event_petir"))
+end
+
+-- ✅ Fungsi utama ipen3 multi-bahasa
+function ipen3()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.alert(_"Etamwarn_event_not_claimed")
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Search main QWORD
+  gg.searchNumber("3304708", gg.TYPE_QWORD)
+  local list = gg.getResults(500)
+
+  if #list == 0 then
+    gg.alert(_"Etamno_data_found")
+    return
+  end
+
+  -- Check offset +0xD4
+  local target = nil
+
+  for i, v in ipairs(list) do
+    local checkAddr = v.address + 0xD4
+    local check = gg.getValues({
+      {address = checkAddr, flags = gg.TYPE_DWORD}
+    })
+
+    if check[1].value == 3237230 then
+      target = v.address
+      break
+    end
+  end
+
+  if not target then
+    gg.alert(_"Etamno_target")
+    return
+  end
+
+  -- Apply edit
+  gg.setValues({
+    {address = target - 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = target - 0x14, flags = gg.TYPE_DWORD, value = 2000}
+  })
+
+  a2()
+  gg.alert(_"Etamsuccess_alert")
+  gg.toast(_"Etamsuccess_toast")
+end
+
+-- ✅ Fungsi utama ipen4 multi-bahasa
+function ipen4()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber("1734429984;85::281", gg.TYPE_DWORD)
+  gg.refineNumber("85", gg.TYPE_DWORD)
+
+  local r = gg.getResults(gg.getResultCount())
+  if #r == 0 then
+    gg.alert(_("dataNotFound_bajak"))
+    return
+  end
+
+  local freeze = {}
+  for i = 1, #r do
+    local addr = r[i].address
+    table.insert(freeze, {address = addr - 0x70, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    table.insert(freeze, {address = addr - 0x6C, flags = gg.TYPE_DWORD, value = 1, freeze = true})
+end
+
+  gg.addListItems(freeze)
+  a2()
+  gg.toast(string.format(_("toastFreeze_bajak") .. " (%d)", #r))
+end
+
+function menu7()
+    local title = banner
+    local menu = gg.choice({
+        _("faster_arrivals_skiptime"),   
+        _("no_feed_timer_skiptime"),     
+        _("no_farm_timer_skiptime"),     
+        _("no_dealer_rest_skiptime"),    
+        _("instant_foundry_skiptime"),   
+        _("no_request_delay_skiptime"),  
+        _("go_back_skiptime")
+    }, nil, title)
+
+    if menu == nil then
+        return
+    elseif menu == 1 then stime1()
+    elseif menu == 2 then stime2()
+    elseif menu == 3 then stime3()
+    elseif menu == 4 then stime4()
+    elseif menu == 5 then stime5()
+    elseif menu == 6 then stime6()
+    elseif menu == 7 then Main()
+    else
+        return
+    end
+
+    -- Kembali ke menu setelah action, kecuali saat balik ke Main()
+    if menu ~= 7 then
+        while true do
+            if gg.isVisible(true) then
+                gg.setVisible(false)
+                menu7()
+                break
+            end
+        end
+    end
+end
+
+-- 🛠 Fungsi menu stime1
+function stime1()
+  local indev = dev
+  local menu = gg.choice({
+    _("shipBoost_aripal"),
+    _("cargoAuto1_aripal"),
+    _("heliAuto_aripal"),
+    _("trainBoost11_aripal"),
+    _("goBack_aripal")
+  }, nil, indev)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then auto1()
+  elseif menu == 2 then auto2()
+  elseif menu == 3 then auto3()
+  elseif menu == 4 then auto4()
+  elseif menu == 5 then menu7()
+    return
+  else
+    return
+  end
+
+  -- Tampilkan ulang menu jika user kembali ke GG
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      stime1()
+      break
+    end
+  end
+end
+
+function auto1()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber("120;70;100;140;160;2019904798;1701606217::1709", gg.TYPE_DWORD)
+  gg.refineNumber("2019904798", gg.TYPE_DWORD)
+
+  local r = gg.getResults(1)
+  if #r == 0 then
+    gg.alert(_("no_ship_kpl"))
+    return
+  end
+
+  local offsets = {0x68, 0x2E8, 0x428, 0x568, 0x6A8}
+  local edits = {}
+
+  for _, o in ipairs(offsets) do
+    table.insert(edits, {
+      address = r[1].address - o,
+      flags = gg.TYPE_DWORD,
+      value = 1
+    })
+  end
+
+  gg.setValues(edits)
+  a2()
+  gg.toast(_("fast_ship_on_kpl"))
+end
+
+function auto2()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber("54000;18000", gg.TYPE_DWORD)
+  gg.refineNumber("54000", gg.TYPE_DWORD)
+
+  local r = gg.getResults(gg.getResultCount())
+  if #r == 0 then
+    gg.alert(_("no_airplane_data_psw"))
+    return
+  end
+
+  for i = 1, #r do
+    r[i].address = r[i].address - 0x8
+    r[i].value = 0
+    r[i].freeze = true
+    r[i].flags = gg.TYPE_DWORD
+  end
+
+  gg.addListItems(r)
+  a2()
+  gg.toast(_("auto_cargo_success_psw"))
+end
+
+function auto3()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber("1;1;16842752;100::25", gg.TYPE_DWORD)
+  local r = gg.getResults(1000)
+  if #r == 0 then
+    gg.alert(_("helicopter_no_data_helkop"))
+    return
+  end
+
+  gg.editAll("0", gg.TYPE_DWORD)
+  a2()
+  gg.toast(_("helicopter_auto_ready_helkop"))
+  gg.alert(_("helicopter_removed_success_helkop"))
+end
+
+-- Fungsi auto4() multi-bahasa
+function auto4()
+    gg.setVisible(false)
+    gg.setRanges(gg.REGION_C_ALLOC)
+
+local d = gg.prompt(_"train_prompt_kreta", nil, {"number", "number", "checkbox"})
+    if not d then return gg.alert(_"cancelled_kreta") end
+
+    local h = tonumber(d[1]) or 0
+    local m = tonumber(d[2]) or 0
+    local freezeCargo = d[3]
+
+    if h < 1 or h > 5 or m < 0 or m > 55 then
+        gg.alert(_"invalid_input_kreta")
+        return
+    end
+
+    local total = (h * 3600) + (m * 60)
+    gg.clearResults()
+    gg.searchNumber(total, gg.TYPE_FLOAT)
+
+    local found = gg.getResults(gg.getResultCount())
+    if #found == 0 then
+        gg.alert(_"no_timer_kreta")
+        return
+    end
+
+    local patch = {}
+    for _, v in ipairs(found) do
+        table.insert(patch, {address = v.address, flags = gg.TYPE_FLOAT, freeze = true, value = 1})
+
+        if freezeCargo then
+            for _, offset in ipairs({0x198, 0x2B8, 0x3D8, 0x4F8, 0x618}) do
+                table.insert(patch, {
+                    address = v.address - offset,
+                    flags = gg.TYPE_DWORD,
+                    freeze = true,
+                    value = 1
+                })
+            end
+        end
+    end
+
+    gg.addListItems(patch)
+    a2()
+
+    local msg = _( "train_timer_frozen_kreta") .. h .. "h " .. m .. "m"
+    if freezeCargo then msg = msg .. _( "carriage_frozen_kreta") end
+
+    gg.alert(_"success_msg_kreta" .. msg)
+    gg.toast(_"train_updated_kreta")
+end
+
+-- ===== Fungsi Feed Factory Multi Bahasa =====
+function stime2()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Cari base address
+  gg.searchNumber("6361660Eh;776F630Eh:41", gg.TYPE_DWORD)
+  gg.refineNumber("6361660Eh", gg.TYPE_DWORD)
+  local result = gg.getResults(1)
+  if #result == 0 then
+    gg.alert(_("feed_not_found_pbrikkan"))
+    return
+  end
+
+  -- Pilih slot
+  local slots = {
+    "🐄  Slot 1", "🐓  Slot 2", "🐑  Slot 3",
+    "🐝  Slot 4", "🐖  Slot 5", "🍄  Slot 6"
+  }
+  local selected = gg.multiChoice(slots, nil, _("select_slots_pbrikkan"))
+  if not selected then
+    gg.alert(_("no_slot_selected_pbrikkan"))
+    return
+  end
+
+  -- Masukkan jumlah
+  local input = gg.prompt({_("enter_amount")}, nil, {"number"})
+local val = tonumber(input and input[1])
+  if not val or val < 3 or val > 500 then
+    gg.alert(_("invalid_amount_pbrikkan"))
+    return
+  end
+
+  local base = result[1].address
+  local offsets = {
+    {0x40, 0x44, 0x48},   -- Slot 1
+    {0xe0, 0xe8, 0xe4},   -- Slot 2
+    {0x180, 0x188, 0x184},-- Slot 3
+    {0x220, 0x228, 0x224},-- Slot 4
+    {0x2c0, 0x2c8, 0x2c4},-- Slot 5
+    {0x310, 0x318, 0x314} -- Slot 6
+  }
+
+  local edits = {}
+  for i = 1, 6 do
+    if selected[i] then
+      local o = offsets[i]
+      table.insert(edits, {address = base + o[1], flags = gg.TYPE_DWORD, value = -1})
+      table.insert(edits, {address = base + o[2], flags = gg.TYPE_DWORD, value = val})
+      table.insert(edits, {address = base + o[3], flags = gg.TYPE_DWORD, value = 0})
+    end
+  end
+
+  gg.setValues(edits)
+  a2()
+  
+  local count = 0
+  for i = 1, 6 do if selected[i] then count = count + 1 end end
+  gg.toast(string.format("%s: %d (%d slot(s))", _("feed_updated_pbrikkan"), val, count))
+end
+
+function oder6()
+  stime3("free")
+end
+
+function stime3(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber(
+    "2003788564;1667327502;1150681088;1163984896;1180762112;1187307520;1185464320;1183621120:889",
+    gg.TYPE_DWORD
+  )
+  gg.refineNumber(
+    "1150681088;1163984896;1180762112;1187307520;1185464320;1183621120:889",
+    gg.TYPE_DWORD
+  )
+
+  local r = gg.getResults(6)
+  if #r ~= 6 then
+    gg.alert(_"alert_feed_not_found_mkncpt")
+    return
+  end
+
+  for i = 1, 6 do r[i].value = 1 end
+  gg.setValues(r)
+  a2()
+  gg.toast(_"toast_fast_feed_applied_mkncpt")
+end
+
+function stime4()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- Cari pola cooldown Dealer (3600 detik = 1 jam, 86400 = 24 jam)
+  gg.searchNumber("3600;86400", gg.TYPE_DWORD)
+  gg.refineNumber("3600", gg.TYPE_DWORD)
+
+  local count = gg.getResultCount()
+if count == 0 then
+    gg.alert(_("dealer_cooldown_not_found_dealer"))
+    return
+  end
+
+  local results = gg.getResults(count)
+  for i, v in ipairs(results) do
+    v.value = 0           -- Set value jadi 0 detik (instan)
+    v.freeze = true       -- Bekukan agar tidak berubah kembali
+    v.flags = gg.TYPE_DWORD
+  end
+  gg.addListItems(results)
+
+  a2()
+  gg.toast(_("dealer_cooldown_frozen_dealer"))
+end
+
+function oder5()
+  stime4("free")
+end
+
+function stime5(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.searchNumber("1701671696;1701868320;1163984896;1172373504;1177075712;1180762112::329", gg.TYPE_DWORD)
+  gg.refineNumber("1701868320", gg.TYPE_DWORD)
+
+  local r = gg.getResults(1)
+  if #r == 0 then
+    gg.alert(_"no_smelter_data_foundry")
+    return
+  end
+
+  local base = r[1].address
+  local o = {
+    0x40, 0x50, 0x58, 0x60,
+    0x90, 0xA0, 0xA8, 0xB0,
+    0xE0, 0xF0, 0xF8, 0x100,
+    0x130, 0x140, 0x148, 0x150
+  }
+
+  local edits = {}
+  for i = 1, #o, 4 do
+    table.insert(edits, { address = base + o[i],     flags = gg.TYPE_DWORD, value = 1 })
+    table.insert(edits, { address = base + o[i + 1], flags = gg.TYPE_DWORD, value = 0 })
+    table.insert(edits, { address = base + o[i + 2], flags = gg.TYPE_DWORD, value = 0 })
+    table.insert(edits, { address = base + o[i + 3], flags = gg.TYPE_DWORD, value = 0 })
+  end
+
+  gg.setValues(edits)
+  a2()
+  gg.toast(_"smelter_success_foundry")
+end
+
+function stime6()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_CODE_APP)
+
+  gg.searchNumber("86400;10800", gg.TYPE_DWORD)
+  gg.refineNumber("10800", gg.TYPE_DWORD)
+
+  local results = gg.getResults(10)
+  if #results == 0 then
+    gg.alert(_("stime6_no_values_minta"))
+    return
+  end
+
+  gg.editAll(1, gg.TYPE_DWORD)
+a2()
+  gg.toast(_("stime6_success_minta"))
+end      
+
+-- ✅ Fungsi menu3 dengan multi bahasa
+function menu3()
+  local title = banner
+  local menu = gg.choice({
+    _("wheat_exp_menupenambah"),
+    _("animal_count_menupenambah"),
+    _("extra_ship_menupenambah"),
+    _("more_requests_menupenambah"),
+    _("market_unlim_menupenambah"),
+    _("back_menupenambah")
+  }, nil, title)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then
+    parming1()
+  elseif menu == 2 then
+    parming2()
+  elseif menu == 3 then
+    parming3()
+  elseif menu == 4 then
+    parming4()
+  elseif menu == 5 then
+    parming5()
+  elseif menu == 6 then
+    Main() -- Kembali ke menu utama
+    return
+  else
+    return
+  end
+
+  -- 🔁 Buka ulang menu jika user tekan ikon GG
+  while true do
+    if gg.isVisible(true) then
+      gg.setVisible(false)
+      menu3()
+      break
+    end
+  end
+end
+
+function oder2()
+  parming1("free")
+end
+
+function parming1(caller)
+  local input = gg.prompt({_('oder2_prompt_boostexp')}, nil, {"number"})
+  local exp = tonumber(input and input[1])
+  if not exp then
+    gg.alert(_("oder2_cancel_boostexp"))
+    return
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("65687716h;726F6316h:217", gg.TYPE_DWORD)
+  gg.refineNumber("65687716h", gg.TYPE_DWORD)
+
+  local r = gg.getResults(1)
+  if #r == 0 then
+    gg.alert(_("oder2_notfound_boostexp"))
+    return
+  end
+
+  local base = r[1].address
+  gg.setValues({
+    {address = base + 0x50, flags = gg.TYPE_DWORD, value = 1},
+    {address = base + 0x60, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x64, flags = gg.TYPE_DWORD, value = exp}
+  })
+
+  a2()
+  gg.toast(_("oder2_success_boostexp") .. exp) -- ✅ diperbaiki di sini
+end
+
+-- 🐾 Function utama
+function parming2()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local input = gg.prompt({
+    _( "animal_prompt_curr_hew"),
+    _( "animal_prompt_new_hew")
+  }, nil, {"number", "number"})
+
+  local curr = tonumber(input and input[1])
+  local new = tonumber(input and input[2])
+  if not curr or not new or curr < 3 or curr > 9 or new < 3 or new > 9 then
+    gg.alert(_( "invalid_input_hew"))
+    return
+  end
+
+  local names = {
+    _( "cow_hew"), _( "chicken_hew"), _( "sheep_hew"),
+    _( "bee_hew"), _( "pig_hew"), _( "mushroom_hew")
+  }
+
+  local patterns = {
+    '1667327502;2037542772;2003788564;1952670054',
+    '1667327502;2037542772;1768448796;1852140387',
+    '1667327502;2037542772;1701344024;1634103397',
+    '1667327502;2037542772;1701143060;1952670054',
+    '1667327502;2037542772;1734963220;1952670054',
+    '1667327502;2037542772;1937075486;1869574760'
+  }
+
+  local sel = gg.multiChoice(names, nil, _( "select_animals_hew"))
+  if not sel then
+    gg.alert(_( "cancel_operation_hew"))
+    return
+  end
+
+  for i = 1, #names do
+    if sel[i] then
+      gg.clearResults()
+      gg.searchNumber(patterns[i]..";"..curr, gg.TYPE_DWORD)
+      gg.refineNumber(curr, gg.TYPE_DWORD)
+
+      local r = gg.getResults(20)
+      if #r == 0 then
+        gg.alert(_( "not_found_prefix_hew").." "..names[i].." ".._( "not_found_suffix_hew"))
+      else
+        for j = 1, #r do r[j].value = new end
+        gg.setValues(r)
+        gg.toast(_( "updated_prefix_hew").." "..names[i].." ".._( "updated_suffix_hew").." "..new.."!")
+      end
+    end
+  end
+end
+
+-- 🛳️ Fungsi Ship Product Edit
+function parming3()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  gg.alert(_"ship_warning_palkapal")
+
+  local input = gg.prompt({
+    _"ship_input1_palkapal",
+    _"ship_input2_palkapal"
+  }, nil, {"number", "number"})
+
+  local old = tonumber(input and input[1])
+  local new = tonumber(input and input[2])
+
+  if not old or not new then
+    gg.alert(_"cancelled_palkapal")
+    return
+  end
+  if new < 3 or new > 500 then
+    gg.alert(_"invalid_range_palkapal")
+    return
+  end
+
+  gg.searchNumber(string.format("69687318h;786F4270h;6E6F7246h;%d", old), gg.TYPE_DWORD)
+  gg.refineNumber(old, gg.TYPE_DWORD)
+
+  local r = gg.getResults(50)
+  if #r == 0 then
+    gg.alert(_"not_found_palkapal")
+    return
+  end
+
+  gg.editAll(new, gg.TYPE_DWORD)
+  gg.clearResults()
+  a2()
+
+  -- ⚠️ %s dipisah dari tabel bahasa, digabung di sini
+  gg.toast(_"ship_done_toast_palkapal" .. new .. "!")
+  gg.alert(_"ship_done_alert_palkapal" .. new .. _"ship_done_alert_palkapal")
+  end
+  
+function parming4()
+    gg.setVisible(false)
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+
+    local cropNames = {
+        "🌾  Wheat", "🌽  Corn", "🥕  Carrot", "🍬  Sugarcane", "☁️  Cotton",
+        "🍓  Strawberry", "🍅  Tomato", "🌲  Pine Tree", "🥔  Potato", "🍫  Cocoa",
+        "🌳  Rubber Tree", "🧵  Silk Tree", "🌶️  Chili", "🌾  Rice", "🌹  Rose",
+        "🌼  Jasmine", "🌰  Coffee Plant", "🥜  Peanut Plant", "🌿  Tea Plant", "🍎  Apple",
+        "🍃  Mint", "🫘  Soybean", "🍂  Cork Oak", "🪻  Lavender"
+    }
+
+    local searchPatterns = {
+        '65687718h;6F437461h;6568770Ah:25', '726F6316h;756F436Eh;726F6308h:25',
+        '7261631Ah;43746F72h;7261630Ch:25', '67757320h;61637261h;67757312h:25',
+        '746F631Ah;436E6F74h;746F630Ch:25', '72747322h;65627761h;72747314h:25',
+        '6D6F7418h;6F437461h;6D6F740Ah:25', '6E697016h;756F4365h;6E697008h:25',
+        '746F701Ah;436F7461h;746F700Ch:25', '63616318h;6F436F61h;6361630Ah:25',
+        '62757222h;54726562h;62757214h:25', '6C697316h;756F436Bh;6C697308h:25',
+        '7065700Ch;00726570h;65657318h:25', '63697216h;756F4365h;63697208h:25',
+        '736F721Eh;65655365h;736F7210h:25', '73616A1Ch;656E696Dh;73616A0Eh:25',
+        '666F631Ah;43656566h;666F630Ch:25', '6165701Ah;4374756Eh;6165700Ch:25',
+        '6165741Ch;68737562h;6165740Eh:25', '70706118h;6F43656Ch;7070610Ah:25',
+        '6E696D16h;756F4374h;6E696D08h:25', '796F731Ch;6E616562h;796F730Eh:25',
+        '726F6316h;756F436Bh;726F6308h:25', '76616C1Eh;65646E65h;76616C10h:25'
+    }
+
+    local refinePatterns = {
+        '6568770Ah','726F6308h','7261630Ch','67757312h','746F630Ch','72747314h','6D6F740Ah','6E697008h',
+        '746F700Ch','6361630Ah','62757214h','6C697308h','65657318h','63697208h','736F7210h','73616A0Eh',
+        '666F630Ch','6165700Ch','6165740Eh','7070610Ah','6E696D08h','796F730Eh','726F6308h','76616C10h'
+    }
+
+    local selected = gg.multiChoice(cropNames, nil, _("🌿 Select crops to modify"))
+    if not selected then return end
+
+    local input = gg.prompt({_("📦 Enter crop amount [1;500]:")}, nil, {"number"})
+    local value = tonumber(input and input[1])
+    if not value or value < 1 or value > 500 then
+        gg.alert(_("🚫 Invalid input. Must be between 1 and 500."))
+        return
+    end
+
+    for i = 1, #cropNames do
+        if selected[i] then
+            gg.clearResults()
+            gg.searchNumber(searchPatterns[i], gg.TYPE_DWORD)
+            gg.refineNumber(refinePatterns[i], gg.TYPE_DWORD)
+
+            local results = gg.getResults(10)
+            if #results == 0 then
+                gg.toast(_("❌ Not found: ") .. cropNames[i])
+            else
+                local edits = {}
+                for _, r in ipairs(results) do
+                    table.insert(edits, {address = r.address + 0xF8, flags = gg.TYPE_DWORD, value = 0})
+                    table.insert(edits, {address = r.address + 0xFC, flags = gg.TYPE_DWORD, value = value})
+                end
+                gg.setValues(edits)
+                gg.toast(_("✅ ") .. cropNames[i] .. _(" set to ") .. value)
+            end
+        end
+    end
+end
+
+-- 🌟 Fungsi parming5
+function parming5()
+  gg.setVisible(false)
+
+  -- 📥 Prompt input awal
+  local i = gg.prompt({_("prompt_market_boxes")}, nil, {"number"})
+  local count = tonumber(i and i[1])
+  if not count or count < 10 or count > 2000 then
+    gg.alert(_("invalid_input_market"))
+    return
+  end
+
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("7020372369389216534", gg.TYPE_QWORD)
+
+  local hasil = gg.getResults(100)
+  if #hasil == 0 then
+    gg.alert(_("data_not_found_market"))
+    return
+  end
+
+  -- 🔍 Filter hasil dengan offset +48 = 1185464320
+  local valid = {}
+  for _, v in ipairs(hasil) do
+    local check = gg.getValues({{address = v.address + 0x48, flags = gg.TYPE_DWORD}})
+    if check[1].value == 1185464320 then
+      table.insert(valid, v)
+    end
+  end
+
+  if #valid == 0 then
+    gg.alert(_("no_valid_offset_market"))
+    return
+  end
+
+  -- ✏️ Edit nilai pada offset +0x1B8 dari hasil valid
+  local edits = {}
+  for _, v in ipairs(valid) do
+    table.insert(edits, {address = v.address - 0x38, value = count, flags = gg.TYPE_DWORD})
+  end
+
+  gg.setValues(edits)
+  a2()
+
+  -- 🎯 Notifikasi
+gg.toast(_("toast_success_market") .. count)
+  gg.alert(_("alert_success_market_1") .. count .. _("alert_success_market_2"))
+end
+
+-- 📌 Menu 4
+function menu4()
+  local title = banner 
+  local menu = gg.choice({
+    _( "industry_boost_gamragam"),
+    _( "heli_tcash_gamragam"),
+    _( "free_boxes_gamragam"),
+    _( "build_no_tools_gamragam"),
+    _( "freeze_expansion_gamragam"),
+    _( "barn_expand_gamragam"),
+    _( "dealer_rent_gamragam"),
+    _( "back_gamragam")
+  }, nil, title)
+
+  if menu == nil then
+    return
+
+  elseif menu == 1 then other1()
+  elseif menu == 2 then other2()
+  elseif menu == 3 then other3()
+  elseif menu == 4 then other4()
+  elseif menu == 5 then other5()
+  elseif menu == 6 then other6()
+  elseif menu == 7 then other7()
+  elseif menu == 8 then Main()
+  else
+    return
+  end
+
+  -- 🔄 Balik ke menu kecuali saat ke Main()
+  if menu ~= 8 then
+    while true do
+      if gg.isVisible(true) then
+        gg.setVisible(false)
+        menu4()
+        break
+      end
+    end
+  end
+end
+
+-- 🔧 Main function
+function other1()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 📋 Fixed pattern list (2–53)
+  local patterns = {
+    '32162031X4','32162030X4','32162025X4','32162024X4','32162027X4',
+    '32162026X4','32162021X4','32162020X4','32162023X4','32162022X4',
+    '32162017X4','32162016X4','32162019X4','32162018X4','32162045X4',
+    '32162044X4','32162047X4','32162046X4','32162041X4','32162040X4',
+    '32162043X4','32162042X4','32162037X4','32162036X4','32162039X4',
+    '32162038X4','32162033X4','32162032X4','32162035X4','32162034X4',
+    '32161997X4','32161996X4','32161999X4','32161998X4','32161993X4',
+    '32161992X4','32161995X4','32161994X4','32161989X4','32161988X4',
+    '32161991X4','32161990X4','32161987X4','32161986X4','32161983X4',
+    '32161982X4','32161985X4','32161984X4','32161981X4','32161980X4',
+    '32161979X4','32161978X4'
+  }
+
+  -- 🛎️ Initial alert
+  gg.alert(_("alert_star_brik"))
+
+  -- 🔢 Combined prompt
+  local p = gg.prompt(
+    {_("prompt_star_brik"), _("prompt_value_brik")},
+    {nil, nil},
+    {"number", "number"}
+  )
+if not p then return end
+
+  local idx = tonumber(p[1])
+  local val = tonumber(p[2])
+
+  if not idx or idx < 2 or idx > 53 then
+    gg.alert(_("err_star_brik"))
+    return
+  end
+  if not val or val < 99 or val > 100 then
+    gg.alert(_("err_value_brik"))
+    return
+  end
+
+  local pattern = patterns[idx - 1]
+
+  -- 🔍 Search & patch
+  gg.clearResults()
+  gg.searchNumber(pattern, gg.TYPE_DWORD)
+  local res = gg.getResults(100)
+  if #res == 0 then
+    gg.toast(_("not_found_brik") .. ": " .. pattern)
+    return
+  end
+
+  local patch = {}
+  for _, r in ipairs(res) do
+    table.insert(patch, {address = r.address + 0x14, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(patch, {address = r.address + 0x18, flags = gg.TYPE_DWORD, value = val})
+  end
+  gg.setValues(patch)
+  gg.toast(_("patched_brik") .. ": " .. pattern .. " → " .. val)
+end
+
+function oder1()
+  other2("free")
+end
+
+function other2(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local input = gg.prompt(_"input_oder1_suntikheli", nil, {"number", "number", "number"})
+
+  if not input then
+    return gg.alert(_"no_input_suntikheli")
+  end
+
+  local coin = tonumber(input[1]) or 0
+  local cash = tonumber(input[2]) or 0
+  local exp  = tonumber(input[3]) or 0
+
+  if coin <= 0 and cash <= 0 and exp <= 0 then
+    return gg.alert(_"zero_values_suntikheli")
+  end
+
+  gg.searchNumber("1885433110;1852403807::253", gg.TYPE_DWORD)
+  gg.refineNumber("1885433110", gg.TYPE_DWORD)
+
+  local r = gg.getResults(1)
+  if #r == 0 then
+    return gg.alert(_"no_match_suntikheli")
+  end
+
+  local edits = {
+    {address = r[1].address - 0xE0, flags = gg.TYPE_DWORD, value = 0},
+    {address = r[1].address - 0xD8, flags = gg.TYPE_DWORD, value = 0},
+    {address = r[1].address - 0xC0, flags = gg.TYPE_DWORD, value = 0},
+    {address = r[1].address - 0xDC, flags = gg.TYPE_DWORD, value = coin},
+    {address = r[1].address - 0xD4, flags = gg.TYPE_DWORD, value = cash},
+    {address = r[1].address - 0xBC, flags = gg.TYPE_DWORD, value = exp}
+  }
+
+  gg.setValues(edits)
+  a2()
+  gg.toast(_"toast_oder1_suntikheli")
+end
+
+function oder3()
+  other3("free")
+end
+
+function other3(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local input = gg.prompt({_("prompt_cash_input_freebox")}, nil, {"number"})
+  local cash = tonumber(input and input[1])
+
+  if not cash then
+    gg.alert(_"invalid_or_cancel_freebox")
+    return
+end
+
+  local pattern = "3407873;" .. cash .. ";6:301"
+  gg.searchNumber(pattern, gg.TYPE_DWORD)
+  gg.refineNumber(cash, gg.TYPE_DWORD)
+
+  local results = gg.getResults(5)
+  if #results == 0 then
+    gg.alert(_"not_found_new_freebox")
+    return
+  end
+
+  local list = {}
+  for _, v in ipairs(results) do
+    table.insert(list, {
+      address = v.address,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+  end
+
+  gg.setValues(list)
+  gg.addListItems(list)
+  gg.toast(_"activated_new_freebox")
+end
+
+-- 🔧 Fungsi utama
+function other4()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Step 1: Search for pattern
+  gg.searchNumber("1768846701;31092;2", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1, 0)
+  gg.refineNumber("2", gg.TYPE_DWORD)
+
+  -- 📊 Step 2: Get results
+  local results = gg.getResults(700)
+  if #results == 0 then
+    gg.alert(_("other4_not_found_nitas"))
+    return
+  end
+
+  -- 📝 Step 3: Apply changes
+  gg.editAll("5", gg.TYPE_DWORD)
+
+  -- ✅ Completion
+  gg.alert(_("other4_success_nitas"))
+  a2()
+gg.toast(_("other4_toast_nitas"))
+end
+
+function oder4()
+  other5("free")
+end
+
+function other5(caller)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local d = {
+    pattern = "1886351380;29;28::105", -- pola untuk expansion city
+    refine = "1886351380",
+    offset = -0x8,
+    label = _("expansion_city_freeluas")
+  }
+
+  gg.searchNumber(d.pattern, gg.TYPE_DWORD)
+  gg.refineNumber(d.refine, gg.TYPE_DWORD)
+
+  local results = gg.getResults(10)
+  if #results == 0 then
+    gg.alert("❌ \"" .. d.label .. "\" " .. _("not_found_restart_freeluas"))
+    return
+  end
+
+  for i = 1, #results do
+    results[i].address = results[i].address + d.offset
+    results[i].flags = gg.TYPE_DWORD
+    results[i].value = 0
+    results[i].freeze = true
+  end
+
+  gg.addListItems(results)
+  gg.toast("✅ \"" .. d.label .. "\" " .. _("frozen_freeluas"))
+  a2()
+  gg.toast("🚧 " .. _("land_freeze_success_freeluas"))
+end
+
+-- ✨ Fungsi utama
+function other6()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🧹 Stage 1: Clear barn values
+  gg.searchNumber('99;99;99;5010', gg.TYPE_DWORD)
+  gg.refineNumber('99;99;99', gg.TYPE_DWORD)
+  local baseResults = gg.getResults(3)
+
+  if #baseResults == 0 then
+    gg.alert(_("barn_not_found_gudangdang"))
+    return
+  end
+
+  local offsets = {
+    0xC40,0xC20,0xC00,0xBE0,0xBC0,0xBA0,0xB80,0xB60,0xB40,
+    0xB20,0xB00,0xAE0,0xAC0,0xAA0,0xA80,0xA60,0xA40,0xA20,
+    0xA00,0x9E0,0x9C0,0x9A0,0x980,0x960,0x940,0x920,0x900,
+    0x8E0,0x8C0,0x8A0,0x880,0x860,0x840,0x820,0x800,
+    0x7E0,0x7C0,0x7A0,0x780,0x760,0x740,0x720,0x700,
+    0x6E0,0x6C0,0x6A0,0x680,0x660,0x640,0x620,0x600,
+    0x5E0,0x5C0,0x5A0,0x580,0x560,0x540,0x520,0x500,
+    0x4E0,0x4C0,0x4A0,0x480,0x460,0x440,0x420,0x400,
+    0x3E0,0x3C0,0x3A0,0x380,0x360,0x340,0x320,0x300,
+    0x2E0,0x2C0,0x2A0,0x280,0x260,0x240,0x220,0x200,
+    0x1E0,0x1C0,0x1A0,0x180,0x160,0x140,0x120,0x100,
+    0xE0, 0xC0, 0xA0, 0x80, 0x60, 0x40, 0x20
+  }
+
+  local toClear = {}
+for _, result in ipairs(baseResults) do
+    for _, offset in ipairs(offsets) do
+      if result.address > offset then
+        table.insert(toClear, {
+          address = result.address - offset,
+          flags = gg.TYPE_DWORD,
+          value = 0
+        })
+      end
+    end
+  end
+
+  if #toClear > 0 then
+    gg.setValues(toClear)
+  end
+
+  -- ❄️ Stage 2: Freeze barn capacity
+  gg.clearResults()
+  gg.searchNumber("5010;4935", gg.TYPE_DWORD)
+  gg.refineNumber("4935", gg.TYPE_DWORD)
+
+  local matchCount = gg.getResultCount()
+  if matchCount == 0 then
+    gg.alert(_("barn_freeze_not_found_gudangdang"))
+    return
+  end
+
+  local results = gg.getResults(matchCount)
+  local freezeItems = {}
+
+  for _, v in ipairs(results) do
+    table.insert(freezeItems, {address = v.address + 0x10, flags = gg.TYPE_DWORD, freeze = true, value = -200})
+    table.insert(freezeItems, {address = v.address + 0x14, flags = gg.TYPE_DWORD, freeze = true, value = -200})
+    table.insert(freezeItems, {address = v.address + 0x18, flags = gg.TYPE_DWORD, freeze = true, value = -200})
+  end
+
+  gg.addListItems(freezeItems)
+  a2()
+  gg.toast(_("barn_frozen_gudangdang") .. matchCount .. _("entries_gudangdang"))
+end
+
+function other7()
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- 🔍 Cari pola memori untuk Dealer rental
+  gg.searchNumber('1634496558;2020176505;97;88::109', gg.TYPE_DWORD)
+  gg.refineNumber('1634496558', gg.TYPE_DWORD)
+
+  local results = gg.getResults(1)
+  if #results == 0 then
+    gg.alert(_("dealer_not_found_deler"))
+    return
+  end
+
+  local addresses = {}
+  for _, v in ipairs(results) do
+    table.insert(addresses, {address = v.address - 0x4C, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(addresses, {address = v.address - 0x48, flags = gg.TYPE_DWORD, value = 2})
+    table.insert(addresses, {address = v.address - 0x44, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(addresses, {address = v.address - 0x40, flags = gg.TYPE_DWORD, value = 2592000}) -- 30 days
+  end
+
+  gg.setValues(addresses)
+
+  gg.alert(_("dealer_success_deler"))
+  a2()
+  gg.toast(_("dealer_toast_deler"))
+end
+
+-- 📘 Tentang Script & Menu Reset
+function menu6()
+  local title = banner
+  local menu = gg.choice({
+	"⚙️ • Admin Login",
+_( "about_script" ),
+    _( "contact_dev" ),
+    _( "reset_default" ),
+    _( "change_lang" ),
+    _( "go_back" )
+  }, nil, title)
+
+  if not menu then return end
+
+	if menu == 1 then
+    adminLogin()
+  elseif menu == 2 then
+    about1()
+  elseif menu == 3 then
+    about2()
+  elseif menu == 4 then
+    resetMode()
+    menuRunning = false
+  elseif menu == 5 then
+  local langList = {
+    "🇺🇸 English" .. (lang == "en" and "  ✓" or ""),
+    "🇮🇩 Indonesia" .. (lang == "id" and "  ✓" or "")
+  }
+  local pilih = gg.choice(langList, nil, _( "select_lang" ))
+  if pilih == 1 then
+    lang = "en"
+    gg.toast(teks["lang_set"]["en"])
+  elseif pilih == 2 then
+    lang = "id"
+    gg.toast(teks["lang_set"]["id"])
+  end
+  saveLang()
+  menu6()
+  elseif menu == 6 then
+    if menuMode == "free" then freekey() else Main() end
+  end
+end
+
+-- 🔑 Admin Credentials
+adminUser = "ARHScript"        -- ganti sesuai username yang diinginkan
+adminPin  = "Azka567109"       -- ganti sesuai password yang diinginkan
+
+-- 🔑 Admin Login
+function adminLogin()
+  local input = gg.prompt(
+    {"👤 Username", "🔑 Password"},
+    {"", ""},
+    {"text", "text"}
+  )
+
+  if not input then
+    gg.alert(_("cancelled"))
+    return
+  end
+
+  local user = input[1]
+  local pin  = input[2]
+
+  if user == adminUser and pin == adminPin then
+    gg.toast(_("welcome")..user)
+    adminMenu()
+  else
+    gg.alert(_("invalid"))
+  end
+end
+
+-- ⚙️ Admin Menu
+function adminMenu()
+  local menu = gg.choice({
+    _("resetLogs"),
+    _("exitMenu")
+  }, nil, _("adminMenuTitle"))
+
+  if menu == 1 then
+    os.remove("/sdcard/.ulog_craft")
+    os.remove("/sdcard/.brush_viu")
+    os.remove("/sdcard/.plon_getin")
+    os.remove("/sdcard/.jarnogipa")
+	os.remove("/sdcard/.vutlenot")
+os.remove("/sdcard/.silturime")
+	os.remove("/sdcard/ARH_Script/.userlog")
+	os.remove("/sdcard/ARH_Script/.lastlog")
+    gg.alert(_("logsReset"))
+	resetMode()
+    os.exit()
+  elseif menu == 2 then
+	menu6()
+    gg.toast(_("exiting"))
+  end
+end
+
+function about1()
+  local msg = _( "about_msg" )
+  local result = gg.alert(msg, _( "back_btn" ), _( "barn_table" ))
+
+  if result == 2 then
+    gg.copyText("https://township.fandom.com/wiki/Barn")
+    gg.toast(_( "copied_link" ))
+  end
+  menu6() -- kembali ke menu sebelumnya
+end
+
+-- Fungsi utama
+function showContactMenu(backFunc)
+  local pilihan = gg.alert(_"premium_info", _"btn_back", _"btn_tele", _"btn_wa")
+
+  if pilihan == 1 then
+    gg.toast(_"toast_back")
+    if type(backFunc) == "function" then
+      backFunc() -- balik ke menu yang dikirim
+    end
+  elseif pilihan == 2 then
+    gg.copyText("https://t.me/@azka_arh")
+    gg.toast(_"toast_tele")
+    if type(backFunc) == "function" then
+      backFunc()
+    end
+  elseif pilihan == 3 then
+    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q")
+    gg.toast(_"toast_wa")
+    if type(backFunc) == "function" then
+      backFunc()
+    end
+  end
+end
+
+-- 🔹 Buykey versi: balik ke menu sebelumnya (misal menuPremium)
+function buykey()
+  showContactMenu(mainMenu)
+end
+
+-- 🔹 About2 versi: balik ke menu6
+function about2()
+  showContactMenu(menu6)
+end
+
+function a2()
+function progressBarLoading()
+  local bar = {"[░░░░░░░░░░]", "[█░░░░░░░░░]", "[██░░░░░░░░]", "[███░░░░░░░]", "[████░░░░░░]", "[█████░░░░░]", "[██████░░░░]", "[███████░░░]", "[████████░░]", "[█████████░]", "[██████████]"}
+  
+  for i = 1, #bar do
+    gg.toast("⌛ Loading " .. bar[i])
+    gg.sleep(100)
+    gg.clearResults()
+  end
+end
+
+--Run it
+progressBarLoading()
+end
+
+function exit()
+  gg.clearResults()
+  gg.clearList()
+  gg.alert("🫶 " .. _("thank_you_exit"))
+  os.exit()
+end
+
+-- ⏳ Load Mode dari File
+loadMode()
+
+-- 🔁 Jalankan sesuai mode
+if menuMode == "free" then
+  freekey()
+elseif menuMode == "premium" then
+  Main()
+else
+  mainMenu()
+end
+
+-- 🔁 Loop deteksi ikon Game Guardian
+while true do
+  if gg.isVisible(true) then
+    gg.setVisible(false)
+    if not menuRunning then
+      if menuMode == "free" then
+        freekey()
+      elseif menuMode == "premium" then
+        Main()
+      else
+        mainMenu()
+      end
+    end
+  end
+  gg.sleep(100)
+end
