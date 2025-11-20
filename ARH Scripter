@@ -848,9 +848,9 @@ end
 loadLang()
 
 -- 📁 Cache Setup
-local folder = "/sdcard/.syscfg.lib"
-local fileItem = folder .. "/.itemcache.txt"
-local fileAddr = folder .. "/.addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileItem = folder .. "itemcache.txt"
+local fileAddr = folder .. "addresscache.txt"
 
 -- 🧹 Delete File Safely
 local function deleteFile(path)
