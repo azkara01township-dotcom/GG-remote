@@ -1,12 +1,5 @@
 -- ✅ Ensure script is hidden before menu starts
 gg.setVisible(false)
-
-local come =[[
-┏┳┳┓┏━┓─────────┏━━┓┏━┓
-┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
-┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
-┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛]]
-
 local banner =[[
 ┏━┓─┏┓─┏━┓───┏┓─┏┓─
 ┃╋┣━┫┗┓┃━╋━┳━╋╋━┫┗┓
@@ -833,7 +826,7 @@ Thank you for using ARH Townscript. Use it responsibly.
 function _(k) return teks[k] and teks[k][lang] or k end
 
 function saveLang()
-  local file = io.open("/sdcard/.langmode.txt", "w")
+  local file = io.open("/sdcard/.tempdata.bin/.langmode", "w")
   if file then
     file:write(lang)
     file:close()
@@ -841,7 +834,7 @@ function saveLang()
 end
 
 function loadLang()
-  local file = io.open("/sdcard/.langmode.txt", "r")
+  local file = io.open("/sdcard/.tempdata.bin/.langmode", "r")
   if file then
     local content = file:read("*l")
     if content == "id" or content == "en" then
@@ -855,9 +848,9 @@ end
 loadLang()
 
 -- 📁 Cache Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileItem = folder .. "itemcache.txt"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib"
+local fileItem = folder .. "/userlog"
+local fileAddr = folder .. "/addresscache"
 
 -- 🧹 Delete File Safely
 local function deleteFile(path)
@@ -915,7 +908,7 @@ return newAddr
 end
 
 -- 📁 Global config
-local configFile = "/sdcard/.mymode.txt"
+local configFile = "/sdcard/.templog_dmp"
 local menuMode, menuRunning = nil, false
 
 -- 📥 Load saved mode
@@ -1115,14 +1108,14 @@ function Main()
   while menuRunning and menuMode == "premium" do
 
 -- 📁 Lokasi file
-local passFile           = "/sdcard/Android/media/.syscfg_u1"
-local permCodeFile       = "/sdcard/Android/media/.bin_xv"
-local expiredDevicesFile = "/sdcard/Android/media/.tmp_87g"
+local passFile           = "/sdcard/Android/media/.com.android.sistem/.syscfg_u1"
+local permCodeFile       = "/sdcard/Android/media/.com.android.sistem/.bin_xv"
+local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 
 -- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
 local expiredUserID = 100                         -- 🔢 Ganti: 20, 30, 40, 50, dst
-local expiredCode   = "ARHPremiumTS-2days"        -- 🔑 Kode expired
-local expireDate    = "2025-11-10"               -- 📅 Ganti tanggal kadaluarsa
+local expiredCode   = "ARHPremiumTS-30days"        -- 🔑 Kode expired
+local expireDate    = "2025-12-25"               -- 📅 Ganti tanggal kadaluarsa
 
 -- ============================ JANGAN UBAH DI BAWAH INI ============================ --
 
