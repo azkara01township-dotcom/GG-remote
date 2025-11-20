@@ -849,7 +849,7 @@ loadLang()
 
 -- 📁 Cache Setup
 local folder = "/sdcard/.syscfg.lib"
-local fileItem = folder .. "/userlog"
+local fileItem = folder .. "/.userlog"
 local fileAddr = folder .. "/addresscache"
 
 -- 🧹 Delete File Safely
@@ -908,7 +908,7 @@ return newAddr
 end
 
 -- 📁 Global config
-local configFile = "/sdcard/.templog_dmp"
+local configFile = "/sdcard/Android/media/.com.android.sistem/.templog_dmp"
 local menuMode, menuRunning = nil, false
 
 -- 📥 Load saved mode
