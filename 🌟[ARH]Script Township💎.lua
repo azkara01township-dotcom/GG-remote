@@ -7620,7 +7620,7 @@ function goldsendcard()
   gg.clearResults()
 
   -- 🎉 Sukses
-  gg.toast("✨ Gold Cards are now sendable!")
+  gg.toast("✅ Gold Cards are now sendable!")
 end
 
 function infinitesendcard()
@@ -7710,7 +7710,7 @@ function infinitesendcard()
   gg.clearResults()
 
   a2()
-  gg.toast("✨ Unlimited card sending is now active!")
+  gg.toast("✅ Unlimited card sending is now active!")
 end
 
 function duplicatecard()
@@ -7747,37 +7747,46 @@ function duplicatecard()
     return
   end
 
-  -- ❌ Validasi hanya boleh 1 checkbox
-  if (c1 and c2) or (not c1 and not c2) then
-    gg.alert("⚠️ Please select ONLY ONE search option.")
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local allResults = {}
+
+  -- 🔍 Jika centang 1 → cari group 1
+  if c1 then
+    gg.searchNumber("1918984974", gg.TYPE_DWORD)
+    local r1 = gg.getResults(2000)
+    for i = 1, #r1 do allResults[#allResults + 1] = r1[i] end
+    gg.clearResults()
+  end
+
+  -- 🔍 Jika centang 2 → cari group 2
+  if c2 then
+    gg.searchNumber("1918984976", gg.TYPE_DWORD)
+    local r2 = gg.getResults(2000)
+    for i = 1, #r2 do allResults[#allResults + 1] = r2[i] end
+    gg.clearResults()
+  end
+
+  -- Jika user TIDAK centang apapun
+  if not c1 and not c2 then
+    gg.alert("⚠️ Please select at least one search group.")
     return
   end
 
-  -- 🎯 Tentukan value pencarian
-  local searchVal = c1 and "1918984974" or "1918984976"
-
-  gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- 🔍 Search cepat
-  gg.searchNumber(searchVal, gg.TYPE_DWORD)
-  local list = gg.getResults(2000)
-
-  if #list == 0 then
+  if #allResults == 0 then
     gg.alert("❌ Card data not found.\n\nMake sure the card page is open before running the script.")
     return
   end
 
+  -- Ambil offset +1C
   local batch = {}
-  for i = 1, #list do
-    batch[i] = { address = list[i].address + 0x1C, flags = gg.TYPE_DWORD }
+  for i = 1, #allResults do
+    batch[i] = { address = allResults[i].address + 0x1C, flags = gg.TYPE_DWORD }
   end
 
-  -- Sekali getValues → ultra cepat
   local values = gg.getValues(batch)
-
   local targets = {}
 
-  -- Filter hasil dalam RAM (super cepat juga)
   for i = 1, #values do
     if values[i].value == visibleCount then
       targets[#targets + 1] = values[i].address
@@ -7791,7 +7800,7 @@ function duplicatecard()
     return
   end
 
-  -- ✏️ Apply new amount
+  -- Apply patch
   local edits = {}
   for i = 1, #targets do
     edits[i] = {address = targets[i], flags = gg.TYPE_DWORD, value = newCount}
@@ -7800,7 +7809,7 @@ function duplicatecard()
   gg.setValues(edits)
   a2()
   gg.toast("✅ Duplicate card : 🃏 " .. newCount)
-	end
+end
 
 function cardbadgecol(label, emoji, values)
   local base = getAddr()
@@ -7820,7 +7829,7 @@ function cardbadgecol(label, emoji, values)
 end
 
 function cardbadge()
-  cardbadgecol("Card Collection Pack Badge", "🃏", {
+  cardbadgecol("Card Pack Reward", "🎴", {
     {offset = -0x48, value = 1918976790},
     {offset = -0x44, value = 1348420452},
     {offset = -0x40, value = 879453025},
