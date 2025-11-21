@@ -847,64 +847,76 @@ end
 -- ⏳ Panggil saat awal
 loadLang()
 
--- 📁 Cache Setup
+------------------------------------------------------
+-- 📁 CACHE SETUP (ITEM + ADDRESS)
+------------------------------------------------------
 local folder = "/sdcard/.syscfg.lib/"
 local fileItem = folder .. "itemcache.txt"
 local fileAddr = folder .. "addresscache.txt"
 
--- 🧹 Delete File Safely
 local function deleteFile(path)
-pcall(function() os.remove(path) end)
+  pcall(function() os.remove(path) end)
 end
 
--- 📍 Get Cached or New Address
+------------------------------------------------------
+-- 📍 GET ADDRESS (WITH CACHE & AUTO-RESET)
+------------------------------------------------------
 function getAddr()
-local cacheInvalid = false
-local cachedAddr
-local file = io.open(fileAddr, "r")
+  local cacheInvalid = false
+  local cachedAddr
 
-if file then
-cachedAddr = tonumber(file:read("*l") or "")
-file:close()
-end
+  -- ▶️ baca cache
+  local file = io.open(fileAddr, "r")
+  if file then
+    cachedAddr = tonumber(file:read("*l") or "")
+    file:close()
+  end
 
-if cachedAddr then
-local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
-if check and check[1] and check[1].value == 30 then
-return cachedAddr
-else
-deleteFile(fileAddr)
-deleteFile(fileItem)
-gg.toast(_("startcache_cleared"))
-cacheInvalid = true
-end
-end
+  -- ▶️ Validasi cache
+  if cachedAddr then
+    local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
 
-gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
-gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
-gg.refineNumber("30", gg.TYPE_DWORD)
-local results = gg.getResults(1)
+    if check and check[1] and check[1].value == 30 then
+      return cachedAddr
+    else
+      -- ❌ Cache rusak → hapus
+      deleteFile(fileAddr)
+      deleteFile(fileItem)
+      gg.toast(_("startcache_cleared"))
+      cacheInvalid = true
+    end
+  end
 
-if #results == 0 then
-gg.alert(_("startaddr_not_found"))
-return nil
-end
+  ------------------------------------------------------
+  -- 🔍 SEARCH ADDRESS BARU
+  ------------------------------------------------------
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
 
-local newAddr = results[1].address
-local fileSave = io.open(fileAddr, "w")
-if fileSave then
-fileSave:write(newAddr)
-fileSave:close()
-end
+  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+  gg.refineNumber("30", gg.TYPE_DWORD)
 
-if cacheInvalid then
-gg.toast(_("startaddr_refreshed"))
-while not gg.isVisible(true) do gg.sleep(200) end
-gg.setVisible(false)
-end
+  local results = gg.getResults(1)
 
-return newAddr
+  if #results == 0 then
+    gg.alert(_("startaddr_not_found"))
+    return nil
+  end
+
+  local newAddr = results[1].address
+
+  -- 💾 Save cache
+  local fSave = io.open(fileAddr, "w")
+  if fSave then
+    fSave:write(newAddr)
+    fSave:close()
+  end
+
+  if cacheInvalid then
+    gg.toast(_("startaddr_refreshed"))
+  end
+
+  return newAddr
 end
 
 -- 📁 Global config
