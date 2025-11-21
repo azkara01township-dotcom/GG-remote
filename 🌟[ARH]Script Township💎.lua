@@ -8,7 +8,7 @@ gg.alert("🚨 UPDATE REQUIRED!\n\nPlease contact the owner to get the latest do
 	os.remove("/sdcard/ARH_Script/.userlog")
 	os.remove("/sdcard/ARH_Script/.lastlog")
 	os.remove("/sdcard/ARH_Script")
-	os.remove("/sdcard/.ARH_Cache")
+	os.remove("/sdcard/ARH_Cache")
 os.exit()
 
 -- ✅ Ensure script is hidden before menu starts
