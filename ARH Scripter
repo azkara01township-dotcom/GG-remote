@@ -668,7 +668,7 @@ local teks = {
   ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
 
 ["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
-["contact_dev"]  = {id="📞 • Kontak Admin", en="📞 • Contact Admin"},
+["contact_dev"]  = {id="📞 • Kontak Pemilik", en="📞 • Contact Owner"},
 ["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
 ["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
   ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
@@ -9534,7 +9534,7 @@ end
 function menu6()
   local title = banner
   local menu = gg.choice({
-	"⚙️ • Admin Login",
+	
 _( "about_script" ),
     _( "contact_dev" ),
     _( "reset_default" ),
@@ -9545,15 +9545,13 @@ _( "about_script" ),
   if not menu then return end
 
 	if menu == 1 then
-    adminLogin()
-  elseif menu == 2 then
     about1()
-  elseif menu == 3 then
+  elseif menu == 2 then
     about2()
-  elseif menu == 4 then
+  elseif menu == 3 then
     resetMode()
     menuRunning = false
-  elseif menu == 5 then
+  elseif menu == 4 then
   local langList = {
     "🇺🇸 English" .. (lang == "en" and "  ✓" or ""),
     "🇮🇩 Indonesia" .. (lang == "id" and "  ✓" or "")
@@ -9568,61 +9566,8 @@ _( "about_script" ),
   end
   saveLang()
   menu6()
-  elseif menu == 6 then
+  elseif menu == 5 then
     if menuMode == "free" then freekey() else Main() end
-  end
-end
-
--- 🔑 Admin Credentials
-adminUser = "ARHScript"        -- ganti sesuai username yang diinginkan
-adminPin  = "Azka567109"       -- ganti sesuai password yang diinginkan
-
--- 🔑 Admin Login
-function adminLogin()
-  local input = gg.prompt(
-    {"👤 Username", "🔑 Password"},
-    {"", ""},
-    {"text", "text"}
-  )
-
-  if not input then
-    gg.alert(_("cancelled"))
-    return
-  end
-
-  local user = input[1]
-  local pin  = input[2]
-
-  if user == adminUser and pin == adminPin then
-    gg.toast(_("welcome")..user)
-    adminMenu()
-  else
-    gg.alert(_("invalid"))
-  end
-end
-
--- ⚙️ Admin Menu
-function adminMenu()
-  local menu = gg.choice({
-    _("resetLogs"),
-    _("exitMenu")
-  }, nil, _("adminMenuTitle"))
-
-  if menu == 1 then
-    os.remove("/sdcard/.ulog_craft")
-    os.remove("/sdcard/.brush_viu")
-    os.remove("/sdcard/.plon_getin")
-    os.remove("/sdcard/.jarnogipa")
-	os.remove("/sdcard/.vutlenot")
-os.remove("/sdcard/.silturime")
-	os.remove("/sdcard/ARH_Script/.userlog")
-	os.remove("/sdcard/ARH_Script/.lastlog")
-    gg.alert(_("logsReset"))
-	resetMode()
-    os.exit()
-  elseif menu == 2 then
-	menu6()
-    gg.toast(_("exiting"))
   end
 end
 
