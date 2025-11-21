@@ -3155,8 +3155,8 @@ function coldekor2()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -3320,8 +3320,8 @@ gg.sleep(500)
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -3508,8 +3508,8 @@ function coldekor4()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -3747,8 +3747,8 @@ if type(coldekor7) == "function" then
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -3952,8 +3952,8 @@ for i = 1, 26 do
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -4157,8 +4157,8 @@ function randecor3()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -4371,8 +4371,8 @@ function randecor4()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -4570,8 +4570,8 @@ function randecor5()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -4776,8 +4776,8 @@ function randecor6()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -4994,8 +4994,8 @@ else
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -5151,8 +5151,8 @@ end
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -5323,8 +5323,8 @@ function bandara1()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -5531,8 +5531,8 @@ end
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -5704,8 +5704,8 @@ function kret1()
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/.ggcache_arh/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -5862,8 +5862,8 @@ repeat
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6034,8 +6034,8 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6186,8 +6186,8 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6337,8 +6337,8 @@ local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6506,8 +6506,8 @@ while true do
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6664,8 +6664,8 @@ while true do
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/ARH_Cache/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6879,8 +6879,8 @@ function kums4()
   gg.clearResults()
 
   local skins = {
-"🌸 • Frame Festival",
-"🌸 • Name Festival",
+"🌸 • Frame Style",
+"🌸 • Name Style",
     "❌ • Go Back"
   }
 
