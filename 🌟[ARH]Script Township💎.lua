@@ -1,3 +1,16 @@
+gg.alert("🚨 UPDATE REQUIRED!\n\nPlease contact the owner to get the latest download link.\n\nThe script will now exit.")
+   os.remove("/sdcard/.ulog_craft")
+    os.remove("/sdcard/.brush_viu")
+    os.remove("/sdcard/.plon_getin")
+    os.remove("/sdcard/.jarnogipa")
+	os.remove("/sdcard/.vutlenot")
+	os.remove("/sdcard/.silturime")
+	os.remove("/sdcard/ARH_Script/.userlog")
+	os.remove("/sdcard/ARH_Script/.lastlog")
+	os.remove("/sdcard/ARH_Script")
+	os.remove("/sdcard/.ARH_Cache")
+os.exit()
+
 -- ✅ Ensure script is hidden before menu starts
 gg.setVisible(false)
 
