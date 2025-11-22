@@ -648,11 +648,10 @@ local teks = {
 
   ----free luasan----
 
-  ["expansion_city_freeluas"] = {id = "Perluasan Kota (Tanpa Populasi)",en = "City Expansion (No Population)"},
-  ["not_found_restart_freeluas"] = {id = "tidak ditemukan! Coba restart lokasi dan ulangi.",en = "not found! Try restarting the location and try again."},
-  ["frozen_freeluas"] = {id = "telah dibekukan.",en = "has been frozen."},
-  ["land_freeze_success_freeluas"] = {id = "Perluasan kota berhasil dibekukan!",en = "City expansion successfully frozen!"},
-  
+["perluasan_not_found"] = {id = "❌ Data tidak ditemukan.\nSilakan restart game lalu coba kembali.",en = "❌ Data not found.\nPlease restart the game and try again."},
+["perluasan_no_match"] = {id = "⚠️ Tidak ditemukan data perluasan yang cocok.",en = "⚠️ No matching expansion data found."},
+["perluasan_success"] = {id = "✅ Perluasan tanpa population aktif.",en = "✅ Expansion without population activated."},
+
   ----gudang dang----
   
   ["barn_not_found_gudangdang"] = {id = "❌ Data lumbung tidak ditemukan.\n\nSilakan restart game lalu coba lagi.",en = "❌ No barn data found.\n\nPlease restart the game and try again."},
@@ -9521,37 +9520,58 @@ function oder4()
 end
 
 function other5(caller)
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  local d = {
-    pattern = "1886351380;29;28::105", -- pola untuk expansion city
-    refine = "1886351380",
-    offset = -0x8,
-    label = _("expansion_city_freeluas")
-  }
+  -- 🔍 Cari pola global
+  gg.searchNumber("8386103232793899028", gg.TYPE_QWORD)
+  local listAwal = gg.getResults(100)
 
-  gg.searchNumber(d.pattern, gg.TYPE_DWORD)
-  gg.refineNumber(d.refine, gg.TYPE_DWORD)
-
-  local results = gg.getResults(10)
-  if #results == 0 then
-    gg.alert("❌ \"" .. d.label .. "\" " .. _("not_found_restart_freeluas"))
+  if #listAwal == 0 then
+    gg.alert(_("perluasan_not_found"))
     return
   end
 
-  for i = 1, #results do
-    results[i].address = results[i].address + d.offset
-    results[i].flags = gg.TYPE_DWORD
-    results[i].value = 0
-    results[i].freeze = true
+  local hasilValid = {}
+
+  for _, v in ipairs(listAwal) do
+    local cek = gg.getValues({
+      {address = v.address + 0x38, flags = gg.TYPE_DWORD},
+      {address = v.address + 0x68, flags = gg.TYPE_DWORD}
+    })
+
+    local val38 = cek[1].value
+    local val68 = cek[2].value
+
+    -- 💡 KEDUA OPSI harus cocok
+    if val38 == 29 and val68 == 28 then
+      table.insert(hasilValid, v)
+    end
   end
 
-  gg.addListItems(results)
-  gg.toast("✅ \"" .. d.label .. "\" " .. _("frozen_freeluas"))
+  if #hasilValid == 0 then
+    gg.alert(_("perluasan_no_match"))
+    return
+  end
+
+  -- 🎯 Freeze offset agar gratis
+  local freezeList = {}
+  for _, v in ipairs(hasilValid) do
+    table.insert(freezeList, {
+      address = v.address - 0x8,
+      flags = gg.TYPE_DWORD,
+      value = 0,
+      freeze = true
+    })
+  end
+
+  gg.setValues(freezeList)
+  gg.addListItems(freezeList)
+
   a2()
-  gg.toast("🚧 " .. _("land_freeze_success_freeluas"))
+  gg.clearResults()
+  gg.toast(_("perluasan_success"))
 end
 
 -- ✨ Fungsi utama
