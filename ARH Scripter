@@ -633,10 +633,11 @@ local teks = {
 
 ----free boks pabrik----
 
-  ["prompt_cash_input_freebox"] = {id = "💸 Masukkan jumlah Uang Tunai yang terlihat di kotak pabrik:",en = "💸 Enter the Cash amount shown in the factory box:"},
-  ["invalid_or_cancel_freebox"] = {id = "❌ Input tidak valid atau dibatalkan.",en = "❌ Invalid input or cancelled."},
-  ["not_found_new_freebox"] = {id = "❌ Tata Letak Baru tidak ditemukan.",en = "❌ New Layout not found."},
-  ["activated_new_freebox"] = {id = "✅ Nilai Tata Letak Baru diubah ke 0 dan dibekukan.",en = "✅ New Layout value changed to 0 and frozen."},
+["pabrik_enter_cash"] = {id = "💸 Masukkan jumlah Uang Tunai yang terlihat di pabrik:",en = "💸 Enter the Cash amount visible in the factory:"},
+["pabrik_cancel"] = {id = "⛔ Input dibatalkan.",en = "⛔ Input cancelled."},
+["pabrik_not_found"] = {id = "❌ Data tidak ditemukan.\nSilakan restart game lalu coba kembali.",en = "❌ Data not found.\nPlease restart the game and try again."},
+["pabrik_no_match"] = {id = "⚠️ Tidak ditemukan data pabrik yang cocok.\nPastikan nilai cash benar.",en = "⚠️ No matching factory data found.\nPlease verify the cash value."},
+["pabrik_success"] = {id = "✅ Pabrik gratis aktif.",en = "✅ Free factory activated."},
 
 ----free open komunitas----
     
@@ -9397,41 +9398,70 @@ function oder3()
 end
 
 function other3(caller)
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  local input = gg.prompt({_("prompt_cash_input_freebox")}, nil, {"number"})
+  -- 📝 Input jumlah Cash
+  local input = gg.prompt(
+    { _("pabrik_enter_cash") }, 
+    nil,
+    {"number"}
+  )
   local cash = tonumber(input and input[1])
 
   if not cash then
-    gg.alert(_"invalid_or_cancel_freebox")
-    return
-end
-
-  local pattern = "3407873;" .. cash .. ";6:301"
-  gg.searchNumber(pattern, gg.TYPE_DWORD)
-  gg.refineNumber(cash, gg.TYPE_DWORD)
-
-  local results = gg.getResults(5)
-  if #results == 0 then
-    gg.alert(_"not_found_new_freebox")
+    gg.alert(_("pabrik_cancel"))
     return
   end
 
-  local list = {}
-  for _, v in ipairs(results) do
-    table.insert(list, {
-      address = v.address,
+  -- 🔍 Cari pola global 3407873
+  gg.searchNumber("3407873", gg.TYPE_DWORD)
+  local listAwal = gg.getResults(2000)
+
+  if #listAwal == 0 then
+    gg.alert(_("pabrik_not_found"))
+    return
+  end
+
+  -- 🔍 Validasi gabungan opset:
+  -- 0x128 = cash input
+  -- 0x12C = 6
+  local hasilValid = {}
+
+  for _, v in ipairs(listAwal) do
+    local cek = gg.getValues({
+      {address = v.address + 0x128, flags = gg.TYPE_DWORD},
+      {address = v.address + 0x12C, flags = gg.TYPE_DWORD}
+    })
+
+    if cek[1].value == cash and cek[2].value == 6 then
+      table.insert(hasilValid, v)
+    end
+  end
+
+  if #hasilValid == 0 then
+    gg.alert(_("pabrik_no_match"))
+    return
+  end
+
+  -- 🎯 Freeze offset 0x128 agar jadi gratis
+  local freezeList = {}
+  for _, v in ipairs(hasilValid) do
+    table.insert(freezeList, {
+      address = v.address + 0x128,
       flags = gg.TYPE_DWORD,
       value = 0,
       freeze = true
     })
   end
 
-  gg.setValues(list)
-  gg.addListItems(list)
-  gg.toast(_"activated_new_freebox")
+  gg.setValues(freezeList)
+  gg.addListItems(freezeList)
+
+  a2()
+  gg.clearResults()
+  gg.toast(_("pabrik_success"))
 end
 
 -- 🔧 Fungsi utama
