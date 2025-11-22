@@ -640,10 +640,11 @@ local teks = {
 
 ----free open komunitas----
     
-  ["other4_not_found_nitas"] = {en = "❌ No matching values found.\n\n'Community Without Tools' could not be applied.\nPlease try again or restart the game.",id = "❌ Tidak ada nilai yang cocok ditemukan.\n\n'Komunitas Tanpa Alat' tidak dapat diterapkan.\nSilakan coba lagi atau mulai ulang permainan."},
-  ["other4_success_nitas"] = {en = "✅ 'Community Without Tools' has been successfully applied.\n\nPlease restart the game to apply changes.",id = "✅ 'Komunitas Tanpa Alat' berhasil diterapkan.\n\nSilakan mulai ulang permainan untuk menerapkan perubahan."},
-  ["other4_toast_nitas"] = {en = "🛠️ Building unlocked without tools!",id = "🛠️ Bangunan terbuka tanpa alat!"},
-  
+["gekomdata_tidak_ditemukan"] = {id = "❌ Data tidak ditemukan.\n\nSilakan coba kembali atau restart permainan terlebih dahulu.",en = "❌ Data not found.\n\nPlease try again or restart the game first."},
+["gekomtidak_valid"] = {id = "❌ Tidak ditemukan data komunitas yang valid.",en = "❌ No valid community data found."},
+["gekomkomunitas_sukses_alert"] = {id = "✅ Komunitas berhasil diperbarui.\n\nSilakan restart permainan untuk melihat perubahannya.",en = "✅ Community updated successfully.\n\nPlease restart the game to see the changes."},
+["gekomkomunitas_sukses_toast"] = {id = "🎉 Komunitas berhasil diperbarui!",en = "🎉 Community updated successfully!"},
+
   ----free luasan----
 
   ["expansion_city_freeluas"] = {id = "Perluasan Kota (Tanpa Populasi)",en = "City Expansion (No Population)"},
@@ -9435,28 +9436,54 @@ end
 
 -- 🔧 Fungsi utama
 function other4()
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  -- 🔍 Step 1: Search for pattern
-  gg.searchNumber("1768846701;31092;2", gg.TYPE_DWORD, false, gg.SIGN_EQUAL, 0, -1, 0)
-  gg.refineNumber("2", gg.TYPE_DWORD)
+  -- 🔍 Langkah 1: Cari pola QWORD utama
+  gg.searchNumber("7597138734268506898", gg.TYPE_QWORD)
 
-  -- 📊 Step 2: Get results
-  local results = gg.getResults(700)
-  if #results == 0 then
-    gg.alert(_("other4_not_found_nitas"))
+  -- 📊 Langkah 2: Ambil hasil
+  local hasil = gg.getResults(2000)
+  if #hasil == 0 then
+    gg.alert(_( "gekomdata_tidak_ditemukan" ))
     return
   end
 
-  -- 📝 Step 3: Apply changes
-  gg.editAll("5", gg.TYPE_DWORD)
+  -- 🔍 Langkah 3: Validasi dengan offset F4 == 2
+  local valid = {}
 
-  -- ✅ Completion
-  gg.alert(_("other4_success_nitas"))
+  for i, v in ipairs(hasil) do
+    local cek = gg.getValues({
+      {address = v.address + 0xF4, flags = gg.TYPE_DWORD}
+    })
+
+    if cek[1].value == 2 then
+      table.insert(valid, v)
+    end
+  end
+
+  if #valid == 0 then
+    gg.alert(_( "gekomtidak_valid" ))
+    return
+  end
+
+  -- 📝 Langkah 4: Set offset F4 = 5
+  local edits = {}
+  for i, v in ipairs(valid) do
+    table.insert(edits, {
+      address = v.address + 0xF4,
+      flags = gg.TYPE_DWORD,
+      value = 5
+    })
+  end
+
+  gg.setValues(edits)
+
+  -- 🎉 Selesai
+  gg.alert(_( "gekomkomunitas_sukses_alert" ))
   a2()
-gg.toast(_("other4_toast_nitas"))
+  gg.toast(_( "gekomkomunitas_sukses_toast" ))
 end
 
 function oder4()
