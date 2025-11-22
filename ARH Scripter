@@ -544,10 +544,11 @@ local teks = {
 
 ----exp gandum----
 
-["oder2_prompt_boostexp"] = {id = "⭐ Masukkan jumlah EXP:",en = "⭐ Enter EXP amount:"},
-["oder2_cancel_boostexp"] = {id = "⚠️ Tidak ada EXP yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No EXP entered.\nOperation cancelled."},
-["oder2_notfound_boostexp"] = {id = "❌ Nilai tidak ditemukan.\nEXP Gandum gagal diterapkan.\nCoba lagi atau mulai ulang game!",en = "❌ No matching value found.\nWheat EXP could not be applied.\nPlease try again or restart the game!"},
-["oder2_success_boostexp"] = {id = "🌾 EXP Gandum berhasil: ",en = "🌾 Wheat EXP applied: "},
+["ganmasukkan_exp"] = {id = "🌾 Masukkan jumlah EXP yang ingin ditambahkan:",en = "🌾 Enter the amount of EXP to add:"},
+["ganinput_dibatalkan"] = {id = "⛔ Input dibatalkan.",en = "⛔ Input cancelled."},
+["gandata_tidak_ditemukan"] = {id = "❌ Data tidak ditemukan.\n\nSilakan coba kembali atau restart permainan terlebih dahulu.",en = "❌ Data not found.\n\nPlease try again or restart the game first."},
+["gantidak_ada_valid"] = {id = "⚠️ Tidak ditemukan data EXP yang valid.\nSilakan coba lagi.",en = "⚠️ No valid EXP data found.\nPlease try again."},
+["ganexp_sukses"] = {id = "🎉 EXP berhasil ditambahkan: 🌾 ",en = "🎉 EXP successfully added: 🌾 "},
   
 ----tambah binatang----
 
@@ -8927,33 +8928,66 @@ function oder2()
 end
 
 function parming1(caller)
-  local input = gg.prompt({_('oder2_prompt_boostexp')}, nil, {"number"})
+gg.setVisible(false)
+
+  -- 📝 Input jumlah EXP
+  local input = gg.prompt({ _( "ganmasukkan_exp" ) }, nil, {"number"})
   local exp = tonumber(input and input[1])
+
   if not exp then
-    gg.alert(_("oder2_cancel_boostexp"))
+    gg.alert(_( "ganinput_dibatalkan" ))
     return
   end
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("65687716h;726F6316h:217", gg.TYPE_DWORD)
-  gg.refineNumber("65687716h", gg.TYPE_DWORD)
 
-  local r = gg.getResults(1)
-  if #r == 0 then
-    gg.alert(_("oder2_notfound_boostexp"))
+  -- 🔍 Cari QWORD utama
+  gg.searchNumber("1819042157", gg.TYPE_QWORD)
+  local list = gg.getResults(1000)
+
+  if #list == 0 then
+    gg.alert(_( "gandata_tidak_ditemukan" ))
     return
   end
 
-  local base = r[1].address
+  -- 🔎 Validasi berdasarkan offset D0
+  local valid = {}
+  local check = {}
+
+  for i, v in ipairs(list) do
+    table.insert(check, {
+      address = v.address + 0xD0,
+      flags = gg.TYPE_DWORD
+    })
+  end
+
+  check = gg.getValues(check)
+
+  for i, v in ipairs(check) do
+    if v.value == 1919902486 then
+      table.insert(valid, list[i])
+    end
+  end
+
+  if #valid == 0 then
+    gg.alert(_( "gantidak_ada_valid" ))
+    return
+  end
+
+  -- 📌 Ambil salah satu hasil valid
+  local base = valid[1].address
+
+  -- ✏️ Set EXP
   gg.setValues({
-    {address = base + 0x50, flags = gg.TYPE_DWORD, value = 1},
-    {address = base + 0x60, flags = gg.TYPE_DWORD, value = 0},
-    {address = base + 0x64, flags = gg.TYPE_DWORD, value = exp}
+    {address = base + 0x48, flags = gg.TYPE_DWORD, value = 1},
+    {address = base + 0x58, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x5C, flags = gg.TYPE_DWORD, value = exp}
   })
 
   a2()
-  gg.toast(_("oder2_success_boostexp") .. exp) -- ✅ diperbaiki di sini
+  gg.clearResults()
+  gg.toast(_( "ganexp_sukses" ) .. exp)
 end
 
 -- 🐾 Function utama
