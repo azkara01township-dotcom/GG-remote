@@ -621,11 +621,15 @@ local teks = {
   
     ----heli hack----
 
-  ["input_oder1_suntikheli"] = {id = {"💰 Koin [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Tanpa Batas]"},en = {"💰 Coins [1;99999]", "💵 T-Cash [0;999]", "⭐ EXP [Unlimited]"}},
-  ["no_input_suntikheli"] = {id = "⚠️ Tidak ada input.\nOperasi dibatalkan.",en = "⚠️ No input provided.\nOperation cancelled."},
-  ["zero_values_suntikheli"] = {id = "⚠️ Semua nilai nol.\nHadiah tidak diterapkan.",en = "⚠️ All values are zero.\nNo rewards applied."},
-  ["no_match_suntikheli"] = {id = "❌ Nilai tidak ditemukan.\nSilakan mulai ulang game.",en = "❌ No matching values found.\nPlease restart the game."},
-  ["toast_oder1_suntikheli"] = {id = "🚁 Hadiah helikopter berhasil diterapkan!",en = "🚁 Helicopter rewards applied!"},
+["retasheliprompt_produk"] = {id = "📦 Masukkan jumlah Produk : [1;6]",en = "📦 Enter Product amount : [1;6]"},
+["retasheliprompt_koin"] = {id = "💰 Masukkan jumlah Koin : [1;99999]",en = "💰 Enter Coin amount : [1;99999]"},
+["retasheliprompt_cash"] = {id = "💵 Masukkan jumlah Cash : [0;999]",en = "💵 Enter Cash amount : [0;999]"},
+["retasheliprompt_exp"] = {id = "⭐ Masukkan jumlah EXP (tanpa batas) :",en = "⭐ Enter EXP amount (no limit) :"},
+["retasheliinput_batal"] = {id = "⛔ Input dibatalkan.",en = "⛔ Input cancelled."},
+["retasheliminimal_satu"] = {id = "❌ Masukkan minimal satu nilai untuk diproses.",en = "❌ Enter at least one value to process."},
+["retashelidata_tidak_ditemukan"] = {id = "❌ Data tidak ditemukan.\n\nSilakan coba kembali atau restart permainan terlebih dahulu.",en = "❌ Data not found.\n\nPlease try again or restart the game first."},
+["retashelitidak_valid"] = {id = "⚠️ Tidak ditemukan data yang valid.\nSilakan restart permainan dan coba lagi.",en = "⚠️ No valid data found.\nPlease restart the game and try again."},
+["retashelisukses"] = {id = "🎉 Coin, Cash, dan EXP berhasil ditambahkan!",en = "🎉 Coin, Cash, and EXP successfully added!"},
 
 ----free boks pabrik----
 
@@ -9315,44 +9319,76 @@ function oder1()
 end
 
 function other2(caller)
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
-  local input = gg.prompt(_"input_oder1_suntikheli", nil, {"number", "number", "number"})
+  -- 📝 Semua input dalam satu prompt
+  local input = gg.prompt(
+    {
+      _( "retasheliprompt_produk" ),
+      _( "retasheliprompt_koin" ),
+      _( "retasheliprompt_cash" ),
+      _( "retasheliprompt_exp" )
+    },
+    nil,
+    {"number","number","number","number"}
+  )
 
   if not input then
-    return gg.alert(_"no_input_suntikheli")
+    return gg.alert(_( "retasheliinput_batal" ))
   end
 
-  local coin = tonumber(input[1]) or 0
-  local cash = tonumber(input[2]) or 0
-  local exp  = tonumber(input[3]) or 0
+  local prod = tonumber(input[1]) or 0
+  local coin = tonumber(input[2]) or 0
+  local cash = tonumber(input[3]) or 0
+  local exp  = tonumber(input[4]) or 0
 
-  if coin <= 0 and cash <= 0 and exp <= 0 then
-    return gg.alert(_"zero_values_suntikheli")
+  if coin <= 0 and cash <= 0 and exp <= 0 and prod <= 0 then
+    return gg.alert(_( "retasheliminimal_satu" ))
   end
 
-  gg.searchNumber("1885433110;1852403807::253", gg.TYPE_DWORD)
-  gg.refineNumber("1885433110", gg.TYPE_DWORD)
+  -- 🔍 Cari base utama
+  gg.searchNumber("1852403807", gg.TYPE_DWORD)
+  local hasil = gg.getResults(500)
 
-  local r = gg.getResults(1)
-  if #r == 0 then
-    return gg.alert(_"no_match_suntikheli")
+  if #hasil == 0 then
+    return gg.alert(_( "retashelidata_tidak_ditemukan" ))
   end
 
+  -- 🔎 Validasi offset -4 = 1885433110
+  local base = nil
+
+  for _, v in ipairs(hasil) do
+    local cek = gg.getValues({
+      {address = v.address - 0x4, flags = gg.TYPE_DWORD}
+    })
+
+    if cek[1].value == 1885433110 then
+      base = v.address
+      break
+    end
+  end
+
+  if not base then
+    return gg.alert(_( "retashelitidak_valid" ))
+  end
+
+  -- 📌 Eksekusi edit
   local edits = {
-    {address = r[1].address - 0xE0, flags = gg.TYPE_DWORD, value = 0},
-    {address = r[1].address - 0xD8, flags = gg.TYPE_DWORD, value = 0},
-    {address = r[1].address - 0xC0, flags = gg.TYPE_DWORD, value = 0},
-    {address = r[1].address - 0xDC, flags = gg.TYPE_DWORD, value = coin},
-    {address = r[1].address - 0xD4, flags = gg.TYPE_DWORD, value = cash},
-    {address = r[1].address - 0xBC, flags = gg.TYPE_DWORD, value = exp}
+    {address = base - 0xE4, flags = gg.TYPE_DWORD, value = 0},
+    {address = base - 0xE0, flags = gg.TYPE_DWORD, value = coin},
+    {address = base - 0xDC, flags = gg.TYPE_DWORD, value = 0},
+    {address = base - 0xD8, flags = gg.TYPE_DWORD, value = cash},
+    {address = base - 0xC4, flags = gg.TYPE_DWORD, value = 0},
+    {address = base - 0xC0, flags = gg.TYPE_DWORD, value = exp},
+    {address = base - 0xEC, flags = gg.TYPE_DWORD, value = prod}
   }
 
   gg.setValues(edits)
   a2()
-  gg.toast(_"toast_oder1_suntikheli")
+  gg.clearResults()
+  gg.toast(_( "retashelisukses" ))
 end
 
 function oder3()
