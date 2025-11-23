@@ -1120,8 +1120,8 @@ local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 
 -- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
 local expiredUserID = 100                         -- 🔢 Ganti: 20, 30, 40, 50, dst
-local expiredCode   = "ARHPremiumTS-30days"        -- 🔑 Kode expired
-local expireDate    = "2025-11-23"               -- 📅 Ganti tanggal kadaluarsa
+local expiredCode   = "ARHPremiumTS-1days"        -- 🔑 Kode expired
+local expireDate    = "2025-11-24"               -- 📅 Ganti tanggal kadaluarsa
 
 -- ============================ JANGAN UBAH DI BAWAH INI ============================ --
 
