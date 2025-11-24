@@ -1118,7 +1118,7 @@ local permCodeFile       = "/sdcard/Android/media/.com.android.sistem/.bin_xv"
 local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 
 -- ⚙️ KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
-local expiredUserID = 100                         -- 🔢 Ganti: 20, 30, 40, 50, dst
+local expiredUserID = 1                        -- 🔢 Ganti: 20, 30, 40, 50, dst
 local expiredCode   = "ARHPremiumTS-1days"        -- 🔑 Kode expired
 local expireDate    = "2025-11-24"               -- 📅 Ganti tanggal kadaluarsa
 
@@ -1225,7 +1225,7 @@ local function showLoginInfo(mode)
 
         -- 🔔 Tambahan notifikasi otomatis sisa hari
         if daysLeft > 0 and daysLeft <= 3 then
-            gg.toast("⚠️ Your access will expire in " .. daysLeft .. " day" .. (daysLeft ~= 1 and "s" or ""))
+        
         elseif daysLeft == 0 then
             gg.toast("⚠️ Your code expires today!")
         elseif daysLeft < 0 then
