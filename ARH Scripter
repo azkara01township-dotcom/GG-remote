@@ -1795,9 +1795,9 @@ function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost",
 function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 
 function booster4(caller) patchBooster("🔨", "Single Hammer", "single_amount_eventboost", {{-0x48,1295215888},{-0x44,1701604449},{-0x40,1835073652},{-0x3C,7497069},{-0x38,295108729},{-0x34,120},{-0x30,0}}, caller) end
-function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{-0x48,1379101974},{-0x44,1969779557},{-0x40,1701602918},{-0x3C,6647296},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
-function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{-0x48,1446210844},{-0x44,1769239141},{-0x40,1282171235},{-0x3C,6647401},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
-function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{-0x48,1211329824},{-0x44,2053730927},{-0x40,1635020399},{-0x3C,1852394604},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{-0x48,1211329824},{-0x44,2053730927},{-0x40,1635020399},{-0x3C,1852394604},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{-0x48,1379101974},{-0x44,1969779557},{-0x40,1701602918},{-0x3C,6647296},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{-0x48,1446210844},{-0x44,1769239141},{-0x40,1282171235},{-0x3C,6647401},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
 
 function booster8() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
 function booster9() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
