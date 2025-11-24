@@ -1255,7 +1255,7 @@ if not loginOK and isExpiredDeviceRegistered(expiredCode) then
         loginOK = true
         local sisa = getDaysLeft(expireDate)
         if sisa <= 3 then
-            gg.toast("⚠️ Your access will expire in " .. sisa .. " day" .. (sisa ~= 1 and "s" or ""))
+            
         end
     end
 end
