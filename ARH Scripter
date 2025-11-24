@@ -122,12 +122,13 @@ local teks = {
 
 ----event boost----
 
-["rainbow_ball_eventboost"]       = {id = "Bola Pelangi", en = "Rainbow Ball"},
-["bomb_eventboost"]               = {id = "Bom", en = "Bomb"},
-["rocket_eventboost"]             = {id = "Roket", en = "Rocket"},
-["jackhammer_eventboost"]         = {id = "Jackhammer", en = "Jackhammer"},
-["hydrant_eventboost"]            = {id = "Hidran", en = "Hydrant"},
-["gloves_eventboost"]             = {id = "Sarung Tangan", en = "Gloves"},
+["boost_event_bola_pelangi"] = {id = "Bola Pelangi", en = "Rainbow Ball"},
+["boost_event_bom"]         = {id = "Bom", en = "Bomb"},
+["boost_event_roket"]       = {id = "Roket", en = "Rocket"},
+["boost_event_palu_tunggal"]   = {id = "Palu Tunggal", en = "Single Hammer"},
+["boost_event_vertical"]      = {id = "Palu Vertikal", en = "Vertical Hammer"},
+["boost_event_horizontal"]       = {id = "Palu Horizontal", en = "Horizontal Hammer"},
+["boost_event_kipas"]      = {id = "Kipas Pengacak", en = "Shuffle Fun"},
 
 ["infinite_lives_30_eventboost"]  = {id = "30 Hari Nyawa Tak Terbatas", en = "30-Day Infinite Lives"},
 ["double_points_30_eventboost"]   = {id = "30 Hari Poin Ganda", en = "30-Day Double Points"},
@@ -136,7 +137,6 @@ local teks = {
 ["rocket_30_eventboost"]          = {id = "30 Hari Roket", en = "30-Day Rocket"},
 
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
-["exploder_adventure_eventboost"] = {id = "Peledak Petualangan", en = "Exploder Adventure"},
 
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
 
@@ -150,19 +150,18 @@ local teks = {
 
 ["rainbow_amount_eventboost"]     = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball amount"},
 ["bomb_amount_eventboost"]        = {id = "Masukkan jumlah Bom", en = "Enter Bomb amount"},
-["rocket_amount_eventboost"]      = {id = "Masukkan jumlah Roket", en = "Enter Rocket amount"},
-["jack_amount_eventboost"]        = {id = "Masukkan jumlah Jackhammer", en = "Enter Jackhammer amount"},
-["hydrant_amount_eventboost"]     = {id = "Masukkan jumlah Hidran", en = "Enter Hydrant amount"},
-["gloves_amount_eventboost"]      = {id = "Masukkan jumlah Sarung Tangan", en = "Enter Gloves amount"},
+["single_amount_eventboost"]      = {id = "Masukkan jumlah Roket", en = "Enter Rocket amount"},
+["single_amount_eventboost"]        = {id = "Masukkan jumlah Palu Tunggal", en = "Enter Single Hammer amount"},
+["vertical_amount_eventboost"]     = {id = "Masukkan jumlah Palu Vertikal", en = "Enter Vertical Hammer amount"},
+["horizontal_amount_eventboost"]      = {id = "Masukkan jumlah Palu Horizontal", en = "Enter Horizontal Hammer amount"},
+["fun_amount_eventboost"]      = {id = "Masukkan jumlah Kipas Pengacak", en = "Enter Shuffle Fun amount"},
 
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
-["exploder_adventure_prompt_eventboost"]= {id = "💥 Masukkan jumlah Peledak Petualangan [1–5000]:", en = "💥 Enter Exploder Adventure amount [1–5000]:"},
 
 ["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 100000.", en = "🚫 Invalid input.\nEnter a number between 1 and 100000."},
 ["invalid_value_exploder_eventboost"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 5000.", en = "🚫 Invalid input.\nEnter a number between 1 and 5000."},
 
 ["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan disetel ke: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
-["toast_exploder_applied_eventboost"] = {id = "💥 Peledak Petualangan disetel ke: %d ✅", en = "💥 Exploder Adventure set to: %d ✅"},
 
 ----lab boost----
 
@@ -1629,28 +1628,27 @@ end
 function rw5()
   boost1("free")
 end
-
 function boost1(caller)
   local indev = dev
   local menu, actions = {}, {}
 
   -- Booster Umum (Free & Premium)
-  table.insert(menu, "🎲 • " .. _("rainbow_ball_eventboost"))     table.insert(actions, booster1)
-  table.insert(menu, "💣 • " .. _("bomb_eventboost"))             table.insert(actions, booster2)
-  table.insert(menu, "🚀 • " .. _("rocket_eventboost"))           table.insert(actions, booster3)
+  table.insert(menu, "🌈 • " .. _("boost_event_bola_pelangi"))     table.insert(actions, booster1)
+  table.insert(menu, "💣 • " .. _("boost_event_bom"))             table.insert(actions, booster2)
+  table.insert(menu, "🚀 • " .. _("boost_event_roket"))           table.insert(actions, booster3)
 
   -- Booster Tambahan (Premium Only)
   if caller ~= "free" then
-    table.insert(menu, "🔨 • " .. _("jackhammer_eventboost"))             table.insert(actions, booster4)
-    table.insert(menu, "🚿 • " .. _("hydrant_eventboost"))                table.insert(actions, booster5)
-    table.insert(menu, "🧤 • " .. _("gloves_eventboost"))                 table.insert(actions, booster6)
-    table.insert(menu, "❤️ • " .. _("infinite_lives_30_eventboost"))     table.insert(actions, booster7)
-    table.insert(menu, "✨ • " .. _("double_points_30_eventboost"))       table.insert(actions, booster8)
-    table.insert(menu, "🎲 • " .. _("rainbow_ball_30_eventboost"))        table.insert(actions, booster9)
-table.insert(menu, "💣 • " .. _("bomb_30_eventboost"))                table.insert(actions, booster10)
-    table.insert(menu, "🚀 • " .. _("rocket_30_eventboost"))              table.insert(actions, booster11)
-    table.insert(menu, "⚡ • " .. _("energy_adventure_eventboost"))       table.insert(actions, booster12)
-    table.insert(menu, "💥 • " .. _("exploder_adventure_eventboost"))     table.insert(actions, booster13)
+    table.insert(menu, "🔨 • " .. _("boost_event_palu_tunggal"))           table.insert(actions, booster4)
+table.insert(menu, "⬇️ • " .. _("boost_event_vertical"))          table.insert(actions, booster5)
+table.insert(menu, "➡️ • " .. _("boost_event_horizontal"))        table.insert(actions, booster6)
+table.insert(menu, "🪭 • " .. _("boost_event_kipas"))               table.insert(actions, booster7)
+table.insert(menu, "❤️ • " .. _("infinite_lives_30_eventboost"))        table.insert(actions, booster8)
+table.insert(menu, "✨ • " .. _("double_points_30_eventboost"))          table.insert(actions, booster9)
+table.insert(menu, "🌈 • " .. _("rainbow_ball_30_eventboost"))          table.insert(actions, booster10)
+table.insert(menu, "💣 • " .. _("bomb_30_eventboost"))                  table.insert(actions, booster11)
+table.insert(menu, "🚀 • " .. _("rocket_30_eventboost"))                table.insert(actions, booster12)
+table.insert(menu, "⚡ • " .. _("energy_adventure_eventboost"))         table.insert(actions, booster13)
   end
 
   table.insert(menu, "❌ • " .. _("go_back_eventboost"))
@@ -1769,7 +1767,7 @@ local function apply30DayBooster(name, offset)
     return
   end
 
-  gg.alert(_ ("template_copied_eventboost") .. ": " .. name)
+  gg.toast(_ ("template_copied_eventboost") .. ": " .. name)
 
   local target = getAddr()
   if not target then return end
@@ -1792,22 +1790,23 @@ local function apply30DayBooster(name, offset)
 end
 
 -- ✅ Booster Functions
-function booster1(caller) patchBooster("🎲", "Rainbow Ball", "rainbow_amount_eventboost", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster1(caller) patchBooster("🌈", "Rainbow Ball", "rainbow_amount_eventboost", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{-0x48,1110666508},{-0x44,6450543},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
 
-function booster4(caller) patchBooster("🔨", "Jackhammer", "jack_amount_eventboost", {{-0x48,1211329808},{-0x44,1701670241},{-0x40,114},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster5(caller) patchBooster("🚿", "Hydrant", "hydrant_amount_eventboost", {{-0x48,1395879196},{-0x44,1734632812},{-0x40,1835100261},{-0x3C,7497069},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster6(caller) patchBooster("🧤", "Gloves", "gloves_amount_eventboost", {{-0x48,1194552590},{-0x44,1702260588},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster4(caller) patchBooster("🔨", "Single Hammer", "single_amount_eventboost", {{-0x48,1295215888},{-0x44,1701604449},{-0x40,1835073652},{-0x3C,7497069},{-0x38,295108729},{-0x34,120},{-0x30,0}}, caller) end
+function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{-0x48,1379101974},{-0x44,1969779557},{-0x40,1701602918},{-0x3C,6647296},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{-0x48,1446210844},{-0x44,1769239141},{-0x40,1282171235},{-0x3C,6647401},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{-0x48,1211329824},{-0x44,2053730927},{-0x40,1635020399},{-0x3C,1852394604},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
 
-function booster7() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
-function booster8() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
+function booster8() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
+function booster9() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
 
-function booster9() apply30DayBooster("🎲 Rainbow Ball", -0x8) end
-function booster10() apply30DayBooster("💣 Bomb", -0x70) end
-function booster11() apply30DayBooster("🚀 Rocket", 0x60) end
+function booster10() apply30DayBooster("🌈 Rainbow Ball", -0x8) end
+function booster11() apply30DayBooster("💣 Bomb", -0x70) end
+function booster12() apply30DayBooster("🚀 Rocket", 0x60) end
 
-function booster12()
+function booster13()
   local addr = getAddr()
   if not addr then return end
   local prompt = gg.prompt({_("adventure_energy_prompt_eventboost")}, nil, {"number"})
@@ -1826,27 +1825,6 @@ function booster12()
   table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
   gg.setValues(edits)
   gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
-end
-
-function booster13()
-  local addr = getAddr()
-  if not addr then return end
-  local prompt = gg.prompt({_("exploder_adventure_prompt_eventboost")}, nil, {"number"})
-  local amount = tonumber(prompt and prompt[1])
-  if not amount or amount < 1 or amount > 5000 then
-    gg.alert(_("invalid_value_exploder_eventboost"))
-    return
-  end
-  local patch = {1886938394,1953064037,1416523625,1862292558,419456110,113,0,amount}
-  local edits = {}
-for i = 0, #patch - 1 do
-    table.insert(edits, {address = addr - 0x48 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
-  end
-  table.insert(edits, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
-  gg.setValues(edits)
-  gg.toast(string.format(_("toast_exploder_applied_eventboost"), amount))
 end
 
 function boost2()
