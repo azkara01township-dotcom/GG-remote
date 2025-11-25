@@ -1120,7 +1120,7 @@ local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 -- ⚙️ EXPIRED USER CONFIG (EDIT THIS ONLY)
 local expiredUserID = 1                    -- 🔢 Max allowed expired users
 local expiredCode   = "ARHPremiumTS-1days" -- 🔑 Expired code
-local expireDate    = "2025-11-24"         -- 📅 Expiration date (YYYY-MM-DD)
+local expireDate    = "2025-11-25"         -- 📅 Expiration date (YYYY-MM-DD)
 
 -- ============================ DO NOT EDIT BELOW ============================ --
 
