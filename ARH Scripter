@@ -1124,7 +1124,7 @@ local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 -- ==============================
 local expiredUserID = 1                     -- maximum expired devices allowed
 local expiredCode   = "ARHPremiumTS-1days"  -- expired code
-local expireDate    = "2025-11-24"          -- expiration date
+local expireDate    = "2025-11-25"          -- expiration date
 
 -- ==============================
 -- HASH UTILITY
