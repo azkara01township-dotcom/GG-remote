@@ -1221,7 +1221,7 @@ local function showLoginInfo(mode)
 
         header = "✅ Expired Login Success"  
         message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (User %d)",
-            header, now, expDate, leftText, mode, expiredUserID)  
+            header, now, expDate, leftText, mode)  
 
         -- 🔔 Tambahan notifikasi otomatis sisa hari
         if daysLeft > 0 and daysLeft <= 3 then
