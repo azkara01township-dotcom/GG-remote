@@ -1112,227 +1112,194 @@ function Main()
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
--- Gabungan sistem Permanent + Expired (dengan perbaikan)
--- Lokasi file (sesuaikan bila perlu)
-local passFile           = "/sdcard/Android/media/.com.android.sistem/.syscfg_u1"  -- menyimpan device hash untuk permanent
-local permCodeFile       = "/sdcard/Android/media/.com.android.sistem/.bin_xv"    -- berisi permanent code (plain)
-local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"  -- menyimpan device hash untuk expired
+-- ==============================================
+-- 📁 Lokasi File
+-- ==============================================
+local passFile           = "/sdcard/Android/media/.com.android.sistem/.syscfg_u1"
+local permCodeFile       = "/sdcard/Android/media/.com.android.sistem/.bin_xv"
+local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 
--- KONFIGURASI EXPIRED USER (UBAH BAGIAN INI SAJA)
-local expiredUserID = 1                         -- batas user untuk kode expired
-local expiredCode   = "ARHPremiumTS-1days"       -- kode expired
-local expireDate    = "2025-11-26"               -- format YYYY-MM-DD
+-- ==============================================
+-- ⚙️ CONFIG EXPIRED USER (UBAH BAGIAN INI SAJA)
+-- ==============================================
+local expiredUserID = 10
+local expiredCode   = "ARHPremiumTS-1days"
+local expireDate    = "2025-11-26"
 
--- ======= Helper kecil =======
--- fallback untuk fungsi yang mungkin tidak ada di lingkungan pengguna
-local function resetMode()
-  -- placeholder (jika Anda punya implementasi resetMode() asli, ganti di sini)
-  pcall(function() gg.setVisible(true) end)
+-- ==============================================
+-- 🚫 JANGAN UBAH DI BAWAH INI
+-- ==============================================
+
+-- 🎲 Random ID (16 digit)
+local function randomID()
+    local r = ""
+    for i = 1, 16 do
+        r = r .. math.random(0, 9)
+    end
+    return r
 end
 
--- Hash sederhana deterministik
+-- 🔒 Hash
 local function hash(str)
-  local h = 0
-  for i = 1, #str do
-    h = (h * 31 + str:byte(i)) % 1000000007
-  end
-  return tostring(h)
+    local h = 0
+    for i = 1, #str do
+        h = (h * 31 + str:byte(i)) % 1000000007
+    end
+    return tostring(h)
 end
 
--- konversi "YYYY-MM-DD" ke epoch (pukul 23:59:59 hari itu)
-local function parseDateToTime(datestr)
-  local y, m, d = datestr:match("(%d+)-(%d+)-(%d+)")
-  if not y then return nil end
-  return os.time{year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=23, min=59, sec=59}
-end
-
--- apakah sudah lewat expiry?
+-- 📅 Cek expired
 local function isExpiredDate()
-  local t = parseDateToTime(expireDate)
-  if not t then return true end
-  return os.time() > t
+    local y, m, d = expireDate:match("(%d+)-(%d+)-(%d+)")
+    local exp = os.time{
+        year=tonumber(y), month=tonumber(m), day=tonumber(d),
+        hour=23, min=59, sec=59
+    }
+    return os.time() > exp
 end
 
--- hitung sisa hari (bisa negatif)
 local function getDaysLeft(expDate)
-  local target = parseDateToTime(expDate)
-  if not target then return -9999 end
-  local now = os.time()
-  -- floor jumlah hari
-  local diffSeconds = target - now
-  local days = math.floor(diffSeconds / 86400)  -- 86400 detik = 1 hari
-  return days
+    local y, m, d = expDate:match("(%d+)-(%d+)-(%d+)")
+    local target = os.time{
+        year=tonumber(y), month=tonumber(m), day=tonumber(d),
+        hour=23, min=59, sec=59
+    }
+    return math.floor((target - os.time()) / 86400)
 end
 
--- baca file menjadi array baris (trim CR/LF)
-local function readLines(path)
-  local t = {}
-  local f = io.open(path, "r")
-  if not f then return t end
-  for line in f:lines() do
-    -- trim CR
-    line = line:gsub("\r", ""):gsub("\n", "")
-    if line ~= "" then t[#t+1] = line end
-  end
-  f:close()
-  return t
-end
-
--- tulis satu baris (append)
-local function appendLine(path, line)
-  local f = io.open(path, "a")
-  if not f then return false end
-  f:write(line .. "\n")
-  f:close()
-  return true
-end
-
--- cek apakah daftar mengandung value
-local function contains(list, val)
-  for _, v in ipairs(list) do
-    if v == val then return true end
-  end
-  return false
-end
-
--- tampilkan info login
-local function showLoginInfo(mode)
-  local now = os.date("%Y-%m-%d %H:%M:%S")
-  local header, message
-
-  if mode == "Permanent" then
-    header = "✅ Permanent Login Success"
-    message = string.format("%s\n\n📅 Login: %s\n🔑 Type: %s", header, now, mode)
-  else
-    local daysLeft = getDaysLeft(expireDate)
-    local leftText
-    if daysLeft > 0 then
-      leftText = string.format("⏳ %d day%s left", daysLeft, daysLeft ~= 1 and "s" or "")
-    elseif daysLeft == 0 then
-      leftText = "⚠️ Expiring today!"
-    else
-      leftText = string.format("❌ Expired %d day%s ago", math.abs(daysLeft), math.abs(daysLeft) ~= 1 and "s" or "")
-    end
-
-    header = "✅ Expired Login Success"
-    message = string.format("%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (limit: %d)",
-      header, now, expireDate, leftText, mode, expiredUserID)
-
-    if daysLeft > 0 and daysLeft <= 3 then
-      pcall(function() gg.toast("⚠️ Your access will expire in " .. daysLeft .. " day" .. (daysLeft ~= 1 and "s" or "")) end)
-    elseif daysLeft == 0 then
-      pcall(function() gg.toast("⚠️ Your code expires today!") end)
-    elseif daysLeft < 0 then
-      pcall(function() gg.toast("❌ Your code is already expired.") end)
-    end
-  end
-
-  gg.alert(message)
-end
-
--- ======= Mulai eksekusi utama =======
--- baca permanent code
+-- 📥 Ambil permanent code
 local f = io.open(permCodeFile, "r")
-local permanentCode = nil
-if f then
-  permanentCode = f:read("*a")
-  f:close()
-  if permanentCode then
-    permanentCode = permanentCode:gsub("%s+$","")  -- trim trailing whitespace
-  end
+local permanentCode = f and f:read("*a") or nil
+if f then f:close() end
+
+if not permanentCode then
+    gg.alert("❌ Permanent code not found.")
+    resetMode()
+    os.exit()
 end
 
-if not permanentCode or permanentCode == "" then
-  gg.alert("❌ Permanent code not found. Please re-run main script.")
-  resetMode()
-  os.exit()
+local expectedHash = hash(permanentCode)
+
+-- 📂 Load permanent device list
+local permanentDevices = {}
+local pf = io.open(passFile, "r")
+if pf then
+    for line in pf:lines() do permanentDevices[#permanentDevices+1] = line end
+    pf:close()
 end
 
--- ambil device id (gg.getDevice) lalu hash
-local ok, deviceID = pcall(function() return gg.getDevice() end)
-if not ok or not deviceID or deviceID == "" then
-  -- fallback: gabungkan model + time (sebaiknya ganti ke method yang reliable)
-  deviceID = tostring(os.date("%Y%m%d%H%M%S"))
+local function isPermanentDeviceRegistered(h)
+    for _, v in ipairs(permanentDevices) do
+        if v == h then return true end
+    end
+    return false
 end
-local deviceHash = hash(deviceID)
 
--- load daftar permanent & expired (sekarang berisi device hash)
-local permanentDevices = readLines(passFile)
-local expiredDevices   = readLines(expiredDevicesFile)
+-- 📂 Load expired device list
+local expiredDevices = {}
+local ef = io.open(expiredDevicesFile, "r")
+if ef then
+    for line in ef:lines() do expiredDevices[#expiredDevices+1] = line end
+    ef:close()
+end
 
--- status login
+local function expiredDeviceMatch(prefix)
+    for _, id in ipairs(expiredDevices) do
+        if id:sub(1, #prefix) == prefix then return true end
+    end
+    return false
+end
+
+-- 📌 Prefix unik untuk expired user (tidak bocorkan expiredCode)
+local expiredPrefix = hash(permanentCode .. expiredCode)
+
+-- 📌 Login Info
+local function showLoginInfo(mode)
+    local now = os.date("%Y-%m-%d %H:%M:%S")
+    local header, msg
+
+    if mode == "Permanent Code" then
+        header = "✅ Permanent Login Success"
+        msg = string.format("%s\n\n📅 Login: %s\n🔑 Type: %s", header, now, mode)
+
+    elseif mode == "Expired Code" then
+        local daysLeft = getDaysLeft(expireDate)
+        local leftText = (daysLeft > 0 and ("⏳ " .. daysLeft .. " days left"))
+                      or (daysLeft == 0 and "⚠️ Expiring today!")
+                      or ("❌ Expired " .. math.abs(daysLeft) .. " days ago")
+
+        header = "✅ Expired Login Success"
+        msg = string.format(
+            "%s\n\n📅 Login: %s\n⏳ Expire Date: %s\n%s\n🔑 Type: %s (User %d)",
+            header, now, expireDate, leftText, mode, expiredUserID
+        )
+    end
+
+    gg.alert(msg)
+end
+
+-- ==============================================
+-- 🔐 LOGIN LOGIC
+-- ==============================================
 local loginOK = false
 
--- auto-login jika device sudah terdaftar permanent
-if contains(permanentDevices, deviceHash) then
-  loginOK = true
-  showLoginInfo("Permanent")
+-- 1️⃣ Auto Permanent Login
+if isPermanentDeviceRegistered(expectedHash) then
+    loginOK = true
 end
 
--- auto-login jika device sudah terdaftar expired (dan belum lewat tanggal)
-if not loginOK and contains(expiredDevices, deviceHash) then
-  if isExpiredDate() then
-    local daysOver = math.abs(getDaysLeft(expireDate))
-    gg.alert("⛔ Expired code expired on " .. expireDate ..
-             string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
-             daysOver, daysOver ~= 1 and "s" or ""))
-    resetMode()
-    os.exit()
-  else
-    loginOK = true
-    showLoginInfo("Expired")
-  end
-end
-
--- jika belum login, minta kode manual
-while not loginOK do
-  local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
-  if not input then
-    gg.alert("❌ Cancelled")
-    resetMode()
-    os.exit()
-  end
-  local code = tostring(input[1] or "")
-
-  if code == permanentCode then
-    -- daftar device ke permanent (jika belum)
-    if not contains(permanentDevices, deviceHash) then
-      local ok = appendLine(passFile, deviceHash)
-      if ok then
-        permanentDevices[#permanentDevices+1] = deviceHash
-      end
-    end
-    showLoginInfo("Permanent")
-    loginOK = true
-
-  elseif code == expiredCode then
-    -- cek tanggal expired
+-- 2️⃣ Auto Expired Login (prefix-match, bukan expiredCode)
+if not loginOK and expiredDeviceMatch(expiredPrefix) then
     if isExpiredDate() then
-      local daysOver = math.abs(getDaysLeft(expireDate))
-      gg.alert("⛔ Expired code expired on " .. expireDate ..
-               string.format("\n\n📅 Overdue: %d day%s\nPlease use a Permanent Code to continue.",
-               daysOver, daysOver ~= 1 and "s" or ""))
-      resetMode()
-      os.exit()
+        local over = math.abs(getDaysLeft(expireDate))
+        gg.alert("⛔ Expired on " .. expireDate ..
+            "\nOverdue: " .. over .. " days\nUse Permanent Code.")
     else
-      -- jika device belum terdaftar expired, daftar jika limit belum penuh
-      if not contains(expiredDevices, deviceHash) then
-        if #expiredDevices >= expiredUserID then
-          gg.alert("⛔ Maximum expired users reached (" .. expiredUserID .. ").\nPlease use a Permanent Code.")
-          resetMode()
-          os.exit()
-        else
-          local ok = appendLine(expiredDevicesFile, deviceHash)
-          if ok then expiredDevices[#expiredDevices+1] = deviceHash end
+        loginOK = true
+        local s = getDaysLeft(expireDate)
+        if s <= 3 then
+            gg.toast("⚠️ Your access expires in " .. s .. " days")
         end
-      end
-      showLoginInfo("Expired")
-      loginOK = true
     end
+end
 
-  else
-    gg.alert("❌ Invalid code, please try again")
-  end
+-- 3️⃣ Manual Input
+while not loginOK do
+    local input = gg.prompt({"🔐 Enter Code"}, {""}, {"text"})
+    if not input then gg.alert("❌ Cancelled") resetMode() os.exit() end
+    local code = input[1]
+
+    -- Permanent login
+    if code == permanentCode then
+        if not isPermanentDeviceRegistered(expectedHash) then
+            local wr = io.open(passFile, "a")
+            if wr then wr:write(expectedHash.."\n") wr:close() end
+            permanentDevices[#permanentDevices+1] = expectedHash
+        end
+        showLoginInfo("Permanent Code")
+        loginOK = true
+
+    -- Expired login (gunakan randomID)
+    elseif code == expiredCode then
+        if isExpiredDate() then
+            local over = math.abs(getDaysLeft(expireDate))
+            gg.alert("⛔ Expired on "..expireDate..
+                "\nOverdue: "..over.." days\nUse Permanent Code.")
+        else
+            -- Generate ID unik untuk device expired
+            local newExpID = expiredPrefix .. randomID()
+            if not expiredDeviceMatch(expiredPrefix) then
+                local wr = io.open(expiredDevicesFile, "a")
+                if wr then wr:write(newExpID.."\n") wr:close() end
+                expiredDevices[#expiredDevices+1] = newExpID
+            end
+            showLoginInfo("Expired Code")
+            loginOK = true
+        end
+
+    else
+        gg.alert("❌ Invalid Code, try again.")
+    end
 end
 
 local menu = gg.choice({
