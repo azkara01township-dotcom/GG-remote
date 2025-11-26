@@ -620,7 +620,6 @@ local teks = {
   
     ----heli hack----
 
-["retasheliprompt_produk"] = {id = "📦 Masukkan jumlah Produk : [1;6]",en = "📦 Enter Product amount : [1;6]"},
 ["retasheliprompt_koin"] = {id = "💰 Masukkan jumlah Koin : [1;99999]",en = "💰 Enter Coin amount : [1;99999]"},
 ["retasheliprompt_cash"] = {id = "💵 Masukkan jumlah Cash : [0;999]",en = "💵 Enter Cash amount : [0;999]"},
 ["retasheliprompt_exp"] = {id = "⭐ Masukkan jumlah EXP (tanpa batas) :",en = "⭐ Enter EXP amount (no limit) :"},
@@ -9323,25 +9322,22 @@ gg.setVisible(false)
   -- 📝 Semua input dalam satu prompt
   local input = gg.prompt(
     {
-      _( "retasheliprompt_produk" ),
       _( "retasheliprompt_koin" ),
       _( "retasheliprompt_cash" ),
       _( "retasheliprompt_exp" )
     },
     nil,
-    {"number","number","number","number"}
+    {"number","number","number"}
   )
-
-  if not input then
+if not input then
     return gg.alert(_( "retasheliinput_batal" ))
   end
 
-  local prod = tonumber(input[1]) or 0
-  local coin = tonumber(input[2]) or 0
-  local cash = tonumber(input[3]) or 0
-  local exp  = tonumber(input[4]) or 0
+  local coin = tonumber(input[1]) or 0
+  local cash = tonumber(input[2]) or 0
+  local exp  = tonumber(input[3]) or 0
 
-  if coin <= 0 and cash <= 0 and exp <= 0 and prod <= 0 then
+  if coin <= 0 and cash <= 0 and exp <= 0 then
     return gg.alert(_( "retasheliminimal_satu" ))
   end
 
@@ -9371,20 +9367,19 @@ gg.setVisible(false)
     return gg.alert(_( "retashelitidak_valid" ))
   end
 
-  -- 📌 Eksekusi edit
+  -- 📌 Eksekusi pengeditan (TIDAK ADA PRODUK)
   local edits = {
     {address = base - 0xE4, flags = gg.TYPE_DWORD, value = 0},
     {address = base - 0xE0, flags = gg.TYPE_DWORD, value = coin},
     {address = base - 0xDC, flags = gg.TYPE_DWORD, value = 0},
     {address = base - 0xD8, flags = gg.TYPE_DWORD, value = cash},
     {address = base - 0xC4, flags = gg.TYPE_DWORD, value = 0},
-    {address = base - 0xC0, flags = gg.TYPE_DWORD, value = exp},
-    {address = base - 0xEC, flags = gg.TYPE_DWORD, value = prod}
+    {address = base - 0xC0, flags = gg.TYPE_DWORD, value = exp}
   }
 
   gg.setValues(edits)
-  a2()
   gg.clearResults()
+  a2()
   gg.toast(_( "retashelisukses" ))
 end
 
