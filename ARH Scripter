@@ -449,10 +449,12 @@ local teks = {
   
 ----free ore poin----
   
-["dataNotFound_ore"]       = {id="❌ Data 'Rule of the Mine' tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en="❌ 'Rule of the Mine' data not found!\n\nPlease restart the game and try again."},
-["toastUpdated_ore"]       = {id="🎉 'Rule of the Mine' berhasil diperbarui!", en="🎉 'Rule of the Mine' updated!"},
-["alertApplied_ore"]       = {id="💸 Edit berhasil diterapkan!\n\nAmbil 1 ore untuk mengaktifkan auto-mining.",en="💸 Edit applied!\n\nTake 1 ore to activate auto-mining."},
-  
+["Etamwarn_event_not_claimed"] = {id = "⚠️ Script ini hanya bekerja jika hadiah 'Penguasa Tambang' belum pernah diambil sama sekali.\n\nJika kamu sudah pernah mendapatkannya, maka script tidak akan berfungsi.",en = "⚠️ This script only works if the 'Mine Ruler' reward has never been claimed.\n\nIf you've already claimed it before, the script will not work."},
+["Etamno_data_found"] = {id = "❌ Data acara 'Penguasa Tambang' tidak ditemukan.\n\n🔁 Silakan restart game dan coba lagi.",en = "❌ 'Mine Ruler' event data not found.\n\n🔁 Please restart the game and try again."},
+["Etamno_target"] = {id = "❌ Data 'Penguasa Tambang' tidak ditemukan.\n\n📝 Pastikan event masih aktif dan belum pernah diselesaikan.",en = "❌ 'Mine Ruler' data not found.\n\n📝 Make sure the event is still active and has never been completed."},
+["Etamsuccess_alert"] = {id = "✅ Edit berhasil diterapkan!\n\n📌 Ambil 1 ore untuk mengaktifkan auto-mining.",en = "✅ Edit applied successfully!\n\n📌 Mine 1 ore to activate auto-mining."},
+["Etamsuccess_toast"] = {id = "🎉 Penguasa Tambang berhasil diupdate!",en = "🎉 Mine Ruler updated successfully!"},
+
 ----bajak laut----
   
 ["dataNotFound_bajak"] = {id = "❌ Harta Karun Bajak Laut tidak ditemukan!\n\nSilakan restart game dan coba lagi.",en = "❌ Pirate Treasure not found!\n\nPlease restart the game and try again."},
@@ -1123,7 +1125,7 @@ local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 -- ==============================================
 local expiredUserID = 10
 local expiredCode   = "ARHPremiumTS-December"
-local expireDate    = "2025-12-15"
+local expireDate    = "2025-12-10"
 
 -- ==============================================
 -- 🚫 JANGAN UBAH DI BAWAH INI
