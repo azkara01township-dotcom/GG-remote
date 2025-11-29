@@ -853,110 +853,6 @@ end
 -- ⏳ Panggil saat awal
 loadLang()
 
--- 📁 Cache Setup  
-local folder = "/sdcard/.syscfg.lib/"  
-local fileItem = folder .. ".itemcache"  
-local fileAddr = folder .. ".addresscache"  
-
--- 🧹 Delete File Safely  
-local function deleteFile(path)
-  pcall(function() os.remove(path) end)
-end
-
--- 📍 Detect correct address using offset -238
-local function detectCorrectAddr()
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- Cari semua 1599361808
-  gg.searchNumber("1599361808", gg.TYPE_DWORD)
-  local found = gg.getResults(5000)
-
-  if #found == 0 then
-    gg.alert(_("startaddr_not_found")) 
-    return nil
-  end
-
-  -- Deteksi offset -238 (DWORD harus bernilai 29)
-  local validAddr = nil
-
-  for i, v in ipairs(found) do
-    local check = gg.getValues({
-      {
-        address = v.address - 238,
-        flags = gg.TYPE_DWORD
-      }
-    })
-
-    if check and check[1] and check[1].value == 29 then
-      validAddr = v.address
-      break
-    end
-  end
-
-  if not validAddr then
-    gg.alert(_("startaddr_not_found")) 
-    return nil
-  end
-
-  -- Simpan cache
-  local f = io.open(fileAddr, "w")
-  if f then
-    f:write(validAddr)
-    f:close()
-  end
-
-  return validAddr
-end
-
-
--- 📍 Get Cached or New Address  
-function getAddr()
-  local cacheInvalid = false
-  local cachedAddr
-
-  -- Coba ambil cache
-  local file = io.open(fileAddr, "r")
-  if file then
-    cachedAddr = tonumber(file:read("*l") or "")
-    file:close()
-  end
-
-  -- Verifikasi cache bila ada
-  if cachedAddr then
-    local check = gg.getValues({
-      {
-        address = cachedAddr - 238,
-        flags = gg.TYPE_DWORD
-      }
-    })
-
-    if check and check[1] and check[1].value == 29 then
-      return cachedAddr
-    else
-      deleteFile(fileAddr)
-      deleteFile(fileItem)
-      gg.toast(_("startcache_cleared"))
-      cacheInvalid = true
-    end
-  end
-
-  -- Cari ulang bila cache tidak valid
-  local newAddr = detectCorrectAddr()
-
-  if not newAddr then
-    return nil
-  end
-
-  if cacheInvalid then
-    gg.toast(_("startaddr_refreshed"))
-    while not gg.isVisible(true) do gg.sleep(200) end
-    gg.setVisible(false)
-  end
-
-  return newAddr
-end
-
 -- 📁 Global config
 local configFile = "/sdcard/Android/media/.com.android.sistem/.templog_dmp"
 local menuMode, menuRunning = nil, false
@@ -1512,6 +1408,66 @@ if cstatus_featureX == off then
     cstatus_featureX = on
     rewardVisible = true
   end
+
+-- 📁 Cache Setup
+local folder = "/sdcard/.syscfg.lib/"
+local fileItem = folder .. ".itemcache"
+local fileAddr = folder .. ".addresscache"
+
+-- 🧹 Delete File Safely
+local function deleteFile(path)
+pcall(function() os.remove(path) end)
+end
+
+-- 📍 Get Cached or New Address
+function getAddr()
+local cacheInvalid = false
+local cachedAddr
+local file = io.open(fileAddr, "r")
+
+if file then
+cachedAddr = tonumber(file:read("*l") or "")
+file:close()
+end
+
+if cachedAddr then
+local check = gg.getValues({{address = cachedAddr, flags = gg.TYPE_DWORD}})
+if check and check[1] and check[1].value == 30 then
+return cachedAddr
+else
+deleteFile(fileAddr)
+deleteFile(fileItem)
+gg.toast(_("startcache_cleared"))
+cacheInvalid = true
+end
+end
+
+gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("29;1599361808;30::641", gg.TYPE_DWORD)
+gg.refineNumber("30", gg.TYPE_DWORD)
+local results = gg.getResults(1)
+
+if #results == 0 then
+gg.alert(_("startaddr_not_found"))
+return nil
+end
+
+local newAddr = results[1].address
+local fileSave = io.open(fileAddr, "w")
+if fileSave then
+fileSave:write(newAddr)
+fileSave:close()
+end
+
+if cacheInvalid then
+gg.toast(_("startaddr_refreshed"))
+while not gg.isVisible(true) do gg.sleep(200) end
+gg.setVisible(false)
+end
+
+return newAddr
+end
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
