@@ -6941,11 +6941,11 @@ function nameStyle1()
     table.insert(copied, {address = base + i * 4, flags = gg.TYPE_DWORD})
   end
   copied = gg.getValues(copied)
-  gg.toast("📋 Frame Festival style copied.")
+  gg.toast("📋 Frame style copied.")
 
   -- Step 2: Search target and paste copied values
   gg.clearResults()
-  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+  gg.searchNumber("29;1599361808;30::641", gg.TYPE_DWORD)
   gg.refineNumber("30", gg.TYPE_DWORD)
   local tgt = gg.getResults(1)
   if #tgt == 0 then
@@ -6991,11 +6991,11 @@ gg.setRanges(gg.REGION_C_ALLOC)
     table.insert(copied, {address = copyAddr + i * 4, flags = gg.TYPE_DWORD})
   end
   copied = gg.getValues(copied)
-  gg.toast("📋 Name Festival style copied.")
+  gg.toast("📋 Name style copied.")
 
   -- Step 2: Cari target dan tempelkan Name Style
   gg.clearResults()
-  gg.searchNumber("29;1599361808;5;30::641", gg.TYPE_DWORD)
+  gg.searchNumber("29;1599361808;30::641", gg.TYPE_DWORD)
   gg.refineNumber("30", gg.TYPE_DWORD)
   local tgt = gg.getResults(1)
   if #tgt == 0 then
