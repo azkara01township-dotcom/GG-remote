@@ -1469,22 +1469,33 @@ end
 return newAddr
 end
 
-  gg.clearResults()
+gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
+
+  -- 🔍 Cari pola utama
+  gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
   local hasil = gg.getResults(1000)
 
   if #hasil == 0 then
     return gg.alert(_("freeze_fail_title"))
   end
 
-  local kandidat = {}
-
-  -- 🧩 Filter hasil dengan offset +0x1CC = 27491
+  local readList = {}
   for i, res in ipairs(hasil) do
-    local check = gg.getValues({{address = res.address + 0x1CC, flags = gg.TYPE_DWORD}})
-    if check[1].value == 27491 then
-      table.insert(kandidat, res)
+    readList[#readList + 1] = {
+      address = res.address + 0x1CC,
+      flags = gg.TYPE_DWORD
+    }
+  end
+
+  -- 🔥 Hanya 1 kali pemanggilan, bukan ribuan!
+  local readResult = gg.getValues(readList)
+
+  -- 🔍 Filter kandidat berdasarkan nilai offset
+  local kandidat = {}
+  for i, val in ipairs(readResult) do
+    if val.value == 27491 then
+      table.insert(kandidat, hasil[i])
     end
   end
 
@@ -1492,17 +1503,19 @@ gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
     return
   end
 
-  -- ❄️ Siapkan pembekuan untuk semua kandidat
   local freezeItems = {}
+
   for _, target in ipairs(kandidat) do
-    table.insert(freezeItems, {address = target.address - 8,  flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(freezeItems, {address = target.address - 12, flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(freezeItems, {address = target.address - 16, flags = gg.TYPE_DWORD, value = 0, freeze = true})
+    freezeItems[#freezeItems + 1] =
+      {address = target.address - 8,  flags = gg.TYPE_DWORD, value = 0, freeze = true}
+    freezeItems[#freezeItems + 1] =
+      {address = target.address - 12, flags = gg.TYPE_DWORD, value = 0, freeze = true}
+    freezeItems[#freezeItems + 1] =
+      {address = target.address - 16, flags = gg.TYPE_DWORD, value = 0, freeze = true}
   end
 
   gg.addListItems(freezeItems)
 
-  -- 🎉 Efek Mengetik Toast
   local function typingToast(msg, delay)
     for i = 1, #msg do
       gg.toast(msg:sub(1, i))
