@@ -7882,12 +7882,14 @@ function packbadge()
     gg.clearResults()
 
     local skins = {
-      "🏙️ Town Badge",
-      "🏆 • Legendary Town Badge",
-      "🃏 • Badge Title",
-      "🎖️ • Grand Badge Title",
-      "⛄ • Winter Badge",
+      "🌃 • City Badge",
+      "👑 • Legendary Town Badge",
+      "🏠 • Mayors Yellow House Badge",
+      "🏛️ • Purple House Badge",
+      "🔔 • Winter Badge",
       "❄️ • Legendary Winter Badge",
+      "🧭 • Journey Badge",
+      "🗺️ • Legendary Journey Badge",
       "❌ • Go Back"
     }
 
@@ -7963,47 +7965,29 @@ function applybBadge(hex, emoji, name)
 end
 
 -- Kumpulan badge
-function badgecollect1() -- 🏙️ Town Badge
-  applybBadge({
-    0x6461621A, 0x305F6567, 0x61625F31,
-    0x00006573, 0x1965E248, 0x00000070
-  }, "🏙️", "Town Badge")
-end
+function badgecollect1() 
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F31,0x00006573, 0x00000000, 0x00000000}, "🌃", "City Badge") end
 
-function badgecollect2() -- 🏆 Legendary Town Badge
-  applybBadge({
-    0x6461621C, 0x305F6567, 0x72675F31,
-    0x00646E61, 0x1965E248, 0x00000070
-  }, "🏆", "Legendary Town Badge")
-end
+function badgecollect2() 
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F31,0x00646E61, 0x00000000, 0x00000000}, "👑", "Legendary Town Badge") end
 
-function badgecollect3() -- 🃏 Badge Title
-  applybBadge({
-    0x64616220, 0x305F6567, 0x32765F31,
-    0x7361625F, 0x19650065, 0x00000070
-  }, "🃏", "Badge Title")
-end
+function badgecollect3() 
+  applybBadge({0x64616220, 0x305F6567, 0x32765F31,0x7361625F, 0x00000065, 0x00000000}, "🏠", "Mayors Yellow House Badge") end
 
-function badgecollect4() -- ❄️ Legendary Winter Badge
-  applybBadge({
-    0x64616222, 0x305F6567, 0x32765F31,
-    0x6172675F, 0x1900646E, 0x00000070
-  }, "🎖️", "Grand Bage Title")
-end
+function badgecollect4() 
+  applybBadge({0x64616222, 0x305F6567, 0x32765F31,0x6172675F, 0x1900646E, 0x00000000}, "🏛️", "Purple House Badge") end
 
-function badgecollect5() -- ⛄ Winter Badge
-  applybBadge({
-    0x6461621A, 0x305F6567, 0x61625F32,
-    0x00006573, 0x1965E248, 0x00000070
-  }, "⛄", "Winter Badge")
-end
+function badgecollect5() 
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F32,0x00006573, 0x00000000, 0x00000000}, "🔔", "Winter Badge") end
 
-function badgecollect6() -- 🎖️ Grand Badge Title
-  applybBadge({
-    0x6461621C, 0x305F6567, 0x72675F32,
-    0x00646E61, 0x1965E248, 0x00000070
-  }, "❄️", "Legendary Winter Badge")
-end
+function badgecollect6() 
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F32,0x00646E61, 0x00000000, 0x00000000}, "❄️", "Legendary Winter Badge") end
+
+function badgecollect7() 
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F33,0x00646E61, 0x00000000, 0x00000000}, "🧭", "Journey Badge") end
+
+function badgecollect8() 
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F33,0x00006573, 0x00000000, 0x00000000}, "🗺️", "Legendary Journey Badge") end
 
 -------------------------------------------------
   
