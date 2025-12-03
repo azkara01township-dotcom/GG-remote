@@ -7687,7 +7687,7 @@ function infinitesendcard()
 gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber(searchValue, gg.TYPE_DWORD)
-  local hasil = gg.getResults(1000)
+  local hasil = gg.getResults(5000)
 
   if #hasil == 0 then
     gg.alert("🚫 No matching data found.\n\nPlease restart your game and try again.")
