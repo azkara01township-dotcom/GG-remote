@@ -7573,9 +7573,9 @@ function kums6()
     "❌ • Go Back"
   }, nil, indev)
 
-  if menu == nil then return end
-
-  if menu == 1 then
+  if menu == nil then
+  return
+  elseif menu == 1 then
     goldsendcard()
   elseif menu == 2 then
     infinitesendcard()
@@ -7587,6 +7587,9 @@ function kums6()
     packbadge()
   elseif menu == 6 then
     gp3()
+  return
+  else
+    return
   end
 
   while true do
