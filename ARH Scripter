@@ -7659,92 +7659,64 @@ local hasil = gg.getResults(5000)
 end
 
 function infinitesendcard()
-  gg.setVisible(false)
+gg.setVisible(false)
   gg.clearResults()
-
-  -- 📢 Alert at start
-  gg.alert("ℹ️ If Search Group 1 cannot be found,\nplease try Search Group 2.")
-
-  -- 📌 Select value group to search (NO CANCEL)
-  local choice = gg.choice({
-    "🔍 Search Group 1",
-    "🔍 Search Group 2"
-  }, nil, "✨ Choose value group for Unlimited Card Sending")
-
-  if choice == nil then
-    return
-  end
-
-  local searchValue = nil
-
-  if choice == 1 then
-    searchValue = "1918984974"
-  elseif choice == 2 then
-    searchValue = "1918984976"
-  end
-
-  -- 🔍 Search base value
-gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber(searchValue, gg.TYPE_DWORD)
-  local hasil = gg.getResults(5000)
+
+  -- 🔍 1) Cari base QWORD 12884967423
+  gg.searchNumber("12884967423", gg.TYPE_QWORD)
+  local hasil = gg.getResults(500)
 
   if #hasil == 0 then
     gg.alert("🚫 No matching data found.\n\nPlease restart your game and try again.")
     return
   end
 
-  -- 🔍 Check +0x48 offset (must be 65537)
-  local checkOffsets = {}
-  for _, item in ipairs(hasil) do
-    table.insert(checkOffsets, {
-      address = item.address + 0x48,
+  -- 🔍 2) Filter hasil berdasarkan offset +0x24 = 86400
+  local kandidat = {}
+  local cekList = {}
+
+  for _, v in ipairs(hasil) do
+    table.insert(cekList, {
+      address = v.address + 0x24, -- offset 36 decimal
       flags = gg.TYPE_DWORD
     })
   end
 
-  local values = gg.getValues(checkOffsets)
-  local targets = {}
+  local nilaiOffset = gg.getValues(cekList)
 
-  for i = 1, #values do
-    if values[i].value == 65537 then
-      table.insert(targets, hasil[i].address)
+  for i = 1, #nilaiOffset do
+    if nilaiOffset[i].value == 86400 then
+      table.insert(kandidat, hasil[i]) -- base yg benar
     end
   end
 
-  if #targets == 0 then
+  if #kandidat == 0 then
     gg.alert("⚠️ Unlimited Card Sending base not found.\n\nTry reopening the game first.")
     return
   end
 
-  -- 🛠 Patch & Freeze at important offsets
+  -- 🔧 3) Edit 6 offset: 44, 48, 4C, 50, 54, 58 → set 0 + freeze
+  local offsets = {0x44, 0x48, 0x4C, 0x50, 0x54, 0x58}
   local edits = {}
-  for _, base in ipairs(targets) do
-    table.insert(edits, {
-      address = base - 0xA0,
-      flags = gg.TYPE_DWORD,
-      value = 0,
-      freeze = true
-    })
-    table.insert(edits, {
-      address = base - 0x58,
-      flags = gg.TYPE_DWORD,
-      value = 0,
-      freeze = true
-    })
-    table.insert(edits, {
-      address = base - 0x10,
-      flags = gg.TYPE_DWORD,
-      value = 0,
-      freeze = true
-    })
+
+  for _, base in ipairs(kandidat) do
+    for _, off in ipairs(offsets) do
+      table.insert(edits, {
+        address = base.address + off,
+        flags = gg.TYPE_DWORD,
+        value = 0,
+        freeze = true
+      })
+    end
   end
 
   gg.setValues(edits)
   gg.addListItems(edits)
-  gg.clearResults()
 
+  gg.clearResults()
   a2()
+
   gg.toast("✅ Unlimited card sending is now active!")
 end
 
