@@ -8917,7 +8917,7 @@ gg.setVisible(false)
   gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
-  gg.searchNumber("1819042157", gg.TYPE_QWORD)
+  gg.searchNumber("1819042157", gg.TYPE_DWORD)
   local list = gg.getResults(1000)
 
   if #list == 0 then
