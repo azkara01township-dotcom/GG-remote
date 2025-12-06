@@ -1593,13 +1593,6 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
   if amount then
     table.insert(edits, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
   end
-  table.insert(edits, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x40, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x44, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x48, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x4C, flags = gg.TYPE_DWORD, value = 0})
-
   gg.setValues(edits)
   gg.toast(label .. (amount and (_("set_to_tambahduit") .. amount .. " ✅") or _("applied_tambahduit")))
 end
