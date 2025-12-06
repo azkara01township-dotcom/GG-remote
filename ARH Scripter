@@ -1929,7 +1929,6 @@ return
 
   table.insert(patch, {address = addr + 0x28, flags = 4, value = 0})    -- duration
   table.insert(patch, {address = addr + 0x2C, flags = 4, value = amt})  -- amount
-  end
 
   gg.setValues(patch)
   gg.toast(emoji .. " " .. name .. " set to " .. amt .. "")
@@ -1983,7 +1982,6 @@ function lab18(name, offset)
   end
 
   patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
-  end
 
   gg.setValues(patch)
   gg.toast("⛵ " .. name .. " set to " .. val)
