@@ -1591,7 +1591,7 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
     table.insert(edits, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
   end
   if amount then
-    table.insert(edits, {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = amount})
+    table.insert(edits, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
   end
   table.insert(edits, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
   table.insert(edits, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
@@ -1609,19 +1609,19 @@ function cash1() applyCurrencyReward("tcash_tambahduit", {
 }, {1, 25000}) end
 
 function cash2() applyCurrencyReward("coin_tambahduit", {
-  {0x10, 0x696F630A}, {0x14, 0x736E}, {0x18,0}, {0x1C,0}, {0x20,0}, {0x24,0}, {-0x28,0}
+  {0x10, 0x696F630A}, {0x14, 0x736E}, {0x18,0}, {0x1C,0}, {0x20,0}, {0x24,0}, {0x28,0}
 }, {1, 999999}) end
 
 function cash3() applyCurrencyReward("regatta_tambahduit", {
-  {0x10, 0x67655214}, {0x14, 0x43617461}, {0x18, 0x687361}, {0x1C,0}, {-0x20,0}, {-0x24,0}, {-0x28,0}
+  {0x10, 0x67655214}, {0x14, 0x43617461}, {0x18, 0x687361}, {0x1C,0}, {0x20,0}, {0x24,0}, {0x28,0}
 }, {1, 2000}) end
 
 function cash4() applyCurrencyReward("clover_tambahduit", {
-  {0x10, 0x6F6C630C}, {0x14, 0x726576}, {0x18,0}, {0x1C,0}, {0x20,0}, {0x24,0}, {-0x28,0}
+  {0x10, 0x6F6C630C}, {0x14, 0x726576}, {0x18,0}, {0x1C,0}, {0x20,0}, {0x24,0}, {0x28,0}
 }, {1, 50}) end
 
 function cash5() applyCurrencyReward("statue_tambahduit", {
-  {0x10, 1635021594}, {0x14, 1600484724}, {0x18, 1953067639}, {0x1C, 29285}, {0x20,0}, {-0x24,0}, {-0x28,0}
+  {0x10, 1635021594}, {0x14, 1600484724}, {0x18, 1953067639}, {0x1C, 29285}, {0x20,0}, {0x24,0}, {0x28,0}
 }, nil, 1) end
 
 function gp5()
