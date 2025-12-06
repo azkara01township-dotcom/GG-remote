@@ -1823,8 +1823,8 @@ function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_am
 function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{0x10,1211329824},{0x14,2053730927},{0x18,1635020399},{0x1C,1852394604},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
 function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{0x10,1379101974},{0x14,1969779557},{0x18,1701602918},{0x1C,6647296},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
 
-function booster8() patchTimedBooster("❤️", "Infinite Lives", {{0x10,1952533798},{0x14,1278437475},{0x18,1936029289},{0x1C,1718511967},{0x20,1701669204},{0x24,0},{0x28,0},{0x2C,2592000},{0x38,0},{0x3C,0},{0x40,0},{0x44,0},{0x48,0},{0x4C,0}}) end
-function booster9() patchTimedBooster("✨", "Double Points", {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000},{0x38,0},{0x3C,0},{0x40,0},{0x44,0},{0x48,0},{0x4C,0}}) end
+function booster8() patchTimedBooster("❤️", "Infinite Lives", {{0x10,1952533798},{0x14,1278437475},{0x18,1936029289},{0x1C,1718511967},{0x20,1701669204},{0x24,0},{0x28,0},{0x2C,2592000}}) end
+function booster9() patchTimedBooster("✨", "Double Points", {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000}}) end
 
 function booster10() apply30DayBooster("🌈 Rainbow Ball", -0x8) end
 function booster11() apply30DayBooster("💣 Bomb", -0x78) end
