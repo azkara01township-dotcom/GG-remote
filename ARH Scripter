@@ -1810,7 +1810,7 @@ local function apply30DayBooster(name, offset)
   local target = getAddr()
   if not target then return end
 
-  local addr = target - 0x48
+  local addr = target + 0x10
   local patch = {}
   for i, v in ipairs(copied) do
     table.insert(patch, {address = addr + (i - 1) * 4, flags = gg.TYPE_DWORD, value = v.value})
