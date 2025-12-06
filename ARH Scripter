@@ -1817,7 +1817,7 @@ local function apply30DayBooster(name, offset)
   end
 
   local extra = {
-    {0x18, 0}, {0x1C, 2592000}, {0x28, 0}, {0x2C, 0}, {0x30, 0}, {0x34, 0}, {0x38, 0}, {0x3C, 0}
+    {0x18, 0}, {0x1C, 2592000}, {0x38, 0}, {0x3C, 0}, {0x40, 0}, {0x44, 0}, {0x48, 0}, {0x4C, 0}
   }
   for _, e in ipairs(extra) do
     table.insert(patch, {address = addr + e[1], flags = gg.TYPE_DWORD, value = e[2]})
