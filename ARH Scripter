@@ -1741,10 +1741,13 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
     table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
   end
 
-  table.insert(patch, {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = amount})
-  table.insert(patch, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
+  table.insert(patch, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x40, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x44, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x48, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(patch, {address = addr + 0x4C, flags = gg.TYPE_DWORD, value = 0})
 
   gg.setValues(patch)
   gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount)
@@ -1825,17 +1828,17 @@ local function apply30DayBooster(name, offset)
 end
 
 -- ✅ Booster Functions
-function booster1(caller) patchBooster("🌈", "Rainbow Ball", "rainbow_amount_eventboost", {{-0x48,1379101978},{-0x44,1651403105},{-0x40,1631745903},{-0x3C,27756},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{-0x48,1110666508},{-0x44,6450543},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
-function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{-0x48,1278438668},{-0x44,6647401},{-0x40,0},{-0x3C,0},{-0x38,0},{-0x34,0},{-0x30,0}}, caller) end
+function booster1(caller) patchBooster("🌈", "Rainbow Ball", "rainbow_amount_eventboost", {{0x10,1379101978},{0x14,1651403105},{0x18,1631745903},{0x1C,27756},{0x20,0},{0x24,0},{0x28,0}}, caller) end
+function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{0x10,1110666508},{0x14,6450543},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
+function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{0x10,1278438668},{0x14,6647401},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
 
-function booster4(caller) patchBooster("🔨", "Single Hammer", "single_amount_eventboost", {{-0x48,1295215888},{-0x44,1701604449},{-0x40,1835073652},{-0x3C,7497069},{-0x38,295108729},{-0x34,120},{-0x30,0}}, caller) end
-function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{-0x48,1446210844},{-0x44,1769239141},{-0x40,1282171235},{-0x3C,6647401},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
-function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{-0x48,1211329824},{-0x44,2053730927},{-0x40,1635020399},{-0x3C,1852394604},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
-function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{-0x48,1379101974},{-0x44,1969779557},{-0x40,1701602918},{-0x3C,6647296},{-0x38,295108709},{-0x34,120},{-0x30,0}}, caller) end
+function booster4(caller) patchBooster("🔨", "Single Hammer", "single_amount_eventboost", {{0x10,1295215888},{0x14,1701604449},{0x18,1835073652},{0x1C,7497069},{0x20,295108729},{0x24,120},{0x28,0}}, caller) end
+function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{0x10,1446210844},{0x14,1769239141},{0x18,1282171235},{0x1C,6647401},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
+function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{0x10,1211329824},{0x14,2053730927},{0x18,1635020399},{0x1C,1852394604},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
+function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{0x10,1379101974},{0x14,1969779557},{0x18,1701602918},{0x1C,6647296},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
 
-function booster8() patchTimedBooster("❤️", "Infinite Lives", {{-0x48,1952533798},{-0x44,1278437475},{-0x40,1936029289},{-0x3C,1718511967},{-0x38,1701669204},{-0x34,0},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
-function booster9() patchTimedBooster("✨", "Double Points", {{-0x48,1835619372},{-0x44,1850041445},{-0x40,2037672308},{-0x3C,1635214674},{-0x38,1816224882},{-0x34,3299436},{-0x30,0},{-0x2C,2592000},{0x10,0},{0x18,0},{0x20,0}}) end
+function booster8() patchTimedBooster("❤️", "Infinite Lives", {{0x10,1952533798},{0x14,1278437475},{0x18,1936029289},{0x1C,1718511967},{0x20,1701669204},{0x24,0},{0x28,0},{0x2C,2592000},{0x38,0},{0x3C,0},{0x40,0},{0x44,0},{0x48,0},{0x4C,0}}) end
+function booster9() patchTimedBooster("✨", "Double Points", {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000},{0x38,0},{0x3C,0},{0x40,0},{0x44,0},{0x48,0},{0x4C,0}}) end
 
 function booster10() apply30DayBooster("🌈 Rainbow Ball", -0x8) end
 function booster11() apply30DayBooster("💣 Bomb", -0x70) end
@@ -1855,9 +1858,12 @@ function booster13()
   for i = 0, #patch - 1 do
     table.insert(edits, {address = addr - 0x48 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
   end
-  table.insert(edits, {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x40, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x44, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x48, flags = gg.TYPE_DWORD, value = 0})
+  table.insert(edits, {address = addr + 0x4C, flags = gg.TYPE_DWORD, value = 0})
   gg.setValues(edits)
   gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
 end
