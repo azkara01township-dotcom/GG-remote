@@ -1784,7 +1784,7 @@ end
 local function copyPatchTemplate(offset)
 gg.clearResults()
 gg.setRanges(gg.REGION_C_ALLOC)
-gg.searchNumber("1952533798;1701669204;8;23;28;23;1395879196::417", gg.TYPE_DWORD)
+gg.searchNumber("1701669204;23;28;23;1446210844::433", gg.TYPE_DWORD)
 gg.refineNumber("28", gg.TYPE_DWORD)
 local ref = gg.getResults(1)
 if #ref == 0 then return nil end
@@ -1856,7 +1856,7 @@ function booster13()
   local patch = {1886938400,1953064037,1164865385,1735550318,121,0,0,energy}
   local edits = {}
   for i = 0, #patch - 1 do
-    table.insert(edits, {address = addr - 0x48 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
+    table.insert(edits, {address = addr + 0x10 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
   end
   table.insert(edits, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
   table.insert(edits, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
