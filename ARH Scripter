@@ -1473,7 +1473,7 @@ gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari pola utama
-  gg.searchNumber("8315166925580948240", gg.TYPE_QWORD)
+  gg.searchNumber("5507461923117941548", gg.TYPE_QWORD)
   local hasil = gg.getResults(1000)
 
   if #hasil == 0 then
@@ -1483,7 +1483,7 @@ gg.clearResults()
   local readList = {}
   for i, res in ipairs(hasil) do
     readList[#readList + 1] = {
-      address = res.address + 0x1CC,
+      address = res.address + 0x38C,
       flags = gg.TYPE_DWORD
     }
   end
