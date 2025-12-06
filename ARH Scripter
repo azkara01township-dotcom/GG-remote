@@ -2194,13 +2194,10 @@ function applyGemReward(label, emoji, gemId, caller)
     table.insert(a, {address = base + offset, flags = gg.TYPE_DWORD, value = v})
   end
 
-  dw(-0x48, 1835362056)
-  dw(-0x44, gemId)
-  for _, o in ipairs({-0x40, -0x3C, -0x38, -0x34, -0x30}) do dw(o, 0) end
-  dw(-0x2C, val)
-  dw(0x10, 0)
-  dw(0x18, 0)
-  dw(0x20, 0)
+  dw(0x10, 1835362056)
+  dw(0x14, gemId)
+  for _, o in ipairs({0x18, 0x1C, 0x20, 0x24, 0x28}) do dw(o, 0) end
+  dw(0x2C, val)
 
   gg.setValues(a)
   gg.toast(string.format("%s %s %s %s 💎", emoji, label, _("reward_set_gemgem"), val))
@@ -2303,18 +2300,15 @@ function applyIngotReward(labelKey, emoji, hexes)
     return
   end
 
-  local a, offsets = {}, {-0x48, -0x44, -0x40, -0x3C, -0x38, -0x34}
+  local a, offsets = {}, {0x10, 0x14, 0x18, 0x1C, 0x20, 0x24}
   for i, v in ipairs(hexes) do
     a[#a + 1] = {address = base + offsets[i], flags = gg.TYPE_DWORD, value = v}
   end
 
   -- Patch tambahan
   local patch = {
-    {-0x30, 0},
-    {-0x2C, val},
-    {0x10, 0},
-    {0x18, 0},
-    {0x20, 0}
+    {0x28, 0},
+    {0x2C, val}
   }
   for _, v in ipairs(patch) do
     a[#a + 1] = {address = base + v[1], flags = gg.TYPE_DWORD, value = v[2]}
