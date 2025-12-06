@@ -2624,17 +2624,14 @@ function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
   end
 
   local patch = {
-    {address = base - 0x48, flags = gg.TYPE_DWORD, value = hex1},
-    {address = base - 0x44, flags = gg.TYPE_DWORD, value = hex2},
-    {address = base - 0x40, flags = gg.TYPE_DWORD, value = hex3},
-    {address = base - 0x2C, flags = gg.TYPE_DWORD, value = amount},
-    {address = base + 0x10, flags = gg.TYPE_DWORD, value = 0},
-    {address = base + 0x18, flags = gg.TYPE_DWORD, value = 0},
-    {address = base + 0x20, flags = gg.TYPE_DWORD, value = 0}
+    {address = base + 0x10, flags = gg.TYPE_DWORD, value = hex1},
+    {address = base + 0x14, flags = gg.TYPE_DWORD, value = hex2},
+    {address = base + 0x18, flags = gg.TYPE_DWORD, value = hex3},
+    {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
   }
 
-  for o = 0x3C, 0x30, -4 do
-    table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+  for o = 0x1C, 0x28, -4 do
+    table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
   end
 
   gg.setValues(patch)
@@ -2709,20 +2706,17 @@ function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     end
 
     local patch = {
-        {address = base - 0x48, flags = gg.TYPE_DWORD, value = toolId},
-        {address = base - 0x2C, flags = gg.TYPE_DWORD, value = amount},
-        {address = base + 0x10, flags = gg.TYPE_DWORD, value = 0},
-        {address = base + 0x18, flags = gg.TYPE_DWORD, value = 0},
-        {address = base + 0x20, flags = gg.TYPE_DWORD, value = 0}
+        {address = base + 0x10, flags = gg.TYPE_DWORD, value = toolId},
+        {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
     }
 
     if metaVal then
-        table.insert(patch, {address = base - 0x44, flags = gg.TYPE_DWORD, value = metaVal})
-        for o = 0x40, 0x30, -4 do
-            table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+        table.insert(patch, {address = base + 0x14, flags = gg.TYPE_DWORD, value = metaVal})
+        for o = 0x18, 0x28, -4 do
+            table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
         end
     else
-        for o = 0x44, 0x30, -4 do
+        for o = 0x14, 0x30, -4 do
             table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
         end
     end
