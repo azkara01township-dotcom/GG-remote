@@ -1735,12 +1735,6 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   end
 
   table.insert(patch, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
-  table.insert(patch, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x40, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x44, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x48, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(patch, {address = addr + 0x4C, flags = gg.TYPE_DWORD, value = 0})
 
   gg.setValues(patch)
   gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount)
@@ -1810,8 +1804,7 @@ local function apply30DayBooster(name, offset)
   end
 
   local extra = {
-    {0x18, 0}, {0x1C, 2592000}, {0x28, 0}, {0x2C, 0}, {0x30, 0}, {0x34, 0}, {0x38, 0}, {0x3C, 0}
-  }
+    {0x18, 0}, {0x1C, 2592000}}
   for _, e in ipairs(extra) do
     table.insert(patch, {address = addr + e[1], flags = gg.TYPE_DWORD, value = e[2]})
   end
@@ -1851,12 +1844,6 @@ function booster13()
   for i = 0, #patch - 1 do
     table.insert(edits, {address = addr + 0x10 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
   end
-  table.insert(edits, {address = addr + 0x38, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x3C, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x40, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x44, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x48, flags = gg.TYPE_DWORD, value = 0})
-  table.insert(edits, {address = addr + 0x4C, flags = gg.TYPE_DWORD, value = 0})
   gg.setValues(edits)
   gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
 end
