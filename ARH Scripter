@@ -2838,7 +2838,7 @@ function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
   local tgt = getAddr()
   if not tgt then return end
 
-  local addr = tgt - 0x48
+  local addr = tgt + 0x10
   local newValues = {}
 
   for i, val in ipairs(copy) do
@@ -2879,49 +2879,40 @@ end
 -- 📌 Perk functions multi bahasa
 function perk1()
   applyPerk("perk_express_plane_keuntungan", "✈️", {
-    {offset = -0x48, value = 1599099684},
-    {offset = -0x44, value = 1936682818},
-    {offset = -0x40, value = 1701860212},
-    {offset = -0x3C, value = 1884644453},
-    {offset = -0x38, value = 7498049},
-    {offset = -0x34, value = 7631717},
-    {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 100},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 1599099684},
+    {offset = 0x14, value = 1936682818},
+    {offset = 0x18, value = 1701860212},
+    {offset = 0x1C, value = 1884644453},
+    {offset = 0x20, value = 7498049},
+    {offset = 0x24, value = 7631717},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 100}
   })
 end
 
 function perk2()
   applyPerk("perk_instant_crop_keuntungan", "🌾", {
-    {offset = -0x48, value = 1599099692},
-    {offset = -0x44, value = 1936682818},
-    {offset = -0x40, value = 1701860212},
-    {offset = -0x3C, value = 1884644453},
-    {offset = -0x38, value = 1987207496},
-    {offset = -0x34, value = 7631717},
-    {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 100},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 1599099692},
+    {offset = 0x14, value = 1936682818},
+    {offset = 0x18, value = 1701860212},
+    {offset = 0x1C, value = 1884644453},
+    {offset = 0x20, value = 1987207496},
+    {offset = 0x24, value = 7631717},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 100}
   })
 end
 
 function perk3()
   applyPerk("perk_rapid_farm_keuntungan", "🐄", {
-    {offset = -0x48, value = 1599099688},
-    {offset = -0x44, value = 1936682818},
-    {offset = -0x40, value = 1701860212},
-    {offset = -0x3C, value = 1884644453},
-    {offset = -0x38, value = 1836212550},
-    {offset = -0x34, value = 7602291},
-    {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 100},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 1599099688},
+    {offset = 0x14, value = 1936682818},
+    {offset = 0x18, value = 1701860212},
+    {offset = 0x1C, value = 1884644453},
+    {offset = 0x20, value = 1836212550},
+    {offset = 0x24, value = 7602291},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 100}
   })
 end
 
