@@ -1841,8 +1841,8 @@ function booster8() patchTimedBooster("❤️", "Infinite Lives", {{0x10,1952533
 function booster9() patchTimedBooster("✨", "Double Points", {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000},{0x38,0},{0x3C,0},{0x40,0},{0x44,0},{0x48,0},{0x4C,0}}) end
 
 function booster10() apply30DayBooster("🌈 Rainbow Ball", -0x8) end
-function booster11() apply30DayBooster("💣 Bomb", -0x70) end
-function booster12() apply30DayBooster("🚀 Rocket", 0x60) end
+function booster11() apply30DayBooster("💣 Bomb", -0x78) end
+function booster12() apply30DayBooster("🚀 Rocket", 0x68) end
 
 function booster13()
   local addr = getAddr()
