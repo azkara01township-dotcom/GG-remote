@@ -1929,8 +1929,6 @@ return
 
   table.insert(patch, {address = addr + 0x28, flags = 4, value = 0})    -- duration
   table.insert(patch, {address = addr + 0x2C, flags = 4, value = amt})  -- amount
-  for _, offset in ipairs({0x38, 0x3C, 0x40, 0x44, 0x48, 0x4C}) do
-    table.insert(patch, {address = addr + offset, flags = 4, value = 0})
   end
 
   gg.setValues(patch)
@@ -1985,8 +1983,6 @@ function lab18(name, offset)
   end
 
   patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
-  for _, o in ipairs({0x28, 0x2C, 0x30, 0x34, 0x38, 0x3C}) do
-table.insert(patch, {address = addr + o, value = 0, flags = gg.TYPE_DWORD})
   end
 
   gg.setValues(patch)
