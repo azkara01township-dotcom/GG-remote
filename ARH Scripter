@@ -2418,14 +2418,14 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
 
   if duration then
     -- 30-Day Bonus Patch
-    dw(-0x48, 1835619372)
-    dw(-0x44, 1850041445)
-    dw(-0x40, 2037672308)
-    dw(-0x3C, 1635214674)
-    dw(-0x38, 1766679666)
-    dw(-0x34, itemId)
-    dw(-0x30, 0)
-    dw(-0x2C, duration)
+    dw(0x10, 1835619372)
+    dw(0x14, 1850041445)
+    dw(0x18, 2037672308)
+    dw(0x1C, 1635214674)
+    dw(0x20, 1766679666)
+    dw(0x24, itemId)
+    dw(0x28, 0)
+    dw(0x2C, duration)
     val = duration
   else
     local max = (caller == "free") and 500 or 25000
@@ -2441,15 +2441,10 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
     end
 
     -- Normal Item Patch
-    dw(-0x48, itemId)
-    for i = -0x44, -0x30, 4 do dw(i, 0) end
-    dw(-0x2C, val)
+    dw(0x10, itemId)
+    for i = 0x14, 0x28, 4 do dw(i, 0) end
+    dw(0x2C, val)
   end
-
-  -- Clean-up
-  dw(0x10, 0)
-  dw(0x18, 0)
-dw(0x20, 0)
 
   gg.setValues(edits)
 
