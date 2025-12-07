@@ -7032,17 +7032,14 @@ function applyAvatarAnniversary(hex, emoji, name)
   end
 
   local patch = {
-    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
-    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
-    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3] or 0},
-    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
-    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr + 0x14, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = hex[3] or 0},
+    {address = addr + 0x1C, flags = gg.TYPE_DWORD, value = 0},
     {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x24, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x28, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = 1}
   }
 
   gg.setValues(patch)
@@ -7124,17 +7121,14 @@ function applyCompleteAvatar(hex, emoji, name)
   end
 
   local patch = {
-    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
-    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
-    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3] or 0},
-    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
-    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr + 0x14, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = hex[3] or 0},
+    {address = addr + 0x1C, flags = gg.TYPE_DWORD, value = 0},
     {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x24, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x28, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = 1}
   }
 
   gg.setValues(patch)
@@ -7588,6 +7582,7 @@ local hasil = gg.getResults(5000)
   gg.clearResults()
 
   -- 🎉 Sukses
+  a2()
   gg.toast("✅ Gold Cards are now sendable!")
 end
 
@@ -7770,17 +7765,14 @@ end
 
 function cardbadge()
   cardbadgecol("Card Pack Reward", "🎴", {
-    {offset = -0x48, value = 1918976790},
-    {offset = -0x44, value = 1348420452},
-    {offset = -0x40, value = 879453025},
-    {offset = -0x3C, value = 0},
-    {offset = -0x38, value = 0},
-    {offset = -0x34, value = 0},
-{offset = -0x30, value = 0},
-    {offset = -0x2C, value = 74},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 1918976790},
+    {offset = 0x14, value = 1348420452},
+    {offset = 0x18, value = 879453025},
+    {offset = 0x1C, value = 0},
+    {offset = 0x20, value = 0},
+    {offset = 0x24, value = 0},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 74}
   })
 end
 
@@ -7855,17 +7847,14 @@ function applybBadge(hex, emoji, name)
   end
 
   local patch = {
-    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex[1]},
-    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex[2]},
-    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex[3]},
-    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = hex[4]},
-    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = hex[5]},
-    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = hex[6]},
-    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
-    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr + 0x14, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = hex[3]},
+    {address = addr + 0x1C, flags = gg.TYPE_DWORD, value = hex[4]},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = hex[5]},
+    {address = addr + 0x24, flags = gg.TYPE_DWORD, value = hex[6]},
+    {address = addr + 0x28, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = 1}
   }
 
   gg.setValues(patch)
