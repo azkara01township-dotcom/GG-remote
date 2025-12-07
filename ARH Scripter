@@ -7872,10 +7872,10 @@ function badgecollect6()
   applybBadge({0x6461621C, 0x305F6567, 0x72675F32,0x00646E61, 0x00000000, 0x00000000}, "❄️", "Legendary Winter Badge") end
 
 function badgecollect7() 
-  applybBadge({0x6461621C, 0x305F6567, 0x72675F33,0x00646E61, 0x00000000, 0x00000000}, "🧭", "Journey Badge") end
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F33,0x00006573, 0x00000000, 0x00000000}, "🧭", "Journey Badge") end
 
 function badgecollect8() 
-  applybBadge({0x6461621A, 0x305F6567, 0x61625F33,0x00006573, 0x00000000, 0x00000000}, "🗺️", "Legendary Journey Badge") end
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F33,0x00646E61, 0x00000000, 0x00000000}, "🗺️", "Legendary Journey Badge") end
 
 -------------------------------------------------
   
