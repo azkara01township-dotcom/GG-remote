@@ -2942,33 +2942,27 @@ end
 
 function perk6()
   applyPerk("perk_train_boost_keuntungan", "🚆", {
-    {offset = -0x48, value = 0x5F50532A},
-    {offset = -0x44, value = 0x736F6F42},
-    {offset = -0x40, value = 0x65705374},
-    {offset = -0x3C, value = 0x70556465},
-    {offset = -0x38, value = 0x69617254},
-    {offset = -0x34, value = 0x0000736E},
-    {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 3},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 0x5F50532A},
+    {offset = 0x14, value = 0x736F6F42},
+    {offset = 0x18, value = 0x65705374},
+    {offset = 0x1C, value = 0x70556465},
+    {offset = 0x20, value = 0x69617254},
+    {offset = 0x24, value = 0x0000736E},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 3}
   })
 end
 
 function perk7()
   applyPerk("perk_double_train_keuntungan", "🚃", {
-    {offset = -0x48, value = 0x5F505322},
-    {offset = -0x44, value = 0x736F6F42},
-    {offset = -0x40, value = 0x61725474},
-    {offset = -0x3C, value = 0x614D6E69},
-    {offset = -0x38, value = 0x4A007374},
-    {offset = -0x34, value = 0x00000078},
-    {offset = -0x30, value = 0},
-    {offset = -0x2C, value = 3},
-    {offset = 0x10, value = 0},
-    {offset = 0x18, value = 0},
-    {offset = 0x20, value = 0}
+    {offset = 0x10, value = 0x5F505322},
+    {offset = 0x14, value = 0x736F6F42},
+    {offset = 0x18, value = 0x61725474},
+    {offset = 0x1C, value = 0x614D6E69},
+    {offset = 0x20, value = 0x4A007374},
+    {offset = 0x24, value = 0x00000078},
+    {offset = 0x28, value = 0},
+    {offset = 0x2C, value = 3}
   })
 end
   
