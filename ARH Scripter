@@ -6763,17 +6763,14 @@ function applySticker(hex1, hex2, hex3, label)
   if not addr then return end
 
   local patch = {
-    {address = addr - 0x48, flags = gg.TYPE_DWORD, value = hex1},
-    {address = addr - 0x44, flags = gg.TYPE_DWORD, value = hex2},
-    {address = addr - 0x40, flags = gg.TYPE_DWORD, value = hex3},
-    {address = addr - 0x3C, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x38, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x34, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x30, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr - 0x2C, flags = gg.TYPE_DWORD, value = 1},
-    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = 0},
-    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = hex1},
+    {address = addr + 0x14, flags = gg.TYPE_DWORD, value = hex2},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = hex3},
+    {address = addr + 0x1C, flags = gg.TYPE_DWORD, value = 0},
     {address = addr + 0x20, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x24, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x28, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = 1}
   }
 
   gg.setValues(patch)
@@ -6983,7 +6980,7 @@ function avatar1()
       "🌟 • Year 5 Avatar",
       "🌟 • Year 6 Avatar",
       "🌟 • Year 7 Avatar",
-"🌟 • Year 8 Avatar",
+      "🌟 • Year 8 Avatar",
       "🌟 • Year 9 Avatar",
       "🌟 • Year 10 Avatar",
       "🌟 • Year 11 Avatar (1)",
