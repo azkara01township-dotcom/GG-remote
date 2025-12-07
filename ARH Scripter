@@ -9229,7 +9229,7 @@ if not input then
   end
 
   -- 🔍 Cari base utama
-  gg.searchNumber("1852403807", gg.TYPE_DWORD)
+  gg.searchNumber("1572867", gg.TYPE_DWORD)
   local hasil = gg.getResults(500)
 
   if #hasil == 0 then
@@ -9241,10 +9241,10 @@ if not input then
 
   for _, v in ipairs(hasil) do
     local cek = gg.getValues({
-      {address = v.address - 0x4, flags = gg.TYPE_DWORD}
+      {address = v.address + 0xF0, flags = gg.TYPE_DWORD}
     })
 
-    if cek[1].value == 1885433110 then
+    if cek[1].value == 1065353216 then
       base = v.address
       break
     end
@@ -9256,12 +9256,12 @@ if not input then
 
   -- 📌 Eksekusi pengeditan (TIDAK ADA PRODUK)
   local edits = {
-    {address = base - 0xE4, flags = gg.TYPE_DWORD, value = 0},
-    {address = base - 0xE0, flags = gg.TYPE_DWORD, value = coin},
-    {address = base - 0xDC, flags = gg.TYPE_DWORD, value = 0},
-    {address = base - 0xD8, flags = gg.TYPE_DWORD, value = cash},
-    {address = base - 0xC4, flags = gg.TYPE_DWORD, value = 0},
-    {address = base - 0xC0, flags = gg.TYPE_DWORD, value = exp}
+    {address = base + 0x30, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x34, flags = gg.TYPE_DWORD, value = coin},
+    {address = base + 0x38, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x3C, flags = gg.TYPE_DWORD, value = cash},
+    {address = base + 0x50, flags = gg.TYPE_DWORD, value = 0},
+    {address = base + 0x54, flags = gg.TYPE_DWORD, value = exp}
   }
 
   gg.setValues(edits)
