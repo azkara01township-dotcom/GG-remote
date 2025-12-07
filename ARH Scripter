@@ -2919,19 +2919,13 @@ end
 function perk4()
   applyCopiedPerk("perk_instant_building_keuntungan", "🏗️", 24, {
     {offset = 24, value = 0},
-    {offset = 0x58, value = 0},
-    {offset = 0x60, value = 0},
-    {offset = 0x68, value = 0},
     {offset = 28, value = 100}
   })
 end
 
 function perk5()
   applyCopiedPerk("perk_unlimited_barn_keuntungan", "🏡", 23, {
-    {offset = 24, value = 0},
-    {offset = 0x58, value = 0},
-    {offset = 0x60, value = 0},
-    {offset = 0x68, value = 0}
+    {offset = 24, value = 0}
   }, {
     prompt = "enter_barn_boost_keuntungan",
     offset = 28,
