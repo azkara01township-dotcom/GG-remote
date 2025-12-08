@@ -6828,8 +6828,8 @@ local choice = gg.multiChoice(skins, nil, "🖼️ Frame Style")
   if not choice then return end
     -- 🔙 Back option
     if choice[3] then
-      if type(kums4) == "function" then
-        kums4()
+      if type(gp3) == "function" then
+        gp3()
       else
       end
       return
