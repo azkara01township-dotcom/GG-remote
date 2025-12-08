@@ -6815,140 +6815,150 @@ for i, s in ipairs(stickers) do
 end
 
 function kums4()
-while true do
-  gg.setVisible(false)
-  gg.clearResults()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
 
-  local skins = {
-    "🌸 Frame Festival",
-    "🌸 Name Festival",
-    "❌ • Go Back"
-  }
+    local skins = {
+      "🌸 • Frame Festival",
+      "🌸 • Name Festival",
+      "❌ • Go Back"
+    }
 
-  local choice = gg.multiChoice(skins, nil, "🖼️  Frame Style")
+    local choice = gg.multiChoice(skins, nil, "🖼️  Frame Style")
 
-  if not choice then
-    gg.toast("❌ Menu closed.")
-    return
-  end
+    if not choice then
+      gg.toast("❌ Menu closed.")
+      return
+    end
 
-  -- 🔙 Back (index ke-3)
-  if choice[3] then
-    gg.toast("🔙 Back to previous menu")
-    return
-  end
+    -- 🔙 Back
+    if choice[3] then
+      return
+    end
 
-  -- 🔁 Proses pilihan 1 & 2
-  for i = 1, 2 do
-    if choice[i] then
-      local func = _G["Framestyle" .. i]
-      if type(func) == "function" then
-        func()
-        gg.toast("✅ Frame Style " .. i .. " applied!\n👉 Claim it in-freeze reward!")
+    -- 🔁 Proses pilihan 1 & 2
+    for i = 1, 2 do
+      if choice[i] then
+        local func = _G["Framestyle" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Frame Style applied!\n👉 Claim it in-freeze reward!")
 
-        -- ⏸️ Tunggu user tekan icon GG
-        repeat
-          gg.sleep(500)
-        until gg.isVisible(true)
+          -- ⏸️ Tunggu user tekan icon GG
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
 
-        gg.setVisible(false)
-      else
-        gg.alert("❌ Framestyle" .. i .. "() not found!")
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Framestyle" .. i .. "() not found!")
+        end
       end
     end
-  end
 
-  gg.toast("🎉 Frame Style processed!")
-end
+    gg.toast("🎉 Frame Style processed!")
+  end
 end
 
 -- 📁 Cache & File Setup
 local folder = "/sdcard/.syscfg.lib/"
 local fileAddr = folder .. ".addresscache"
-local function deleteFile(p) pcall(function() os.remove(p) end) end
+local function deleteFile(p)
+  pcall(function() os.remove(p) end)
+end
+
 gg.setVisible(false)
 
--- 📍 Get Framestyle Address
-function getFramestyleAddr()
+function getAddr()
   local f = io.open(fileAddr, "r")
   local addr = f and tonumber(f:read("*l")) or nil
   if f then f:close() end
 
   if addr then
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if chk and chk[1] and chk[1].value == 29 then return addr end
+    if chk and chk[1] and chk[1].value == 30 then 
+      return addr 
+    end
     deleteFile(fileAddr)
-    gg.toast("👑 ARH-Cache cleared 👑")
+    gg.toast("👑 ARH-Cache cleared")
   end
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
-  gg.refineNumber("24", gg.TYPE_DWORD)
+  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
+  gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen the frame style first.") return nil end
+
+  if #r == 0 then 
+    gg.alert("❌ Address not found.\nOpen framestyle first.") 
+    return nil 
+  end
 
   local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
-  if save then save:write(newAddr) save:close() end
+  if save then 
+    save:write(newAddr) 
+    save:close() 
+  end
   return newAddr
 end
 
--- 🎯 Framestyle Source Base
-local baseSignAddr = nil
+local baseFramestyleAddr = nil
+
 function initFramestyleSearch()
-  if baseSignAddr then return true end
+  if baseFramestyleAddr then return true end
+
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
-  gg.refineNumber("24", gg.TYPE_DWORD)
+  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
+  gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Frame Style  structure not found.") return false end
-  baseSignAddr = r[1].address
+
+  if #r == 0 then 
+    gg.alert("❌ Framestyle structure not found.") 
+    return false 
+  end
+
+  baseFramestyleAddr = r[1].address
   return true
 end
 
--- 🪧 Apply Framestyle Skin
 function applyFramestyle(offset, label, emoji)
   if not initFramestyleSearch() then return end
 
-  local src = baseSignAddr + offset
+  local src = baseFramestyleAddr + offset
   local vals = {}
 
   for i = 0, 5 do
-    table.insert(vals, {
-      address = src + i * 4,
-      flags = gg.TYPE_DWORD
-    })
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
   end
 
   vals = gg.getValues(vals)
 
-  local target = getFramestyleAddr()
+  local target = getAddr()
   if not target then return end
   target = target + 0x10
 
   local newVals = {}
-
   for i, v in ipairs(vals) do
     table.insert(newVals, {
-      address = target + (i - 1) * 4,
-      value = v.value,
+      address = target + (i - 1) * 4, 
+      value = v.value, 
       flags = gg.TYPE_DWORD
     })
   end
 
-  -- ✅ FIXED OFFSET
   table.insert(newVals, {address = target + 0x28, value = 0, flags = gg.TYPE_DWORD})
   table.insert(newVals, {address = target + 0x2C, value = 1, flags = gg.TYPE_DWORD})
 
   gg.setValues(newVals)
-  gg.toast(emoji .. " " .. label .. " applied!")
+  gg.toast(emoji .. " " .. label .. " framestyle applied!")
 end
 
-function Framestyle1()  applyFramestyle(-0x8,  "Name Festival",  "🌸") end
-function Framestyle2()  applyFramestyle(0xEF8, "Frame Festival", "🌸") end
-
+function Framestyle1() applyFramestyle(0xEF8, "Frame Festival", "🌸") end
+function Framestyle2() applyFramestyle(-0x8,  "Name Festival",  "🌸") end
+    
 function kums5()
 local indev = dev
   local menu = gg.choice({
