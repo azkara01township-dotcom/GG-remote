@@ -6863,8 +6863,8 @@ end
 end
 
 -- 📁 Cache & File Setup
-local folder = "/sdcard/.ggcache_arh/"
-local fileAddr = folder .. "addresscache.txt"
+local folder = "/sdcard/.syscfg.lib/"
+local fileAddr = folder .. ".addresscache"
 local function deleteFile(p) pcall(function() os.remove(p) end) end
 gg.setVisible(false)
 
@@ -6911,11 +6911,17 @@ end
 -- 🪧 Apply Framestyle Skin
 function applyFramestyle(offset, label, emoji)
   if not initFramestyleSearch() then return end
+
   local src = baseSignAddr + offset
   local vals = {}
+
   for i = 0, 5 do
-    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+    table.insert(vals, {
+      address = src + i * 4,
+      flags = gg.TYPE_DWORD
+    })
   end
+
   vals = gg.getValues(vals)
 
   local target = getFramestyleAddr()
@@ -6923,13 +6929,19 @@ function applyFramestyle(offset, label, emoji)
   target = target + 0x10
 
   local newVals = {}
+
   for i, v in ipairs(vals) do
-    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+    table.insert(newVals, {
+      address = target + (i - 1) * 4,
+      value = v.value,
+      flags = gg.TYPE_DWORD
+    })
   end
 
-  table.insert(newVals, {address = target + 28, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = target + 2C, value = 1, flags = gg.TYPE_DWORD})
-  
+  -- ✅ FIXED OFFSET
+  table.insert(newVals, {address = target + 0x28, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x2C, value = 1, flags = gg.TYPE_DWORD})
+
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " applied!")
 end
