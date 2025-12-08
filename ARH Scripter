@@ -6815,135 +6815,133 @@ for i, s in ipairs(stickers) do
 end
 
 function kums4()
+while true do
   gg.setVisible(false)
   gg.clearResults()
-
+  
   local skins = {
-"🌸 • Frame Style",
-"🌸 • Name Style",
-    "❌ • Go Back"
+"🌸 Frame Festival",
+"🌸 Name Festival",
+"❌ • Go Back"
   }
 
-  local choice = gg.choice(skins, nil, "🖼️  Frame Style")
+  local choice = gg.multiChoice(skins, nil, "🖼️  Frame Style")
   if not choice then return end
-if choice == 3 then
-    gp3()
-    return
-  end
 
-  local func = _G["nameStyle" .. choice]
-  if type(func) == "function" then
-    func()
-  else
-  end
-
-  while true do
-    if gg.isVisible(true) then
-      gg.setVisible(false)
-      kums4()
-      break
+if not choice then 
+      gg.toast("❌ Menu closed.")
+      return
     end
+
+    -- 🔙 Back option
+    if choice[2] then
+      if type(kums4) == "function" then
+        kums4()
+      else
+        gg.toast("⚠️ Back function unavailable.")
+      end
+      return
+    end
+
+    -- 🔁 Process selected avatars one by one
+    for i = 1, 2 do
+      if choice[i] then
+        local func = _G["Framestyle" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ Frame Style " .. i .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Wait for user to press GG icon before continuing
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+
+          gg.setVisible(false)
+        else
+          gg.alert("❌ Frame Style" .. i .. "() not found!")
+        end
+      end
+    end
+
+    gg.toast("🎉 Frame Style have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
-function nameStyle1()
+-- 📁 Cache & File Setup
+local folder = "/sdcard/.ggcache_arh/"
+local fileAddr = folder .. "addresscache.txt"
+local function deleteFile(p) pcall(function() os.remove(p) end) end
+gg.setVisible(false)
+
+-- 📍 Get Framestyle Address
+function getFramestyleAddr()
+  local f = io.open(fileAddr, "r")
+  local addr = f and tonumber(f:read("*l")) or nil
+  if f then f:close() end
+
+  if addr then
+    local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
+    if chk and chk[1] and chk[1].value == 29 then return addr end
+    deleteFile(fileAddr)
+    gg.toast("👑 ARH-Cache cleared 👑")
+  end
+
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- Step 1: Search and copy source values
-  gg.searchNumber("1767993366;49;24;1599099692:1153", gg.TYPE_DWORD)
-  gg.refineNumber("24", gg.TYPE_DWORD)
-  local src = gg.getResults(1)
-  if #src == 0 then
-    gg.alert("❌ Source Frame Festival style not found.\nPlease try again.")
-    return
-  end
-
-  local base = src[1].address - 0x8
-  local copied = {}
-  for i = 0, 5 do
-    table.insert(copied, {address = base + i * 4, flags = gg.TYPE_DWORD})
-  end
-  copied = gg.getValues(copied)
-  gg.toast("📋 Frame style copied.")
-
-  -- Step 2: Search target and paste copied values
-  gg.clearResults()
-  gg.searchNumber("29;1599361808;30::641", gg.TYPE_DWORD)
-  gg.refineNumber("30", gg.TYPE_DWORD)
-  local tgt = gg.getResults(1)
-  if #tgt == 0 then
-    gg.toast("❌ Target Frame Festival style not found.")
-    return
-  end
-
-  local addr = tgt[1].address - 0x48
-  local patch = {}
-  for i, v in ipairs(copied) do
-    patch[#patch + 1] = {address = addr + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD}
-  end
-
-  -- Step 3: Insert fixed perk values
-  table.insert(patch, {address = addr + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patch, {address = addr + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
-
-  -- Step 4: Insert blank cleanup slots
-  for i = 0, 2 do
-    table.insert(patch, {address = addr + 0x58 + (i * 8), value = 0, flags = gg.TYPE_DWORD})
-  end
-
-  -- Step 5: Apply all
-  gg.setValues(patch)
-  gg.toast("✅ Frame Festival style applied!")
-end
-
-function nameStyle2()
-  gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- Step 1: Salin struktur Name Style
   gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
   gg.refineNumber("24", gg.TYPE_DWORD)
-  local src = gg.getResults(1)
-  if #src == 0 then
-    gg.alert("❌ Source Name Festival Style not found.\nPlease restart the game and try again.")
-    return
-  end
-  local copyAddr = src[1].address - 0x8
-  local copied = {}
-  for i = 0, 5 do
-    table.insert(copied, {address = copyAddr + i * 4, flags = gg.TYPE_DWORD})
-  end
-  copied = gg.getValues(copied)
-  gg.toast("📋 Name style copied.")
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Address not found.\nOpen the frame style first.") return nil end
 
-  -- Step 2: Cari target dan tempelkan Name Style
-  gg.clearResults()
-  gg.searchNumber("29;1599361808;30::641", gg.TYPE_DWORD)
-  gg.refineNumber("30", gg.TYPE_DWORD)
-  local tgt = gg.getResults(1)
-  if #tgt == 0 then
-    gg.toast("❌ Target Name Festival style not found.")
-    return
-  end
-  local base = tgt[1].address - 0x48
-  local patch = {}
-  for i, v in ipairs(copied) do
-    table.insert(patch, {address = base + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
-  end
-
-  -- Perk tetap
-  table.insert(patch, {address = base + 6 * 4, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(patch, {address = base + 7 * 4, value = 1, flags = gg.TYPE_DWORD})
-
-  -- Slot kosong tambahan
-  for i = 0, 2 do
-    table.insert(patch, {address = base + 0x58 + i * 8, value = 0, flags = gg.TYPE_DWORD})
-  end
-
-  gg.setValues(patch)
-  gg.toast("✅ Name Festival style applied!")
+  local newAddr = r[1].address
+  local save = io.open(fileAddr, "w")
+  if save then save:write(newAddr) save:close() end
+  return newAddr
 end
+
+-- 🎯 Framestyle Source Base
+local baseSignAddr = nil
+function initFramestyleSearch()
+  if baseSignAddr then return true end
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
+  gg.refineNumber("24", gg.TYPE_DWORD)
+  local r = gg.getResults(1)
+  if #r == 0 then gg.alert("❌ Frame Style  structure not found.") return false end
+  baseSignAddr = r[1].address
+  return true
+end
+
+-- 🪧 Apply Framestyle Skin
+function applyFramestyle(offset, label, emoji)
+  if not initFramestyleSearch() then return end
+  local src = baseSignAddr + offset
+  local vals = {}
+  for i = 0, 5 do
+    table.insert(vals, {address = src + i * 4, flags = gg.TYPE_DWORD})
+  end
+  vals = gg.getValues(vals)
+
+  local target = getFramestyleAddr()
+  if not target then return end
+  target = target + 0x10
+
+  local newVals = {}
+  for i, v in ipairs(vals) do
+    table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
+  end
+
+  table.insert(newVals, {address = target + 28, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 2C, value = 1, flags = gg.TYPE_DWORD})
+  
+  gg.setValues(newVals)
+  gg.toast(emoji .. " " .. label .. " applied!")
+end
+
+function Framestyle1()  applyFramestyle(-0x8,  "Name Festival",               "🌸") end
+function Framestyle2()  applyFramestyle(0xEF8, "Frame Festival",             "🌸") end
 
 function kums5()
 local indev = dev
