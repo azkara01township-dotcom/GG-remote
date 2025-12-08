@@ -6886,8 +6886,8 @@ function getAddr()
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
-  gg.refineNumber("1784639593", gg.TYPE_DWORD)
+  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
+  gg.refineNumber("24", gg.TYPE_DWORD)
   local r = gg.getResults(1)
 
   if #r == 0 then 
@@ -6911,8 +6911,8 @@ function initFramestyleSearch()
 
   gg.clearResults()
   gg.setRanges(gg.REGION_C_ALLOC)
-  gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
-  gg.refineNumber("1784639593", gg.TYPE_DWORD)
+  gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
+  gg.refineNumber("24", gg.TYPE_DWORD)
   local r = gg.getResults(1)
 
   if #r == 0 then 
@@ -6949,8 +6949,8 @@ function applyFramestyle(offset, label, emoji)
     })
   end
 
-  table.insert(newVals, {address = target + 0x28, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = target + 0x2C, value = 1, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x18, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x1C, value = 1, flags = gg.TYPE_DWORD})
 
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " framestyle applied!")
