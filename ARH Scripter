@@ -6824,40 +6824,38 @@ function kums4()
       "🌸 • Name Festival",
       "❌ • Go Back"
     }
-
-    local choice = gg.multiChoice(skins, nil, "🖼️  Frame Style")
-
-    if not choice then
-      gg.toast("❌ Menu closed.")
-      return
-    end
-
-    -- 🔙 Back
+local choice = gg.multiChoice(skins, nil, "🖼️ Frame Style")
+  if not choice then return end
+    -- 🔙 Back option
     if choice[3] then
+      if type(kums4) == "function" then
+        kums4()
+      else
+      end
       return
     end
 
-    -- 🔁 Proses pilihan 1 & 2
+    -- 🔁 Process selected frame style one by one
     for i = 1, 2 do
       if choice[i] then
         local func = _G["Framestyle" .. i]
         if type(func) == "function" then
           func()
-          gg.toast("✅ Frame Style applied!\n👉 Claim it in-freeze reward!")
-
-          -- ⏸️ Tunggu user tekan icon GG
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+          -- ⏸️ Wait for user to press GG icon before continuing
           repeat
             gg.sleep(500)
           until gg.isVisible(true)
 
           gg.setVisible(false)
         else
-          gg.alert("❌ Framestyle" .. i .. "() not found!")
+          gg.alert("❌ Function Frame Style" .. i .. "() not found!")
         end
       end
     end
 
-    gg.toast("🎉 Frame Style processed!")
+    gg.toast("🎉 Frame Style have been processed!")
+    -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
 
