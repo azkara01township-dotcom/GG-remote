@@ -3092,7 +3092,7 @@ function coldekor2()
       end
     end
 
-    gg.toast("🎉 All selected Lantern Decoration have been processed!")
+    gg.toast("🎉 All selected Lantern decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -3255,7 +3255,7 @@ gg.sleep(500)
       end
     end
 
-    gg.toast("🎉 All selected Easter Decoration have been processed!")
+    gg.toast("🎉 All selected Easter decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -3441,7 +3441,7 @@ function coldekor4()
       end
     end
 
-    gg.toast("🎉 All selected Valentine Decoration have been processed!")
+    gg.toast("🎉 All selected Valentine decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -3678,7 +3678,7 @@ if type(coldekor7) == "function" then
       end
     end
 
-    gg.toast("🎉 All selected Special Decoration have been processed!")
+    gg.toast("🎉 All selected Special decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -3881,7 +3881,7 @@ for i = 1, 26 do
       end
     end
 
-    gg.toast("🎉 All selected Rare Decoration have been processed!")
+    gg.toast("🎉 All selected Rare decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -4084,7 +4084,7 @@ function randecor3()
       end
     end
 
-    gg.toast("🎉 All selected Unique Decoration have been processed!")
+    gg.toast("🎉 All selected Unique decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -4296,7 +4296,7 @@ function randecor4()
       end
     end
 
-    gg.toast("🎉 All selected Limited Decoration have been processed!")
+    gg.toast("🎉 All selected Limited decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -4493,7 +4493,7 @@ function randecor5()
       end
     end
 
-    gg.toast("🎉 All selected Premium Decoration have been processed!")
+    gg.toast("🎉 All selected Premium decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -4697,7 +4697,7 @@ function randecor6()
       end
     end
 
-    gg.toast("🎉 All selected Classic Decoration have been processed!")
+    gg.toast("🎉 All selected Classic decorations have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -4913,7 +4913,7 @@ else
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Helipad have been processed!")
+    gg.toast("🎉 All selected Helipad have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5068,7 +5068,7 @@ local choice = gg.multiChoice(skins, nil, "🚁 Select an Helicopter Skins:")
 end
     end
 
-    gg.toast("🎉 All selected Exclusive Helicopter have been processed!")
+    gg.toast("🎉 All selected Helicopter have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5238,7 +5238,7 @@ function bandara1()
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Airport have been processed!")
+    gg.toast("🎉 All selected Airport have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5441,7 +5441,7 @@ local choice = gg.multiChoice(skins, nil, "🛩️ Select an Airplane Skin:")
       end
 end
 
-    gg.toast("🎉 All selected Exclusive Airplane have been processed!")
+    gg.toast("🎉 All selected Airplane have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5612,7 +5612,7 @@ function kret1()
       end
     end
 
-    gg.toast("🎉 All selected Station skin have been processed!")
+    gg.toast("🎉 All selected Station skin have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5769,7 +5769,7 @@ repeat
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Train have been processed!")
+    gg.toast("🎉 All selected Train have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -5939,7 +5939,7 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Port Skin:")
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Port have been processed!")
+    gg.toast("🎉 All selected Port have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6089,7 +6089,7 @@ local choice = gg.multiChoice(skins, nil, "🛳️ Select Ship Skin:")
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Ship have been processed!")
+    gg.toast("🎉 All selected Ship have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6238,7 +6238,7 @@ local choice = gg.multiChoice(skins, nil, "🏯 Select Fortress Skin:")
       end
     end
 
-    gg.toast("🎉 All selected Exclusive Fortress have been processed!")
+    gg.toast("🎉 All selected Fortress have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6405,7 +6405,7 @@ while true do
       end
     end
 
-    gg.toast("🎉 All selected City Townsign Event have been processed!")
+    gg.toast("🎉 All selected City Sign Event have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6561,7 +6561,7 @@ while true do
       end
     end
 
-    gg.toast("🎉 All selected City Townsign Random have been processed!")
+    gg.toast("🎉 All selected City Sign Random have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6705,7 +6705,7 @@ while true do
       end
     end
   end
-gg.toast("🎉 All selected stickers have been processed!")
+gg.toast("🎉 All selected stickers have been successfully claimed!")
 end
 end
 
@@ -6812,7 +6812,7 @@ local choice = gg.multiChoice(skins, nil, "🖼️ Frame Style")
       end
     end
 
-    gg.toast("🎉 Frame Style have been processed!")
+    gg.toast("🎉 All selected Frame Style have been successfully claimed!")
     -- 🔄 Setelah selesai → otomatis balik ke menu lagi
   end
 end
@@ -6954,7 +6954,6 @@ function avatar1()
 
     local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Avatars")
     if not choice then 
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -6963,7 +6962,6 @@ function avatar1()
       if type(kums5) == "function" then
         return kums5()
       else
-        gg.toast("⚠️ Back function unavailable.")
         return
       end
     end
@@ -6981,7 +6979,7 @@ function avatar1()
       end
     end
 
-    gg.toast("🎉 All selected avatars have been processed!")
+    gg.toast("🎉 All selected avatars have been successfully claimed!")
   end
 end
 
@@ -7036,7 +7034,6 @@ function avatar2()
     local choice = gg.multiChoice(options, nil, "🎊 Complete Avatar List")
 
     if not choice then
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -7045,7 +7042,6 @@ function avatar2()
       if type(kums5) == "function" then
         kums5()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return -- keluar total dari avatar2()
     end
@@ -7070,7 +7066,7 @@ function avatar2()
       end
     end
 
-    gg.toast("🎉 All selected Complete Avatars have been processed!")
+    gg.toast("🎉 All selected Complete Avatars have been successfully claimed!")
   end
 end
 
@@ -7756,7 +7752,6 @@ function packbadge()
 
     local choice = gg.multiChoice(skins, nil, "🎉 Exclusive Badge")
     if not choice then
-      gg.toast("❌ Menu closed.")
       return
     end
 
@@ -7765,7 +7760,6 @@ function packbadge()
       if type(kums6) == "function" then
         kums6()
       else
-        gg.toast("⚠️ Back function unavailable.")
       end
       return
     end
@@ -7793,7 +7787,7 @@ function packbadge()
     end
 
     if processed then
-      gg.toast("🎉 Selected Exclusive Badge processed successfully!")
+      gg.toast("🎉 All selected Badge have been successfully claimed!")
     end
     -- 🔄 Setelah selesai → balik ke menu lagi
   end
