@@ -3697,9 +3697,9 @@ function getAddr()
 
   if addr then
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if chk and chk[1] and chk[1].value == 30 then return addr end
+    if chk and chk[1] and chk[1].value == 29 then return addr end
     deleteFile(fileAddr)
-    gg.toast("👑 ARH-Cache cleared")
+    gg.toast("👑 ARH searching address.")
   end
 
   gg.clearResults()
@@ -3707,7 +3707,7 @@ function getAddr()
   gg.searchNumber("1935754524;1852732770;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen special decoration first.") return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nPlease restart the game and try again.") return nil end
 
   local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
@@ -3741,18 +3741,16 @@ function specialdecor(offset, label, emoji)
 
   local target = getAddr()
   if not target then return end
-  target = target - 0x48
+  target = target + 0x10
 
   local newVals = {}
   for i, v in ipairs(vals) do
     table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
-  end
+  table.insert(newVals, {address = target + 0x18, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x1C, value = 1, flags = gg.TYPE_DWORD})
+  
 
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " special decoration applied!")
@@ -3902,9 +3900,9 @@ function getAddr()
 
   if addr then
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if chk and chk[1] and chk[1].value == 30 then return addr end
+    if chk and chk[1] and chk[1].value == 29 then return addr end
     deleteFile(fileAddr)
-    gg.toast("👑 ARH-Cache cleared")
+    gg.toast("👑 ARH searching address.")
   end
 
   gg.clearResults()
@@ -3912,7 +3910,7 @@ function getAddr()
   gg.searchNumber("1634034218;1634038388;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen rare decoration first.") return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nPlease restart the game and try again.") return nil end
 
   local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
@@ -3946,18 +3944,16 @@ local src = baseRareAddr + offset
 
   local target = getAddr()
   if not target then return end
-  target = target - 0x48
+  target = target + 0x10
 
   local newVals = {}
   for i, v in ipairs(vals) do
     table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
-  end
+  table.insert(newVals, {address = target + 0x18, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x1C, value = 1, flags = gg.TYPE_DWORD})
+  
 
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " rare decoration applied!")
@@ -4107,9 +4103,9 @@ function getAddr()
 
   if addr then
     local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
-    if chk and chk[1] and chk[1].value == 30 then return addr end
+    if chk and chk[1] and chk[1].value == 29 then return addr end
     deleteFile(fileAddr)
-    gg.toast("👑 ARH-Cache cleared")
+    gg.toast("👑 ARH searching address.")
   end
 
   gg.clearResults()
@@ -4117,7 +4113,7 @@ function getAddr()
   gg.searchNumber("1634034214;1734439524;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
-  if #r == 0 then gg.alert("❌ Address not found.\nOpen unique decoration first.") return nil end
+  if #r == 0 then gg.alert("❌ Address not found.\nPlease restart the game and try again.") return nil end
 
   local newAddr = r[1].address
   local save = io.open(fileAddr, "w")
@@ -4151,18 +4147,16 @@ function unikdecor(offset, label, emoji)
 
   local target = getAddr()
   if not target then return end
-  target = target - 0x48
+  target = target + 0x10
 
   local newVals = {}
   for i, v in ipairs(vals) do
     table.insert(newVals, {address = target + (i - 1) * 4, value = v.value, flags = gg.TYPE_DWORD})
   end
 
-  table.insert(newVals, {address = target + 24, value = 0, flags = gg.TYPE_DWORD})
-  table.insert(newVals, {address = target + 28, value = 1, flags = gg.TYPE_DWORD})
-  for _, off in ipairs({0x58, 0x5C, 0x60, 0x64, 0x68, 0x6C}) do
-    table.insert(newVals, {address = target + off, value = 0, flags = gg.TYPE_DWORD})
-  end
+  table.insert(newVals, {address = target + 0x18, value = 0, flags = gg.TYPE_DWORD})
+  table.insert(newVals, {address = target + 0x1C, value = 1, flags = gg.TYPE_DWORD})
+  
 
   gg.setValues(newVals)
   gg.toast(emoji .. " " .. label .. " unique decoration applied!")
