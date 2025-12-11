@@ -111,8 +111,8 @@ local teks = {
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
 ["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
-["set_to_tambahduit"]  = {id = " diatur menjadi: ", en = " set to: "},
-["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
+["set_to_tambahduit"]  = {id = ": ", en = ": "},
+["applied_tambahduit"] = {id = "diterapkan ✅", en = "applied ✅"},
   
   ----menu boost----
   
@@ -143,7 +143,7 @@ local teks = {
 ["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
-["booster_applied_eventboost"]    = {id = "diatur menjadi:", en = "set to:"},
+["booster_applied_eventboost"]    = {id = ":", en = ":"},
 ["success_30d_eventboost"]        = {id = "Booster 30 Hari diterapkan", en = "30-Day Booster applied."},
 
 ["rainbow_amount_eventboost"]     = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball amount"},
@@ -156,7 +156,7 @@ local teks = {
 
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
 ["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 100000"},
-["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan diatur menjadi: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
+["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan: %d ✅", en = "⚡ Adventure Energy: %d ✅"},
 
 ----lab boost----
 
@@ -242,7 +242,7 @@ local teks = {
 
 ["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
-["reward_set_gemgem"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
+["reward_set_gemgem"] = {id = ":",en = ":"},
 ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
 ["green_gem_gemgem"]  = {id = "Permata Hijau",  en = "Green Gem"},
 ["red_gem_gemgem"]    = {id = "Permata Merah",  en = "Red Gem"},
@@ -1724,7 +1724,7 @@ end
   table.insert(patch, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
 
   gg.setValues(patch)
-  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount .. "✅")
+  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount .. " ✅")
 end
 
 -- 🔧 Booster dengan waktu 30 hari
@@ -1916,7 +1916,7 @@ return
   table.insert(patch, {address = addr + 0x2C, flags = 4, value = amt})  -- amount
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. name .. " set to " .. amt .. "")
+  gg.toast(emoji .. " " .. name .. " set to; " .. amt .. " ✅")
 end
 
 -- 🧬 Copy Template for Lab18
@@ -1969,7 +1969,7 @@ function lab18(name, offset)
   patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
 
   gg.setValues(patch)
-  gg.toast("⛵ " .. name .. " set to " .. val)
+  gg.toast("⛵ " .. name .. " set to: " .. val .. " ✅")
 end
 
 -- 🧪 Booster Lab Functions (lab1 to lab17)
@@ -2199,7 +2199,7 @@ end
   dw(0x2C, val)
 
   gg.setValues(a)
-  gg.toast(string.format("%s %s %s %s 💎", emoji, label, _("reward_set_gemgem"), val))
+  gg.toast(string.format("%s %s %s %s ✅", emoji, label, _("reward_set_gemgem"), val))
 end
 
 -- 🔸 Specific Gem Wrappers
