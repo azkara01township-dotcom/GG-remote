@@ -143,7 +143,7 @@ local teks = {
 ["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
-["booster_applied_eventboost"]    = {id = "Booster diterapkan:", en = "Booster applied:"},
+["booster_applied_eventboost"]    = {id = "diatur menjadi:", en = "set to:"},
 ["success_30d_eventboost"]        = {id = "Booster 30 Hari diterapkan", en = "30-Day Booster applied."},
 
 ["rainbow_amount_eventboost"]     = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball amount"},
@@ -156,7 +156,7 @@ local teks = {
 
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
 ["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 100000"},
-["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan disetel ke: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
+["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan diatur menjadi: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
 
 ----lab boost----
 
@@ -1724,7 +1724,7 @@ end
   table.insert(patch, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
 
   gg.setValues(patch)
-  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount)
+  gg.toast("" .. emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount .. "✅")
 end
 
 -- 🔧 Booster dengan waktu 30 hari
