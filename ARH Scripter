@@ -111,7 +111,7 @@ local teks = {
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
 ["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
-["set_to_tambahduit"]  = {id = " diatur menjadi ", en = " set to "},
+["set_to_tambahduit"]  = {id = " diatur menjadi: ", en = " set to: "},
 ["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
   
   ----menu boost----
@@ -137,12 +137,10 @@ local teks = {
 ["rocket_30_eventboost"]          = {id = "30 Hari Roket", en = "30-Day Rocket"},
 
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
-
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
 
 ["booster_amount_eventboost"]     = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
-["no_input_eventboost"]           = {id = "⚠️ Tidak ada jumlah dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara", en = "🚫 Invalid input.\nEnter a number between 1 and"},
+["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
 ["booster_applied_eventboost"]    = {id = "Booster diterapkan:", en = "Booster applied:"},
@@ -1715,12 +1713,11 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   local amount = tonumber(input and input[1])
 
   if not amount then
-    gg.alert(_ ("no_input_eventboost"))
     return
   end
 
   if amount < 1 or amount > maxLimit then
-    gg.alert(_ ("invalid_range_eventboost") .. " " .. maxLimit .. ".")
+gg.alert(_("invalid_range_eventboost") .. "\n✅ Min: " .. min .. "\n✅ Max: " .. max)
     return
   end
 
