@@ -1717,7 +1717,7 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   end
 
   if amount < 1 or amount > maxLimit then
-gg.alert(_("invalid_range_eventboost") .. "\n✅ Min: " .. min .. "\n✅ Max: " .. max)
+gg.alert(_ ("invalid_range_eventboost") .. " " .. maxLimit .. ".")
     return
   end
 
