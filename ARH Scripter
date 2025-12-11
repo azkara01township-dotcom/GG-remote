@@ -223,8 +223,7 @@ local teks = {
 ["factory_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Pabrik",   en = "Enter Factory Upgrade Coupon amount"},
 ["train_coupon_kuponpon"]   = {id = "Masukkan jumlah Kupon Upgrade Kereta",   en = "Enter Train Upgrade Coupon amount"},
 ["island_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Upgrade Pulau",    en = "Enter Island Upgrade Coupon amount"},
-["no_amount_kuponpon"]      = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_range_kuponpon"]  = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
+["invalid_range_kuponpon"]  = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 
 ["Loader Coupon_kuponpon"]  = {id = "Kupon Pengisian Barang",   en = "Loader Coupon"},
 ["Hire Dealer Coupon_kuponpon"] = {id = "Kupon Sewa Pedagang",  en = "Hire Dealer Coupon"},
@@ -2056,11 +2055,18 @@ function applyCoupon(label, emoji, promptKey, maxAmount, caller, offsets)
   end
 
   local prompt = gg.prompt({emoji .. " " .. _(promptKey) .. " [1–" .. maxAmount .. "]:"}, nil, {"number"})
-  local amt = tonumber(prompt and prompt[1])
-  if not amt then return gg.alert(_("no_amount_kuponpon")) end
-  if amt < 1 or amt > maxAmount then
-    return gg.alert(_("invalid_range_kuponpon") .. " 1 – " .. maxAmount)
-  end
+local amt = tonumber(prompt and prompt[1])
+
+-- ❌ Tidak memasukkan angka
+if not amt then
+  return
+end
+
+-- ❌ Melebihi batas 1–maxAmount
+if amt < 1 or amt > maxAmount then
+  gg.alert(_("invalid_range_kuponpon") .. "\n✅ Min: 1\n✅ Max: " .. maxAmount)
+  return
+end
 
   local edits = {}
   for k, v in pairs(offsets) do
