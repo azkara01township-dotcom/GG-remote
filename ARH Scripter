@@ -24,9 +24,8 @@ local teks = {
 ["startaddr_refreshed"] = {id = "✅ Klik ikon GG untuk lanjut...",en = "✅ Click GG icon to continue..." },
 ["mode_reset"] = {id = "🔄 Mode berhasil direset.\nKembali ke Menu Utama.",en = "🔄 Mode has been reset.\nReturning to Main Menu."},
   
-["main_menu"] = {id="📜 Menu Utama", en="📜 Main Menu"},
-["free_script"] = {id="🔓 • Skrip Gratis", en="🔓• Free Script"},
-["premium_script"] = {id="💎 • Skrip Premium", en="💎 • Premium Script"},
+["free_script"] = {id="🔓 • Naskah Gratis", en="🔓• Free Script"},
+["premium_script"] = {id="💎 • Naskah Premium", en="💎 • Premium Script"},
 ["buy_key"] = {id="🔑 • Beli Kunci Premium", en="🔑 • Buy Premium Key"},
 ["exit_script"] = {id="❌ • Keluar Skrip", en="❌ • Exit Script"},
   
@@ -394,7 +393,7 @@ local teks = {
 ["edit300"] = { id = "⭐ Edit Poin 300", en = "⭐ Edit Points 300" },
 ["dibatalkan"] = { id = "❌ Edit Poin dibatalkan.", en = "❌ Point edit canceled." },
 ["gagal_regata"] = {id = "⚠️ Tidak dapat mengedit poin tugas regata.\n\n💡 Silakan mulai atau ambil tugas regata terlebih dahulu.",en = "⚠️ Unable to edit regatta task points.\n\n💡 Please start or take a regatta task first."},
-["sukses"] = {id = "✅ Poin berhasil diubah ke ⭐ ",en = "✅ Points successfully changed to ⭐ "},
+["sukses"] = {id = "⭐ Poin berhasil diubah ke: ",en = "⭐ Points successfully changed to: "},
 ----boom like----
   
 ["cancel_boomlike"]             = {id="❌ Dibatalkan.", en="❌ Cancelled."},
@@ -686,17 +685,17 @@ local teks = {
 • ✨ ...dan masih banyak lagi!
 ──────────────────────────
 💵 Harga:
-• 🇮🇩 IDR 330.000
+🇮🇩 IDR 330.000
 
 📆 Masa Aktif:
-• ♾️ Seumur Hidup
+♾️ Seumur Hidup
 ──────────────────────────
 🔐 Cara Premium:
 ➡️ Lakukan pembayaran via: -
-➡️ Salin ID Lisensi dan kirim ke admin
+➡️ Salin ID Lisensi dan kirim ke penjual
 ➡️ Aktivasi setelah pembayaran dikonfirmasi
 ──────────────────────────
-📩 DM admin:
+📩 Hubungi Penjual:
 💬 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Update):
@@ -720,17 +719,17 @@ local teks = {
 • ✨ ...and much more!
 ──────────────────────────
 💵 Price:
-• 🇺🇸 USD 20$
+🇺🇸 USD 20$
 
 📆 Duration:
-• ♾️ Lifetime Access
+♾️ Lifetime Access
 ──────────────────────────
 🔐 How to Get Premium:
 ➡️ Make your payment via: –
-➡️ Copy your License ID and send it to the admin
+➡️ Copy your License ID and send it to the seller
 ➡️ Activation will be processed after your payment is confirmed
 ──────────────────────────
-📩 DM the admin:
+📩 Contact The Seller:
 💬 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Updates):
