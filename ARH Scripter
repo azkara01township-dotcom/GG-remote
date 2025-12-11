@@ -1,5 +1,11 @@
 -- ✅ Ensure script is hidden before menu starts
 gg.setVisible(false)
+local starting =[[
+┏┳┳┓┏━┓─────────┏━━┓┏━┓
+┃┃┃┃┃━┫┏┓─┏━┓┏━┓┃┃┃┃┃━┫
+┃┃┃┃┃━┫┃┣┓┃┣┫┃╋┃┃┃┃┃┃━┫
+┗━━┛┗━┛┗━┛┗━┛┗━┛┗┻┻┛┗━┛]]
+
 local banner =[[
 ┏━┓─┏┓─┏━┓───┏┓─┏┓─
 ┃╋┣━┫┗┓┃━╋━┳━╋╋━┫┗┓
@@ -876,12 +882,13 @@ else
 end
 
 function mainMenu()
+local welkam = starting
   local menu = gg.choice({
     _( "free_script" ),
     _( "premium_script" ),
     _( "buy_key" ),
     _( "exit_script" )
-  }, nil, _( "main_menu" ))
+  }, nil, welkam)
 
   if menu == 1 then
     menuMode = "free" saveMode(menuMode) freekey()
