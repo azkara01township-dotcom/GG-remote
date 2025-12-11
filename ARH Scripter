@@ -1709,17 +1709,19 @@ local function patchBooster(emoji, name, promptKey, hexData, caller)
   if not addr then return end
 
   local maxLimit = (caller == "free") and 500 or 5000
-  local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [1–" .. maxLimit .. "]:"}, nil, {"number"})
-  local amount = tonumber(input and input[1])
+local min = 1
 
-  if not amount then
-    return
-  end
+local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [" .. min .. "–" .. maxLimit .. "]:"}, nil, {"number"})
+local amount = tonumber(input and input[1])
 
-  if amount < 1 or amount > maxLimit then
-gg.alert(_ ("invalid_range_eventboost") .. " " .. maxLimit .. ".")
-    return
-  end
+if not amount then
+  return
+end
+
+if amount < min or amount > maxLimit then
+  gg.alert(_("invalid_range_eventboost") .. "\n✅ Min: " .. min .. "\n✅ Max: " .. maxLimit)
+  return
+end
 
   local patch = {}
   for _, v in ipairs(hexData) do
