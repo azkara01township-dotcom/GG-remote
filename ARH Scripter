@@ -155,7 +155,7 @@ local teks = {
 ["fun_amount_eventboost"]      = {id = "Masukkan jumlah Kipas Pengacak", en = "Enter Shuffle Fun amount"},
 
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
-["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 100.000",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 100.000"},
+["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 100000"},
 ["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan disetel ke: %d ✅", en = "⚡ Adventure Energy set to: %d ✅"},
 
 ----lab boost----
@@ -240,8 +240,7 @@ local teks = {
 ["red_gem_gemgem"]           = {id ="Permata Merah",en =  "Red Gem"},
 ["go_back_gemgem"]           = {id ="Kembali", en = "Go Back"},
 
-["no_input_gemgem"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara ",en = "🚫 Invalid input.\nEnter a number between 1 and "},
+["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
 ["reward_set_gemgem"] = {id = "Hadiah diatur ke:",en = "reward set to:"},
 ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
@@ -2167,20 +2166,27 @@ function applyGemReward(label, emoji, gemId, caller)
     return
   end
 
-  local max = (caller == "free") and 100 or 10000
-  local promptText = string.format("%s %s %s [1–%d]:", emoji, _("enter_amount_gemgem"), label, max)
-  local p = gg.prompt({promptText}, nil, {"number"})
-  local val = tonumber(p and p[1])
+local maxValue = (caller == "free") and 100 or 10000
+local minValue = 1
 
-  if not val then
-    gg.alert(_("no_input_gemgem"))
-    return
-  end
+local promptText = string.format("%s %s %s [%d–%d]:", emoji, _("enter_amount_gemgem"), label, minValue, maxValue)
+local p = gg.prompt({promptText}, nil, {"number"})
+local val = tonumber(p and p[1])
 
-  if val < 1 or val > max then
-    gg.alert(_("invalid_input_gemgem") .. max .. ".")
+-- ❌ Tidak ada input
+if not val then
     return
-  end
+end
+
+-- ❌ Input kurang dari min atau lebih dari max
+if val < minValue or val > maxValue then
+    gg.alert(
+        _("invalid_input_gemgem")
+        .. "\n✅ Min: " .. minValue
+        .. "\n✅ Max: " .. maxValue
+    )
+    return
+end
 
   local a = {}
   local function dw(offset, v)
