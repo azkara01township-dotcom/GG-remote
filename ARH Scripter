@@ -665,14 +665,6 @@ local teks = {
 ["dealer_success_deler"] = {id = "✅ Sewa Dealer diperpanjang 30 hari.\n\nSilakan keluar dan masuk kembali ke pasar kota untuk menerapkan perubahan.",en = "✅ Dealer rental extended by 30 days.\n\nPlease exit and re-enter the city market to apply changes."},
 ["dealer_toast_deler"] = {id = "📦 Sewa Dealer 30 hari aktif!",en = "📦 30-day Dealer rental activated!"},
 
-  ["cancelled"] = {id = "❌ Dibatalkan", en = "❌ Cancelled"},
-  ["invalid"]   = {id = "❌ Username atau Password Salah!", en = "❌ Invalid Username or Password!"},
-  ["adminMenuTitle"] = {id = "⚙️ Admin ARH Reset Logs", en = "⚙️ ARH Admin Reset Logs"},
-  ["resetLogs"] = {id = "🔁 • Reset Log Pengguna", en = "🔁 • Reset User Logs"},
-  ["exitMenu"]  = {id = "❌ • Keluar Skrip", en="❌ • Exit Script"},
-  ["logsReset"] = {id = "🔁 Log berhasil direset.\n\nScript akan ditutup. Silakan masukkan username baru (mudah diingat), kemudian hubungi admin dan berikan username Anda. Terima kasih.", en = "🔁 Logs have been reset successfully.\n\nThe script will now close. Please enter a new username (easy to remember), then contact the admin and provide your username. Thank you."},
-  ["exiting"]  = {id = "👋 Keluar dari Mode Admin...", en = "👋 Exiting Admin Mode..."},
-
 ["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
 ["contact_dev"]  = {id="📞 • Kontak Pemilik", en="📞 • Contact Owner"},
 ["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
@@ -701,22 +693,21 @@ local teks = {
 • ✨ ...dan masih banyak lagi!
 ──────────────────────────
 💵 Harga:
-• 🇮🇩 IDR 450.000
+• 🇮🇩 IDR 330.000
 
 📆 Masa Aktif:
 • ♾️ Seumur Hidup
 ──────────────────────────
-🔐 Cara Membeli:
+🔐 Cara Premium:
 ➡️ Lakukan pembayaran via: -
-➡️ Salin Kode License yang muncul sebelum script berjalan
-➡️ Kirim Kode License ke pemilik script
-➡️ Aktivasi otomatis setelah pembayaran dikonfirmasi
+➡️ Salin ID Lisensi dan kirim ke admin
+➡️ Aktivasi setelah pembayaran dikonfirmasi
 ──────────────────────────
-📩 Kontak Pemilik:
-• 📨 Telegram: @azka_arh
+📩 DM admin:
+💬 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Update):
-• 📨 ARH TownScript
+📨 ARH SCRIPT - Township
 ]],en = [[
 ┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
 ┃🚀ᴇɴᴊᴏʏ ᴀʟʟ ꜰᴇᴀᴛᴜʀᴇꜱ ᴡɪᴛʜ ɴᴏ ʟɪᴍɪᴛꜱ!🚀
@@ -736,22 +727,21 @@ local teks = {
 • ✨ ...and much more!
 ──────────────────────────
 💵 Price:
-• 🇺🇸 USD 30$
+• 🇺🇸 USD 20$
 
 📆 Duration:
 • ♾️ Lifetime Access
 ──────────────────────────
-🔐 How to Buy:
-➡️ Make payment via: -
-➡️ Copy your License Code (appears before script starts)
-➡️ Send the License Code to the owner
-➡️ Activation is automatic after payment confirmed
+🔐 How to Get Premium:
+➡️ Make your payment via: –
+➡️ Copy your License ID and send it to the admin
+➡️ Activation will be processed after your payment is confirmed
 ──────────────────────────
-📩 Contact Owner:
-• 📨 Telegram: @azka_arh
+📩 DM the admin:
+💬 Telegram: @azka_arh
 
 📢 WhatsApp Channel (Info & Updates):
-• 📨 ARH TownScript
+📨 ARH SCRIPT - Township
 ]]},
   ["btn_back"] = {id = "❌ Kembali", en = "❌ Go Back"},
   ["btn_tele"] = {id = "📩 Telegram", en = "📩 Telegram"},
@@ -792,7 +782,7 @@ Gunakan script ini dengan bijak. Kami tidak bertanggung jawab atas konsekuensi p
 • Hindari aktivitas yang jelas melanggar aturan permainan.
 
 🙏 Terima kasih
-Terima kasih sudah menggunakan ARH Townscript. Gunakan secara bijak.
+Terima kasih sudah menggunakan ARH Script. Gunakan secara bijak.
 ]],en = [[
 ┏━━━━━｢‼️𝗦𝗖𝗥𝗜𝗣𝗧 𝗜𝗡𝗙𝗢‼️｣━━━━━━━━┓
 ┃📖ᴀʀʜ ᴛᴏᴡɴꜱᴄʀɪᴘᴛ — ɢᴜɪᴅᴇ & ᴡᴀʀɴɪɴɢ📖
@@ -823,7 +813,7 @@ Use this script responsibly. We are not responsible for any consequences, includ
 • Avoid any clearly rule-breaking actions.
 
 🙏 Thank You
-Thank you for using ARH Townscript. Use it responsibly.
+Thank you for using ARH Script. Use it responsibly.
 ]]},
 ["back_btn"]    = { id = "❌ Kembali", en = "❌ Go Back" },
 ["barn_table"]  = { id = "🏡 Tabel lumbung", en = "🏡 Barn table" },
