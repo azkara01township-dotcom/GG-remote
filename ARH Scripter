@@ -110,7 +110,7 @@ local teks = {
 ["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
-["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah min ",en = "🚫 Invalid input.\nEnter the min amount "},
+["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["set_to_tambahduit"]  = {id = " diatur menjadi ", en = " set to "},
 ["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
   
@@ -1576,7 +1576,7 @@ if not amount and promptRange then
 
   -- ❌ Input di luar batas min–max
   if amount < min or amount > max then
-    gg.alert(_("invalid_tambahduit") .. "\nMin: " .. min .. "\nMax: " .. max)
+    gg.alert(_("invalid_tambahduit") .. "\n✅ Min: " .. min .. "\n✅ Max: " .. max)
     return
   end
 end
