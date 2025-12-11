@@ -110,7 +110,7 @@ local teks = {
 ["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
-["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara ", en = "🚫 Invalid input.\nEnter a number between "},
+["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah min.",en = "🚫 Invalid input.\nEnter the min amount."},
 ["set_to_tambahduit"]  = {id = " diatur menjadi ", en = " set to "},
 ["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
   
@@ -1569,7 +1569,7 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
     local input = gg.prompt({label .. " [" .. min .. "–" .. max .. "]:"}, nil, {"number"})
     amount = tonumber(input and input[1])
     if not amount or amount < min or amount > max then
-      
+      gg.alert(_( "invalid_tambahduit" ) .. min .. " max " .. max .. ".")
       return
     end
   end
