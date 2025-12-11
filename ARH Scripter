@@ -1571,13 +1571,12 @@ if not amount and promptRange then
 
   -- ❌ Input kosong atau bukan angka
   if not amount then
-    gg.alert(_("invalid_tambahduit") .. "\n⚠️ No input detected.")
     return
   end
 
   -- ❌ Input di luar batas min–max
   if amount < min or amount > max then
-    gg.alert("🚫 " .. _("invalid_tambahduit") .. "\nMin: " .. min .. "\nMax: " .. max)
+    gg.alert(.. _("invalid_tambahduit") .. "\nMin: " .. min .. "\nMax: " .. max)
     return
   end
 end
