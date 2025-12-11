@@ -110,7 +110,7 @@ local teks = {
 ["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
-["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah min.",en = "🚫 Invalid input.\nEnter the min amount."},
+["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah min ",en = "🚫 Invalid input.\nEnter the min amount "},
 ["set_to_tambahduit"]  = {id = " diatur menjadi ", en = " set to "},
 ["applied_tambahduit"] = {id = " diterapkan ✅", en = " applied ✅"},
   
@@ -1564,15 +1564,23 @@ function applyCurrencyReward(key, pattern, promptRange, fixedAmount)
   if not addr then return end
 
   local amount = fixedAmount
-  if not amount and promptRange then
-    local min, max = promptRange[1], promptRange[2]
-    local input = gg.prompt({label .. " [" .. min .. "–" .. max .. "]:"}, nil, {"number"})
-    amount = tonumber(input and input[1])
-    if not amount or amount < min or amount > max then
-      gg.alert(_( "invalid_tambahduit" ) .. min .. " max " .. max .. ".")
-      return
-    end
+if not amount and promptRange then
+  local min, max = promptRange[1], promptRange[2]
+  local input = gg.prompt({label .. " [" .. min .. "–" .. max .. "]:"}, nil, {"number"})
+  amount = tonumber(input and input[1])
+
+  -- ❌ Input kosong atau bukan angka
+  if not amount then
+    gg.alert(_("invalid_tambahduit") .. "\n⚠️ No input detected.")
+    return
   end
+
+  -- ❌ Input di luar batas min–max
+  if amount < min or amount > max then
+    gg.alert("🚫 " .. _("invalid_tambahduit") .. "\nMin: " .. min .. "\nMax: " .. max)
+    return
+  end
+end
 
   local edits = {}
   for _, v in ipairs(pattern) do
