@@ -180,11 +180,9 @@ local teks = {
 ["favorable_voyage_labboost"]      = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 ["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
 
-["no_match_labboost"]              = {id = "❌ Nilai tidak ditemukan. Tidak dapat menerapkan ", en = "❌ No matching value found. Cannot apply "},
 ["enter_amount_labboost"]          = {id = "Masukkan jumlah booster [1–500]:", en = "Enter booster amount [1–500]:"},
-["no_amount_labboost"]             = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
-["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nMasukkan angka antara 1 antara 500.", en = "🚫 Invalid input.\nEnter a number between 1 and 500."},
+["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 500"},
+["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 500"},
 ["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
 ["unnamed_booster_labboost"]       = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 
@@ -1897,13 +1895,11 @@ end
   function applyLabBooster(label, emoji, name)
   local addr = getAddr()
   if not addr then
-    gg.alert(_("no_match_labboost", name))
     return
   end
 
   local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost")}, nil, {"number"})
   if not prompt then
-    gg.alert(_("no_amount_labboost"))
 return
   end
 
