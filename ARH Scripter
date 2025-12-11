@@ -265,10 +265,8 @@ local teks = {
 ["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
 
 ["enter_amount_batangtang"] = {id = "Masukkan jumlah batangan", en = "Enter amount ingots"},
-["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nMasukkan angka antara", en = "🚫 Invalid input.\nEnter a number between"},
-["invalid_range_batangtang"] = {id = "Masukkan angka antara", en = "Please enter a number between"},
-["no_input_batangtang"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.", en = "⚠️ No amount entered.\nOperation cancelled."},
-["set_to_batangtang"] = {id = "diset ke", en = "set to"},
+["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["set_to_batangtang"] = {id = ":", en = ":"},
 ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
 ["silver_batangtang"] = {id = "Batang Perak",    en = "Silver Ingots"},
 ["gold_batangtang"]   = {id = "Batang Emas",     en = "Gold Ingots"},
@@ -283,8 +281,7 @@ local teks = {
 ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
 
 ["mining_prompt_macul"] = {id = "Masukkan jumlah alat tambang",en = "Enter amount mining tools"},
-["cancel_input_macul"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_macul"] = {id = "🚫 Masukan tidak valid.\nMasukkan angka antara",en = "🚫 Invalid input.\nPlease enter a number between"},
+["invalid_input_macul"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
 ["not_found_macul"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
 ["success_bonus_macul"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
 ["pickaxes_macul"] = {id = "Beliung", en = "Pickaxes"},
@@ -1916,7 +1913,7 @@ return
   table.insert(patch, {address = addr + 0x2C, flags = 4, value = amt})  -- amount
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. name .. " set to; " .. amt .. " ✅")
+  gg.toast(emoji .. " " .. name .. ": " .. amt .. " ✅")
 end
 
 -- 🧬 Copy Template for Lab18
@@ -1969,7 +1966,7 @@ function lab18(name, offset)
   patch[8] = {address = addr + 7 * 4, value = val, flags = gg.TYPE_DWORD}
 
   gg.setValues(patch)
-  gg.toast("⛵ " .. name .. " set to: " .. val .. " ✅")
+  gg.toast("⛵ " .. name .. ": " .. val .. " ✅")
 end
 
 -- 🧪 Booster Lab Functions (lab1 to lab17)
@@ -2284,20 +2281,29 @@ function applyIngotReward(labelKey, emoji, hexes)
   local base = getAddr()
   if not base then return end
 
-  local maxval = _G.ingotCaller == "free" and 100 or 5000
-  local prompt = gg.prompt({
-    emoji .. " " .. _( "enter_amount_batangtang") .. " " .. _(labelKey) .. " [1–" .. maxval .. "]:"
-  }, nil, {"number"})
-  local val = tonumber(prompt and prompt[1])
+  local maxval = (_G.ingotCaller == "free") and 100 or 5000
+local minval = 1
 
-  if not val or val < 1 or val > maxval then
-    if val then
-      gg.alert(_( "invalid_input_batangtang") .. "\n" .. _( "invalid_range_batangtang") .. " 1–" .. maxval .. ".")
-    else
-      gg.alert(_( "no_input_batangtang"))
-    end
-    return
-  end
+local prompt = gg.prompt({
+  emoji .. " " .. _("enter_amount_batangtang") .. " " .. _(labelKey) .. " [" .. minval .. "–" .. maxval .. "]:"
+}, nil, {"number"})
+
+local val = tonumber(prompt and prompt[1])
+
+-- ❌ Tidak ada input
+if not val then
+  return
+end
+
+-- ❌ Di luar batas
+if val < minval or val > maxval then
+  gg.alert(
+    _("invalid_input_batangtang") ..
+    "\n✅ Min: " .. minval ..
+    "\n✅ Max: " .. maxval
+  )
+  return
+end
 
   local a, offsets = {}, {0x10, 0x14, 0x18, 0x1C, 0x20, 0x24}
   for i, v in ipairs(hexes) do
@@ -2314,7 +2320,7 @@ function applyIngotReward(labelKey, emoji, hexes)
   end
 
   gg.setValues(a)
-  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "set_to_batangtang") .. ": " .. val .. " ✅")
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "set_to_batangtang") .. " " .. val .. " ✅")
 end
 
 -- ✅ Fungsi-fungsi ingot individual
