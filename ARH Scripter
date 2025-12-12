@@ -1710,7 +1710,12 @@ local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [" .. min .. "–" ..
 local amount = tonumber(input and input[1])
 
 if not amount then
-  return nil
+if caller == "free" then
+        rw5()
+    else
+        boost1("premium")
+    end
+  return
 end
 
 if amount < min or amount > maxLimit then
