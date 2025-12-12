@@ -1908,7 +1908,7 @@ end
     return
   end
 
-  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost" " .. name .. " "[1-500]:")}, nil, {"number"})
+  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost .. " " .. name .. " "[1-500]:")}, nil, {"number"})
   if not prompt then
 return
   end
