@@ -1341,10 +1341,10 @@ function gp1(caller)
 
   local kandidat = {}
 
-  -- 🧩 Filter hasil berdasarkan offset +0x48 == 660
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 670
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 660 then
+    if check and check[1] and check[1].value == 670 then
       table.insert(kandidat, res)
     end
   end
