@@ -1710,7 +1710,7 @@ local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [" .. min .. "–" ..
 local amount = tonumber(input and input[1])
 
 if not amount then
-  return
+  return nil
 end
 
 if amount < min or amount > maxLimit then
