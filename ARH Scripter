@@ -1563,6 +1563,7 @@ if not amount and promptRange then
 
   -- ❌ Input kosong atau bukan angka
   if not amount then
+gp4()
     return
   end
 
