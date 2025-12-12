@@ -2675,16 +2675,18 @@ if amount < min or amount > max then
   return
 end
 
-  local patch = {
-    {address = base + 0x10, flags = gg.TYPE_DWORD, value = hex1},
-    {address = base + 0x14, flags = gg.TYPE_DWORD, value = hex2},
-    {address = base + 0x18, flags = gg.TYPE_DWORD, value = hex3},
-    {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
-  }
+  -- Patch utama
+local patch = {
+  {address = base + 0x10, flags = gg.TYPE_DWORD, value = hex1},
+  {address = base + 0x14, flags = gg.TYPE_DWORD, value = hex2},
+  {address = base + 0x18, flags = gg.TYPE_DWORD, value = hex3},
+  {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
+}
 
-for o = 0x1C, 0x20, 4 do
-    table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
-  end
+-- Set 0 pada offset 0x1C, 0x20, 0x24, 0x28
+for o = 0x1C, 0x28, 4 do
+  table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
+end
 
   gg.setValues(patch)
   gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set_gudangdang" ) .. " " .. amount .. " ✅")
