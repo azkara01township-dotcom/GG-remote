@@ -1563,7 +1563,6 @@ if not amount and promptRange then
 
   -- ❌ Input kosong atau bukan angka
   if not amount then
-gp4()
     return
   end
 
@@ -1710,11 +1709,6 @@ local input = gg.prompt({emoji .. " " .. _(promptKey) .. " [" .. min .. "–" ..
 local amount = tonumber(input and input[1])
 
 if not amount then
-if caller == "free" then
-        rw5()
-    else
-        boost1("premium")
-    end
   return
 end
 
