@@ -2440,17 +2440,30 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
     dw(0x2C, duration)
     val = duration
   else
+
     local max = (caller == "free") and 500 or 25000
-    local input = gg.prompt({emoji .. " " .. _("mining_prompt_macul") .. " " .. label .. " [1–" .. max .. "]:"}, nil, {"number"})
-    val = tonumber(input and input[1])
-    if not val then
-      gg.alert(_("cancel_input_macul"))
-      return
-    end
-    if val < 1 or val > max then
-      gg.alert(_("invalid_input_macul") .. " 1 - " .. max .. ".")
-      return
-    end
+local min = 1
+
+local input = gg.prompt({
+  emoji .. " " .. _("mining_prompt_macul") .. " " .. label .. " [" .. min .. "–" .. max .. "]:"
+}, nil, {"number"})
+
+val = tonumber(input and input[1])
+
+-- ❌ Tidak ada input
+if not val then
+  return
+end
+
+-- ❌ Input di luar range
+if val < min or val > max then
+  gg.alert(
+    _("invalid_input_macul") ..
+    "\n✅ Min: " .. min ..
+    "\n✅ Max: " .. max
+  )
+  return
+end
 
     -- Normal Item Patch
     dw(0x10, itemId)
@@ -2463,7 +2476,7 @@ function applyMiningReward(label, emoji, itemId, caller, duration)
   if duration then
     gg.toast(emoji .. " " .. label .. " " .. _("success_bonus_macul"))
   else
-    gg.toast(emoji .. " " .. label .. " set to: " .. val .. " ✅")
+    gg.toast(emoji .. " " .. label .. ": " .. val .. " ✅")
   end
 end
 
