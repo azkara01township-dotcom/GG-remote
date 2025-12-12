@@ -111,10 +111,10 @@ local teks = {
 ["add_statuecoins_tambahduit"] = {id = "Tambah Koin Patung", en = "Add Statue Coin"},
 ["go_back_tambahduit"]         = {id = "Kembali", en = "Go Back"},
 
-["tcash_tambahduit"]   = {id = "💵 T-Cash", en = "💵 T-Cash"},
-["coin_tambahduit"]    = {id = "💰 Koin", en = "💰 Coins"},
-["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
-["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
+["tcash_tambahduit"]   = {id = "💵 Masukkan jumlah T-Cash", en = "💵 Enter amount T-Cash"},
+["coin_tambahduit"]    = {id = "💰 Masukkan jumlah Koin", en = "💰 Enter amount Coins"},
+["regatta_tambahduit"] = {id = "🪙 Masukkan jumlah Token Regatta", en = "🪙 Enter amount Regatta Token"},
+["clover_tambahduit"]  = {id = "🍀 Masukkan jumlah Semanggi", en = "🍀 Enter amount Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
 ["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["set_to_tambahduit"]  = {id = ": ", en = ": "},
@@ -145,7 +145,6 @@ local teks = {
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
 
-["booster_amount_eventboost"]     = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
 ["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
@@ -154,7 +153,7 @@ local teks = {
 
 ["rainbow_amount_eventboost"]     = {id = "Masukkan jumlah Bola Pelangi", en = "Enter Rainbow Ball amount"},
 ["bomb_amount_eventboost"]        = {id = "Masukkan jumlah Bom", en = "Enter Bomb amount"},
-["single_amount_eventboost"]      = {id = "Masukkan jumlah Roket", en = "Enter Rocket amount"},
+["rocket_amount_eventboost"]      = {id = "Masukkan jumlah Roket", en = "Enter Rocket amount"},
 ["single_amount_eventboost"]        = {id = "Masukkan jumlah Palu Tunggal", en = "Enter Single Hammer amount"},
 ["vertical_amount_eventboost"]     = {id = "Masukkan jumlah Palu Vertikal", en = "Enter Vertical Hammer amount"},
 ["horizontal_amount_eventboost"]      = {id = "Masukkan jumlah Palu Horizontal", en = "Enter Horizontal Hammer amount"},
@@ -186,7 +185,7 @@ local teks = {
 ["favorable_voyage_labboost"]      = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 ["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
 
-["enter_amount_labboost"]          = {id = "Masukkan jumlah booster", en = "Enter amount"},
+["enter_amount_labboost"]          = {id = "Masukkan jumlah", en = "Enter amount"},
 ["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
 ["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
 ["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
@@ -2345,28 +2344,28 @@ end
 
 -- ✅ Fungsi-fungsi ingot individual
 function batang1()
-  applyIngotReward("bronze", "🥉", {
+  applyIngotReward(_("bronze_batangtang"), "🥉", {
     0x6F724228, 0x42657A6E, 0x696C6C75,
     0x6F436E6F, 0x65746E75, 0x00000072
   })
 end
 
 function batang2()
-  applyIngotReward("silver", "🥈", {
+  applyIngotReward(_( "silver_batangtang"), "🥈", {
     0x6C695328, 0x42726576, 0x696C6C75,
     0x6F436E6F, 0x65746E75, 0x00000072
   })
 end
 
 function batang3()
-  applyIngotReward("gold", "🥇", {
+  applyIngotReward(_( "gold_batangtang"), "🥇", {
     0x6C6F4724, 0x6C754264, 0x6E6F696C,
     0x6E756F43, 0x00726574, 0x00000000
   })
 end
 
 function batang4()
-  applyIngotReward("platinum", "🏅", {
+  applyIngotReward(_( "platinum_batangtang"), "🏅", {
     0x616C502C, 0x756E6974, 0x6C75426D,
     0x6E6F696C, 0x6E756F43, 0x00726574
   })
@@ -2669,7 +2668,7 @@ function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
 local max = 5000
 
 local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_gudangdang") .. " " .. _(labelKey) .. " [1-5000]:"
+  emoji .. " " .. _("enter_amount_gudangdang") .. "" .. _(labelKey) .. " [1-5000]:"
 }, nil, {"number"})
 
 local amount = tonumber(p and p[1])
@@ -2769,7 +2768,7 @@ local min = 1
 local max = 5000
 
 local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_waswas") .. " " .. label .. " [1-5000]:"}, nil, {"number"})
+  emoji .. " " .. _("enter_amount_waswas") .. "" .. label .. " [1-5000]:"}, nil, {"number"})
 
 local amount = tonumber(p and p[1])
 
