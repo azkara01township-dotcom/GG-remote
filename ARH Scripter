@@ -2682,12 +2682,12 @@ end
     {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
   }
 
-for o = 0x1C, 0x20, 28 do
-    table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+for o = 0x1C, 0x20, 4 do
+    table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
   end
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set_gudangdang" ) .. ": " .. amount .. " ✅")
+  gg.toast(emoji .. " " .. _(labelKey) .. " " .. _( "barn_reward_set_gudangdang" ) .. " " .. amount .. " ✅")
 end
 
 -- 📦 Item lumbung
@@ -2790,7 +2790,7 @@ end
     end
 
     gg.setValues(patch)
-    gg.toast(emoji .. " " .. label .. " " .. _("reward_set_waswas") .. ": " .. amount .. " ✅")
+    gg.toast(emoji .. " " .. label .. " " .. _("reward_set_waswas") .. " " .. amount .. " ✅")
 end
 
 -- 🔧 Tool Reward Functions
