@@ -116,7 +116,7 @@ local teks = {
 ["regatta_tambahduit"] = {id = "🪙 Token Regatta", en = "🪙 Regatta Token"},
 ["clover_tambahduit"]  = {id = "🍀 Semanggi", en = "🍀 Clover"},
 ["statue_tambahduit"]  = {id = "🗽 Koin Patung", en = "🗽 Statue Coin"},
-["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_tambahduit"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["set_to_tambahduit"]  = {id = ": ", en = ": "},
 ["applied_tambahduit"] = {id = "diterapkan ✅", en = "applied ✅"},
   
@@ -146,7 +146,7 @@ local teks = {
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
 
 ["booster_amount_eventboost"]     = {id = "Masukkan jumlah booster", en = "Enter booster amount"},
-["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["template_not_found_eventboost"] = {id = "❌ Referensi tidak ditemukan.\nTidak dapat menerapkan", en = "❌ Reference not found.\nCannot apply"},
 ["template_copied_eventboost"]    = {id = "📋 Template disalin", en = "📋 Template copied"},
 ["booster_applied_eventboost"]    = {id = ":", en = ":"},
@@ -161,7 +161,7 @@ local teks = {
 ["fun_amount_eventboost"]      = {id = "Masukkan jumlah Kipas Pengacak", en = "Enter Shuffle Fun amount"},
 
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
-["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 100000"},
+["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 100000"},
 ["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan: %d ✅", en = "⚡ Adventure Energy: %d ✅"},
 
 ----lab boost----
@@ -187,8 +187,8 @@ local teks = {
 ["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
 
 ["enter_amount_labboost"]          = {id = "Masukkan jumlah booster [1–500]:", en = "Enter booster amount [1–500]:"},
-["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 500"},
-["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nMasukkan jumlah\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nEnter the amount\n✅ Min: 1\n✅ Max: 500"},
+["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
+["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
 ["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
 ["unnamed_booster_labboost"]       = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 
@@ -229,7 +229,7 @@ local teks = {
 ["factory_coupon_kuponpon"] = {id = "Masukkan jumlah Kupon Upgrade Pabrik",   en = "Enter Factory Upgrade Coupon amount"},
 ["train_coupon_kuponpon"]   = {id = "Masukkan jumlah Kupon Upgrade Kereta",   en = "Enter Train Upgrade Coupon amount"},
 ["island_coupon_kuponpon"]  = {id = "Masukkan jumlah Kupon Upgrade Pulau",    en = "Enter Island Upgrade Coupon amount"},
-["invalid_range_kuponpon"]  = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_range_kuponpon"]  = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 
 ["Loader Coupon_kuponpon"]  = {id = "Kupon Pengisian Barang",   en = "Loader Coupon"},
 ["Hire Dealer Coupon_kuponpon"] = {id = "Kupon Sewa Pedagang",  en = "Hire Dealer Coupon"},
@@ -246,7 +246,7 @@ local teks = {
 ["red_gem_gemgem"]           = {id ="Permata Merah",en =  "Red Gem"},
 ["go_back_gemgem"]           = {id ="Kembali", en = "Go Back"},
 
-["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_input_gemgem"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["enter_amount_gemgem"] = {id = "Masukkan jumlah",en = "Enter amount of"},
 ["reward_set_gemgem"] = {id = ":",en = ":"},
 ["orange_gem_gemgem"] = {id = "Permata Jingga", en = "Orange Gem"},
@@ -271,7 +271,7 @@ local teks = {
 ["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
 
 ["enter_amount_batangtang"] = {id = "Masukkan jumlah batangan", en = "Enter amount ingots"},
-["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["set_to_batangtang"] = {id = ":", en = ":"},
 ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
 ["silver_batangtang"] = {id = "Batang Perak",    en = "Silver Ingots"},
@@ -287,8 +287,7 @@ local teks = {
 ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
 
 ["mining_prompt_macul"] = {id = "Masukkan jumlah alat tambang",en = "Enter amount mining tools"},
-["invalid_input_macul"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
-["not_found_macul"] = {id = "❌ Alamat tidak ditemukan.\nCoba mulai ulang game-nya.",en = "❌ Address not found.\nTry restarting the game."},
+["invalid_input_macul"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["success_bonus_macul"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
 ["pickaxes_macul"] = {id = "Beliung", en = "Pickaxes"},
 ["tnt_macul"] = {id = "TNT", en = "TNT"},
@@ -306,7 +305,7 @@ local teks = {
 ["back_matdung"]          = {id = "Kembali", en = "Go Back"},
 
 ["input_construct_matdung"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
-["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["reward_set_matdung"] = {id = "{emoji} {label}: {amount} ✅",en = "{emoji} {label}: {amount} ✅"},
 ["glass_matdung"] = {id = "Kaca", en = "Glass"},
 ["bricks_matdung"] = {id = "Batu Bata", en = "Bricks"},
@@ -325,7 +324,7 @@ local teks = {
 ["hammers_gudangdang"] = {id = "Palu", en = "Hammers"},
 ["nails_gudangdang"] = {id = "Paku", en = "Nails"},
 ["red_paint_gudangdang"] = {id = "Cat Merah", en = "Red Paint"},
-["enter_amount_gudangdang"] = {id = "Masukkan jumlah [1-5000]", en = "Enter amount [1-5000]"},
+["enter_amount_gudangdang"] = {id = "Masukkan jumlah ", en = "Enter amount "},
 ["invalid_input_gudangdang"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["barn_reward_set_gudangdang"] = {id = ":", en = ":"},
 
@@ -336,7 +335,7 @@ local teks = {
 ["shovel_waswas"]      = { id = "Sekop", en = "Shovel" },
 ["go_back_waswas"]     = { id = "Kembali", en = "Go Back" },
   
-["enter_amount_waswas"] = {id = "Masukkan jumlah alat perluasan",en = "Enter amount expansion tools"},
+["enter_amount_waswas"] = {id = "Masukkan jumlah alat perluasan [1-5000]:",en = "Enter amount expansion tools [1-5000]:"},
 ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["reward_set_waswas"] = {id = ":",en = ":"},
 ["saw_waswas"] = {id = "Gergaji", en = "Saw"},
@@ -2655,7 +2654,7 @@ function applyBarnReward(labelKey, emoji, hex1, hex2, hex3)
 local max = 5000
 
 local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_gudangdang") .. " " .. _(labelKey) .. ":"
+  emoji .. " " .. _("enter_amount_gudangdang") .. " " .. _(labelKey) .. " [1-5000]:"
 }, nil, {"number"})
 
 local amount = tonumber(p and p[1])
