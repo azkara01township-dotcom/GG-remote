@@ -2764,7 +2764,7 @@ local min = 1
 local max = 5000
 
 local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_waswas") .. " " .. label .. " [1-5000]:}, nil, {"number"})
+  emoji .. " " .. _("enter_amount_waswas") .. " " .. label .. " [1-5000]:"}, nil, {"number"})
 
 local amount = tonumber(p and p[1])
 
