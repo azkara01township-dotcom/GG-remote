@@ -1908,10 +1908,15 @@ end
     return
   end
 
-  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost .. " " .. name .. " "[1-500]:")}, nil, {"number"})
-  if not prompt then
-return
-  end
+  local prompt = gg.prompt(
+  { emoji .. " " .. _("enter_amount_labboost") .. " " .. name .. " [1–500]:" },
+  nil,
+  {"number"}
+)
+
+if not prompt then
+  return
+end
 
   local amt = tonumber(prompt[1])
   if not amt or amt < 1 or amt > 500 then
