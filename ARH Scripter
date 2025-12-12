@@ -306,9 +306,8 @@ local teks = {
 ["back_matdung"]          = {id = "Kembali", en = "Go Back"},
 
 ["input_construct_matdung"] = {id = "Masukkan jumlah {label} [1–{max}]:",en = "Enter {label} amount [1–{max}]:"},
-["no_amount_matdung"] = {id = "⚠️ Tidak ada jumlah yang dimasukkan.\nOperasi dibatalkan.",en = "⚠️ No amount entered.\nOperation cancelled."},
-["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan angka 1 antara {max}.",en = "🚫 Invalid input.\nPlease enter a number between 1 and {max}."},
-["reward_set_matdung"] = {id = "{emoji} {label} diatur ke: {amount} ✅",en = "{emoji} {label} reward set to: {amount} ✅"},
+["invalid_input_matdung"] = {id = "🚫 Input tidak valid.\nMasukkan jumlah",en = "🚫 Invalid input.\nEnter the amount"},
+["reward_set_matdung"] = {id = "{emoji} {label}: {amount} ✅",en = "{emoji} {label}: {amount} ✅"},
 ["glass_matdung"] = {id = "Kaca", en = "Glass"},
 ["bricks_matdung"] = {id = "Batu Bata", en = "Bricks"},
 ["slabs_matdung"] = {id = "Lempengan", en = "Slabs"},
@@ -2542,21 +2541,32 @@ function applyConstructReward(label, emoji, hexList, caller)
   local base = getAddr()
   if not base then return end
 
-  local max = (caller == "free") and 100 or 5000
-  local promptText = _("input_construct_matdung"):gsub("{label}", label):gsub("{max}", max)
-  local prompt = gg.prompt({emoji .. " " .. promptText}, nil, {"number"})
-  local amount = tonumber(prompt and prompt[1])
+local max = (caller == "free") and 100 or 5000
+local min = 1
 
-  if not amount then
-    gg.alert(_("no_amount_matdung"))
-    return
-  end
+-- prompt text dengan template
+local promptText = _("input_construct_matdung")
+  :gsub("{label}", label)
+  :gsub("{max}", max)
 
-  if amount < 1 or amount > max then
-local msg = _("invalid_input_matdung"):gsub("{max}", max)
-    gg.alert(msg)
-    return
-  end
+local prompt = gg.prompt({emoji .. " " .. promptText}, nil, {"number"})
+local amount = tonumber(prompt and prompt[1])
+
+-- ❌ Tidak ada input
+if not amount then
+  return
+end
+
+-- ❌ Input di luar range
+if amount < min or amount > max then
+  gg.alert(
+    _("invalid_input_matdung")
+      :gsub("{max}", max)
+    .. "\n✅ Min: " .. min
+    .. "\n✅ Max: " .. max
+  )
+  return
+end
 
   local edits = {}
   for _, hex in ipairs(hexList) do
