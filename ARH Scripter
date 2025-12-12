@@ -186,7 +186,7 @@ local teks = {
 ["favorable_voyage_labboost"]      = {id = "Pelayaran Menguntungkan", en = "Favorable Voyage"},
 ["go_back_labboost"]               = {id = "Kembali", en = "Go Back"},
 
-["enter_amount_labboost"]          = {id = "Masukkan jumlah booster [1–500]:", en = "Enter booster amount [1–500]:"},
+["enter_amount_labboost"]          = {id = "Masukkan jumlah booster", en = "Enter amount"},
 ["invalid_input_labboost"]         = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
 ["invalid_amount_labboost"]        = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 500",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 500"},
 ["ref_not_found_labboost"]         = {id = "❌ Referensi tidak ditemukan. Tidak dapat menerapkan ", en = "❌ Reference not found. Cannot apply "},
@@ -270,7 +270,7 @@ local teks = {
 ["platinum_ingot_batangtang"] = {id = "Batangan Platinum", en = "Platinum Ingot"},
 ["go_back_batangtang"]        = {id = "Kembali", en = "Go Back"},
 
-["enter_amount_batangtang"] = {id = "Masukkan jumlah batangan", en = "Enter amount ingots"},
+["enter_amount_batangtang"] = {id = "Masukkan jumlah", en = "Enter amount"},
 ["invalid_input_batangtang"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["set_to_batangtang"] = {id = ":", en = ":"},
 ["bronze_batangtang"] = {id = "Batang Perunggu", en = "Bronze Ingots"},
@@ -286,7 +286,7 @@ local teks = {
 ["x2_ore_bonus_macul"] = {id = "Bonus Bijih ×2 (30 Hari)", en = "×2 Ore Bonus (30 Days)"},
 ["go_back_macul"] = {id = "Kembali", en = "Go Back"},
 
-["mining_prompt_macul"] = {id = "Masukkan jumlah alat tambang",en = "Enter amount mining tools"},
+["mining_prompt_macul"] = {id = "Masukkan jumlah",en = "Enter amount"},
 ["invalid_input_macul"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["success_bonus_macul"] = {id = "berhasil diaktifkan!",en = "successfully activated!"},
 ["pickaxes_macul"] = {id = "Beliung", en = "Pickaxes"},
@@ -335,7 +335,7 @@ local teks = {
 ["shovel_waswas"]      = { id = "Sekop", en = "Shovel" },
 ["go_back_waswas"]     = { id = "Kembali", en = "Go Back" },
   
-["enter_amount_waswas"] = {id = "Masukkan jumlah alat perluasan [1-5000]:",en = "Enter amount expansion tools [1-5000]:"},
+["enter_amount_waswas"] = {id = "Masukkan jumlah ",en = "Enter amount "},
 ["invalid_input_waswas"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
 ["reward_set_waswas"] = {id = ":",en = ":"},
 ["saw_waswas"] = {id = "Gergaji", en = "Saw"},
@@ -1822,12 +1822,22 @@ function booster12() apply30DayBooster("🚀 Rocket", 0x68) end
 function booster13()
   local addr = getAddr()
   if not addr then return end
-  local prompt = gg.prompt({_("adventure_energy_prompt_eventboost")}, nil, {"number"})
-  local energy = tonumber(prompt and prompt[1])
-  if not energy or energy < 1 or energy > 100000 then
-    gg.alert(_("invalid_value_energy_eventboost"))
-    return
-  end
+
+local prompt = gg.prompt({ _("adventure_energy_prompt_eventboost") }, nil, { "number" })
+
+-- Cegah error kalau prompt dibatalkan
+if not prompt then
+  return
+end
+
+local energy = tonumber(prompt[1])
+
+-- Validasi angka
+if not energy or energy < 1 or energy > 100000 then
+  gg.alert(_("invalid_value_energy_eventboost"))
+  return
+end
+
   local patch = {1886938400,1953064037,1164865385,1735550318,121,0,0,energy}
   local edits = {}
   for i = 0, #patch - 1 do
@@ -1898,7 +1908,7 @@ end
     return
   end
 
-  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost")}, nil, {"number"})
+  local prompt = gg.prompt({emoji .. " " .. _("enter_amount_labboost" " .. name .. " [1-500]:)}, nil, {"number"})
   if not prompt then
 return
   end
@@ -2754,8 +2764,7 @@ local min = 1
 local max = 5000
 
 local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_waswas") .. " " .. label
-}, nil, {"number"})
+  emoji .. " " .. _("enter_amount_waswas") .. " " .. label .. " [1-5000]:}, nil, {"number"})
 
 local amount = tonumber(p and p[1])
 
