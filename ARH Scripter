@@ -31,8 +31,8 @@ local teks = {
   
   ----Menu Free----
   
-["free_menu_freemenu"]      = {id="📜 Menu Skrip Gratis", en="📜 Free Script Menu"},
-["unlock_season_freemenu"]  = {id="🌟 • Buka Season Pass", en="🌟 • Unlock Season Pass"},
+["free_menu_freemenu"]      = {id="📜 Menu Naskah Gratis", en="📜 Free Script Menu"},
+["unlock_season_freemenu"]  = {id="🌟 • Buka Tiket Emas", en="🌟 • Unlock Golden Ticket"},
 ["freeze_rewards_freemenu"] = {id="❄️ • Bekukan Hadiah", en="❄️ • Freeze Rewards"},
 ["change_reward_freemenu"]  = {id="🎁 • Ubah Hadiah", en="🎁 • Change Rewards"},
 ["misc_mods_freemenu"]      = {id="🛠️ • Modifikasi Lainnya", en="🛠️ • Other Mods"},
@@ -79,9 +79,9 @@ local teks = {
   
 ----Premium Menu----
   
-["premium_menu_premenu"]     = {id = "📜 Menu Skrip Premium", en = "📜 Premium Script Menu"},
+["premium_menu_premenu"]     = {id = "📜 Menu Naskah Premium", en = "📜 Premium Script Menu"},
 ["special_hack_premenu"]     = {id = "💠 • Menu Spesial", en = "💠 • Special Menu"},
-["unlock_season_premenu"]    = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["unlock_season_premenu"]    = {id = "🌟 • Buka Tiket Emas", en = "🌟 • Unlock Golden Ticket"},
 ["limited_events_premenu"]   = {id = "🎯 • Event Terbatas", en = "🎯 • Limited-Time Events"},
 ["skip_time_premenu"]        = {id = "⏩ • Lewati Waktu", en = "⏩ • Skip Time"},
 ["farming_products_premenu"] = {id = "🚜 • Produk Pertanian", en = "🚜 • Farming Products"},
@@ -91,7 +91,7 @@ local teks = {
   
   ----Menu Hack RW Premium----
   
-["unlock_pass_rwpremium"]     = {id = "🌟 • Buka Season Pass", en = "🌟 • Unlock Season Pass"},
+["unlock_pass_rwpremium"]     = {id = "🌟 • Buka Tiket Emas", en = "🌟 • Unlock Golden Ticket"},
 ["freeze_rewards_rwpremium"]  = {id = "❄️ • Bekukan Hadiah", en = "❄️ • Freeze Rewards"},
 ["skins_decor_rwpremium"] = {id = "🎭 • Kostum, Avatar & Dekorasi",en = "🎭 • Skins, Avatars & Decorations"},
 ["add_cash_rwpremium"]        = {id = "💵 • Tambah T-Cash", en = "💵 • Add T-Cash"},
