@@ -655,7 +655,7 @@ local teks = {
 ["dealer_toast_deler"] = {id = "📦 Sewa Dealer 30 hari aktif!",en = "📦 30-day Dealer rental activated!"},
 
 ["about_script"] = {id="📖 • Tentang Skrip", en="📖 • About Script"},
-["contact_dev"]  = {id="📞 • Kontak Pemilik", en="📞 • Contact Owner"},
+["contact_dev"]  = {id="📞 • Hubungi Penjual", en="📞 • Contact The Seller"},
 ["reset_default"] = {id="♻️ • Setelan Awal", en="♻️ • Reset to Default"},
 ["change_lang"]  = {id="🌐 • Ganti Bahasa", en="🌐 • Change Language"},
   ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
