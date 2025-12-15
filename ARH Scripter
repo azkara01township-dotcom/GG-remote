@@ -141,6 +141,7 @@ local teks = {
 ["rainbow_ball_30_eventboost"]    = {id = "30 Hari Bola Pelangi", en = "30-Day Rainbow Ball"},
 ["bomb_30_eventboost"]            = {id = "30 Hari Bom", en = "30-Day Bomb"},
 ["rocket_30_eventboost"]          = {id = "30 Hari Roket", en = "30-Day Rocket"},
+["success_30d_eventnyawaganda"]   = {id = "diterapkan", en = "applied."},
 
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
@@ -1752,7 +1753,7 @@ table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]}
 end
 
 gg.setValues(patch)
-gg.toast("" .. emoji .. " " .. name .. " (30 Days) successfully applied.")
+gg.toast(emoji .. " " .. name .. " " .. _("booster_applied_eventboost"))
 end
 
 -- 🔁 Booster dengan template salin
