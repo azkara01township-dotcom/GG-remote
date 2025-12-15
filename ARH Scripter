@@ -1727,7 +1727,7 @@ end
   table.insert(patch, {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = amount})
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount .. " ✅")
+  gg.toast(emoji .. " " .. name .. "" .. _ ("booster_applied_eventboost") .. " " .. amount .. " ✅")
 end
 
 local function patchTimedBooster(emoji, name, hexData)
