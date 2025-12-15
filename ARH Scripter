@@ -95,7 +95,7 @@ local teks = {
 ["freeze_rewards_rwpremium"]  = {id = "❄️ • Bekukan Hadiah", en = "❄️ • Freeze Rewards"},
 ["skins_decor_rwpremium"] = {id = "🎭 • Kostum, Avatar & Dekorasi",en = "🎭 • Skins, Avatars & Decorations"},
 ["add_cash_rwpremium"]        = {id = "💵 • Tambah T-Cash", en = "💵 • Add T-Cash"},
-["boosters_rwpremium"]        = {id = "🚀•  Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
+["boosters_rwpremium"]        = {id = "🚀 •  Booster & Power-Up", en = "🚀 • Boosters & Power-Ups"},
 ["redeem_coupon_rwpremium"]   = {id = "🎟️ • Klaim Kupon", en = "🎟️ • Claim Coupons"},
 ["add_gems_rwpremium"]        = {id = "💎 • Tambah Permata", en = "💎 • Add Gems"},
 ["special_product_rwpremium"] = {id = "🛍️ • Produk Alat-Alat",en = "🛍️ • Tool Products"},
@@ -1730,20 +1730,6 @@ end
   gg.toast(emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost") .. " " .. amount .. " ✅")
 end
 
--- 🔧 Booster dengan waktu 30 hari
-local function patchTimedBooster(emoji, name, hexData)
-  local addr = getAddr()
-  if not addr then return end
-
-  local patch = {}
-  for _, v in ipairs(hexData) do
-    table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]})
-  end
-
-  gg.setValues(patch)
-  gg.toast("✅ " .. emoji .. " " .. name .. " - " .. _ ("success_30d_eventboost"))
-end
-
 local function patchTimedBooster(emoji, name, hexData)
 local addr = getAddr()
 if not addr then return end
@@ -1804,14 +1790,14 @@ local function apply30DayBooster(emoji, name, offset)
 end
 
 -- ✅ Booster Functions
-function booster1(caller) patchBooster("🌈", "Rainbow Ball", "rainbow_amount_eventboost", {{0x10,1379101978},{0x14,1651403105},{0x18,1631745903},{0x1C,27756},{0x20,0},{0x24,0},{0x28,0}}, caller) end
-function booster2(caller) patchBooster("💣", "Bomb", "bomb_amount_eventboost", {{0x10,1110666508},{0x14,6450543},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
-function booster3(caller) patchBooster("🚀", "Rocket", "rocket_amount_eventboost", {{0x10,1278438668},{0x14,6647401},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
+function booster1(caller) patchBooster("🌈", _("boost_event_bola_pelangi"), "rainbow_amount_eventboost", {{0x10,1379101978},{0x14,1651403105},{0x18,1631745903},{0x1C,27756},{0x20,0},{0x24,0},{0x28,0}}, caller) end
+function booster2(caller) patchBooster("💣", _("boost_event_bom"), "bomb_amount_eventboost", {{0x10,1110666508},{0x14,6450543},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
+function booster3(caller) patchBooster("🚀", _("boost_event_roket"), "rocket_amount_eventboost", {{0x10,1278438668},{0x14,6647401},{0x18,0},{0x1C,0},{0x20,0},{0x24,0},{0x28,0}}, caller) end
 
-function booster4(caller) patchBooster("🔨", "Single Hammer", "single_amount_eventboost", {{0x10,1295215888},{0x14,1701604449},{0x18,1835073652},{0x1C,7497069},{0x20,295108729},{0x24,120},{0x28,0}}, caller) end
-function booster5(caller) patchBooster("⬇️", "Vertical Hammer", "vertical_amount_eventboost", {{0x10,1446210844},{0x14,1769239141},{0x18,1282171235},{0x1C,6647401},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
-function booster6(caller) patchBooster("➡️", "Horizontal Hammer", "horizontal_amount_eventboost", {{0x10,1211329824},{0x14,2053730927},{0x18,1635020399},{0x1C,1852394604},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
-function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventboost", {{0x10,1379101974},{0x14,1969779557},{0x18,1701602918},{0x1C,6647296},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
+function booster4(caller) patchBooster("🔨", _("boost_event_palu_tunggal"), "single_amount_eventboost", {{0x10,1295215888},{0x14,1701604449},{0x18,1835073652},{0x1C,7497069},{0x20,295108729},{0x24,120},{0x28,0}}, caller) end
+function booster5(caller) patchBooster("⬇️", _("boost_event_vertical"), "vertical_amount_eventboost", {{0x10,1446210844},{0x14,1769239141},{0x18,1282171235},{0x1C,6647401},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
+function booster6(caller) patchBooster("➡️", _("boost_event_horizontal"), "horizontal_amount_eventboost", {{0x10,1211329824},{0x14,2053730927},{0x18,1635020399},{0x1C,1852394604},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
+function booster7(caller) patchBooster("🪭", _("boost_event_kipas"), "fun_amount_eventboost", {{0x10,1379101974},{0x14,1969779557},{0x18,1701602918},{0x1C,6647296},{0x20,295108709},{0x24,120},{0x28,0}}, caller) end
 
 function booster8() patchTimedBooster("❤️", _("infinite_lives_30_eventboost"), {{0x10,1952533798},{0x14,1278437475},{0x18,1936029289},{0x1C,1718511967},{0x20,1701669204},{0x24,0},{0x28,0},{0x2C,2592000}}) end
 function booster9() patchTimedBooster("✨", _("double_points_30_eventboost"), {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000}}) end
