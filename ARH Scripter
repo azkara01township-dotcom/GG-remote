@@ -2804,7 +2804,7 @@ end
     end
 
     gg.setValues(patch)
-    gg.toast(emoji .. " " .. label .. " " .. _("reward_set_waswas") .. " " .. amount .. " ✅")
+    gg.toast(emoji .. " " .. label .. "" .. _("reward_set_waswas") .. " " .. amount .. " ✅")
 end
 
 -- 🔧 Tool Reward Functions
