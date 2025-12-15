@@ -141,7 +141,8 @@ local teks = {
 ["rainbow_ball_30_eventboost"]    = {id = "30 Hari Bola Pelangi", en = "30-Day Rainbow Ball"},
 ["bomb_30_eventboost"]            = {id = "30 Hari Bom", en = "30-Day Bomb"},
 ["rocket_30_eventboost"]          = {id = "30 Hari Roket", en = "30-Day Rocket"},
-["success_30d_eventnyawaganda"]   = {id = "diterapkan", en = "applied."},
+["success_30d_eventnyawaganda"]   = {id = "diterapkan ✅", en = "applied ✅"},
+["success_30d_eventbolabomroket"] = {id = "diterapkan ✅", en = "30-Day Booster applied ✅"},
 
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
@@ -1774,7 +1775,7 @@ return gg.getValues(copied)
 end
 
 -- 🔁 Booster dengan template salin
-local function apply30DayBooster(name, offset)
+local function copyPatchTemplate(offset, emoji, name)
   local copied = copyPatchTemplate(offset)
   if not copied then
     gg.alert(_ ("template_not_found_eventboost") .. " " .. name)
@@ -1799,7 +1800,7 @@ local function apply30DayBooster(name, offset)
   end
 
   gg.setValues(patch)
-  gg.toast("✅ 30-Day " .. name .. " " .. _ ("booster_applied_eventboost"))
+  gg.toast(emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost"))
 end
 
 -- ✅ Booster Functions
@@ -1815,9 +1816,9 @@ function booster7(caller) patchBooster("🪭", "Shuffle Fan", "fun_amount_eventb
 function booster8() patchTimedBooster("❤️", _("infinite_lives_30_eventboost"), {{0x10,1952533798},{0x14,1278437475},{0x18,1936029289},{0x1C,1718511967},{0x20,1701669204},{0x24,0},{0x28,0},{0x2C,2592000}}) end
 function booster9() patchTimedBooster("✨", _("double_points_30_eventboost"), {{0x10,1835619372},{0x14,1850041445},{0x18,2037672308},{0x1C,1635214674},{0x20,1816224882},{0x24,3299436},{0x28,0},{0x2C,2592000}}) end
 
-function booster10() apply30DayBooster("🌈 Rainbow Ball", -0x8) end
-function booster11() apply30DayBooster("💣 Bomb", -0x78) end
-function booster12() apply30DayBooster("🚀 Rocket", 0x68) end
+function booster10() apply30DayBooster("🌈", _("rainbow_ball_30_eventboost"), -0x8) end
+function booster11() apply30DayBooster("💣", _("bomb_30_eventboost"), -0x78) end
+function booster12() apply30DayBooster("🚀", _("rocket_30_eventboost"), 0x68) end
 
 function booster13()
   local addr = getAddr()
