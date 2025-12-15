@@ -1775,14 +1775,14 @@ return gg.getValues(copied)
 end
 
 -- 🔁 Booster dengan template salin
-local function copyPatchTemplate(offset, emoji, name)
+local function apply30DayBooster(emoji, name, offset)
   local copied = copyPatchTemplate(offset)
   if not copied then
     gg.alert(_ ("template_not_found_eventboost") .. " " .. name)
     return
   end
 
-  gg.toast(_ ("template_copied_eventboost") .. ": " .. name)
+  gg.toast(_ ("template_copied_eventboost") .. " " .. name)
 
   local target = getAddr()
   if not target then return end
@@ -1800,7 +1800,7 @@ local function copyPatchTemplate(offset, emoji, name)
   end
 
   gg.setValues(patch)
-  gg.toast(emoji .. " " .. name .. " " .. _ ("booster_applied_eventboost"))
+  gg.toast(emoji .. " " .. name .. " " .. _("success_30d_eventbolabomroket"))
 end
 
 -- ✅ Booster Functions
