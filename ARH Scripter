@@ -695,8 +695,8 @@ local teks = {
 📩 Hubungi Penjual:
 💬 Telegram: @azka_arh
 
-📢 WhatsApp Channel (Info & Update):
-📨 ARH SCRIPT - Township
+📢 Telegram Channel (Info & Update):
+📨 ｢ARH｣ • Official Channel
 ]],en = [[
 ┏━━━━｢💎𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗔𝗖𝗖𝗘𝗦𝗦💎｣━━━━┓
 ┃🚀ᴇɴᴊᴏʏ ᴀʟʟ ꜰᴇᴀᴛᴜʀᴇꜱ ᴡɪᴛʜ ɴᴏ ʟɪᴍɪᴛꜱ!🚀
@@ -729,15 +729,15 @@ local teks = {
 📩 Contact The Seller:
 💬 Telegram: @azka_arh
 
-📢 WhatsApp Channel (Info & Updates):
-📨 ARH SCRIPT - Township
+📢 Telegram Channel (Info & Updates):
+📨 ｢ARH｣ • Official Channel
 ]]},
   ["btn_back"] = {id = "❌ Kembali", en = "❌ Go Back"},
   ["btn_tele"] = {id = "📩 Telegram", en = "📩 Telegram"},
   ["btn_wa"]   = {id = "📢 WhatsApp Channel", en = "📢 WhatsApp Channel"},
   ["toast_back"] = {id = "↩️ Kembali ke menu sebelumnya", en = "↩️ Back to previous menu"},
   ["toast_tele"] = {id = "✅ Username Telegram berhasil disalin!", en = "✅ Telegram username copied!"},
-  ["toast_wa"]   = {id = "✅ Link WhatsApp berhasil disalin!", en = "✅ WhatsApp link copied!"},
+  ["toast_wa"]   = {id = "✅ Link Telegram berhasil disalin!", en = "✅ Telegram link copied!"},
 	
 ["thank_you_exit"] = {id = "Terima kasih telah menggunakan script ini!\nSemoga harimu menyenangkan!",en = "Thanks for using this script!\nHave a great day!"},
 
@@ -9668,7 +9668,7 @@ function showContactMenu(backFunc)
       backFunc()
     end
   elseif pilihan == 3 then
-    gg.copyText("https://whatsapp.com/channel/0029Vb6ez5yCcW4t9G1AJE3q")
+    gg.copyText("https://t.me/arhtownship")
     gg.toast(_"toast_wa")
     if type(backFunc) == "function" then
       backFunc()
