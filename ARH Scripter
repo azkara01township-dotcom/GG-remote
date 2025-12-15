@@ -1753,7 +1753,7 @@ table.insert(patch, {address = addr + v[1], flags = gg.TYPE_DWORD, value = v[2]}
 end
 
 gg.setValues(patch)
-gg.toast(emoji .. " " .. name .. " " .. _("booster_applied_eventboost"))
+gg.toast(emoji .. " " .. name .. " " .. _("success_30d_eventnyawaganda"))
 end
 
 -- 🔁 Booster dengan template salin
