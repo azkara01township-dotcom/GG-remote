@@ -7927,7 +7927,7 @@ function ipen1()
   end
 
   -- 🔍 Cari base QWORD
-  gg.searchNumber("276", gg.TYPE_QWORD)
+  gg.searchNumber("281", gg.TYPE_QWORD)
   local results = gg.getResults(200)
 
   if #results == 0 then
