@@ -1335,10 +1335,10 @@ function gp1(caller)
 
   local kandidat = {}
 
-  -- 🧩 Filter hasil berdasarkan offset +0x48 == 670
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 680
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 670 then
+    if check and check[1] and check[1].value == 680 then
       table.insert(kandidat, res)
     end
   end
@@ -8170,8 +8170,8 @@ function ipen6()
   gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari DRAFT Gold Card Identifier
-  gg.searchNumber("1701667150", gg.TYPE_DWORD)
-  local hasil = gg.getResults(5000)
+  gg.searchNumber("97059372622158", gg.TYPE_QWORD)
+  local hasil = gg.getResults(100)
 
   if #hasil == 0 then
     gg.alert(_("goldcard_notfound"))
