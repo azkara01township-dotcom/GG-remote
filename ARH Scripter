@@ -644,10 +644,13 @@ local teks = {
 
 -------------------------------------------------------------------------------------------
 
+["rangememorymenu"]  = {id="🔍 Pilih Rentang Memori", en="🔍 Select Memory Range"},
+
 ["about_script"] = {id = "📖 • Panduan Naskah",en = "📖 • Script Guide"},
 ["contact_dev"]  = {id="📞 • Hubungi Penjual", en="📞 • Contact The Seller"},
 ["reset_default"] = {id = "♻️ • Reset ke Setelan Awal",en = "♻️ • Reset to Default"},
 ["change_lang"]  = {id="🌐 • Ubah Bahasa", en="🌐 • Change Language"},
+["rangememory"]  = {id="🔍 • Pilih Rentang Memori", en="🔍 • Select Memory Range"},
   ["go_back"] = {id="❌ • Kembali", en="❌ • Go Back"},
 
   ["select_lang"] = {id="🌐 Pilih Bahasa:", en="🌐 Choose Language:"},
@@ -915,7 +918,56 @@ function getFreezeFlag()
   return v[1].value == 1
 end
 
+rangesSelected = false
+
+function pilihRanges()
+  while true do
+    local r = gg.choice({
+      "🔹 Ca: Alloc",
+      "🔹 O: Other",
+      "🔹 A: Anonymous",
+      "🔹 Ca: Alloc + Other",
+      "🔹 Ca: Alloc + Anonymous",
+      "🔹 Ca: Alloc + Other + Anonymous"
+    }, nil, _("rangememorymenu"))
+
+    -- ❌ Jika user cancel → tutup menu, tunggu klik GG lagi
+    if r == nil then
+      return false
+    end
+
+    if r == 1 then
+      gg.setRanges(gg.REGION_C_ALLOC)
+    elseif r == 2 then
+      gg.setRanges(gg.REGION_OTHER)
+    elseif r == 3 then
+      gg.setRanges(gg.REGION_ANONYMOUS)
+    elseif r == 4 then
+      gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_OTHER)
+    elseif r == 5 then
+      gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS)
+    elseif r == 6 then
+      gg.setRanges(
+        gg.REGION_C_ALLOC |
+        gg.REGION_OTHER |
+        gg.REGION_ANONYMOUS
+      )
+    end
+
+    rangesSelected = true
+    return true
+  end
+end
+
 function freekey()
+-- 🔐 Wajib pilih range dulu
+  if not rangesSelected then
+    local ok = pilihRanges()
+    if not ok then
+      return -- ⛔ stop total, menu free tidak muncul
+    end
+  end
+
   menuRunning = true
 while menuRunning and menuMode == "free" do
     local menuList = {
@@ -1018,6 +1070,14 @@ end
 
 -- 💎 Premium Script Menu
 function Main()
+-- 🔐 Wajib pilih range dulu
+  if not rangesSelected then
+    local ok = pilihRanges()
+    if not ok then
+      return -- ⛔ stop total, menu free tidak muncul
+    end
+  end
+
   menuRunning = true
   while menuRunning and menuMode == "premium" do
 
@@ -1323,7 +1383,6 @@ end
 function gp1(caller)
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("6875698586322892050", gg.TYPE_QWORD)
@@ -1415,7 +1474,6 @@ end
 end
 
 gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("28;29;1970225960::849", gg.TYPE_DWORD)
 gg.refineNumber("29", gg.TYPE_DWORD)
 local results = gg.getResults(1)
@@ -1442,7 +1500,6 @@ return newAddr
 end
 
 gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari pola utama
   gg.searchNumber("5507461923117941548", gg.TYPE_QWORD)
@@ -1744,7 +1801,6 @@ end
 -- 🔁 Booster dengan template salin
 local function copyPatchTemplate(offset)
 gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("1701669204;23;28;23;1446210844::433", gg.TYPE_DWORD)
 gg.refineNumber("28", gg.TYPE_DWORD)
 local ref = gg.getResults(1)
@@ -1924,7 +1980,6 @@ end
 -- 🧬 Copy Template for Lab18
 local function copyPatchTemplate(offset)
 gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("1701081679;1919906915;49;23::", gg.TYPE_DWORD)
 gg.refineNumber("23", gg.TYPE_DWORD)
 local ref = gg.getResults(1)
@@ -1995,7 +2050,6 @@ function lab17() applyLabBooster({0x6F6F421C,0x614D7473,0x6E6F4478,0x00657461,0x
 
 function applyCopiedPerk(labelKey, emoji, matchValue, extraValues, customInput)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1852793872;1600484449;23;24::201", gg.TYPE_DWORD)
   gg.refineNumber(matchValue, gg.TYPE_DWORD)
   local src = gg.getResults(1)
@@ -3167,7 +3221,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1768440596;6778692;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3184,7 +3237,6 @@ local baseLanternAddr = nil
 function initLanternDecorationSearch()
   if baseLanternAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1768440596;6778692;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3330,7 +3382,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1818318362;1801413998;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3347,7 +3398,6 @@ local baseEasterAddr = nil
 function initEasterDecorationSearch()
   if baseEasterAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1818318362;1801413998;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3516,7 +3566,6 @@ function getAddr()
   end
 
   gg.clearResults()
-gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634035750;1918137458;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3533,7 +3582,6 @@ local baseValentineAddr = nil
 function initValentineDecorationSearch()
   if baseValentineAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634035750;1918137458;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3753,7 +3801,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1935754524;1852732770;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3770,7 +3817,6 @@ local baseSpecialAddr = nil
 function initSpecialDecorationSearch()
   if baseSpecialAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1935754524;1852732770;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3956,7 +4002,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034218;1634038388;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -3973,7 +4018,6 @@ local baseRareAddr = nil
 function initRareDecorationSearch()
   if baseRareAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034218;1634038388;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4159,7 +4203,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034214;1734439524;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4176,7 +4219,6 @@ local baseUniqueAddr = nil
 function initUniqueDecorationSearch()
   if baseUniqueAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034214;1734439524;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4371,7 +4413,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1701860140;1918989681;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4388,7 +4429,6 @@ local baseLimitedAddr = nil
 function initLimitedDecorationSearch()
   if baseLimitedAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1701860140;1918989681;1769300575::37", gg.TYPE_DWORD)
   gg.refineNumber("1769300575", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4568,7 +4608,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("2036811032;1768776050;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4585,7 +4624,6 @@ local basePrmAddr = nil
 function initPrmDecorationSearch()
   if basePrmAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("2036811032;1768776050;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4772,7 +4810,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034214;1735292266;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4789,7 +4826,6 @@ local baseClassicAddr = nil
 function initClassicDecorationSearch()
   if baseClassicAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034214;1735292266;1769300498::121", gg.TYPE_DWORD)
   gg.refineNumber("1769300498", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -4988,7 +5024,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5005,7 +5040,6 @@ local baseHelipadAddr = nil
 function initHelipadSkinSearch()
   if baseHelipadAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5143,7 +5177,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5160,7 +5193,6 @@ local baseHelipadAddr = nil
 function initHelipadSkinSearch()
   if baseHelipadAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("34;1651462751;1952532319:841", gg.TYPE_DWORD)
   gg.refineNumber("1952532319", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5313,7 +5345,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
   gg.refineNumber("6646134", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5330,7 +5361,6 @@ local baseAirportAddr = nil
 function initAirportSkinSearch()
   if baseAirportAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("51;6646134:385", gg.TYPE_DWORD)
   gg.refineNumber("6646134", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5515,7 +5545,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
   gg.refineNumber("7037807", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5532,7 +5561,6 @@ local baseAirplaneAddr = nil
 function initAirplaneSkinSearch()
   if baseAirplaneAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;8;1768641316;7037807:85", gg.TYPE_DWORD)
   gg.refineNumber("7037807", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5687,7 +5715,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
   gg.refineNumber("1768844127", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5704,7 +5731,6 @@ local baseStationAddr = nil
 function initStationSkinSearch()
   if baseStationAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("29550;7;1768844127:157", gg.TYPE_DWORD)
   gg.refineNumber("1768844127", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5844,7 +5870,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
   gg.refineNumber("1734962795", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -5861,7 +5886,6 @@ local baseTrainAddr = nil
 function initTrainSkinSearch()
   if baseTrainAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1953062766;2;1734962795:125", gg.TYPE_DWORD)
   gg.refineNumber("1734962795", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6014,7 +6038,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
   gg.refineNumber("1717912671", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6031,7 +6054,6 @@ local basePortAddr = nil
 function initPortSkinSearch()
   if basePortAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1717912671;1919902322;827609951::129", gg.TYPE_DWORD)
   gg.refineNumber("1717912671", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6164,7 +6186,6 @@ local chk = gg.getValues({{address = addr, flags = gg.TYPE_DWORD}})
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
   gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6181,7 +6202,6 @@ local baseBoatAddr = nil
 function initBoatSkinSearch()
   if baseBoatAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("12628;1768190575;1784639593:381", gg.TYPE_DWORD)
   gg.refineNumber("1784639593", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6313,7 +6333,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
   gg.refineNumber("1651733601", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6330,7 +6349,6 @@ local baseFortressAddr = nil
 function initFortressSkinSearch()
   if baseFortressAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("13157;1866882926;1651733601:61", gg.TYPE_DWORD)
   gg.refineNumber("1651733601", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6480,7 +6498,6 @@ if addr then
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("32;49;37;1953055504:97", gg.TYPE_DWORD)
   gg.refineNumber("37", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6497,7 +6514,6 @@ local baseSignAddr = nil
 function initSignEventSearch()
   if baseSignAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("32;49;37;1953055504:97", gg.TYPE_DWORD)
   gg.refineNumber("37", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6636,7 +6652,6 @@ function getSignRandomAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034188;33;26;1953055504:81", gg.TYPE_DWORD)
   gg.refineNumber("26", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6653,7 +6668,6 @@ local baseSignAddr = nil
 function initSignRandomSearch()
   if baseSignAddr then return true end
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1634034188;33;26;1953055504:81", gg.TYPE_DWORD)
   gg.refineNumber("26", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6891,7 +6905,6 @@ function getAddr()
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
   gg.refineNumber("24", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -6916,7 +6929,6 @@ function initFramestyleSearch()
   if baseFramestyleAddr then return true end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("1651403105;49;24;1768641318;1953719654:777", gg.TYPE_DWORD)
   gg.refineNumber("24", gg.TYPE_DWORD)
   local r = gg.getResults(1)
@@ -7703,8 +7715,7 @@ end
 function ms1()
 gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
+  
   -- 📥 Pilih jumlah poin
   local poinChoice = gg.choice({
     _( "vipedit150" ),
@@ -7747,6 +7758,7 @@ edits[#edits + 1] = { address = addr + 0xC4, flags = gg.TYPE_DWORD, value = 0 }
 
   if #edits > 0 then
     gg.setValues(edits)
+gg.clearResults()
     gg.alert(_( "alert_berhasil_prefix" ) .. " " .. count .. "\n" ..
              _( "alert_berhasil_suffix" ) .. " " .. points)
     gg.toast(_( "toast_berhasil" ))
@@ -7758,7 +7770,6 @@ end
 function ms2()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("65540", gg.TYPE_QWORD)
@@ -7810,7 +7821,6 @@ end
 function ms3()
   gg.setVisible(false)
 gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 💬 Pilihan poin
   local pilihan = gg.choice({
@@ -7915,7 +7925,6 @@ end
 function ipen1()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🏁 Input poin
   local input = gg.prompt(
@@ -7975,7 +7984,6 @@ end
 function ipen2()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🏁 Input poin
   local input = gg.prompt(
@@ -8034,7 +8042,6 @@ end
 function ipen3()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🏆 Input poin
   local input = gg.prompt(
@@ -8095,7 +8102,6 @@ function ipen4()
   gg.setVisible(false)
   gg.clearResults()
   gg.alert(_"Etamwarn_event_not_claimed")
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- Search main QWORD
   gg.searchNumber("3304708", gg.TYPE_QWORD)
@@ -8141,7 +8147,6 @@ end
 function ipen5()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   gg.searchNumber("1734429984;85::281", gg.TYPE_DWORD)
   gg.refineNumber("85", gg.TYPE_DWORD)
@@ -8160,6 +8165,7 @@ function ipen5()
 end
 
   gg.addListItems(freeze)
+gg.clearResults()
   a2()
   gg.toast(string.format(_("toastFreeze_bajak") .. " (%d)", #r))
 end
@@ -8167,7 +8173,6 @@ end
 function ipen6()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari DRAFT Gold Card Identifier
   gg.searchNumber("97059372622158", gg.TYPE_QWORD)
@@ -8223,7 +8228,6 @@ end
 function ipen7()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 1) Cari base QWORD
   gg.searchNumber("12884967423", gg.TYPE_QWORD)
@@ -8410,8 +8414,7 @@ end
 function auto1()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
+  
   -- 🔍 Cari DRAFT Gold Card Identifier
   gg.searchNumber("8315178131471156752", gg.TYPE_QWORD)
   local hasil = gg.getResults(100)
@@ -8468,8 +8471,7 @@ end
 function auto2()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
+  
   -- 🔍 Cari nilai cooldown utama
   gg.searchNumber("54000", gg.TYPE_DWORD)
   local results = gg.getResults(10)
@@ -8503,6 +8505,7 @@ function auto2()
   end
 
   gg.addListItems(freezeList)
+gg.clearResults()
   a2()
   gg.toast(_"activated")
 end
@@ -8510,7 +8513,6 @@ end
 function auto3()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari DRAFT Gold Card Identifier
   gg.searchNumber("16842752", gg.TYPE_QWORD)
@@ -8563,7 +8565,6 @@ end
 -- Fungsi auto4() multi-bahasa
 function auto4()
     gg.setVisible(false)
-    gg.setRanges(gg.REGION_C_ALLOC)
 
 local d = gg.prompt(_"train_prompt_kreta", nil, {"number", "number", "checkbox"})
     if not d then return gg.alert(_"cancelled_kreta") end
@@ -8604,6 +8605,7 @@ local d = gg.prompt(_"train_prompt_kreta", nil, {"number", "number", "checkbox"}
     end
 
     gg.addListItems(patch)
+gg.clearResults()
     a2()
 
     local msg = _( "train_timer_frozen_kreta") .. h .. "h " .. m .. "m"
@@ -8674,7 +8676,6 @@ function parming1()
   local feedamount = ({50, 100, 500})[choice]
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("8751179571608512014", gg.TYPE_QWORD)
@@ -8740,7 +8741,6 @@ end
 function parming2()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari pola utama (banyak hasil)
   gg.searchNumber("8386654023812342548", gg.TYPE_QWORD)
@@ -8795,7 +8795,6 @@ end
 function parming3(caller)
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama (hasil banyak)
   gg.searchNumber("8243122701878522640", gg.TYPE_QWORD)
@@ -8894,7 +8893,6 @@ end
 function parming5()
     gg.setVisible(false)
     gg.clearResults()
-    gg.setRanges(gg.REGION_C_ALLOC)
 
     local cropKeys = {
         _("crop_wheat"),_("crop_corn"),_("crop_carrot"),_("crop_sugar"),_("crop_cotton"),
@@ -8971,7 +8969,6 @@ end
 function parming6()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- ⚠️ Warning
   gg.alert(_("ship_warning"))
@@ -9072,7 +9069,6 @@ end
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari data Dealer
   gg.searchNumber("6072", gg.TYPE_DWORD)
@@ -9132,7 +9128,6 @@ if not count or count < 10 or count > 2000 then
 end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
   gg.searchNumber("7020372369389216534", gg.TYPE_QWORD)
 
   local hasil = gg.getResults(100)
@@ -9173,7 +9168,6 @@ end
 function cmarket3()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 1️⃣ Cari anchor cooldown besar (432000)
   gg.searchNumber("432000", gg.TYPE_DWORD)
@@ -9245,7 +9239,6 @@ function cmarket4()
   local selectedTime = seconds[durMenu]
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari nilai awal
   gg.searchNumber("3367428", gg.TYPE_DWORD)
@@ -9336,7 +9329,6 @@ end
 function other1()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 📋 Fixed pattern list (2–53)
   local patterns = {
@@ -9393,6 +9385,7 @@ if not p then return end
     table.insert(patch, {address = r.address + 0x18, flags = gg.TYPE_DWORD, value = val})
   end
   gg.setValues(patch)
+gg.clearResults()
   gg.toast(_("patched_brik") .. ": " .. pattern .. " → " .. val)
 end
 
@@ -9403,7 +9396,6 @@ end
 function other2(caller)
 gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 📝 Semua input dalam satu prompt
   local input = gg.prompt(
@@ -9485,7 +9477,6 @@ gg.setVisible(false)
   end
 
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("1819042157", gg.TYPE_DWORD)
@@ -9542,7 +9533,6 @@ end
 function other4(caller)
 gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 📝 Input jumlah Cash
   local input = gg.prompt(
@@ -9609,7 +9599,6 @@ end
 function other5()
 gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Langkah 1: Cari pola QWORD utama
   gg.searchNumber("7597138734268506898", gg.TYPE_QWORD)
@@ -9650,6 +9639,7 @@ gg.setVisible(false)
   end
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- 🎉 Selesai
   gg.alert(_( "gekomkomunitas_sukses_alert" ))
@@ -9664,7 +9654,6 @@ end
 function other6(caller)
 gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari pola global
   gg.searchNumber("8386103232793899028", gg.TYPE_QWORD)
@@ -9719,7 +9708,6 @@ end
 function other7()
   gg.setVisible(false)
   gg.clearResults()
-  gg.setRanges(gg.REGION_OTHER)
 
   -- 🔍 Cari base Boom Like (QWORD)
   gg.searchNumber("8391162090120890396", gg.TYPE_QWORD)
@@ -9749,10 +9737,11 @@ function menu6()
   local title = abouts
   local menu = gg.choice({
 	
-_( "about_script" ),
+    _( "about_script" ),
     _( "contact_dev" ),
     _( "reset_default" ),
     _( "change_lang" ),
+     _( "rangememory" ),
     _( "go_back" )
   }, nil, title)
 
@@ -9781,6 +9770,9 @@ _( "about_script" ),
   saveLang()
   menu6()
   elseif menu == 5 then
+    pilihRanges()
+    menu6()
+  elseif menu == 6 then
     if menuMode == "free" then freekey() else Main() end
   end
 end
