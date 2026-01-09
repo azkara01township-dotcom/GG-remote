@@ -7936,7 +7936,7 @@ function ipen1()
   end
 
   -- 🔍 Cari base QWORD
-  gg.searchNumber("281", gg.TYPE_QWORD)
+  gg.searchNumber("1684370542", gg.TYPE_QWORD)
   local results = gg.getResults(200)
 
   if #results == 0 then
@@ -7948,8 +7948,8 @@ function ipen1()
   local validBase = {}
   for i = 1, #results do
     local checks = gg.getValues({
-      { address = results[i].address - 0x20, flags = gg.TYPE_DWORD },
-      { address = results[i].address + 0xB8, flags = gg.TYPE_DWORD }
+      { address = results[i].address + 0x8, flags = gg.TYPE_DWORD },
+      { address = results[i].address + 0xE0, flags = gg.TYPE_DWORD }
     })
 
     if checks
@@ -7969,7 +7969,7 @@ function ipen1()
   local setval = {}
   for i = 1, #validBase do
     setval[#setval + 1] = {
-      address = validBase[i].address + 0xB4,
+      address = validBase[i].address + 0xDC,
       flags   = gg.TYPE_DWORD,
       value   = val
     }
