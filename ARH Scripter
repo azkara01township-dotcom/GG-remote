@@ -154,6 +154,7 @@ local teks = {
 ["success_30d_eventbolabomroket"] = {id = "diterapkan ✅", en = "30-Day Booster applied ✅"},
 
 ["energy_adventure_eventboost"]   = {id = "Energi Petualangan", en = "Adventure Energy"},
+["frozentoken_menu"]   = {id = "Token Harta Beku", en = "Frozen Fortune Tokens"},
 ["go_back_eventboost"]            = {id = "Kembali", en = "Go Back"},
 
 ["invalid_range_eventboost"]      = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan",en = "🚫 Invalid input.\nMax allowed"},
@@ -173,6 +174,10 @@ local teks = {
 ["adventure_energy_prompt_eventboost"]  = {id = "⚡ Masukkan jumlah Energi Petualangan [1–100000]:", en = "⚡ Enter Adventure Energy amount [1–100000]:"},
 ["invalid_value_energy_eventboost"]   = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 100000",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 100000"},
 ["toast_energy_applied_eventboost"]   = {id = "⚡ Energi Petualangan: %d ✅", en = "⚡ Adventure Energy: %d ✅"},
+
+["frozentoken_input"]  = {id = "⚓ Masukkan jumlah token harta beku [1–5000]:", en = "⚓ Enter frozen fortune tokens amount [1–5000]:"},
+["frozentoken_invalid"]   = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 1\n✅ Max: 5000",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 1\n✅ Max: 5000"},
+["frozentoken_toast"]   = {id = "⚓ Token harta beku: %d ✅", en = "⚓ Frozen fortune tokens: %d ✅"},
 
 ----lab boost----
 
@@ -1721,6 +1726,8 @@ if caller ~= "free" then
   table.insert(actions, booster12)
   table.insert(menu, "⚡ • " .. _("energy_adventure_eventboost"))
   table.insert(actions, booster13)
+  table.insert(menu, "⚓ • " .. _("frozentoken_menu"))
+  table.insert(actions, booster14)
 end
 
   table.insert(menu, "❌ • " .. _("go_back_eventboost"))
@@ -1886,6 +1893,34 @@ end
   end
   gg.setValues(edits)
   gg.toast(string.format(_("toast_energy_applied_eventboost"), energy))
+end
+
+function booster14()
+  local addr = getAddr()
+  if not addr then return end
+
+local prompt = gg.prompt({ _("frozentoken_input") }, nil, { "number" })
+
+-- Cegah error kalau prompt dibatalkan
+if not prompt then
+  return
+end
+
+local energy = tonumber(prompt[1])
+
+-- Validasi angka
+if not energy or energy < 1 or energy > 5000 then
+  gg.alert(_("frozentoken_invalid"))
+  return
+end
+
+  local patch = {1634878494;1315860327;1416917861;1852140399;0;0;0,energy}
+  local edits = {}
+  for i = 0, #patch - 1 do
+    table.insert(edits, {address = addr + 0x10 + i * 4, flags = gg.TYPE_DWORD, value = patch[i + 1]})
+  end
+  gg.setValues(edits)
+  gg.toast(string.format(_("frozentoken_toast"), energy))
 end
 
 function boost2()
