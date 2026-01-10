@@ -7936,8 +7936,8 @@ function ipen1()
   end
 
   -- 🔍 Cari base QWORD
-  gg.searchNumber("1684370542", gg.TYPE_QWORD)
-  local results = gg.getResults(200)
+  gg.searchNumber("1684370542", gg.TYPE_DWORD)
+  local results = gg.getResults(1000)
 
   if #results == 0 then
     gg.alert( _("level_puzzle_not_found") )
