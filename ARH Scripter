@@ -1502,7 +1502,7 @@ end
 gg.clearResults()
 
   -- 🔍 Cari pola utama
-  gg.searchNumber("1970225964", gg.TYPE_DWORD)
+  gg.searchNumber("5507461923117941548", gg.TYPE_QWORD)
   local hasil = gg.getResults(1000)
 
   if #hasil == 0 then
