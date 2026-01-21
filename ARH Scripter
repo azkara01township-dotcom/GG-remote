@@ -412,8 +412,7 @@ local teks = {
 ["menu2_erni_cup"]   = {id = "🏆 • Poin Piala Ernie",en = "🏆 • Ernie's Cup Points"},
 ["menu2_ruler_the_mine"]        = {id="💵 • Penguasa Tambang", en="💵 • Ruler of the Mine"},
 ["menu2_treasure_pirate"] = {id = "🏴‍☠️ • Sembunyikan Kartu Hitam Bajak Laut",en = "🏴‍☠️ • Hide Pirate Black Card"},
-["menu2_send_goldcard"]   = {id = "🌟 • Kirim Kartu Emas",en = "🌟 • Send Gold Card"},
-["menu2_send_cardnolimite"]        = {id = "🃏 • Kirim Kartu Tanpa Batas",en = "🃏 • Unlimited Card Sending"},
+["menu2_send_goldcard"] = {id = "🌟 • Kirim Kartu Emas Tanpa Batas",en = "🌟 • Send Gold Card Unlimited"},
 ["menu2_duplicate_card"] = { id = "🔁 • Duplikat Kartu", en = "🔁 • Duplicate Cards" },
 ["menu_back_menuipen"]             = {id="❌ • Kembali", en="❌ • Go Back"},
 
@@ -442,23 +441,21 @@ local teks = {
 ["toastFreeze_bajak"] = {id = "🏴‍☠️ Freeze Harta Karun Bajak Laut diterapkan pada entri!",en = "🏴‍☠️ Pirate Treasure freeze applied to entries!"},
 
 ["goldcard_notfound"] = {id = "❌ Data Kirim Kartu Emas tidak ditemukan.\n\nSilakan mulai ulang permainan dan coba lagi.",en = "❌ Gold Card Send Data not found.\n\nPlease restart the game and try again."},
-["goldcard_notverify"] = {id = "⛔ Data Kirim Kartu Emas valid tidak dapat ditemukan!\n\nSilahkan mulai ulang permainan dan coba lagi.",en = "⛔ Gold Card Send data found.\n\nPlease restart the game and try again."},
+["goldcard_notverify"] = {id = "⛔ Data Kirim Kartu Emas valid tidak dapat ditemukan!\n\nSilahkan mulai ulang permainan dan coba lagi.",en = "⛔ Valid Gold Card Send data not found.\n\nPlease restart the game and try again."},
 ["goldcard_success"] = {id = "✅ Gold Card sekarang bisa dikirim!",en = "✅ Gold Cards are now sendable!"},
 
 ["noDataFound_sendcard"] = {id = "❌ Data kirim kartu tanpa batas tidak ditemukan.\n\nSilakan restart game dan coba lagi.",en = "❌ Unlimited Card Sending data not found.\n\nPlease restart the game and try again."},
 ["baseNotFound_sendcard"] = {id = "⛔ Pengiriman Kartu Tanpa Batas valid tidak ditemukan.\n\nMulai ulang permainan dan coba lagi.",en = "⛔ Unlimited Card Sending valid not found.\n\nPelease restart the game and try again."},
-["success_sendcard"] = {id = "✅ Kirim kartu tanpa batas berhasil diaktifkan!",en = "✅ Unlimited card sending is now active!"},
+["success_sendcard"] = {id = "✅ Kirim Kartu Emas tanpa batas berhasil diaktifkan!",en = "✅ Unlimited Gold Card sending is now active!"},
 
-["dup_prompt_visible"] = {id = "🃏 Masukkan jumlah kartu yang TERLIHAT (contoh: 1):",en = "🃏 Enter VISIBLE card amount (example: 1):"},
-["dup_prompt_new"] = {id = "✨ Masukkan jumlah kartu BARU (10–1000):",en = "✨ Enter NEW card amount (10–1000):"},
-["dup_group1"] = { id = "🔍 Cari grup 1",en = "🔍 Search group 1"},
-["dup_group2"] = {id = "🔍 Cari grup 2",en = "🔍 Search group 2"},
-["dup_invalid_input"] = {id = "❌ Input tidak valid.\nMasukkan angka saja.",en = "❌ Invalid input.\nPlease enter numeric values only."},
-["dup_range_error"] = {id = "⚠️ Jumlah kartu baru harus antara 10 sampai 1000!",en = "⚠️ The new card amount must be between 10 and 1000!"},
-["dup_select_group"] = {id = "⚠️ Pilih minimal satu grup pencarian.",en = "⚠️ Please select at least one search group."},
-["dup_not_found"] = {id = "❌ Data kartu tidak ditemukan.\n\nPastikan halaman kartu sedang dibuka.",en = "❌ Card data not found.\n\nMake sure the card page is open before running the script."},
-["dup_no_match"] = {id = "⚠️ Tidak ditemukan kartu dengan jumlah tersebut.\nPeriksa jumlah yang terlihat.",en = "⚠️ No matching card entries found.\nPlease verify the visible amount."},
-["dup_success"] = {id = "✅ Duplikat kartu berhasil : 🃏 ",en = "✅ Duplicate card successful : 🃏 "},
+["duplikat_title"] = {id = "🃏 Pilih Jumlah Kartu",en = "🃏 Select Card Amount"},
+["duplikat_opt_50"] = {id = "✨ Set kartu ke 50",en = "✨ Set cards to 50"},
+["duplikat_opt_100"] = {id = "✨ Set kartu ke 100",en = "✨ Set cards to 100"},
+["duplikat_opt_500"] = {id = "✨ Set kartu ke 500",en = "✨ Set cards to 500"},
+
+["duplikat_not_found"] = {id = "❌ Data kartu tidak ditemukan.\nPastikan halaman kartu sedang dibuka.",en = "❌ Card data not found.\nMake sure the card page is open."},
+["duplikat_invalid"] = {id = "⚠️ Kartu valid tidak ditemukan.",en = "⚠️ No valid cards found."},
+["duplikat_success"] = {id = "✅ Duplikat kartu berhasil : 🃏 ",en = "✅ Card duplication successful : 🃏 "},
   
 ----skip time----
 
@@ -2688,7 +2685,7 @@ local subMenu = gg.choice(options, nil, indev)
   while true do
     if gg.isVisible(true) then
       gg.setVisible(false)
-      menu9(caller)
+      gp9(caller)
       break
     end
   end
@@ -7924,7 +7921,6 @@ function menu2()
     _("menu2_ruler_the_mine"),          
     _("menu2_treasure_pirate"),
     _("menu2_send_goldcard"),     
-    _("menu2_send_cardnolimite"),          
     _("menu2_duplicate_card"),   
     _("menu_back_menuipen")                
   }, nil, title)
@@ -7939,8 +7935,7 @@ function menu2()
   elseif menu == 5 then ipen5()
   elseif menu == 6 then ipen6()
   elseif menu == 7 then ipen7()
-  elseif menu == 8 then ipen8()
-  elseif menu == 9 then
+  elseif menu == 8 then
     Main()
     return -- stop loop kalau balik ke menu utama
   else
@@ -8209,75 +8204,57 @@ function ipen6()
   gg.setVisible(false)
   gg.clearResults()
 
-  -- 🔍 Cari DRAFT Gold Card Identifier
   gg.searchNumber("97059372622158", gg.TYPE_QWORD)
-  local hasil = gg.getResults(100)
+  local hasil1 = gg.getResults(5000)
 
-  if #hasil == 0 then
+  if #hasil1 == 0 then
     gg.alert(_("goldcard_notfound"))
     return
   end
 
-  -- 🔍 Siapkan list offset untuk dicek (0x20)
-  local offsets = {}
-  for _, v in ipairs(hasil) do
-    offsets[#offsets + 1] = {
+  local offsets1 = {}
+  for _, v in ipairs(hasil1) do
+    offsets1[#offsets1 + 1] = {
       address = v.address + 0x20,
       flags = gg.TYPE_DWORD
     }
   end
 
-  -- 📥 Ambil nilai offset
-  local nilai = gg.getValues(offsets)
-  local kandidat = nil
+  local nilai1 = gg.getValues(offsets1)
+  local kandidat1 = nil
 
-  -- 🔎 Validasi offset
-  for i = 1, #nilai do
-    if nilai[i].value == 1684828007 then
-      kandidat = hasil[i]
+  for i = 1, #nilai1 do
+    if nilai1[i].value == 1684828007 then
+      kandidat1 = hasil1[i]
       break
     end
   end
 
-  if not kandidat then
+  if not kandidat1 then
     gg.alert(_("goldcard_notverify"))
     return
   end
 
-  -- ✏️ Patch agar bisa dikirim
   gg.setValues({
     {
-      address = kandidat.address + 0x20,
+      address = kandidat1.address + 0x20,
       flags = gg.TYPE_DWORD,
       value = 0
     }
   })
 
   gg.clearResults()
-  a2()
 
-  -- 🎉 Sukses
-  gg.toast(_("goldcard_success"))
-end
-
-function ipen7()
-  gg.setVisible(false)
-  gg.clearResults()
-
-  -- 🔍 1) Cari base QWORD
   gg.searchNumber("12884967423", gg.TYPE_QWORD)
-  local hasil = gg.getResults(500)
+  local hasil2 = gg.getResults(500)
 
-  if #hasil == 0 then
+  if #hasil2 == 0 then
     gg.alert(_("noDataFound_sendcard"))
     return
   end
 
-  -- 🔍 2) Filter offset +0x24 = 86400
-  local kandidat = {}
   local cekList = {}
-
-  for _, v in ipairs(hasil) do
+  for _, v in ipairs(hasil2) do
     table.insert(cekList, {
       address = v.address + 0x24,
       flags = gg.TYPE_DWORD
@@ -8285,24 +8262,24 @@ function ipen7()
   end
 
   local nilaiOffset = gg.getValues(cekList)
+  local kandidat2 = {}
 
   for i = 1, #nilaiOffset do
     if nilaiOffset[i].value == 86400 then
-      table.insert(kandidat, hasil[i])
+      table.insert(kandidat2, hasil2[i])
     end
   end
 
-  if #kandidat == 0 then
+  if #kandidat2 == 0 then
     gg.alert(_("baseNotFound_sendcard"))
     return
   end
 
-  -- 🔧 3) Edit & freeze offset
-  local offsets = {0x44, 0x48, 0x4C, 0x50, 0x54, 0x58}
+  local offsets2 = {0x44, 0x48, 0x4C, 0x50, 0x54, 0x58}
   local edits = {}
 
-  for _, base in ipairs(kandidat) do
-    for _, off in ipairs(offsets) do
+  for _, base in ipairs(kandidat2) do
+    for _, off in ipairs(offsets2) do
       table.insert(edits, {
         address = base.address + off,
         flags = gg.TYPE_DWORD,
@@ -8320,90 +8297,78 @@ function ipen7()
   gg.toast(_("success_sendcard"))
 end
 
-function ipen8()
+function ipen7()
   gg.setVisible(false)
   gg.clearResults()
-
-  local opt = gg.prompt(
-    {
-      _( "dup_prompt_visible" ),
-      _( "dup_prompt_new" ),
-      _( "dup_group1" ),
-      _( "dup_group2" )
-    },
-    {"1", "10", false, false},
-    {"number", "number", "checkbox", "checkbox"}
-  )
-
-  if not opt then return end
-
-  local visibleCount = tonumber(opt[1])
-  local newCount = tonumber(opt[2])
-  local c1 = opt[3]
-  local c2 = opt[4]
-
-  if not visibleCount or not newCount then
-    gg.alert(_( "dup_invalid_input" ))
-    return
-  end
-
-  if newCount < 10 or newCount > 1000 then
-    gg.alert(_( "dup_range_error" ))
-    return
-  end
-
   gg.setRanges(gg.REGION_C_ALLOC)
+
+  -- ✨ Pilihan jumlah kartu baru
+  local ch = gg.choice({
+    _("duplikat_opt_50"),
+    _("duplikat_opt_100"),
+    _("duplikat_opt_500")
+  }, nil, _("duplikat_title"))
+
+  if not ch then return end
+
+  -- nilai patch (+1 biar aman)
+  local newCount = ({51, 101, 501})[ch]
+  if not newCount then return end
+
   local allResults = {}
 
-  if c1 then
-    gg.searchNumber("1918984974", gg.TYPE_DWORD)
-    local r1 = gg.getResults(2000)
-    for i = 1, #r1 do allResults[#allResults + 1] = r1[i] end
-    gg.clearResults()
-  end
+  -- 🔍 Grup 1
+  gg.searchNumber("1918984974", gg.TYPE_DWORD)
+  local r1 = gg.getResults(2000)
+  gg.clearResults()
 
-  if c2 then
-    gg.searchNumber("1918984976", gg.TYPE_DWORD)
-    local r2 = gg.getResults(2000)
-    for i = 1, #r2 do allResults[#allResults + 1] = r2[i] end
-    gg.clearResults()
-  end
+  -- 🔍 Grup 2
+  gg.searchNumber("1918984976", gg.TYPE_DWORD)
+  local r2 = gg.getResults(2000)
+  gg.clearResults()
 
-  if not c1 and not c2 then
-    gg.alert(_( "dup_select_group" ))
-    return
-  end
+  -- 🔗 Gabungkan hasil
+  for i = 1, #r1 do allResults[#allResults + 1] = r1[i] end
+  for i = 1, #r2 do allResults[#allResults + 1] = r2[i] end
 
   if #allResults == 0 then
-    gg.alert(_( "dup_not_found" ))
+    gg.alert(_("duplikat_not_found"))
     return
   end
 
+  -- 🎯 Ambil nilai offset +0x28
   local batch = {}
   for i = 1, #allResults do
-    batch[i] = { address = allResults[i].address + 0x1C, flags = gg.TYPE_DWORD }
+    batch[i] = {
+      address = allResults[i].address + 0x28,
+      flags = gg.TYPE_DWORD
+    }
   end
 
   local values = gg.getValues(batch)
   local targets = {}
+  local seen = {}
 
+  -- ✅ FILTER GABUNG (OR)
   for i = 1, #values do
-    if values[i].value == visibleCount then
-      targets[#targets + 1] = values[i].address
+    local v = values[i].value
+    local addr = allResults[i].address
+    if (v == 1918984974 or v == 1918984976) and not seen[addr] then
+      seen[addr] = true
+      targets[#targets + 1] = addr
     end
   end
 
-  gg.clearResults()
-
   if #targets == 0 then
-    gg.alert(_( "dup_no_match" ))
+    gg.alert(_("duplikat_invalid"))
     return
   end
 
+  -- ✍️ Patch jumlah kartu (offset +0x1C)
   local edits = {}
   for i = 1, #targets do
     edits[i] = {
-      address = targets[i],
+      address = targets[i] + 0x1C,
       flags = gg.TYPE_DWORD,
       value = newCount
     }
@@ -8411,7 +8376,7 @@ function ipen8()
 
   gg.setValues(edits)
   a2()
-  gg.toast(_( "dup_success" ) .. newCount)
+  gg.toast(_("duplikat_success") .. newCount)
 end
 
 function menu7()
@@ -9454,30 +9419,31 @@ if not input then
     return gg.alert(_( "retasheliminimal_satu" ))
   end
 
-  -- 🔍 Cari base utama
-  gg.searchNumber("1572867", gg.TYPE_DWORD)
+    -- 🔍 Cari base
+  gg.searchNumber("1703939", gg.TYPE_DWORD)
   local hasil = gg.getResults(500)
 
   if #hasil == 0 then
-    return gg.alert(_( "retashelidata_tidak_ditemukan" ))
+    return gg.alert(_("retashelidata_tidak_ditemukan"))
   end
 
-  -- 🔎 Validasi offset -4 = 1885433110
   local base = nil
 
+  -- 🔎 Validasi struktur
   for _, v in ipairs(hasil) do
-    local cek = gg.getValues({
-      {address = v.address + 0xF0, flags = gg.TYPE_DWORD}
-    })
+  local cek = gg.getValues({
+    {address = v.address + 0xF8, flags = gg.TYPE_DWORD},
+    {address = v.address + 0x100,  flags = gg.TYPE_DWORD}
+  })
 
-    if cek[1].value == 1065353216 then
-      base = v.address
-      break
-    end
+  if cek[1].value == 1065353216 and cek[2].value == 1065353216 then
+    base = v.address
+    break
   end
+end
 
   if not base then
-    return gg.alert(_( "retashelitidak_valid" ))
+    return gg.alert(_("retashelitidak_valid"))
   end
 
   -- 📌 Eksekusi pengeditan (TIDAK ADA PRODUK)
