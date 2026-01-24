@@ -1094,8 +1094,8 @@ local expiredDevicesFile = "/sdcard/Android/media/.com.android.sistem/.tmp_87g"
 -- ⚙️ CONFIG EXPIRED USER (UBAH BAGIAN INI SAJA)
 -- ==============================================
 local expiredUserID = 10
-local expiredCode   = "923762"
-local expireDate    = "2026-01-22"
+local expiredCode   = "613397"
+local expireDate    = "2026-01-27"
 
 -- ==============================================
 -- 🚫 JANGAN UBAH DI BAWAH INI
