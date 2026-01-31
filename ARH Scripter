@@ -415,6 +415,7 @@ local teks = {
 ["menu2_treasure_pirate"] = {id = "🏴‍☠️ • Sembunyikan Kartu Hitam Bajak Laut",en = "🏴‍☠️ • Hide Pirate Black Card"},
 ["menu2_send_goldcard"] = {id = "🌟 • Kirim Kartu Emas Tanpa Batas",en = "🌟 • Send Gold Card Unlimited"},
 ["menu2_duplicate_card"] = { id = "🔁 • Duplikat Kartu", en = "🔁 • Duplicate Cards" },
+["menu2_frozen_poin"] = {id = "⚓ • Menambah Poin Harta Beku",en = "⚓ • Increase Frozen Fortune Points"},
 ["menu_back_menuipen"]             = {id="❌ • Kembali", en="❌ • Go Back"},
 
 ["input_level_puzzel"] = {id = "🧩 Masukkan level puzzle yang ingin ditingkatkan:",en = "🧩 Enter the puzzle level to increase:"},
