@@ -10609,7 +10609,7 @@ function ipen8()
   end
 
   -- 🔍 Cari base
-  gg.searchNumber("1869374218", gg.TYPE_DWORD)
+  gg.searchNumber("1986947350", gg.TYPE_DWORD)
   local results = gg.getResults(200)
   if #results == 0 then
     gg.alert(_("menu2_notfound"))
