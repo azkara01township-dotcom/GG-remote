@@ -12056,7 +12056,7 @@ function resetDataWithCode()
   gg.setVisible(false)
 
   -- 🔐 Kode yang diizinkan
-  local VALID_CODE = "RESET123"  -- ← ganti sesuai keinginanmu
+  local VALID_CODE = "ARHScript4826"  -- ← ganti sesuai keinginanmu
 
   -- 📥 Input kode
   local input = gg.prompt(
