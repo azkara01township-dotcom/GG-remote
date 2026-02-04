@@ -9082,8 +9082,11 @@ function kums4()
     gg.clearResults()
     local indev = dev
     local skins = {
-  "🌸 • Flower Frame (Pink)",
-  "🌸 • Flower Name (Pink)",
+      "🌸 • Festival Frame",
+      "🌸 • Festival Name",
+      "✨ • Sparkling Purple Frame",
+      "❄️ • Ice Frame",
+      "🐉 • CNY Frame",
       "❌ • Go Back"
     }
 
@@ -9091,13 +9094,13 @@ function kums4()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[3] then
+    if choice[6] then
       if type(gp3) == "function" then gp3() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 2 do
+    for i = 1, 5 do
       if choice[i] then
         framestyle(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -9119,8 +9122,11 @@ local cache = {
 }
 
 local frameStyle = {
-[1]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108,1600482657,1953719654,1818326633,808534528,1110454853,2051542784,112,9,0}},
-  [2] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1951622508,1600482425,1953719654,1818326633,980641024,56,0,0,436207655,113}}}
+  [1]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108,1600482657,1953719654,1818326633,808534528,1110454853,2051542784,112,9,0}},
+  [2] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1951622508,1600482425,1953719654,1818326633,980641024,56,0,0,436207655,113}},
+  [3]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,825253733,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [4] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,842030949,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [5]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,858808165,0,0,1852402515;1919895135;1936028276;1749245811}}}
 
 function framestyle(index)
   gg.setVisible(false)
