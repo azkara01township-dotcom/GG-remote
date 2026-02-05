@@ -11333,11 +11333,11 @@ function menumarketplace()
   end
 end
   
-  function cmarket1()
+function cmarket1()
   gg.setVisible(false)
 
-  -- ✏️ Input manual jumlah produk
-  local input = gg.prompt({ _("quantityproduk_input") },{ 50 },{ "number" })
+  -- ✏️ Input jumlah produk
+  local input = gg.prompt({ _("quantityproduk_input") }, {50}, {"number"})
   if not input then return end
 
   local quantityamount = tonumber(input[1])
@@ -11348,23 +11348,26 @@ end
 
   gg.clearResults()
 
-  -- 🔍 Cari data Dealer
-  gg.searchNumber("6072", gg.TYPE_DWORD)
-  local results = gg.getResults(100)
+  -- 🔍 Cari base Dealer
+  gg.searchNumber("2949", gg.TYPE_DWORD)
+  local results = gg.getResults(1000)
   if #results == 0 then
     gg.alert(_("quantityproduk_not_found"))
     return
   end
 
-  local valid = {}
+  local checkList = {}
+  for i, v in ipairs(results) do
+    checkList[#checkList+1] = {address = v.address - 0x68, flags = gg.TYPE_DWORD}
+    checkList[#checkList+1] = {address = v.address + 0x1C, flags = gg.TYPE_DWORD}
+  end
 
-  -- 🔎 Validasi signature
-  for _, v in ipairs(results) do
-    local val = gg.getValues({
-      { address = v.address - 0x4, flags = gg.TYPE_DWORD }
-    })
-    if val[1].value == 1149804544 then
-      table.insert(valid, v)
+  local values = gg.getValues(checkList)
+
+  local valid = {}
+  for i = 1, #values, 2 do
+    if values[i].value == 32 and values[i+1].value == 9978 then
+      table.insert(valid, results[(i+1)/2])
     end
   end
 
@@ -11376,10 +11379,10 @@ end
   -- 🛠 Edit + ❄️ Freeze
   local edits = {}
   for _, v in ipairs(valid) do
-    table.insert(edits, {address = v.address + 0x2C, flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(edits, {address = v.address + 0x30, flags = gg.TYPE_DWORD, value = quantityamount, freeze = true})
-    table.insert(edits, {address = v.address + 0x34, flags = gg.TYPE_DWORD, value = 0, freeze = true})
-    table.insert(edits, {address = v.address + 0x38, flags = gg.TYPE_DWORD, value = 1, freeze = true})
+    edits[#edits+1] = {address = v.address + 0x48, flags = gg.TYPE_DWORD, value = 0, freeze = true}
+    edits[#edits+1] = {address = v.address + 0x4C, flags = gg.TYPE_DWORD, value = quantityamount, freeze = true}
+    edits[#edits+1] = {address = v.address + 0x50, flags = gg.TYPE_DWORD, value = 0, freeze = true}
+    edits[#edits+1] = {address = v.address + 0x54, flags = gg.TYPE_DWORD, value = 1, freeze = true}
   end
 
   gg.setValues(edits)
