@@ -3059,52 +3059,56 @@ function applyExpansionReward(labelKey, emoji, toolId, metaVal)
     if not base then return end
 
     local label = _(labelKey)
-local min = 1
-local max = 5000
+    local min, max = 1, 5000
 
-local p = gg.prompt({
-  emoji .. " " .. _("enter_amount_waswas") .. "" .. label .. " [1-5000]:"}, nil, {"number"})
+    local p = gg.prompt({
+        emoji .. " " .. _("enter_amount_waswas") .. label .. " [1-5000]:"
+    }, nil, {"number"})
 
-local amount = tonumber(p and p[1])
+    local amount = tonumber(p and p[1])
+    if not amount then return end
 
--- ❌ Tidak ada input
-if not amount then
-    return
-end
-
--- ❌ Di luar range
-if amount < min or amount > max then
-    gg.alert(
-        _("invalid_input_waswas") ..
-        "\n✅ Min: " .. min ..
-        "\n✅ Max: " .. max
-    )
-    return
-end
+    if amount < min or amount > max then
+        gg.alert(
+            _("invalid_input_waswas") ..
+            "\n✅ Min: " .. min ..
+            "\n✅ Max: " .. max
+        )
+        return
+    end
 
     local patch = {
-        {address = base + 0x10, flags = gg.TYPE_DWORD, value = toolId},
-        {address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount}
+        { address = base + 0x10, flags = gg.TYPE_DWORD, value = toolId },
+        { address = base + 0x2C, flags = gg.TYPE_DWORD, value = amount }
     }
 
+    -- meta (0x14) + clear 0x18–0x28
     if metaVal then
-        table.insert(patch, {address = base + 0x14, flags = gg.TYPE_DWORD, value = metaVal})
-        for o = 0x18, 0x28, -4 do
-            table.insert(patch, {address = base + o, flags = gg.TYPE_DWORD, value = 0})
-        end
-    else
-        for o = 0x14, 0x30, -4 do
-            table.insert(patch, {address = base - o, flags = gg.TYPE_DWORD, value = 0})
+        table.insert(patch, {
+            address = base + 0x14,
+            flags = gg.TYPE_DWORD,
+            value = metaVal
+        })
+    end
+
+    -- clear offset 14–28
+    for o = 0x14, 0x28, 4 do
+        if not (metaVal and o == 0x14) then
+            table.insert(patch, {
+                address = base + o,
+                flags = gg.TYPE_DWORD,
+                value = 0
+            })
         end
     end
 
     gg.setValues(patch)
-    gg.toast(emoji .. " " .. label .. "" .. _("reward_set_waswas") .. " " .. amount .. " ✅")
+    gg.toast(emoji .. " " .. label .. _("reward_set_waswas") .. " " .. amount .. " ✅")
 end
 
 -- 🔧 Tool Reward Functions
-function luas1() applyExpansionReward("saw_waswas", "🪚", 1414419462) end
-function luas2() applyExpansionReward("axe_waswas", "🪓", 1702387974) end
+function luas1() applyExpansionReward("saw_waswas",    "🪚", 1414419462) end
+function luas2() applyExpansionReward("axe_waswas",    "🪓", 1702387974) end
 function luas3() applyExpansionReward("shovel_waswas", "⛏️", 1667854344, 107) end
 
 function cardbadgecol(label, emoji, values)
@@ -3168,7 +3172,7 @@ local title = banner
   local menu = gg.choice({
 "🌟 • Upgradable Decorations",
 "🎄 • Christmas Decoration",
-"🏮 • Lantern Decoration",
+"🏮 • Lunar Year Decoration",
 "🐰 • Easter Decoration",
 "💘 • Valentine Decoration",
 "🎃 • Halloween Decoration",
