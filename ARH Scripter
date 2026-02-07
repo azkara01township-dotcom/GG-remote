@@ -3308,6 +3308,7 @@ local expeditionDecor= {
 function expedecor(index)
   gg.setVisible(false)
   gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
 
   -- ===============================
   -- VALIDASI DATA
@@ -3352,6 +3353,7 @@ function expedecor(index)
   -- ===============================
   if not cache.target then
     gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
     gg.searchNumber("2581275344925", gg.TYPE_QWORD)
     local t = gg.getResults(1)
     if #t == 0 then
@@ -3385,6 +3387,7 @@ function expedecor(index)
   }
 
   gg.setValues(edits)
+  gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER VALIDATION
@@ -3482,6 +3485,7 @@ local expeditionnonDecor = {
 function expesitionnondecor(index)
   gg.setVisible(false)
   gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = expeditionnonDecor[index]
   if not data then
@@ -3525,6 +3529,7 @@ function expesitionnondecor(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -3567,6 +3572,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -3666,6 +3672,7 @@ local mergeDecor = {
 function mergedecor(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   -- ===============================
   -- VALIDASI DATA
@@ -3710,6 +3717,7 @@ function mergedecor(index)
   -- ===============================
   if not cache.target then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
     gg.searchNumber("2581275344925", gg.TYPE_QWORD)
     local t = gg.getResults(1)
     if #t == 0 then
@@ -3742,6 +3750,7 @@ function mergedecor(index)
   }
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER VALIDATION
@@ -3833,6 +3842,7 @@ local oldnonDecor = {
 function oldnondecor(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = oldnonDecor[index]
   if not data then
@@ -3876,6 +3886,7 @@ function oldnondecor(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -3918,6 +3929,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -4039,6 +4051,7 @@ local lunarDecor = {
 function lunardecor(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = lunarDecor[index]
   if not data then
@@ -4082,6 +4095,7 @@ function lunardecor(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -4124,6 +4138,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -4244,6 +4259,7 @@ local easterDecor = {
 function easterdecor(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = easterDecor[index]
   if not data then
@@ -4287,6 +4303,7 @@ function easterdecor(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -4329,6 +4346,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -5928,6 +5946,7 @@ local helipadSkin = {
 function helipadskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = helipadSkin[index]
   if not data then
@@ -5971,6 +5990,7 @@ function helipadskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -6013,6 +6033,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -6130,6 +6151,7 @@ local helicopterSkin = {
 function helicopterskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = helicopterSkin[index]
   if not data then
@@ -6173,6 +6195,7 @@ function helicopterskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -6215,6 +6238,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -6328,6 +6352,7 @@ local airportSkin = {
 function airportskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = airportSkin[index]
   if not data then
@@ -6371,6 +6396,7 @@ function airportskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -6413,6 +6439,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -6526,6 +6553,7 @@ local planeSkin = {
 function planeskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = planeSkin[index]
   if not data then
@@ -6569,6 +6597,7 @@ function planeskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -6611,6 +6640,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -6726,6 +6756,7 @@ local stationtrainSkin = {
 function stationtrainskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = stationtrainSkin[index]
   if not data then
@@ -6769,6 +6800,7 @@ function stationtrainskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -6811,6 +6843,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -6926,6 +6959,7 @@ local trainSkin = {
 function trainskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = trainSkin[index]
   if not data then
@@ -6969,6 +7003,7 @@ function trainskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7011,6 +7046,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -7124,6 +7160,7 @@ local portSkin = {
 function portskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = portSkin[index]
   if not data then
@@ -7167,6 +7204,7 @@ function portskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7209,6 +7247,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -7322,6 +7361,7 @@ local boatSkin = {
 function boatskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = boatSkin[index]
   if not data then
@@ -7365,6 +7405,7 @@ function boatskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7407,6 +7448,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -7512,6 +7554,7 @@ local islandSkin = {
 function islandskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = islandSkin[index]
   if not data then
@@ -7555,6 +7598,7 @@ function islandskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7597,6 +7641,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -7718,6 +7763,7 @@ local cowSkin = {
 function cowskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = cowSkin[index]
   if not data then
@@ -7761,6 +7807,7 @@ function cowskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7803,6 +7850,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -7914,6 +7962,7 @@ local chickenSkin = {
 function chickenskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = chickenSkin[index]
   if not data then
@@ -7957,6 +8006,7 @@ function chickenskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -7999,6 +8049,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -8114,6 +8165,7 @@ local sheepSkin = {
 function sheepskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = sheepSkin[index]
   if not data then
@@ -8157,6 +8209,7 @@ function sheepskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -8199,6 +8252,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -8278,6 +8332,7 @@ local pigSkin = {
 function pigskin(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = pigSkin[index]
   if not data then
@@ -8321,6 +8376,7 @@ function pigskin(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -8363,6 +8419,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -8498,6 +8555,7 @@ local oldSign = {
 function oldsign(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = oldSign[index]
   if not data then
@@ -8541,6 +8599,7 @@ function oldsign(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -8583,6 +8642,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -8668,6 +8728,7 @@ local regattaSign = {
 function regattasign(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = regattaSign[index]
   if not data then
@@ -8711,6 +8772,7 @@ function regattasign(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -8753,6 +8815,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -8852,6 +8915,7 @@ local expeSign = {
 function expesign(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = expeSign[index]
   if not data then
@@ -8895,6 +8959,7 @@ function expesign(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -8937,6 +9002,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -9135,6 +9201,7 @@ local frameStyle = {
 function framestyle(index)
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   local data = frameStyle[index]
   if not data then
@@ -9178,6 +9245,7 @@ function framestyle(index)
   -- ===============================
   if not cache.sourceBase then
     gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
 local r = gg.getResults(1)
     if #r == 0 then
@@ -9220,6 +9288,7 @@ local r = gg.getResults(1)
   edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
 
   gg.setValues(edits)
+gg.clearResults()
 
   -- ===============================
   -- 🔗 POINTER
@@ -9929,6 +9998,7 @@ end
 function ms1()
 gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
   
   -- 📥 Pilih jumlah poin
   local poinChoice = gg.choice({
@@ -9984,6 +10054,7 @@ end
 function ms2()
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 🔍 Cari QWORD utama
   gg.searchNumber("65540", gg.TYPE_QWORD)
@@ -10035,6 +10106,7 @@ end
 function ms3()
   gg.setVisible(false)
 gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
 
   -- 💬 Pilihan poin
   local pilihan = gg.choice({
@@ -11994,6 +12066,7 @@ end
 function other7()
   gg.setVisible(false)
   gg.clearResults()
+gg.setRanges(gg.REGION_OTHER)
 
   -- 🔍 Cari base Boom Like (QWORD)
   gg.searchNumber("8391162090120890396", gg.TYPE_QWORD)
