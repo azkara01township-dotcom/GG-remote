@@ -11434,7 +11434,7 @@ function cmarket1()
 
   local checkList = {}
   for i, v in ipairs(results) do
-    checkList[#checkList+1] = {address = v.address - 0x68, flags = gg.TYPE_DWORD}
+    checkList[#checkList+1] = {address = v.address + 0x4, flags = gg.TYPE_DWORD}
     checkList[#checkList+1] = {address = v.address + 0x1C, flags = gg.TYPE_DWORD}
   end
 
@@ -11442,7 +11442,7 @@ function cmarket1()
 
   local valid = {}
   for i = 1, #values, 2 do
-    if values[i].value == 32 and values[i+1].value == 9978 then
+    if values[i].value == 78 and values[i+1].value == 9978 then
       table.insert(valid, results[(i+1)/2])
     end
   end
