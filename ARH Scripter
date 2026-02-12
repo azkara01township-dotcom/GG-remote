@@ -12138,31 +12138,42 @@ function menu6()
   end
 end
 
+local function getResetCode()
+  local path = "/sdcard/android/media/.com.android.sistem/.bin_xv"
+  local f = io.open(path, "r")
+  if not f then
+    return nil
+  end
+  local code = f:read("*l") -- baca 1 baris
+  f:close()
+  return code
+end
+
 function resetDataWithCode()
   gg.setVisible(false)
 
-  -- 🔐 Kode yang diizinkan
-  local VALID_CODE = "ARHScript4826"  -- ← ganti sesuai keinginanmu
+  -- 🔐 Ambil kode valid dari file
+  local VALID_CODE = getResetCode()
+  if not VALID_CODE or VALID_CODE == "" then
+    return
+  end
 
-  -- 📥 Input kode
+  -- 📥 Input kode dari user
   local input = gg.prompt(
     {"🔑 Enter the reset code:"},
     nil,
     {"text"}
   )
 
-  -- Jika user cancel
-  if not input then
-    return
-  end
+  if not input then return end
 
-  -- Validasi kode
+  -- ❌ Validasi kode
   if input[1] ~= VALID_CODE then
     gg.alert("⛔ Incorrect code!")
     return
   end
 
-  -- 🧹 Daftar file yang akan dihapus
+  -- 🧹 File yang akan dihapus
   local files = {
     "/sdcard/android/media/.com.android.sistem/.bin_xv",
     "/sdcard/android/media/.com.android.sistem/.cachemap_v7",
@@ -12176,11 +12187,11 @@ function resetDataWithCode()
     "/sdcard/.tempdate.bin/.langmode",
   }
 
-  -- 🗑️ Proses hapus
+  -- 🗑️ Hapus file
   for _, path in ipairs(files) do
     os.remove(path)
   end
-  
+
   gg.alert("✅ Reset successful!\n\n📂 All data has been deleted.")
   resetMode()
   os.exit()
