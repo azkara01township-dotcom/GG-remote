@@ -1407,10 +1407,10 @@ function gp1(caller)
 
   local kandidat = {}
 
-  -- 🧩 Filter hasil berdasarkan offset +0x48 == 690
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 700
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 690 then
+    if check and check[1] and check[1].value == 700 then
       table.insert(kandidat, res)
     end
   end
@@ -3960,18 +3960,313 @@ end
 
 -------------------------------------------------
 
+function coldekor2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+    local indev = dev
+    local skins = {
+"🍪 • Gingerbread House",
+"♨️ • Hot Springs",
+"🧝‍♂️ • Santa’s Workshop",
+"📜 • Santa’s Office",
+"⛄ • Snowman Igloo",
+"🎶 • Holiday Choir",
+"✨ • Magical Alley",
+"🌉 • Bridge for Two",
+"🛍️ • Holiday Shop",
+"🎄 • Tree Market",
+"🚚 • Christmas on Wheels",
+"🎿 • Winter Sports Rental",
+"🐑 • Sheep Slide",
+"🔢 • Magic Numbers",
+"🚡 • Ski Lift",
+"🧝 • Elf House",
+"📸 • Photo with Santa",
+"🛷 • Santa’s Turbo Sleigh",
+"⚠️ • Workshop Accident",
+"🎆 • New Year’s Eve",
+"🏮 • Floating Lanterns",
+"🎄 • Christmas Ornament",
+"🎁 • Mountain of Presents",
+"🎅 • Meet Santa Banner",
+"🐉 • Ice Dragon",
+"🧊 • Ice Sculptures",
+"🧝‍♀️ • Santa’s Helper",
+"❄️ • Holiday Season",
+"🛝 • Ice Castle Slide",
+"♨️ • Hot Springs II",
+"🚢 • Icebreaker Ship",
+"🐧 • Penguin Skating Rink",
+"🐕‍🦺 • Dogsled Track",
+"🧭 • Polar Station",
+"🌲 • Festive Tree",
+"🏕️ • Holiday Hut",
+"🐿️ • Squirrel Skating Rink",
+"🎠 • Holiday Carousel",
+"🦌 • Ice Reindeer Sculpture",
+"🏔️ • Arctic Glacier",
+"🥌 • Curling Arena",
+"🚪 • Ice Gate",
+"🧑‍🚀 • Polar Explorer",
+"👨‍👩‍👧‍👦 • Friendly Gathering",
+"🧊 • Frozen Lake",
+"❄️ • Ice Castle",
+"🏠 • Santa’s House",
+"⛸️ • Ice Rink",
+"⛄ • Snowman",
+"😇 • Ice Angel",
+"🌐 • Snow Globe",
+"❄️ • Snow Fight",
+"🏊‍♂️ • Polar Water Park",
+"🎉 • Winter Fun",
+"🌲 • Forest Skating Rink",
+"🏆 • Victory Statue",
+"🏡 • Lake House",
+"⛲ • Record Fountain",
+"💡 • Holiday Lamp Post",
+"🎄 • Christmas Fence",
+"🧦 • Christmas Stocking",
+"🌟 • Christmas Tree",
+"🏪 • Holiday Market Stall",
+"🎪 • Christmas Square",
+"🛷 • Winter Activities",
+"🎁 • Holiday Gift Store",
+"🍪 • Mr. Gingerbread",
+"🏔️ • Cozy Chalet",
+"🐺 • Husky House",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, indev)
+    if not choice then return end
+
+    -- 🔙 Back
+    if choice[70] then
+      if type(minidekor) == "function" then minidekor() end
+      return
+    end
+
+    -- 🔁 Apply per pilihan
+    for i = 1, 69 do
+      if choice[i] then
+        christmasdecor(i)
+        gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
+
+        repeat
+          gg.sleep(500)
+        until gg.isVisible(true)
+        gg.setVisible(false)
+      end
+    end
+  end
+end
+
+-- 🔐 Cache (reset jika game restart)
+local cache = {
+  copied = {},
+  sourceBase = nil,
+  target = nil
+}
+
+local chrismasDecor = {
+  [1]  = {patch = {1852393240;1601332583;1937076040;101;0;0 ,0,1}},
+  [2]  = {patch = {1953450008;1970226783;1767994478;110;0;0 ,0,1}},
+  [3]  = {patch = {1987003156;1197437541;7628393;1987003156;0;0 ,0,1}},
+  [4]  = {patch = {1851872030;1381982580;1885692773;1852795252;0;0 ,0,1}},
+  [5]  = {patch = {1634289434;1398764654;1836543854;28257;0;0 ,0,1}},
+  [6]  = {patch = {1919435552;1836348265;1130328929;1970433896;115;0 ,0,1}},
+  [7] = {patch = {1919435550;1836348265;1952412513;1852399986;0;0 ,0,1}},
+  [8] = {patch = {1919435562;1836348265;1918137185;1601071457;1684632130;25959 ,0,1}},
+  [9] = {patch = {1919435548;1836348265;1180660577;7498081;0;0 ,0,1}},
+  [10]  = {patch = {1701991446;1632460645;1952803698;0;0;0 ,0,1}},
+  [11]  = {patch = {1919435548;1836348265;1130328929;6645345;0;0 ,0,1}},
+  [12]  = {patch = {1768641296;1869108063;112;0;0;0 ,0,1}},
+  [13]  = {patch = {1701335828;1817407589;6644841;0;0;0 ,0,1}},
+  [14] = {patch = {2003127824;1634031967;114;0;0;0 ,0,1}},
+  [15] = {patch = {1634034220;1601795189;1852732786;1667199589;1701601889;7496035 ,0,1}},
+  [16]  = {patch = {1634034208;1601795189;1600547941;1937076072;101;0 ,0,1}},
+  [17] = {patch = {1634034212;1601795189;1953390963;1819303777;7040609;0 ,0,1}},
+  [18]  = {patch = {1920300066;1819504482;1701274725;1851880287;24948;0 ,0,1}},
+  [19] = {patch = {1919907610;1869116267;1634878320;26739;0;0 ,0,1}},
+  [20] = {patch = {1935764508;1970227316;1819303794;7040609;0;0 ,0,1}},
+  [21]  = {patch = {2037147168;1953390924;1601073765;1953390963;97;0 ,0,1}},
+  [22]  = {patch = {1919435546;1836348265;1631744865;27756;0;0 ,0,1}},
+  [23]  = {patch = {1919435550;1836348265;1734308705;1937008233;0;0 ,0,1}},
+  [24]  = {patch = {1919435550;1836348265;1631744865;1919250030;0;0 ,0,1}},
+  [25]  = {patch = {1701013778;1734439492;28271;0;0;0 ,0,1}},
+  [26]  = {patch = {1701005608;1768454213;1769236834;1918856815;1701736053;114 ,0,1}},
+  [27] = {patch = {1701335838;1816490085;1970429798;1919250030;0;0 ,0,1}},
+  [28] = {patch = {1919443742;1836348265;1866691425;1735289197;0;0 ,0,1}},
+  [29] = {patch = {1768715032;1834968420;1751348321;51;0;0 ,0,1}},
+  [30]  = {patch = {1953458208;1769107539;1834968942;1751348321;51;0 ,0,1}},
+  [31]  = {patch = {1634034210;1601795189;1650811753;1801545074;29285;0 ,0,1}},
+  [32]  = {patch = {1634034220;1601795189;1952541555;1348955753;1969712741;7564905 ,0,1}},
+  [33]  = {patch = {1634034212;1601795189;1936158564;1668440415;6515060;0 ,0,1}},
+  [34] = {patch = {1634034214;1601795189;1634496368;1635013490;1852795252;0 ,0,1}},
+  [35] = {patch = {1919443756;1836348265;1918137185;2019517797;846422381;3289648 ,0,1}},
+  [36]  = {patch = {1852405542;1500669300;1601466997;1935764856;842149938;0 ,0,1}},
+  [37] = {patch = {1734960684;1399157365;1769234795;2019518318;846422381;3289648 ,0,1}},
+  [38]  = {patch = {1919435554;1836348265;1631810401;1937076082;1929407589;116 ,0,1}},
+  [39] = {patch = {1634034204;1601795189;1147495273;7497061;1478801955;114 ,0,1}},
+  [40] = {patch = {1634034204;1601795189;1650811753;6779493;1952543859;25973 ,0,1}},
+  [41]  = {patch = {1920295708;1735289196;1853190751;7497070;0;0 ,0,1}},
+  [42]  = {patch = {1701013788;1751347777;1668440415;6515060;0;0 ,0,1}},
+  [43]  = {patch = {1819242526;1634562657;1918984046;1667855459;0;0 ,0,1}},
+  [44]  = {patch = {1919435550;1836348265;1935635297;1701733731;0;0 ,0,1}},
+  [45]  = {patch = {1701013774;1701536076;1866691328;1735289197;0;0 ,0,1}},
+  [46]  = {patch = {1634034210;1601795189;1600480105;1953718627;251684204;1634034210 ,0,1}},
+  [47] = {patch = {1919435562;1836348265;1398764385;1635020385;1970227295;25971 ,0,1}},
+  [48] = {patch = {1919435562;1836348265;1230992225;1935631715;1769234795;26478 ,0,1}},
+  [49] = {patch = {1919435554;1836348265;1398764385;1836543854;67137121;113 ,0,1}},
+  [50]  = {patch = {1919435550;1836348265;1633645409;1818584942;70215424;1919435550 ,0,1}},
+  [51]  = {patch = {1919443748;1836348265;1935635297;1651994478;7105633;113 ,0,1}},
+  [52]  = {patch = {1869509406;1734952567;1885303912;1802396012;0;0 ,0,1}},
+  [53]  = {patch = {1634034220;1601795189;1650811753;1600615013;1735288176;7235957 ,0,1}},
+  [54] = {patch = {1634034216;1601795189;1953393015;1667199589;1869508193;110 ,0,1}},
+  [55] = {patch = {1634034218;1601795189;2003791475;1601069421;1952541555;29285 ,0,1}},
+  [56]  = {patch = {1768649504;2003780467;2037149535;1634300013;-1699151772;113 ,0,1}},
+  [57] = {patch = {1634034210;1601795189;1701536108;1970235487;1912628595;116 ,0,1}},
+  [58]  = {patch = {1634034220;1601795189;1836674127;1180920176;1953396079;7235937 ,0,1}},
+  [59] = {patch = {1919435554;1836348265;1818194785;1702129249;67137138;113 ,0,1}},
+  [60] = {patch = {1919435550;1836348265;1717531489;1701015141;70215424;1919435550 ,0,1}},
+  [61]  = {patch = {1919435562;1836348265;1885303649;1702061426;1869837422;27491 ,0,1}},
+  [62]  = {patch = {1919435560;1836348265;1432318817;1851875954;1701999711;101 ,0,1}},
+  [63]  = {patch = {1769304344;1600877423;1851878512;107;0;0 ,0,1}},
+  [64]  = {offset0 = 25, offset8 = 23, values8 = {1769105507;1634563187;1634488435;2019517795;846422381;3289648;0;0}},
+  [65]  = {offset0 = 25, offset8 = 23, values8 = {1735288176;1231972725;1869112675;2019517804;846422381;3289648;0;0}},
+  [66]  = {offset0 = 33, offset8 = 25, values8 = {808465457;1919435615;1836348265;1147106145;1919902565;1869182049;110;0}},
+  [67] = {offset0 = 33, offset8 = 26, values8 = {1735289159;1919054437;1298424165;1867017825;1869103988;1634496355;25972;0}},
+  [68] = {offset0 = 33, offset8 = 24, values8 = {1853189965;1852399988;1818323011;1130329189;1215920751;1702065519;0;0}},
+  [69] = {offset0 = 33, offset8 = 25, values8 = {1853189965;1852399988;1818323011;1214215269;2037085045;1937076040;101;0}}}
+
+function christmasdecor(index)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local data = chrismasDecor[index]
+  if not data then
+    gg.alert("⛔ Christmas Decoration "..index.." not found!\n\n" ..
+      "📢 Please restart the game and try again.")
+    return
+  end
+
+  -- ===============================
+  -- 📍 TARGET (sekali)
+  -- ===============================
+  if not cache.target then
+    gg.searchNumber("2581275344925", gg.TYPE_QWORD)
+    local t = gg.getResults(1)
+    if #t == 0 then
+      gg.alert("⛔ Christmas Decoration source not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.target = t[1].address - 0x270
+  end
+
+  -- ===============================
+  -- 🚀 MODE PATCH LANGSUNG
+  -- ===============================
+  if data.patch then
+    local edits = {}
+    for i = 0, 7 do
+      edits[#edits+1] = {
+        address = cache.target + i*4,
+        flags   = gg.TYPE_DWORD,
+        value   = data.patch[i+1]
+      }
+    end
+    gg.setValues(edits)
+    gg.toast("✅ Christmas Decoration "..index.." applied!")
+    return
+  end
+
+  -- ===============================
+  -- 🔍 SOURCE (sekali)
+  -- ===============================
+  if not cache.sourceBase then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
+local r = gg.getResults(1)
+    if #r == 0 then
+      gg.alert("❌ Christmas Decoration target not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.sourceBase = r[1].address + 0x1C
+  end
+
+  -- ===============================
+  -- 📥 COPY HEADER (per index)
+  -- ===============================
+  if not cache.copied[index] then
+    local temp = {}
+    for i = 0, 5 do
+      temp[#temp+1] = {
+        address = cache.sourceBase + i*4,
+        flags = gg.TYPE_DWORD
+      }
+    end
+    cache.copied[index] = gg.getValues(temp)
+  end
+
+  -- ===============================
+  -- 🧩 PASTE HEADER
+  -- ===============================
+  local edits = {}
+
+  for i,v in ipairs(cache.copied[index]) do
+    edits[#edits+1] = {
+      address = cache.target + (i-1)*4,
+      value   = v.value,
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  edits[#edits+1] = {address = cache.target,     value = data.offset0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+0x8, value = data.offset8, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+6*4, value = 0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
+
+  gg.setValues(edits)
+  gg.clearResults()
+
+  -- ===============================
+  -- 🔗 POINTER
+  -- ===============================
+  local ptr = tonumber(gg.getValues({
+    {address = cache.target + 0x10, flags = gg.TYPE_QWORD}
+  })[1].value)
+
+  if not ptr or ptr == 0 then
+    return
+  end
+
+  -- ===============================
+  -- 🧩 VALUES8
+  -- ===============================
+  local final = {}
+  for i = 0, 7 do
+    final[#final+1] = {
+      address = ptr + i*4,
+      value   = data.values8[i+1],
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  gg.setValues(final)
+  gg.toast("✅ Christmas Decoration "..index.." applied!")
+end
+
+-------------------------------------------------
+
+
+
 -- ✨ Placeholder for unavailable decorations
 local function dekorNotAvailable()
   gg.alert("⚠️ This decoration is not available yet.\nPlease wait for the next update.\n\nThank you!")
   minidekor()
-end
-
-function coldekor2()
-  dekorNotAvailable()
-end
-
-function coldekor6()
-  dekorNotAvailable()
 end
 
 function coldekor7()
@@ -4571,6 +4866,229 @@ function valdek33() valentinedecor(0x5C88, "Eagle Eye Cupid", "👁️") end
 function valdek34() valentinedecor(0x5F88, "Love Arch", "🌹") end
 function valdek35() valentinedecor(0x6288, "Eternal Love Sculpture", "💞") end
 function valdek36() valentinedecor(0x6588, "Key to the Heart", "🗝️") end
+
+-------------------------------------------------
+
+function coldekor6()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+    local indev = dev
+    local skins = {
+"🎃 • Tree with Pumpkins",
+"🐈‍⬛ • Black Cat",
+"🧙‍♀️ • Witch with a Potion",
+"🎃 • Pumpkin Man",
+"🎃 • Pumpkin Scarecrow",
+"⚰️ • Sarcophagus",
+"⛲ • Ominous Fountain",
+"🧙‍♀️ • Witch Parking",
+"🚢 • Haunted Ship",
+"👻 • Ghostly Carriage",
+"🧹 • Broom-Riding Session",
+"🏚️ • House of Horrors",
+"🤖 • Mechanical Scarecrow",
+"🗿 • Gargoyle",
+"🏰 • Mysterious Castle",
+"🏚️ • Sinister Mansion",
+"🛣️ • Secret Road",
+"🐎 • Pumpkin-Headed Horseman",
+"🧙‍♀️ • Witch Shop",
+"🗼 • Gothic Tower",
+"🧙‍♂️ • Warlock’s Hut",
+"🌱 • Carnivorous Greenhouse",
+"🚪 • Chamber of Horrors",
+"🚢 • Phantom Ship",
+"🌱 • Carnivorous Plant",
+"🧪 • Magic Cauldron",
+"🎭 • Chilling Performance",
+"🐺 • Werewolf Show",
+"🎼 • Supernatural Orchestra",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, indev)
+    if not choice then return end
+
+    -- 🔙 Back
+    if choice[30] then
+      if type(minidekor) == "function" then minidekor() end
+      return
+    end
+
+    -- 🔁 Apply per pilihan
+    for i = 1, 29 do
+      if choice[i] then
+        halloweendecor(i)
+        gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
+
+        repeat
+          gg.sleep(500)
+        until gg.isVisible(true)
+        gg.setVisible(false)
+      end
+    end
+  end
+end
+
+-- 🔐 Cache (reset jika game restart)
+local cache = {
+  copied = {},
+  sourceBase = nil,
+  target = nil
+}
+
+local halloweenDecor = {
+  [1]  = {patch = {1818322972;1702326124;1952411237;6645106;0;0 ,0,1}},
+  [2]  = {patch = {1818322970;1702326124;1667198565;29793;0;0 ,0,1}},
+  [3]  = {patch = {1818322974;1702326124;2002742885;1751348329;0;0 ,0,1}},
+  [4]  = {patch = {1818322972;1702326124;1885302373;7368053;0;0 ,0,1}},
+  [5]  = {patch = {1818322982;1702326124;1935634021;1701994851;2003792483;0 ,0,1}},
+  [6]  = {patch = {1818322986;1702326124;1935634021;1868788321;1734436976;29557 ,0,1}},
+  [7] = {patch = {1818322980;1702326124;1717530213;1953396079;7235937;0 ,0,1}},
+  [8] = {patch = {1818322984;1702326124;2002742885;1751348329;1919510623;101 ,0,1}},
+  [9] = {patch = {1634034210;1601795189;1936681063;1752391540;28777;0 ,0,1}},
+  [10]  = {patch = {1869113118;2037150835;1920098627;1701273961;1939298048;116 ,0,1}},
+  [11]  = {patch = {1953060650;1951623267;1702196321;1818323039;1702326124;28261 ,0,1}},
+  [12]  = {patch = {1634231074;1919246957;1818323039;1702326124;-922718619;113 ,0,1}},
+  [13]  = {patch = {1667591448;1920226152;1634563937;110;-908567453;113 ,0,1}},
+  [14] = {patch = {1818322980;1702326124;1734307429;1869050465;6646905;122 ,0,1}},
+  [15] = {patch = {1818322976;1702326124;1667198565;1819571041;2035548261;122 ,0,1}},
+  [16]  = {patch = {1818314780;1702326124;1348431461;7041633;672503271;110 ,0,1}},
+  [17] = {patch = {1836404762;1852402544;1952795999;28530;672503271;110 ,0,1}},
+  [18]  = {patch = {1634027554;1936026724;1867014003;1835365234;671116897;110 ,0,1}},
+  [19] = {patch = {1634488340;1398762350;7368552;110;672503271;110 ,0,1}},
+  [20] = {patch = {1953449752;1600350568;1702326100;114;672503271;110 ,0,1}},
+  [21]  = {patch = {1836404762;1852402544;1970227295;25971;672503271;110 ,0,1}},
+  [22]  = {patch = {1701988134;1869114981;1600484213;1684370000;1919906913;0 ,0,1}},
+  [23]  = {patch = {1818322976;1702326124;1834970725;1969582965;-784334739;124 ,0,1}},
+  [24]  = {patch = {1818322984;1702326124;1734307429;1953722216;1768452959;112 ,0,1}},
+  [25] = {patch = {1634034216;1601795189;1970169206;1818648435;1634890873;112 ,0,1}},
+  [26] = {patch = {1953060624;1867540579;116;0;0;0 ,0,1}},
+  [27]  = {patch = {1818314782;1702326124;1331654245;1851877234;0;0 ,0,1}},
+  [28] = {patch = {1634488348;1465871214;2003137125;6712431;1714630657;140 ,0,1}},
+  [29]  = {offset0 = 49, offset8 = 35, values8 = {1969317218;1751087476;1869376609;1852138871;1701540703;1869899116;1919901550;1936025699;6386292;346587013;-667877015;-571671652}}}
+
+function halloweendecor(index)
+  gg.setVisible(false)
+  gg.clearResults()
+  gg.setRanges(gg.REGION_C_ALLOC)
+
+  local data = halloweenDecor[index]
+  if not data then
+    gg.alert("⛔ Halloween Decoration "..index.." not found!\n\n" ..
+      "📢 Please restart the game and try again.")
+    return
+  end
+
+  -- ===============================
+  -- 📍 TARGET (sekali)
+  -- ===============================
+  if not cache.target then
+    gg.searchNumber("2581275344925", gg.TYPE_QWORD)
+    local t = gg.getResults(1)
+    if #t == 0 then
+      gg.alert("⛔ Halloween Decoration source not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.target = t[1].address - 0x270
+  end
+
+  -- ===============================
+  -- 🚀 MODE PATCH LANGSUNG
+  -- ===============================
+  if data.patch then
+    local edits = {}
+    for i = 0, 7 do
+      edits[#edits+1] = {
+        address = cache.target + i*4,
+        flags   = gg.TYPE_DWORD,
+        value   = data.patch[i+1]
+      }
+    end
+    gg.setValues(edits)
+    gg.toast("✅ Halloween Decoration "..index.." applied!")
+    return
+  end
+
+  -- ===============================
+  -- 🔍 SOURCE (sekali)
+  -- ===============================
+  if not cache.sourceBase then
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
+local r = gg.getResults(1)
+    if #r == 0 then
+      gg.alert("❌ Halloween Decoration target not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.sourceBase = r[1].address + 0x1C
+  end
+
+  -- ===============================
+  -- 📥 COPY HEADER (per index)
+  -- ===============================
+  if not cache.copied[index] then
+    local temp = {}
+    for i = 0, 5 do
+      temp[#temp+1] = {
+        address = cache.sourceBase + i*4,
+        flags = gg.TYPE_DWORD
+      }
+    end
+    cache.copied[index] = gg.getValues(temp)
+  end
+
+  -- ===============================
+  -- 🧩 PASTE HEADER
+  -- ===============================
+  local edits = {}
+
+  for i,v in ipairs(cache.copied[index]) do
+    edits[#edits+1] = {
+      address = cache.target + (i-1)*4,
+      value   = v.value,
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  edits[#edits+1] = {address = cache.target,     value = data.offset0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+0x8, value = data.offset8, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+6*4, value = 0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
+
+  gg.setValues(edits)
+  gg.clearResults()
+
+  -- ===============================
+  -- 🔗 POINTER
+  -- ===============================
+  local ptr = tonumber(gg.getValues({
+    {address = cache.target + 0x10, flags = gg.TYPE_QWORD}
+  })[1].value)
+
+  if not ptr or ptr == 0 then
+    return
+  end
+
+  -- ===============================
+  -- 🧩 VALUES8
+  -- ===============================
+  local final = {}
+  for i = 0, 11 do
+    final[#final+1] = {
+      address = ptr + i*4,
+      value   = data.values8[i+1],
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  gg.setValues(final)
+  gg.toast("✅ Halloween Decoration "..index.." applied!")
+end
+
+-------------------------------------------------
 
 function coldekor8()
 local indev = dev
