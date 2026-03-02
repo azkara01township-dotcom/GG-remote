@@ -580,8 +580,10 @@ local teks = {
 ["quantityproduk_not_valid"] = {id = "⛔ Data Dealer valid tidak ditemukan.\nSilakan mulai ulang permainan dan coba lagi.",en = "⛔ Valid Dealer data not found.\nPlease restart the game and try again."},
 ["quantityproduk_success"] = {id = "✅ Jumlah produk berhasil diubah!",en = "✅ Product quantity successfully updated!"},
     
-["prompt_market_boxes"] = {id = "📦 Masukkan jumlah kotak pasar (10–2000):",en = "📦 Enter number of market boxes (10–2000):"},
-["invalid_input_market"] = {id = "🚫 Input tidak valid.\nJumlah maksimum yang diizinkan\n✅ Min: 10\n✅ Max: 2000",en = "🚫 Invalid input.\nMax allowed\n✅ Min: 10\n✅ Max: 2000"},
+["pasar_jumlah_title"] = {id = "⏳ Pilih jumlah kotak pasar", en = "⏳ Select market box amount"},
+["pasar_500_box"]     = {id = "📦 500 Kotak Pasar", en = "📦 500 Market Boxes"},
+["pasar_1000_box"]    = {id = "📦 1000 Kotak Pasar", en = "📦 1000 Market Boxes"},
+["pasar_2000_box"]    = {id = "📦 2000 Kotak Pasar", en = "📦 2000 Market Boxes"},
 ["data_not_found_market"] = {id = "❌ Data kotak pasar tidak ditemukan.\nSilakan mulai ulang permainan dan coba lagi.",en = "❌ Market box data not found.\nPlease restart the game and try again."},
 ["no_valid_offset_market"] = {id = "⛔ Data kotak pasar yang valid tidak ditemukan.\n\nSilakan mulai ulang permainan dan coba lagi.",en = "⛔ Market box data not detected.\n\nPlease restart the game and try again."},
 ["toast_success_market"] = {id = "✅ Sukses",en = "✅ Success"},
@@ -6404,6 +6406,7 @@ function colek1()
 "🚀 • Astro Helipad",
 "🎸 • Rock n Roll Helipad",
 "🎅 • Christmas Helipad",
+"🌸 • Spring Helipad",
       "❌ • Go Back"
     }
 
@@ -6411,13 +6414,13 @@ function colek1()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[22] then
+    if choice[23] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 21 do
+    for i = 1, 22 do
       if choice[i] then
         helipadskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -6459,7 +6462,8 @@ local helipadSkin = {
   [18]  = {offset0 = 33, offset8 = 31, values8 = {1852402515,1818576991,1886348137,1349674356,1701011820,1935764831,1919251825,6644833,1852402515,1919895135,1936028276,1749245811}},
   [19] = {offset0 = 33, offset8 = 29, values8 = {1852402515,1818576991,1886348137,1349674356,1701011820,1918987615,842019443,53,1852402515,1919895135,1936028276,1749245811}},
   [20]  = {offset0 = 41, offset8 = 34, values8 = {1852402515,1818576991,1886348137,1349674356,1701011820,1919500895,1633970292,808607609,-2147470030,112,-2136862489,112}},
-  [21]  = {offset0 = 41, offset8 = 33, values8 = {1852402515,1818576991,1886348137,1349674356,1701011820,1919443807,1836348265,912225121,55,0,-2137646496,112}}}
+  [21]  = {offset0 = 41, offset8 = 33, values8 = {1852402515,1818576991,1886348137,1349674356,1701011820,1919443807,1836348265,912225121,55,0,-2137646496,112}},
+  [22]  = {offset0 = 49, offset8 = 33, values8 = {1852402515;1818576991;1886348137;1349674356;1701011820;1953849951;1718773108;929003884;49;0;0;0}}}
 
 function helipadskin(index)
   gg.setVisible(false)
@@ -6609,6 +6613,7 @@ function colek2()
 "🚀 • Astro Helicopter",
 "🎸 • Rock ’n’ Roll Helicopter",
 "🎅 • Christmas Helicopter",
+"🌸 • Spring Helicopter",
       "❌ • Go Back"
     }
 
@@ -6616,13 +6621,13 @@ function colek2()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[22] then
+    if choice[23] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 21 do
+    for i = 1, 22 do
       if choice[i] then
         helicopterskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -6664,7 +6669,8 @@ local helicopterSkin = {
   [18]  = {offset0 = 33, offset8 = 26, values8 = {1852402515,1818576991,1886348137,1601332596,1903386989,1634887029,-16751260,-1,1852402515,1919895135,1936028276,1749245811}},
   [19]  = {offset0 = 33, offset8 = 24, values8 = {1852402515,1818576991,1886348137,1601332596,1936875885,892481586,-2137322752,112,1852402515,1919895135,1936028276,1749245811}},
   [20]  = {offset0 = 33, offset8 = 29, values8 = {1852402515,1818576991,1886348137,1601332596,1953655106,2036425832,842019423,53,1852402515,1919895135,1936028276,1749245811}},
-  [21]  = {offset0 = 33, offset8 = 28, values8 = {1852402515,1818576991,1886348137,1601332596,1769105507,1634563187,926310259,0,1852402515,1919895135,1936028276,1749245811}}}
+  [21]  = {offset0 = 33, offset8 = 28, values8 = {1852402515,1818576991,1886348137,1601332596,1769105507,1634563187,926310259,0,1852402515,1919895135,1936028276,1749245811}},
+  [22]  = {offset0 = 49, offset8 = 28, values8 = {1852402515;1818576991;1886348137;1601332596;1953789282;1818653285;825712505;0;-1244080528;112;-1244080416;112}}}
 
 function helicopterskin(index)
   gg.setVisible(false)
@@ -7620,6 +7626,7 @@ function colek7()
 "🍣 • Japanese Port",
 "⚔️ • Knight Port",
 "🎭 • Broadway Port",
+"🐰 • Easter Port",
       "❌ • Go Back"
     }
 
@@ -7627,13 +7634,13 @@ function colek7()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[20] then
+    if choice[21] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 19 do
+    for i = 1, 20 do
       if choice[i] then
         portskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -7673,7 +7680,8 @@ local portSkin = {
   [16]  = {offset0 = 49, offset8 = 28, values8 = {1852402515,1918978143,1601335138,1768713313,1970037614,1702259059,892481586,1767863296,1852401262,6648937,2672640,0}},
   [17]  = {patch = {1768641314,1632132974,1919902322,1885432415,28257,0,0,1}},
   [18] = {patch = {1768641316,1632132974,1919902322,1768835935,7628903,0,0,1}},
-  [19] = {offset0 = 49, offset8 = 23, values8 = {1852402515,1918978143,1601335138,1634693730,2036430692,3749471,0,0,1852402515,1919895135,1936028276,1749245811}}}
+  [19] = {offset0 = 49, offset8 = 23, values8 = {1852402515,1918978143,1601335138,1634693730,2036430692,3749471,0,0,1852402515,1919895135,1936028276,1749245811}},
+  [20] = {patch = {1768641322;1632132974;1919902322;1935762783;1601332596;12855, 0,1}}}
 
 function portskin(index)
   gg.setVisible(false)
@@ -7821,6 +7829,7 @@ function colek8()
 "🍣 • Japanese Ship",
 "⚔️ • Knight Ship",
 "🎭 • Broadway Ship",
+"🐰 • Easter Ship",
       "❌ • Go Back"
     }
 
@@ -7828,13 +7837,13 @@ function colek8()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[20] then
+    if choice[21] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 19 do
+    for i = 1, 20 do
       if choice[i] then
         boatskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -7874,7 +7883,8 @@ local boatSkin = {
   [16] = {offset0 = 49, offset8 = 26, values8 = {1852402515,1768444767,1818320752,1668180332,1769174380,808609142,13618,0,1714689832,0;0;0}},
   [17]  = {patch = {1768641310,1750294382,1784639593,1851879521,0,0,0,1}},
   [18] = {patch = {1768641312,1750294382,1264545897,1751607662,116,0,0,1}},
-  [19]  = {patch = {1768641322,1750294382,1650421865,1684107122,1601790327,14646,0,1}}}
+  [19]  = {patch = {1768641322,1750294382,1650421865,1684107122,1601790327,14646,0,1}},
+  [20]  = {patch = {1768641318;1750294382;1700753513;1702130529;842489714;0, 0,1}}}
 
 function boatskin(index)
   gg.setVisible(false)
@@ -8423,6 +8433,7 @@ function colek11()
 "🎸 • Rock ’n’ Roll Chicken",
 "🚀 • Astro Chicken",
 "🎭 • Broadway Chicken",
+"🐰 • Easter Chicken",
       "❌ • Go Back"
     }
 
@@ -8430,13 +8441,13 @@ function colek11()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[19] then
+    if choice[20] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 18 do
+    for i = 1, 19 do
       if choice[i] then
         chickenskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -8475,7 +8486,8 @@ local chickenSkin = {
   [15]  = {offset0 = 49, offset8 = 27, values8 = {1852402515,1768440671,1852140387,1919500895,1633970292,808607609,7550258,1718511967,1701669204,0,0,0}},
   [16]  = {offset0 = 49, offset8 = 26, values8 = {1852402515,1768440671,1852140387,1919500895,1633970292,808607609,13618,0,1684632838,0,88,0}},
   [17]  = {patch = {1768641322,1749245806,1701536617,1634557806,808612722,13618 ,0,1}},
-  [18]  = {offset0 = 49, offset8 = 24, values8 = {1852402515,1768440671,1852140387,1869767263,1635214433,959864697,-1705097216,112,1869116186,1382959479,1918990181,29540}}}
+  [18]  = {offset0 = 49, offset8 = 24, values8 = {1852402515,1768440671,1852140387,1869767263,1635214433,959864697,-1705097216,112,1869116186,1382959479,1918990181,29540}},
+  [19]  = {patch = {1768641324;1749245806;1701536617;1634033518;1919251571;3290975 ,0,1}}}
 
 function chickenskin(index)
   gg.setVisible(false)
@@ -8624,6 +8636,7 @@ function colek12()
 "🎸 • Rocker Sheep",
 "🐉 • Mythic Sheep",
 "🧳 • Vacation Sheep",
+"🌸 • Spring Sheep",
       "❌ • Go Back"
     }
 
@@ -8631,13 +8644,13 @@ function colek12()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[21] then
+    if choice[22] then
       if type(kums1) == "function" then kums1() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 20 do
+    for i = 1, 21 do
       if choice[i] then
         sheepskin(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -8678,7 +8691,8 @@ local sheepSkin = {
   [17]  = {offset0 = 49, offset8 = 23, values8 = {1852402515,1701335903,1650421861,1752461929,846815588,3486256,0,0,0,0,-1704931413,112}},
   [18]  = {offset0 = 49, offset8 = 24, values8 = {1852402515,1701335903,1113550949,1752461929,1601790308,892481586,-1705094400,112,1835101704,101,88,0}},
   [19]  = {patch = {1768641322,1750294382,1601201509,1819043176,808612705,13618 ,0,1}},
-  [20]  = {offset0 = 49, offset8 = 27, values8 = {1852402515,1701335903,1633644645,1852402796,1937075299,845510249,3486256,112,5779456,0,-1704931362,112}}}
+  [20]  = {offset0 = 49, offset8 = 27, values8 = {1852402515,1701335903,1633644645,1852402796,1937075299,845510249,3486256,112,5779456,0,-1704931362,112}},
+  [21]  = {offset0 = 49, offset8 = 23, values8 = {1852402515;1701335903;1650421861;1702130805;2037147250;3225439;-1244079648;112;-1237959823;112;-1237959817;112}}}
 
 function sheepskin(index)
   gg.setVisible(false)
@@ -9671,10 +9685,12 @@ function kums4()
     local indev = dev
     local skins = {
       "🌸 • Festival Frame",
-      "🌸 • Festival Name",
-      "✨ • Sparkling Purple Frame",
-      "❄️ • Ice Frame",
-      "🐉 • CNY Frame",
+      "🌸 • Festival Style",
+      "✨ • Starlight Frame",
+      "❄️ • Frozen Frame",
+      "🐉 • Ornamental Frame",
+      "🦋 • Spring Frame",
+      "🖌️ • Easter Frame",
       "❌ • Go Back"
     }
 
@@ -9682,13 +9698,13 @@ function kums4()
     if not choice then return end
 
     -- 🔙 Back
-    if choice[6] then
+    if choice[8] then
       if type(gp3) == "function" then gp3() end
       return
     end
 
     -- 🔁 Apply per pilihan
-    for i = 1, 5 do
+    for i = 1, 7 do
       if choice[i] then
         framestyle(i)
         gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
@@ -9714,7 +9730,9 @@ local frameStyle = {
   [2] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1951622508,1600482425,1953719654,1818326633,980641024,56,0,0,436207655,113}},
   [3]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,825253733,0,0,1852402515;1919895135;1936028276;1749245811}},
   [4] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,842030949,0,0,1852402515;1919895135;1936028276;1749245811}},
-  [5]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,858808165,0,0,1852402515;1919895135;1936028276;1749245811}}}
+  [5]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,858808165,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [6] = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;875585381,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [7]  = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;892362597,0,0,1852402515;1919895135;1936028276;1749245811}}}
 
 function framestyle(index)
   gg.setVisible(false)
@@ -10383,6 +10401,8 @@ function kums6()
       "❄️ • Legendary Winter Badge",
       "🧭 • Journey Badge",
       "🗺️ • Legendary Journey Badge",
+      "🌼 • Spring Badge",
+      "🌸 • Legendary Spring Badge",
       "❌ • Go Back"
     }
 
@@ -10476,6 +10496,12 @@ function badgecollect7()
 
 function badgecollect8() 
   applybBadge({0x6461621C, 0x305F6567, 0x72675F33,0x00646E61, 0x00000000, 0x00000000}, "🗺️", "Legendary Journey Badge") end
+
+function badgecollect9() 
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F34,0x00006573, 0x00000000, 0x00000000}, "🌼", "Spring Badge") end
+  
+  function badgecollect10() 
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F34,0x00646E61, 0x00000000, 0x00000000}, "🌸", "Legendary Spring Badge") end
 
 -------------------------------------------------
 
@@ -11990,32 +12016,45 @@ end
 function cmarket2()
   gg.setVisible(false)
 
-  -- ?? Prompt input awal
-  local i = gg.prompt({_("prompt_market_boxes")}, {"10"}, {"number"})
-if not i then
-    return
-end
+  -- ⏳ Pilih jumlah box
+  local durMenu = gg.choice({
+    _("pasar_500_box"),
+    _("pasar_1000_box"),
+    _("pasar_2000_box")
+  }, nil, _("pasar_jumlah_title"))
 
-local count = tonumber(i[1])
-if not count or count < 10 or count > 2000 then
-    gg.alert(_("invalid_input_market"))
-    return
-end
+  if not durMenu then return end
+
+  local seconds = {
+    [1] = 500,
+    [2] = 1000,
+    [3] = 2000
+  }
+
+  local selectedTime = seconds[durMenu]
 
   gg.clearResults()
-  gg.searchNumber("7020372369389216534", gg.TYPE_QWORD)
 
-  local hasil = gg.getResults(100)
-  if #hasil == 0 then
+  -- 🔍 Cari nilai awal
+  gg.searchNumber("1953063702", gg.TYPE_DWORD)
+  local results = gg.getResults(100)
+
+  if #results == 0 then
     gg.alert(_("data_not_found_market"))
     return
   end
 
-  -- 🔍 Filter hasil dengan offset +48 = 1185464320
   local valid = {}
-  for _, v in ipairs(hasil) do
-    local check = gg.getValues({{address = v.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check[1].value == 1185464320 then
+
+  -- 🔎 Validasi offset +0x48
+  for _, v in ipairs(results) do
+    local check = {
+      { address = v.address + 0x48, flags = gg.TYPE_DWORD }
+    }
+
+    local val = gg.getValues(check)
+
+    if val[1].value == 1185464320 then
       table.insert(valid, v)
     end
   end
@@ -12025,19 +12064,27 @@ end
     return
   end
 
-  -- ✏️ Edit nilai pada offset +0x1B8 dari hasil valid
+  -- 🛠 Edit hanya address valid
   local edits = {}
   for _, v in ipairs(valid) do
-    table.insert(edits, {address = v.address - 0x38, value = count, flags = gg.TYPE_DWORD})
+    table.insert(edits, {
+      address = v.address - 0x38,
+      flags = gg.TYPE_DWORD,
+      value = selectedTime
+    })
   end
 
   gg.setValues(edits)
-  gg.clearResults()
-  a2()
+gg.clearResults()
 
-  -- 🎯 Notifikasi
-gg.toast(_("toast_success_market") .. count)
-  gg.alert(_("alert_success_market_1") .. count .. _("alert_success_market_2"))
+-- tampilkan jumlah pilihan user (500/1000/2000)
+gg.toast(_("toast_success_market") .. " " .. selectedTime)
+
+gg.alert(
+  _("alert_success_market_1") ..
+  selectedTime ..
+  _("alert_success_market_2")
+)
 end
 
 function cmarket3()
@@ -12129,7 +12176,7 @@ function cmarket4()
   -- 🔎 Validasi offset +0x110 == 10704
   for _, v in ipairs(results) do
     local check = {
-      { address = v.address + 0x110, flags = gg.TYPE_DWORD }
+      { address = v.address + 0x50, flags = gg.TYPE_DWORD }
     }
     local val = gg.getValues(check)
     if val[1].value == 10704 then
@@ -12145,10 +12192,10 @@ function cmarket4()
   -- 🛠 Edit hanya address valid
   local edits = {}
   for _, v in ipairs(valid) do
-    table.insert(edits, {address = v.address + 0x68, flags = gg.TYPE_DWORD, value = 0})
-    table.insert(edits, {address = v.address + 0x6C, flags = gg.TYPE_DWORD, value = 1})
-    table.insert(edits, {address = v.address + 0x70, flags = gg.TYPE_DWORD, value = 0})
-    table.insert(edits, {address = v.address + 0x74, flags = gg.TYPE_DWORD, value = selectedTime})
+    table.insert(edits, {address = v.address - 0x58, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = v.address - 0x54, flags = gg.TYPE_DWORD, value = 1})
+    table.insert(edits, {address = v.address - 0x50, flags = gg.TYPE_DWORD, value = 0})
+    table.insert(edits, {address = v.address - 0x4C, flags = gg.TYPE_DWORD, value = selectedTime})
   end
 
   gg.setValues(edits)
