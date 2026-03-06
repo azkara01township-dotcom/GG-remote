@@ -687,7 +687,7 @@ local teks = {
 • ✨ ...dan masih banyak lagi!
 ──────────────────────────
 💵 Harga:
-🇮🇩 IDR 415.000
+🇮🇩 IDR 420.000
 
 📆 Masa Aktif:
 ♾️ Seumur Hidup
@@ -1409,10 +1409,10 @@ function gp1(caller)
 
   local kandidat = {}
 
-  -- 🧩 Filter hasil berdasarkan offset +0x48 == 700
+  -- 🧩 Filter hasil berdasarkan offset +0x48 == 710
   for i, res in ipairs(hasil) do
     local check = gg.getValues({{address = res.address + 0x48, flags = gg.TYPE_DWORD}})
-    if check and check[1] and check[1].value == 700 then
+    if check and check[1] and check[1].value == 710 then
       table.insert(kandidat, res)
     end
   end
