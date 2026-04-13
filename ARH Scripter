@@ -9681,18 +9681,34 @@ end
 -------------------------------------------------
 
 function kums4()
+local title = banner
+  local menu = gg.choice({
+"🖼️ • Frame Style",
+"📛 • Name Style",
+ "❌ • Go Back"
+  }, nil,title)
+
+  if menu == nil then
+    return
+  elseif menu == 1 then framename1()
+  elseif menu == 2 then framename2()
+  elseif menu == 3 then gp3()
+  end
+end
+
+function framename1()
   while true do
     gg.setVisible(false)
     gg.clearResults()
     local indev = dev
     local skins = {
       "🌸 • Festival Frame",
-      "🌸 • Festival Style",
       "✨ • Starlight Frame",
       "❄️ • Frozen Frame",
       "🐉 • Ornamental Frame",
       "🦋 • Spring Frame",
       "🖌️ • Easter Frame",
+      "🔥 • Fire Frame",
       "❌ • Go Back"
     }
 
@@ -9701,7 +9717,7 @@ function kums4()
 
     -- 🔙 Back
     if choice[8] then
-      if type(gp3) == "function" then gp3() end
+      if type(kums4) == "function" then kums4() end
       return
     end
 
@@ -9729,12 +9745,12 @@ local cache = {
 
 local frameStyle = {
   [1]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108,1600482657,1953719654,1818326633,808534528,1110454853,2051542784,112,9,0}},
-  [2] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1951622508,1600482425,1953719654,1818326633,980641024,56,0,0,436207655,113}},
-  [3]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,825253733,0,0,1852402515;1919895135;1936028276;1749245811}},
-  [4] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,842030949,0,0,1852402515;1919895135;1936028276;1749245811}},
-  [5]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,858808165,0,0,1852402515;1919895135;1936028276;1749245811}},
-  [6] = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;875585381,0,0,1852402515;1919895135;1936028276;1749245811}},
-  [7]  = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;892362597,0,0,1852402515;1919895135;1936028276;1749245811}}}
+  [2]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,825253733,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [3] = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,842030949,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [4]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1917216108;1600482657,1835102822,858808165,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [5] = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;875585381,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [6]  = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;892362597,0,0,1852402515;1919895135;1936028276;1749245811}},
+  [7] = {offset0 = 49, offset8 = 24, values8 = {1348423763;1768320882;1917216108;1600482657;1835102822;909139813,0,0,1852402515;1919895135;1936028276;1749245811}}}
 
 function framestyle(index)
   gg.setVisible(false)
@@ -9853,6 +9869,175 @@ gg.clearResults()
 
   gg.setValues(final)
   gg.toast("✅ Frame Style "..index.." applied!")
+end
+
+-------------------------------------------------
+
+function framename2()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+    local indev = dev
+    local skins = {
+      "🌸 • Festival Style",
+      "🐰 • Easter Style",
+      "🔥 • Fire Style",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, indev)
+    if not choice then return end
+
+    -- 🔙 Back
+    if choice[4] then
+      if type(kums4) == "function" then kums4() end
+      return
+    end
+
+    -- 🔁 Apply per pilihan
+    for i = 1, 3 do
+      if choice[i] then
+        namestyle(i)
+        gg.toast(skins[i] .. " applied\n👉 Claim in freeze reward!")
+
+        repeat
+          gg.sleep(500)
+        until gg.isVisible(true)
+        gg.setVisible(false)
+      end
+    end
+  end
+end
+
+-- 🔐 Cache (reset jika game restart)
+local cache = {
+  copied = {},
+  sourceBase = nil,
+  target = nil
+}
+
+local nameStyle = {
+  [1]  = {offset0 = 49, offset8 = 24, values8 = {1348423763,1768320882,1951622508,1600482425,1953719654,1818326633,980641024,56,0,0,436207655,113}},
+  [2] = {offset0 = 25, offset8 = 22, values8 = {1348423763;1768320882;1951622508;1600482425;1953718629;774795877,980641024,56,0,0,436207655,113}},
+  [3]  = {offset0 = 25, offset8 = 23, values8 = {1348423763;1768320882;1951622508;1600482425;1802465123;778530409,980641024,56,0,0,436207655,113}}}
+
+function namestyle(index)
+  gg.setVisible(false)
+  gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+
+  local data = nameStyle[index]
+  if not data then
+    gg.alert("⛔ Name Style "..index.." not found!\n\n" ..
+      "📢 Please restart the game and try again.")
+    return
+  end
+
+  -- ===============================
+  -- 📍 TARGET (sekali)
+  -- ===============================
+  if not cache.target then
+    gg.searchNumber("2581275344925", gg.TYPE_QWORD)
+    local t = gg.getResults(1)
+    if #t == 0 then
+      gg.alert("⛔ Name Style source not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.target = t[1].address - 0x270
+  end
+
+  -- ===============================
+  -- 🚀 MODE PATCH LANGSUNG
+  -- ===============================
+  if data.patch then
+    local edits = {}
+    for i = 0, 7 do
+      edits[#edits+1] = {
+        address = cache.target + i*4,
+        flags   = gg.TYPE_DWORD,
+        value   = data.patch[i+1]
+      }
+    end
+    gg.setValues(edits)
+    gg.toast("✅ Name Style "..index.." applied!")
+    return
+  end
+
+  -- ===============================
+  -- 🔍 SOURCE (sekali)
+  -- ===============================
+  if not cache.sourceBase then
+    gg.clearResults()
+gg.setRanges(gg.REGION_C_ALLOC)
+gg.searchNumber("7021767231079972979", gg.TYPE_QWORD)
+local r = gg.getResults(1)
+    if #r == 0 then
+      gg.alert("❌ Name Style target not found!\n\n📢 Please restart the game and try again.")
+      return
+    end
+    cache.sourceBase = r[1].address + 0x1C
+  end
+
+  -- ===============================
+  -- 📥 COPY HEADER (per index)
+  -- ===============================
+  if not cache.copied[index] then
+    local temp = {}
+    for i = 0, 5 do
+      temp[#temp+1] = {
+        address = cache.sourceBase + i*4,
+        flags = gg.TYPE_DWORD
+      }
+    end
+    cache.copied[index] = gg.getValues(temp)
+  end
+
+  -- ===============================
+  -- 🧩 PASTE HEADER
+  -- ===============================
+  local edits = {}
+
+  for i,v in ipairs(cache.copied[index]) do
+    edits[#edits+1] = {
+      address = cache.target + (i-1)*4,
+      value   = v.value,
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  edits[#edits+1] = {address = cache.target,     value = data.offset0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+0x8, value = data.offset8, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+6*4, value = 0, flags = gg.TYPE_DWORD}
+  edits[#edits+1] = {address = cache.target+7*4, value = 1, flags = gg.TYPE_DWORD}
+
+  gg.setValues(edits)
+gg.clearResults()
+
+  -- ===============================
+  -- 🔗 POINTER
+  -- ===============================
+  local ptr = tonumber(gg.getValues({
+    {address = cache.target + 0x10, flags = gg.TYPE_QWORD}
+  })[1].value)
+
+  if not ptr or ptr == 0 then
+    return
+  end
+
+  -- ===============================
+  -- 🧩 VALUES8
+  -- ===============================
+  local final = {}
+  for i = 0, 11 do
+    final[#final+1] = {
+      address = ptr + i*4,
+      value   = data.values8[i+1],
+      flags   = gg.TYPE_DWORD
+    }
+  end
+
+  gg.setValues(final)
+  gg.toast("✅ Name Style "..index.." applied!")
 end
 
 -------------------------------------------------
