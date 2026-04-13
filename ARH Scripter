@@ -10720,7 +10720,6 @@ function menu2()
     _("menu2_treasure_pirate"),
     _("menu2_send_goldcard"),     
     _("menu2_duplicate_card"),
-    _("menu2_frozen_poin"),
     _("menu_back_menuipen")                
   }, nil, title)
 
@@ -10734,8 +10733,7 @@ function menu2()
   elseif menu == 5 then ipen5()
   elseif menu == 6 then ipen6()
   elseif menu == 7 then ipen7()
-  elseif menu == 8 then ipen8()
-  elseif menu == 9 then
+  elseif menu == 8 then
     Main()
     return -- stop loop kalau balik ke menu utama
   else
@@ -11212,69 +11210,6 @@ function ipen7()
   gg.setValues(edits)
   a2()
   gg.toast(_("duplikat_success") .. newCount)
-end
-
-function ipen8()
-  gg.setVisible(false)
-  gg.clearResults()
-  gg.setRanges(gg.REGION_C_ALLOC)
-
-  -- 🏁 Input poin
-  local input = gg.prompt(
-    { _("menu2_input") },
-    { 5 },
-    { "number" }
-  )
-
-  local val = tonumber(input and input[1])
-  if not val then return end
-
-  if val < 5 or val > 55000 then
-    gg.alert(_("menu2_invalid"))
-    return
-  end
-
-  -- 🔍 Cari base
-  gg.searchNumber("1986947350", gg.TYPE_DWORD)
-  local results = gg.getResults(200)
-  if #results == 0 then
-    gg.alert(_("menu2_notfound"))
-    return
-  end
-
-  -- 🔎 Filter berantai
-  local validBase = {}
-
-  for i = 1, #results do
-    local addr = results[i].address
-
-    local v1 = gg.getValues({{address = addr - 0x64, flags = gg.TYPE_DWORD}})[1].value
-    local v2 = gg.getValues({{address = addr - 0x60, flags = gg.TYPE_DWORD}})[1].value
-    local v3 = gg.getValues({{address = addr - 0x5C, flags = gg.TYPE_DWORD}})[1].value
-
-    if v1 == val and v2 == val and v3 == val then
-      table.insert(validBase, results[i])
-    end
-  end
-
-  if #validBase == 0 then
-    gg.alert(_("menu2_novalid"))
-    return
-  end
-
-  -- ✏️ Edit poin
-  local setval = {}
-  for i = 1, #validBase do
-    local addr = validBase[i].address
-    setval[#setval + 1] = {address = addr - 0x64, flags = gg.TYPE_DWORD, value = 55000}
-    setval[#setval + 1] = {address = addr - 0x60, flags = gg.TYPE_DWORD, value = 55000}
-    setval[#setval + 1] = {address = addr - 0x5C, flags = gg.TYPE_DWORD, value = 55000}
-  end
-
-  gg.setValues(setval)
-  gg.clearResults()
-  gg.toast(_("menu2_success"))
-  a2()
 end
 
 function menu7()
@@ -11919,7 +11854,6 @@ end
 function menumarketplace()
   local title = banner
   local menu = gg.choice({
-    _("market_quantity_marketplace"),   
     _("market_unlim_marketplace"),   
     _("no_dealer_rest_marketplace"),   
     _("dealer_rent_marketplace"),
@@ -11935,8 +11869,6 @@ function menumarketplace()
   elseif menu == 3 then
     cmarket3()
   elseif menu == 4 then
-    cmarket4()
-  elseif menu == 5 then
     Main()
     return
   else
@@ -11954,66 +11886,6 @@ function menumarketplace()
 end
   
 function cmarket1()
-  gg.setVisible(false)
-
-  -- ✏️ Input jumlah produk
-  local input = gg.prompt({ _("quantityproduk_input") }, {50}, {"number"})
-  if not input then return end
-
-  local quantityamount = tonumber(input[1])
-  if not quantityamount or quantityamount < 50 or quantityamount > 1000 then
-    gg.alert(_("quantityproduk_invalid"))
-    return
-  end
-
-  gg.clearResults()
-
-  -- 🔍 Cari base Dealer
-  gg.searchNumber("2949", gg.TYPE_DWORD)
-  local results = gg.getResults(1000)
-  if #results == 0 then
-    gg.alert(_("quantityproduk_not_found"))
-    return
-  end
-
-  local checkList = {}
-  for i, v in ipairs(results) do
-    checkList[#checkList+1] = {address = v.address + 0x4, flags = gg.TYPE_DWORD}
-    checkList[#checkList+1] = {address = v.address + 0x1C, flags = gg.TYPE_DWORD}
-  end
-
-  local values = gg.getValues(checkList)
-
-  local valid = {}
-  for i = 1, #values, 2 do
-    if values[i].value == 78 and values[i+1].value == 9978 then
-      table.insert(valid, results[(i+1)/2])
-    end
-  end
-
-  if #valid == 0 then
-    gg.alert(_("quantityproduk_not_valid"))
-    return
-  end
-
-  -- 🛠 Edit + ❄️ Freeze
-  local edits = {}
-  for _, v in ipairs(valid) do
-    edits[#edits+1] = {address = v.address + 0x48, flags = gg.TYPE_DWORD, value = 0, freeze = true}
-    edits[#edits+1] = {address = v.address + 0x4C, flags = gg.TYPE_DWORD, value = quantityamount, freeze = true}
-    edits[#edits+1] = {address = v.address + 0x50, flags = gg.TYPE_DWORD, value = 0, freeze = true}
-    edits[#edits+1] = {address = v.address + 0x54, flags = gg.TYPE_DWORD, value = 1, freeze = true}
-  end
-
-  gg.setValues(edits)
-  gg.addListItems(edits)
-  gg.clearResults()
-
-  a2()
-  gg.toast(_("quantityproduk_success"))
-end
-  
-function cmarket2()
   gg.setVisible(false)
 
   -- ⏳ Pilih jumlah box
@@ -12087,7 +11959,7 @@ gg.alert(
 )
 end
 
-function cmarket3()
+function cmarket2()
   gg.setVisible(false)
   gg.clearResults()
 
@@ -12140,7 +12012,7 @@ function cmarket3()
   gg.alert(_("dealer_cd_freeze_success"))
 end
 
-function cmarket4()
+function cmarket3()
   gg.setVisible(false)
 
   -- ⏳ Pilih durasi di awal
