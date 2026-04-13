@@ -11157,7 +11157,7 @@ function ipen6()
   gg.setVisible(false)
   gg.clearResults()
 
-  gg.searchNumber("97059372622158", gg.TYPE_QWORD)
+  gg.searchNumber("7738150958661921096", gg.TYPE_QWORD)
   local hasil1 = gg.getResults(5000)
 
   if #hasil1 == 0 then
