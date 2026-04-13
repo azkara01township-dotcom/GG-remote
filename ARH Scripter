@@ -3153,6 +3153,7 @@ function gp3()
   "🏜️ • Frame Style",
   "🧛 • Avatar List",
   "🔔 • Bagde Style",
+  "🦎 • Titles Earned",
   "❌ • Go Back"
 }, nil, title)
 
@@ -3165,7 +3166,8 @@ function gp3()
   elseif menu == 5 then kums4()
   elseif menu == 6 then kums5()
   elseif menu == 7 then kums6()
-  elseif menu == 8 then menu1()
+  elseif menu == 8 then kums7()
+  elseif menu == 9 then menu1()
   end
 end
 
@@ -10403,6 +10405,8 @@ function kums6()
       "🗺️ • Legendary Journey Badge",
       "🌼 • Spring Badge",
       "🌸 • Legendary Spring Badge",
+      "🌶️ • Culinery Badge",
+      "🌶️ • Legendary Culinery Badge",
       "❌ • Go Back"
     }
 
@@ -10502,6 +10506,122 @@ function badgecollect9()
   
   function badgecollect10() 
   applybBadge({0x6461621C, 0x305F6567, 0x72675F34,0x00646E61, 0x00000000, 0x00000000}, "🌸", "Legendary Spring Badge") end
+
+function badgecollect11() 
+  applybBadge({0x6461621A, 0x305F6567, 0x61625F35, 0x00006573, 0x00000000, 0x00000000}, "🌶️", "Culinery Badge") end
+  
+  function badgecollect12() 
+  applybBadge({0x6461621C, 0x305F6567, 0x72675F35, 0x00646E61, 0x00000000, 0x00000000}, "🌶️", "Legendary Culinery Badge") end
+
+-------------------------------------------------
+
+function kums7()
+  while true do
+    gg.setVisible(false)
+    gg.clearResults()
+    local indev = dev
+    local skins = {
+      "🦎 • Temple of Living Water Expedition",
+      "🦎 • Temple of Living Water Expedition II",
+      "⛵ • Secret of the Past Expedition",
+      "⛵ • Secret of the Past Expedition II",
+      "⚔️ • Scourge of the Season Expedition",
+      "⚔️ • Scourge of the Season Expedition II",
+      "🦇 • Legends of Transylvania Expedition",
+      "🦇 • Legends of Transylvania Expedition II",
+      "❌ • Go Back"
+    }
+
+    local choice = gg.multiChoice(skins, nil, indev)
+    if not choice then
+      return
+    end
+
+    -- 🔙 Back option (selalu terakhir)
+    if choice[#skins] then
+      if type(kums7) == "function" then
+        gp3()
+      else
+      end
+      return
+    end
+
+    local processed = false
+    -- 🔁 Jalankan fungsi badge berdasarkan pilihan
+    for i = 1, #skins - 1 do
+      if choice[i] then
+        local func = _G["titlecollect" .. i]
+        if type(func) == "function" then
+          func()
+          gg.toast("✅ " .. skins[i] .. " applied.\n👉 Claim it in-freeze reward!")
+
+          -- ⏸️ Tunggu user tekan ikon GG sebelum lanjut
+          repeat
+            gg.sleep(500)
+          until gg.isVisible(true)
+          gg.setVisible(false)
+
+          processed = true
+        else
+          gg.alert("❌ Function titlecollect" .. i .. "() not found!")
+        end
+      end
+    end
+
+    if processed then
+      gg.toast("🎉 All selected Title have been successfully claimed!")
+    end
+    -- 🔄 Setelah selesai → balik ke menu lagi
+  end
+end
+
+-- Fungsi utama untuk menerapkan badge
+function applybTitle(hex, emoji, name)
+  local addr = getAddr()
+  if not addr then
+    gg.alert("❌ No matching value found.\n" .. name .. " could not be applied.\nPlease try again or restart the game!")
+    return
+  end
+
+  local patch = {
+    {address = addr + 0x10, flags = gg.TYPE_DWORD, value = hex[1]},
+    {address = addr + 0x14, flags = gg.TYPE_DWORD, value = hex[2]},
+    {address = addr + 0x18, flags = gg.TYPE_DWORD, value = hex[3]},
+    {address = addr + 0x1C, flags = gg.TYPE_DWORD, value = hex[4]},
+    {address = addr + 0x20, flags = gg.TYPE_DWORD, value = hex[5]},
+    {address = addr + 0x24, flags = gg.TYPE_DWORD, value = hex[6]},
+    {address = addr + 0x28, flags = gg.TYPE_DWORD, value = 0},
+    {address = addr + 0x2C, flags = gg.TYPE_DWORD, value = 1}
+  }
+
+  gg.setValues(patch)
+  gg.toast("✅ " .. emoji .. " " .. name .. " applied!")
+end
+
+-- Kumpulan badge
+function titlecollect1() 
+  applybBadge({0x50584520, 0x6E61525F, 0x37345F6B, 0x7361625F, 0x00000065, 0x00000000}, "🦎", "Temple of Living Water Expedition") end
+
+function titlecollect2() 
+  applybBadge({0x50584522, 0x6E61525F, 0x37345F6B, 0x6172675F, 0x0000646E, 0x00000000}, "🦎", "Temple of Living Water Expedition II") end
+
+function titlecollect3() 
+  applybBadge({0x50584520, 0x6E61525F, 0x36345F6B, 0x7361625F, 0x00000065, 0x00000000}, "⛵", "Secret of the Past Expedition") end
+
+function titlecollect4() 
+  applybBadge({0x50584522, 0x6E61525F, 0x36345F6B, 0x6172675F, 0x0000646E, 0x00000000}, "⛵", "Secret of the Past Expedition II") end
+  
+function titlecollect5() 
+  applybBadge({0x50584520, 0x6E61525F, 0x39345F6B, 0x7361625F, 0x00000065, 0x00000000}, "⚔️", "Scourge of the Season Expedition") end
+
+function titlecollect6() 
+  applybBadge({0x50584522, 0x6E61525F, 0x39345F6B, 0x6172675F, 0x0000646E, 0x00000000}, "⚔️", "Scourge of the Season Expedition II") end
+
+function titlecollect7() 
+  applybBadge({0x50584520, 0x6E61525F, 0x38345F6B, 0x7361625F, 0x00000065, 0x00000000}, "🦇", "Legends of Transylvania Expedition") end
+
+function titlecollect8() 
+  applybBadge({0x50584522, 0x6E61525F, 0x38345F6B, 0x6172675F, 0x0000646E, 0x00000000}, "🦇", "Legends of Transylvania Expedition II") end
 
 -------------------------------------------------
 
